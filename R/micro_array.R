@@ -261,10 +261,10 @@ if(is.null(M2)){
   library(gplots) 
   if(!attr(dev.cur(),"names")=="pdf"){dev.new()}
   heatmap.2(exprs(Em.s), dendrogram = 'row', Colv = FALSE, col = greenred (75), 
-††††††††††††††††††key = FALSE, keysize = 1.0, symkey = FALSE, density.info = 'none',
-††††††††††††††††††trace = 'none', colsep = rep(1:10), sepcolor = 'white', sepwidth = 0.05,
-††††††††††††††††††hclustfun = function (c){hclust(c, method = 'average')}, 
-††††††††††††††††††labRow = NA, cexCol = 1)
+  key = FALSE, keysize = 1.0, symkey = FALSE, density.info = 'none',
+  trace = 'none', colsep = rep(1:10), sepcolor = 'white', sepwidth = 0.05,
+  hclustfun = function (c){hclust(c, method = 'average')}, 
+  labRow = NA, cexCol = 1)
  }
   MM<-M1
   MM@group<-cl$cluster
