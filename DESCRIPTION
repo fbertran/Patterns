@@ -1,0 +1,14 @@
+Package: Patterns
+Type: Package
+Title: Selection, Reverse Engineering, Prediction and Simulation for patterned expressions in networks
+Version: 0.2
+Date: 2013-06-07
+Author: Frederic Bertrand, Nicolas Jung, Laurent Vallat, Myriam Maumy Bertrand
+Maintainer: <fbertran@math.unistra.fr>
+Description: ...
+License: GPL (>= 2)
+Depends: methods, abind, animation, cluster, graphics, grDevices,
+        igraph, lars, lattice, limma, magic, methods, nnls, plotrix, splines,
+        stats, stats4, survival, tnet, utils, VGAM
+Collate: global.R micro_array.R nextgen_seq.R network.R micro_array-network.R
+	nextgen_seq-network.R micropredict.R ngseqpredict.R

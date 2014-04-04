@@ -1,0 +1,33 @@
+import(abind, animation, cluster, graphics, grDevices, igraph, lars, lattice, limma, magic, methods, nnls, plotrix, splines, stats, stats4, survival, tnet, utils)
+
+importFrom(VGAM,rlaplace)
+
+
+exportMethods(
+    "analyze_network",
+    "cutoff",
+    "dim",
+    "evolution",
+    "geneNeighborhood",
+    "genePicSelection",
+    "geneSelection",
+    "head",
+    "inference",
+    "plot",
+    "position",
+    "predict",
+    "print",
+    "summary",
+    "unionMicro",
+    "unionNGseq",
+    "gene_expr_simulation"
+)
+
+exportClasses(
+    "micro_array",
+     "nextgen_seq",     "network",
+     "micropredict"
+,     "ngseqpredict")
+
+
+export("network_random","unsupervised_clustering_auto_m_c","unsupervised_clustering","as.micro_array","as.nextgen_seq","compare","replaceBand","replaceUp","replaceDown","CascadeFshape","CascadeFinit")
