@@ -89,31 +89,45 @@ setMethod("summary","micro_array",function(object,nb.graph=NULL,...)
 	colnames(G)<-paste(rep(paste("T",object@time),object@subject), as.character(rep(paste("subject",1:object@subject),each=length(object@time))))
 	z <- cor(G)
 	require(lattice)
-	rownames(z)<-NULL
+	#rownames(z)<-NULL
 	if(is.null(nb.graph) || nb.graph==1 ){
-	print(levelplot(z,xaxt="n",aspect="iso",xlab="",ylab=""))}
-	if(is.null(nb.graph)){if(!attr(dev.cur(),"names")=="pdf"){dev.new()}}
+	print(levelplot(z,aspect="iso",xlab="",ylab="", 
+scales=list(x=list(rot=90)), 
+ylab.right = "Level of correlation",
+par.settings = list(layout.widths = list(axis.key.padding = 0,
+                                                      ylab.right = 2))))
+ 	}
+	if(is.null(nb.graph)){dev.new()}
 	G<-object@microarray
 	colnames(G)<-paste(rep(paste("T",object@time),object@subject), as.character(rep(paste("subject",1:object@subject),each=length(object@time))))
 	w<-agnes(t(G))[1]$order
 	G<-G[,w]
 	z <- cor(G)
-	rownames(z)<-NULL
-	if(is.null(nb.graph) || nb.graph==2 ){
-	print(levelplot(z,xaxt="n",aspect="iso",xlab="",ylab=""))}
 	
+	if(is.null(nb.graph) || nb.graph==2 ){
+	print(levelplot(z,aspect="iso",xlab="",ylab="", 
+scales=list(x=list(rot=90)), 
+ylab.right = "Level of correlation",
+par.settings = list(layout.widths = list(axis.key.padding = 0,
+                                                      ylab.right = 2))))
+                     }
 	if(dim(object@microarray)[1]<1000){
-		if(is.null(nb.graph)){if(!attr(dev.cur(),"names")=="pdf"){dev.new()}}
+		if(is.null(nb.graph)){dev.new()}
 		
 	R<-object@microarray
 	w<-agnes(R)[1]$order
 	R<-R[w,]
 	z <- cor(t(R))
-	rownames(z)<-NULL
+
 	if(is.null(nb.graph) || nb.graph==3 ){
-	print(levelplot(z,xaxt="n",aspect="iso",xlab="",ylab=""))}
-	}
-	})
+	print(levelplot(z,aspect="iso",xlab="",ylab="", 
+scales=list(x=list(rot=90)), 
+ylab.right = "Level of correlation",
+par.settings = list(layout.widths = list(axis.key.padding = 0,
+                                                      ylab.right = 2))))
+ 	}
+	}}
+	)
 
 setMethod("dim","micro_array",function(x)
 {
@@ -139,13 +153,13 @@ V<- reshape(U,idvar="ID",varying=list(1:dim(xs)[2]), v.names = "conc", direction
 if(length(unique(x@group))>1){
 gr<-rep(paste("Cluster",x@group,sep=" "),each=x@subject*length(x@time))
 if(!attr(dev.cur(),"names")=="pdf"){dev.new()}
-print(xyplot(V$conc~V$ys|V$suj,xlab="Time",ylab="Gene Expression",group=rep(1:(x@subject*dim(xs)[2]),each=length(x@time)),type="l",scales="free",col=rep(x@group,each=x@subject),key=list(
+print(xyplot(V$conc~V$ys|V$suj,xlab="Time",as.table=TRUE,ylab="Gene Expression",group=rep(1:(x@subject*dim(xs)[2]),each=length(x@time)),type="l",scales="free",col=rep(x@group,each=x@subject),key=list(
 space="right",
 lines=list(type="l",col=cclus),
 text=list(text=paste("Cluster",as.character(cclus)))
 )))
 if(!attr(dev.cur(),"names")=="pdf"){dev.new()}
-print(xyplot(V$conc~V$ys|gr,xlab="Time",ylab="Gene Expression",group=rep(1:(x@subject*dim(xs)[2]),each=length(x@time)),type="l",scales="free",col=rep(1:x@subject,dim(xs)[2]),key=list(
+print(xyplot(V$conc~V$ys|gr,xlab="Time",as.table=TRUE,ylab="Gene Expression",group=rep(1:(x@subject*dim(xs)[2]),each=length(x@time)),type="l",scales="free",col=rep(1:x@subject,dim(xs)[2]),key=list(
 space="right",
 lines=list(type="l",col=1:x@subject),
 text=list(text=paste("Subject",as.character(1:x@subject)))
@@ -154,11 +168,11 @@ for(i in 1:x@subject){
 ss<-V$suj
 sss<-ss==paste("Subject",i,sep=" ")
 if(!attr(dev.cur(),"names")=="pdf"){dev.new()}
-print(xyplot(V$conc[sss]~V$ys[sss]|gr[sss],xlab="Time",ylab="Gene Expression",type="l",main=paste("Subject",i,sep=" "),group=rep(1:(x@subject*dim(xs)[2]),each=length(x@time))[sss],scales="free"))
+print(xyplot(V$conc[sss]~V$ys[sss]|gr[sss],as.table=TRUE,xlab="Time",ylab="Gene Expression",type="l",main=paste("Subject",i,sep=" "),group=rep(1:(x@subject*dim(xs)[2]),each=length(x@time))[sss],scales="free"))
 }
 }
 else{
-	xyplot(V$conc~V$ys|V$suj,xlab="Time",group=rep(1:(x@subject*dim(xs)[2]),each=length(x@time)),ylab="Gene Expression",scales="free",type="l",col="black")
+	xyplot(V$conc~V$ys|V$suj,as.table=TRUE,xlab="Time",group=rep(1:(x@subject*dim(xs)[2]),each=length(x@time)),ylab="Gene Expression",scales="free",type="l",col="black")
 	}
 }
 )
@@ -247,10 +261,10 @@ if(is.null(M2)){
   library(gplots) 
   if(!attr(dev.cur(),"names")=="pdf"){dev.new()}
   heatmap.2(exprs(Em.s), dendrogram = 'row', Colv = FALSE, col = greenred (75), 
-                  key = FALSE, keysize = 1.0, symkey = FALSE, density.info = 'none',
-                  trace = 'none', colsep = rep(1:10), sepcolor = 'white', sepwidth = 0.05,
-                  hclustfun = function (c){hclust(c, method = 'average')}, 
-                  labRow = NA, cexCol = 1)
+â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ key = FALSE, keysize = 1.0, symkey = FALSE, density.info = 'none',
+â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ trace = 'none', colsep = rep(1:10), sepcolor = 'white', sepwidth = 0.05,
+â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ hclustfun = function (c){hclust(c, method = 'average')}, 
+â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ â€ labRow = NA, cexCol = 1)
  }
   MM<-M1
   MM@group<-cl$cluster
