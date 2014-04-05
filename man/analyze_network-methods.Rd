@@ -31,7 +31,7 @@ Nicolas Jung, Bertrand Frederic, Myriam Maumy-Bertrand.
 
 \examples{
 	data(network)
-	analyze_network(network,nv=0)
+#	analyze_network(network,nv=0)
 }
 
 \keyword{methods}

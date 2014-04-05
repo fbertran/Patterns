@@ -238,8 +238,8 @@ plot(evol_cutoff$sequence,evol_cutoff$p.value.inter,type="l",xlab="cutoff",ylab=
 ###################################################
 ### code chunk number 33: Patterns.Rnw:451-453
 ###################################################
-analyze<-analyze_network(network,nv)
-head(analyze)
+#analyze<-analyze_network(network,nv)
+#head(analyze)
 
 
 ###################################################

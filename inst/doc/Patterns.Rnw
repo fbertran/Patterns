@@ -19,6 +19,7 @@
 \renewcommand{\geq}{\geqslant}
 
 \begin{document} 
+\SweaveOpts{concordance=TRUE}
 \maketitle
 
 
@@ -43,11 +44,11 @@ Since the emergence of high-throughput technologies that allow measuring simulta
 These tools are either based on static co-expression methods or, if the biological phenomenon shows any temporality, time dependent methods. 
 While the former relies on the assumption that co-expressed genes share some biological characteristics, the latter is grounded on a directed network with temporal dependencies. 
 
-The \verb£Patterns£ package is a tool designed to infer such directed networks with temporal dependencies.
+The \verb?Patterns? package is a tool designed to infer such directed networks with temporal dependencies.
 
 Another important distinction should be made between exogenous stress (e.g., growth response) and endogenous phenomenon (e.g., cell cycle) (\citealp{Zhu07} and \citealp{Lusc04}). This leads to different network topologies: in exogenous stress, networks' topologies seem to have larger hubs and shorter paths through temporal dependant transcriptional waves. This results in a quick response to environmental modifications (\citealp{Lusc04}) and those networks are often called ``cascade networks''.
 
-The \verb£Patterns£ package is based on the idea that genes may be assigned to temporal clusters which are used to enforce temporal causality in the network. It has been designed to analyze temporal microarray datasets, allowing gene selection, temporal cluster assignment, reverse-engineering of the GRN and predicting the effect of biological intervention experiments.
+The \verb?Patterns? package is based on the idea that genes may be assigned to temporal clusters which are used to enforce temporal causality in the network. It has been designed to analyze temporal microarray datasets, allowing gene selection, temporal cluster assignment, reverse-engineering of the GRN and predicting the effect of biological intervention experiments.
 This package also features a temporal synthetic simulation tool. The biological interpretations are made easier and comprehensive thanks to graphical outputs.
 
 
@@ -58,11 +59,11 @@ This package also features a temporal synthetic simulation tool. The biological 
 \caption{Cascade networks are temporal nested networks} \label{casc}
 \end{figure}
 
-The \verb£Patterns£ package is a tool to analyze microarray data and model directed networks with temporal dependencies. %The statistical tools provided in this library show several major improvements over those that were initially published in \cite{vallat2013reverse}.
+The \verb?Patterns? package is a tool to analyze microarray data and model directed networks with temporal dependencies. %The statistical tools provided in this library show several major improvements over those that were initially published in \cite{vallat2013reverse}.
 
 \section{Installation requirements}
 
-Following software is required to run the \verb£Patterns£ package:
+Following software is required to run the \verb?Patterns? package:
 
 \begin{itemize}
 \item R (> 2.14.2). For installation of R, refer to http://www.r-project.org.
@@ -85,7 +86,7 @@ biocLite("name_of_the_package")
 \end{itemize}
 
 \noindent
-Once the \verb£Patterns£ package is installed, you can load the package by: 
+Once the \verb?Patterns? package is installed, you can load the package by: 
 
 <<results=hide>>=
 library(Patterns)
@@ -335,7 +336,7 @@ However, if clusters are sufficiently homogeneous, inference of matrices $F_{m(i
 To get a more robust result, at each step, the estimation of matrices $F_{m(i)m(j)}$ is done several times throughout cross-validation. Furthermore, to avoid computational issues, the new solution is chosen by a linear combination between the old and the new solution. 
 
 
-The three functions \verb£replaceBand£, \verb£replaceUp£ and \verb£replaceDown£ can be used to create $F$ matrices with custom band values. The two functions \verb£CascadeFinit£ and \verb£CascadeFshape£ will provide the users with band $F$ matrices useful for cascade networks.
+The three functions \verb?replaceBand?, \verb?replaceUp? and \verb?replaceDown? can be used to create $F$ matrices with custom band values. The two functions \verb?CascadeFinit? and \verb?CascadeFshape? will provide the users with band $F$ matrices useful for cascade networks.
 
 
 
@@ -449,8 +450,8 @@ where $\sigma_{st}$ is the number of shortest way between $s$ and $t$, and $\sig
 As our network is weighted we used specific measures developed in \cite{bla}.
  
 <<keep.source=TRUE>>=
-analyze<-analyze_network(network,nv)
-head(analyze)
+#analyze<-analyze_network(network,nv)
+#head(analyze)
 @
 
 Note that one can plot the network and modulate the size of the vertex following one of this measure, using the \texttt{weight.node} option. \\
