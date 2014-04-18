@@ -9,7 +9,7 @@ exportMethods(
     "dim",
     "evolution",
     "geneNeighborhood",
-    "genePicSelection",
+    "genePeakSelection",
     "geneSelection",
     "head",
     "inference",
@@ -19,15 +19,22 @@ exportMethods(
     "print",
     "summary",
     "unionMicro",
-    "unionNGseq",
+#    "unionNGseq",
     "gene_expr_simulation"
 )
 
 exportClasses(
     "micro_array",
-     "nextgen_seq",     "network",
+#     "nextgen_seq",
+     "network",
      "micropredict"
-,     "ngseqpredict")
+#,     "ngseqpredict"
+)
 
 
-export("network_random","unsupervised_clustering_auto_m_c","unsupervised_clustering","as.micro_array","as.nextgen_seq","compare","replaceBand","replaceUp","replaceDown","CascadeFshape","CascadeFinit")
+export("network_random",
+       "unsupervised_clustering_auto_m_c",
+       "unsupervised_clustering",
+       "as.micro_array",
+       #"as.nextgen_seq",
+       "compare","replaceBand","replaceUp","replaceDown","CascadeFshape","CascadeFinit")

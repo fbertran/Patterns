@@ -1,7 +1,7 @@
 setGeneric("unsupervised_clustering_auto_m_c",package="Mfuzz",def=function(M1,... ){standardGeneric("unsupervised_clustering_auto_m_c")})
 setGeneric("unsupervised_clustering",package="Mfuzz",def=function(M1,clust,mestim,... ){standardGeneric("unsupervised_clustering")})
-setGeneric("geneSelection",package="Limma",def = function(M1,tot.number,... ){standardGeneric("geneSelection")})
-setGeneric("genePicSelection",package="Limma",def = function(M1,pic,... ){standardGeneric("genePicSelection")})
+setGeneric("geneSelection",package="Patterns",def = function(x,y,tot.number,... ){standardGeneric("geneSelection")})
+setGeneric("genePeakSelection",package="Patterns",def = function(x,pic,... ){standardGeneric("genePeakSelection")})
 setGeneric("unionMicro",package="Limma",def = function(M1,M2 ){standardGeneric("unionMicro")})
 setGeneric("unionNGseq",package="Limma",def = function(C1,C2 ){standardGeneric("unionNGseq")})
 setGeneric("position",package="igraph",def = function(net,... ){standardGeneric("position")})
@@ -10,7 +10,7 @@ setGeneric("evolution",package="igraph",def = function(net,list_nv,... ){standar
 setGeneric("inferenceCascade",package="Patterns",def = function(M,... ){standardGeneric("inferenceCascade")})
 setGeneric("inference",package="Patterns",def = function(M,... ){standardGeneric("inference")})
 setGeneric("cutoff",package="Patterns",def = function(Omega,... ){standardGeneric("cutoff")})
-setGeneric("analyze_network",package="tnet",def = function(Omega,nv){standardGeneric("analyze_network")})
+setGeneric("analyze_network",package="Patterns",def = function(Omega,nv,...){standardGeneric("analyze_network")})
 setGeneric("predict",package="Patterns",def = function(object,...){standardGeneric("predict")})
 setGeneric("gene_expr_simulation",def = function(network,...){standardGeneric("gene_expr_simulation")})
 setGeneric("gene_counts_simulation",def = function(network,...){standardGeneric("gene_counts_simulation")})
@@ -76,8 +76,6 @@ F[col(F)==row(F)-(i-1)]<-x[i]
 return(F)
 }
 
-
-
 sumabso<-function(x){
 d<-sum(abs(x))
 if(d==0){
@@ -87,25 +85,24 @@ return(d)
 }
 
 expo<-function(x,hub){
-	
 	sum(x>=hub)/sum(x>0)
 }
 
-
-
 choice_cutoff<-function(O,nb,eps,hub,plot.g=FALSE,prop.hub=NULL){
 	O<-abs(O)
+  #plus petit omega sup a eps
 	minO<-min(O[O>eps])
+  #mediane des omegas
 	qq<-quantile(O[O>eps],0.50)
+  #max des omega
 	maxO<-max(O)
+  #cutoffs
 	sequence<-seq(minO,maxO,length.out=nb)
 	
 	Mcut<-array(0,c(dim(O)[1],nb))
-	
+  #pour chaque valeur du cutoff on calcule 
 	for(i in 1:nb){
-		
 		Mcut[,i]<-apply(O>sequence[i],1,sum)
-		
 	}
 	
 	expoh<-function(x){expo(x,hub)}
@@ -131,7 +128,6 @@ choice_cutoff<-function(O,nb,eps,hub,plot.g=FALSE,prop.hub=NULL){
 	
 }
 
-
 choice_cutoff_final<-function(O,nb,eps,hub,plot.g=FALSE,prop.hub){
 
 if(length(hub)>1){
@@ -150,21 +146,11 @@ for(i in prop.hub){
 	}
 plot(prop.hub,choix,type="l")
 lines(prop.hub,predict(loess(choix ~ prop.hub, span=0.75)),col="red")
-
 return(choix)
-	
 	}
-
 }
 
-
-
-
-
-
 #simulations
-
-
 
 network_random<-function(nb,time_label,exp,init,regul,min_expr,max_expr,casc.level){
 	
@@ -176,16 +162,17 @@ network_random<-function(nb,time_label,exp,init,regul,min_expr,max_expr,casc.lev
 		
 		if(rbinom(1,1,1-casc.level)==1){	
 		reg<-which(time_label<time_label[i])}
-		else{reg<-which(time_label==(time_label[i]-1))}
+        else{
+          reg<-which(time_label==(time_label[i]-1))
+        }
 		if(length(reg)!=0 && sum(sum(net[,i])<regul[i])){
 		pb<-apply(net[reg,],1,sum)^exp
 		pb<-(pb+init)/(sum(pb+init))
 		r<-rmultinom(1, 1, pb)
 		net[reg[which(r==1)],i]<-1
 		net2[reg[which(r==1)],i]<-runif(1,min_expr,max_expr)*(-1)^rbinom(1,1,0.5)
-		}}
-		
-	
+        }
+      }
 	}
 	}
 	length(unique(time_label))->T
@@ -193,10 +180,6 @@ network_random<-function(nb,time_label,exp,init,regul,min_expr,max_expr,casc.lev
 	N<-new("network",network=net2,name=paste("gene",1:nb),F=F,convO=0,convF=matrix(0,1,1),time_pt=1:length(unique(time_label)))
 	return(N)
 }
-
-
-
-
 
 compare<-function(Net,Net_inf,nv){
 	N1<-Net@network

@@ -195,10 +195,10 @@ rbind(c(0,1,0,0),c(1,0,0,0),c(1,1,0,0)))
 
 You may want forbid some patterns thanks to the \texttt{forbidden.patterns} option. \\
 
-If we wish select genes that have a differential maximum of expression at a specific time point, we may use the \texttt{genePicSelection} method. Basically, this function selects genes that are differentially expressed at desired time point, and which differential expression is significantly higher at this time point:
+If we wish select genes that have a differential maximum of expression at a specific time point, we may use the \texttt{genePeakSelection} method. Basically, this function selects genes that are differentially expressed at desired time point, and which differential expression is significantly higher at this time point:
 
 <<>>=
-Selection<-genePicSelection(M1=micro_S,M2=micro_US,1,
+Selection<-genePeakSelection(M1=micro_S,M2=micro_US,1,
 abs_val=FALSE,alpha_diff=0.01)
 @
 

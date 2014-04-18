@@ -1,17 +1,17 @@
-\name{genePicSelection}
-\alias{genePicSelection}
+\name{genePeakSelection}
+\alias{genePeakSelection}
 \alias{geneSelection}
-\alias{genePicSelection-methods}
+\alias{genePeakSelection-methods}
 \alias{geneSelection-methods}
 \alias{geneSelection,micro_array,numeric-method}
-\alias{genePicSelection,micro_array,numeric-method}
+\alias{genePeakSelection,micro_array,numeric-method}
 \title{Methods for selecting genes }
 \description{
 Find the neighborhood of a set of nodes. Please refer to the vignette for more details.
 }
 \usage{
 	geneSelection(M1,tot.number,...)
-	genePicSelection(M1,pic,... )
+	genePeakSelection(M1,pic,... )
 }
 
 \arguments{
@@ -24,8 +24,8 @@ Find the neighborhood of a set of nodes. Please refer to the vignette for more d
  		 		\item{data_log}{logical (default to TRUE) ; should data be logged ?}
  		\item{wanted.patterns}{a matrix with wanted patterns [only for geneSelection].}
  		\item{forbidden.patterns}{a matrix with forbidden patterns [only for geneSelection].}
- 		\item{durPic}{vector of size 2 (default to c(1,1)) ; the first elements gives the length of the pic at the left, the second at the right. [only for genePicSelection]}
- 		\item{abs_val}{ logical (default to TRUE) ; should genes be selected on the basis of their absolute value expression ? [only for genePicSelection]}
+ 		\item{durPic}{vector of size 2 (default to c(1,1)) ; the first elements gives the length of the pic at the left, the second at the right. [only for genePeakSelection]}
+ 		\item{abs_val}{ logical (default to TRUE) ; should genes be selected on the basis of their absolute value expression ? [only for genePeakSelection]}
  		\item{alpha_diff}{float ; the risk level }
  		
  }}

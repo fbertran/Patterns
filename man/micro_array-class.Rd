@@ -25,7 +25,7 @@ Objects can be created by calls of the form \code{new("micro_array", ...)}.
 \section{Methods}{
   \describe{
     \item{dim}{\code{signature(x = "micro_array")}: ... }
-    \item{genePicSelection}{\code{signature(M1 = "micro_array", M2 = "micro_array", pic = "numeric")}: ... }
+    \item{genePeakSelection}{\code{signature(M1 = "micro_array", M2 = "micro_array", pic = "numeric")}: ... }
     \item{geneSelection}{\code{signature(M1 = "micro_array", M2 = "micro_array", tot.number = "numeric")}: ... }
     \item{head}{\code{signature(x = "micro_array")}: ... }
     \item{inference}{\code{signature(M = "micro_array")}: ... }

@@ -1,16 +1,31 @@
 setClass(Class = "micropredict",
-representation(microarray_unchanged="micro_array",microarray_changed="micro_array",microarray_predict="micro_array",nv="numeric",network="network",targets="numeric")	)
+representation(microarray_unchanged="micro_array"
+,microarray_changed="micro_array"
+,microarray_predict="micro_array"
+,nv="numeric"
+,network="network"
+,targets="numeric")
+)
 
-setMethod("plot",c("micropredict"),function(x,time=NULL,label_v=NULL,frame.color="white",ini=NULL,label.hub=FALSE){
+setMethod("plot"
+,c("micropredict")
+,function(x
+,time=NULL
+,label_v=NULL
+,frame.color="white"
+,ini=NULL
+,label.hub=FALSE
+                    ,edge.arrow.size=0.7
+                    ,edge.thickness=1){
 	net<-x@network
-	micro<-predict(x@microarray_unchanged,x@network,nv=x@nv)@microarray_predict
+	micro<-x@microarray_changed
 	nv<-x@nv
 	micro_pred<-x@microarray_predict
 	targets<-x@targets
 	O<-net@network
   	Omega<-net@network
-    O[abs(O)<=nv]<-0
-    O[abs(O)>nv]<-1
+    O[abs(O)<nv]<-0
+    O[abs(O)>=nv]<-1
     if(is.null(label_v)){label_v<-1:dim(O)[1]}
 	
 	G<-graph.adjacency(O,weighted=TRUE)
@@ -30,7 +45,9 @@ setMethod("plot",c("micropredict"),function(x,time=NULL,label_v=NULL,frame.color
 		}
 		else{K<-time}
 		for(time in K){
+		if(length(K)>1){
 	if(!attr(dev.cur(),"names")=="pdf"){dev.new()}
+}
 		if(time==length(micro@time)){time<-0}
 		sup_pred<-1:dim(micro@microarray)[2]
 	sup_pred<-sup_pred[sup_pred%%length(micro@time)==time]
@@ -42,18 +59,21 @@ setMethod("plot",c("micropredict"),function(x,time=NULL,label_v=NULL,frame.color
 	long<-long[-targets]
 	for(j in long){
 		
-		if(M[j]>=0){
-			color[j]<-rgb(couleur2(M[j]),alpha=255,max=255)
+		if(M[j]>0){
+			color[j]<-rgb(couleur2(max(M[j],0.2)),alpha=255,max=255)
 					}
 					else{
+						color[j]<-rgb(couleur1(max(-M[j],0.2)),alpha=255,max=255)
 						
-						color[j]<-rgb(couleur1(-M[j]),alpha=255,max=255)
-
+					}
+					if(M[j]==0){
+            color[j]<- rgb(couleur2(0),alpha=255,max=255)
 					}
 		
 	}
 	if(!is.null(targets)){color[targets]<-"green"}
-	plot(net,nv=nv,color.vertex=color,ini=P,label_v=label_v,frame.color=frame.color,label.hub=label.hub)
+	plot(net,nv=nv,color.vertex=color,ini=P,label_v=label_v,frame.color=frame.color,label.hub=label.hub,
+	edge.arrow.size=edge.arrow.size,edge.thickness=edge.thickness)
 couleur3<-colorRamp(c("blue","grey","red"))
 nb.col<-300
 coll<-rgb(couleur3(1:nb.col/nb.col),max=255)
@@ -68,6 +88,3 @@ if(time==0){time<-length(micro@time)}
 		
 }
 )
-
-
-

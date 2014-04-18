@@ -96,7 +96,7 @@ rbind(c(0,1,0,0),c(1,0,0,0),c(1,1,0,0)))
 ###################################################
 ### code chunk number 15: Patterns.Rnw:199-201
 ###################################################
-Selection<-genePicSelection(M1=micro_S,M2=micro_US,1,
+Selection<-genePeakSelection(M1=micro_S,M2=micro_US,1,
 abs_val=FALSE,alpha_diff=0.01)
 
 

@@ -24,10 +24,10 @@ validity=function(object){
 				stop("[Error: ] Length of the vector of starting time must equal to the number of genes or null")
 		}
 		
-	if(length(object@name)!=length(unique(object@name))){
-
-				stop("[Error: ] Names must be unique")
-		}
+#	if(length(object@name)!=length(unique(object@name))){ #Disappeared in Cascade 1.03
+#
+#				stop("[Error: ] Names must be unique")
+#		}
 	if(object@subject<1){
 
 				stop("[Error: ] There must be at least one subject")
@@ -137,7 +137,7 @@ setMethod("plot","micro_array",function(x,y,...)
 {
 		
 require(lattice)
-	
+require(grid)	
 xs<-t(x@microarray)
 
 rownames(xs)<-1:dim(xs)[1]
@@ -153,13 +153,13 @@ V<- reshape(U,idvar="ID",varying=list(1:dim(xs)[2]), v.names = "conc", direction
 if(length(unique(x@group))>1){
 gr<-rep(paste("Cluster",x@group,sep=" "),each=x@subject*length(x@time))
 if(!attr(dev.cur(),"names")=="pdf"){dev.new()}
-print(xyplot(V$conc~V$ys|V$suj,xlab="Time",as.table=TRUE,ylab="Gene Expression",group=rep(1:(x@subject*dim(xs)[2]),each=length(x@time)),type="l",scales="free",col=rep(x@group,each=x@subject),key=list(
+print(xyplot(V$conc~V$ys|V$suj,as.table=TRUE,xlab="Time",ylab="Gene Expression",group=rep(1:(x@subject*dim(xs)[2]),each=length(x@time)),type="l",scales=list(x=list(relation="free",at=x@time),y=list(relation="free")),col=rep(x@group,each=x@subject),key=list(
 space="right",
 lines=list(type="l",col=cclus),
 text=list(text=paste("Cluster",as.character(cclus)))
 )))
 if(!attr(dev.cur(),"names")=="pdf"){dev.new()}
-print(xyplot(V$conc~V$ys|gr,xlab="Time",as.table=TRUE,ylab="Gene Expression",group=rep(1:(x@subject*dim(xs)[2]),each=length(x@time)),type="l",scales="free",col=rep(1:x@subject,dim(xs)[2]),key=list(
+print(xyplot(V$conc~V$ys|gr,as.table=TRUE,xlab="Time",ylab="Gene Expression",group=rep(1:(x@subject*dim(xs)[2]),each=length(x@time)),type="l",scales=list(x=list(relation="free",at=x@time),y=list(relation="free")),col=rep(1:x@subject,dim(xs)[2]),key=list(
 space="right",
 lines=list(type="l",col=1:x@subject),
 text=list(text=paste("Subject",as.character(1:x@subject)))
@@ -168,11 +168,11 @@ for(i in 1:x@subject){
 ss<-V$suj
 sss<-ss==paste("Subject",i,sep=" ")
 if(!attr(dev.cur(),"names")=="pdf"){dev.new()}
-print(xyplot(V$conc[sss]~V$ys[sss]|gr[sss],as.table=TRUE,xlab="Time",ylab="Gene Expression",type="l",main=paste("Subject",i,sep=" "),group=rep(1:(x@subject*dim(xs)[2]),each=length(x@time))[sss],scales="free"))
+print(xyplot(V$conc[sss]~V$ys[sss]|gr[sss],as.table=TRUE,xlab="Time",ylab="Gene Expression",type="l",main=paste("Subject",i,sep=" "),group=rep(1:(x@subject*dim(xs)[2]),each=length(x@time))[sss],scales=list(x=list(relation="free",at=x@time),y=list(relation="free"))))
 }
 }
 else{
-	xyplot(V$conc~V$ys|V$suj,as.table=TRUE,xlab="Time",group=rep(1:(x@subject*dim(xs)[2]),each=length(x@time)),ylab="Gene Expression",scales="free",type="l",col="black")
+	xyplot(V$conc~V$ys|V$suj,xlab="Time",as.table=TRUE,group=rep(1:(x@subject*dim(xs)[2]),each=length(x@time)),ylab="Gene Expression",scales=list(x=list(relation="free",at=x@time),y=list(relation="free")),type="l",col="black")
 	}
 }
 )
@@ -272,16 +272,20 @@ if(is.null(M2)){
 }
 )
 
-
-
-
-
- 
- 
-setMethod(f="geneSelection", 
-	signature=c("micro_array","numeric"),
-	definition=function(M1,tot.number,M2=NULL,data_log=TRUE,wanted.patterns=NULL,forbidden.patterns=NULL,pic=NULL,alpha=0.05){
+ setMethod(f="geneSelection", 
+	signature=c("micro_array","micro_array","numeric"),
+	definition=function(x,y,tot.number,data_log=TRUE,wanted.patterns=NULL,forbidden.patterns=NULL,pic=NULL,alpha=0.05,Design=NULL,lfc=0){
+   
+	  BBB<-strsplit(sessionInfo()[5]$otherPkgs$limma$Version,"[.]")
+	  
+	  if( !(BBB[[1]][1]>3 || (BBB[[1]][1]==3 && BBB[[1]][2]>18) || 
+	          (BBB[[1]][1]==3 && BBB[[1]][2]==18 && BBB[[1]][3]>=13 ) ))
+	  {stop("Upgrade your version of Limma (>= 3.18.13)")}
+    
+    
     indic<-0
+    M1<-x
+    M2<-y
   if(is.null(M2)){
   indic<-1
   M2<-M1
@@ -292,23 +296,29 @@ setMethod(f="geneSelection",
 		if(data_log==TRUE){
 			M1_mic<-log(M1@microarray)
 			M2_mic<-log(M2@microarray)
-		}
-		else{
+		} else{
 			M1_mic<-(M1@microarray)
 			M2_mic<-(M2@microarray)
 		}
+		
+		if(is.null(rownames(M1_mic))){rownames(M1_mic)<-paste("probe ",1:dim(M1_mic)[1])}
+if(is.null(rownames(M2_mic))){rownames(M2_mic)<-paste("probe ",1:dim(M2_mic)[1])}
+
       if(indic==1){ M2_mic<-M2_mic*0}
+      
+      
 
 		colnames(M1_mic)<-paste(rep("US",length(M1@time)*M1@subject),rep(M1@time,M1@subject), sep="")
 		colnames(M2_mic)<-paste(rep("S",length(M2@time)*M2@subject),rep(M2@time,M2@subject), sep="")
-		rownames(M1_mic)<- M1@name
-		rownames(M2_mic)<- M1@name
+		#rownames(M1_mic)<- paste("probe",rownames(M1_mic) ) 
+		#rownames(M2_mic)<-  paste("probe",rownames(M2_mic) ) 
     M<-cbind(M1_mic,M2_mic)
 
 		T<-length(M1@time)
 		
 		#Construction de la matrice de design
 
+    if(is.null(Design)){
 		design<-t(matrix(rep(0,(M1@subject+M2@subject)*T*(T*2)),2*T))
 		
 		for(i in 1:(T)){
@@ -316,30 +326,55 @@ setMethod(f="geneSelection",
 			design[which(colnames(M)%in%paste("S",M2@time[i],sep="")),i+T]<-1	
 		}
 
-
+     
 		vnom<-paste(c(paste(rep("US_time",length(M1@time)),M1@time[1:(length(M1@time))],sep=""),paste(rep("S_time",length(M1@time)),M1@time[1:(length(M1@time))],sep="")),sep="")
 		colnames(design)<-vnom
-		
+		}else{
+		 design<-Desing$X		
+		}
 		#block<-rep(1:(M1@subject*2),each=T)
 		#dupcor <- duplicateCorrelation(M,design,block=block)
 		#model<-lmFit(M,design,block=block)
 		model<-lmFit(M,design)
-		diff<-paste(vnom[1:T],vnom[1:T+length(M1@time)],sep="-")
-		contr<-makeContrasts(contrasts=diff,levels=vnom)
+		if(is.null(Design)){
+    diff<-paste(vnom[1:T],vnom[1:T+length(M1@time)],sep="-")
+		contr<-makeContrasts(contrasts=diff,levels=vnom)  		}else{
+		 contr<-Design$contr
+		}
 		model2<-contrasts.fit(model,contr)
 		model.test<-eBayes(model2)
 		
 
 		
 p.val.ind<-model.test$p.value
-rownames(p.val.ind)<-M1@name
-p.val.all<-topTable(model.test,p.value=0.05,number=dim(M)[1])
+rownames(p.val.ind)<-rownames(M1_mic) 
 
+p.val.all<-topTable(model.test,p.value=alpha,number=dim(M)[1],lfc=lfc)
+kkkk<-0
+if(is.null(p.val.all$ID)){
+  kkkk<-1
+		ID<-row.names(p.val.all)
+		p.val.all<-cbind(ID,p.val.all)
+		f_nom<-function(nom){
+			which(x@name %in% nom)			
+		}
+		f_nom<-Vectorize(f_nom)
+		row.names(p.val.all)<-unlist(f_nom(as.character(p.val.all$ID)))
+		}
+if(tot.number>0 && tot.number<=1){
+ tot.number<-round(tot.number*dim(p.val.all)[1])
+}
+
+if(kkkk<-0){
 ind.class<-rownames(p.val.all)
-p.val.ind.class<-p.val.ind[ind.class,]
-		
+p.val.ind.class<-p.val.ind[(ind.class),]
+}else{
+  ind.class<-rownames(p.val.all)
+  p.val.ind.class<-p.val.ind[as.numeric(ind.class),]
+  
+}	
 		f.p.val<-function(x){
-			if(x<0.05){return(1)}
+			if(x<alpha){return(1)}
 			else{return(0)}
 		}
 
@@ -439,8 +474,19 @@ p.val.ind.class<-p.val.ind[ind.class,]
 		R<-apply(choix,1,temps.prem)
 		n<-length(R)
 		MM1<-M1_mic[rownames(choix),]-M2_mic[rownames(choix),]
+
+
+r3<-function(choix){
+sortie<-NULL
+for(i in 1:length(choix)){
+sortie<-c(sortie,which(rownames(M1_mic)%in%rownames(choix)[i]))
+}
+sortie
+}
+
+
 		
-		M<-new("micro_array",microarray=MM1,name=rownames(choix),time=M1@time,subject=M1@subject,group=as.vector(R),start_time=as.vector(R))
+		M<-new("micro_array",microarray=MM1,name=M1@name[r3(choix)],time=M1@time,subject=M1@subject,group=as.vector(R),start_time=as.vector(R))
 		
 		
 			
@@ -450,11 +496,273 @@ p.val.ind.class<-p.val.ind[ind.class,]
 
 )
 
-setMethod(f="genePicSelection", 
+
+setMethod(f="geneSelection", 
+	signature=c("list","list","numeric"),
+	definition=function(x,y,tot.number,data_log=TRUE,alpha=0.05,cont=FALSE,lfc=0,f.asso=NULL){
+  
+  
+	  BBB<-strsplit(sessionInfo()[5]$otherPkgs$limma$Version,"[.]")
+	  
+	  if( !(BBB[[1]][1]>3 || (BBB[[1]][1]==3 && BBB[[1]][2]>18) || 
+	          (BBB[[1]][1]==3 && BBB[[1]][2]==18 && BBB[[1]][3]>=13 ) ))
+	  {stop("Upgrade your version of Limma (>= 3.18.13)")}
+
+  
+  M<-x
+  contrast<-y
+ 
+  M_mic<-M
+		require(limma)		
+n<-length(M)
+Time<-length(M[[2]]@time)
+
+if(cont==TRUE && is.null(f.asso) ){
+	
+	f.asso<-"mean"
+	
+}
+
+Subj<-(M[[2]]@subject)
+
+
+		if(data_log==TRUE){
+			
+			for(i in 1:n){
+			M_mic[[i]]<-log(M[[i]]@microarray)
+			}
+		} else{
+			for(i in 1:n){
+			M_mic[[i]]<-(M[[i]]@microarray)
+			}
+		}
+		
+		
+		
+		
+		#colN<-function(N,i){
+#			colnames(N)<-paste(rep("Time ",Time*Subj),rep(M[[1]]@time,Subj), sep="")
+#			return((N))
+#			}
+	#	M_mic<-rapply(M_mic,colN,how="list")
+#		
+#		
+#		
+    	Ma<-abind(M_mic,along=2)
+		T<-Time
+		
+		
+		#Construction de la matrice de design
+
+    
+		condition<-as.factor(paste("condition",rep(1:n,unlist(lapply(M,ncol))),sep=""))
+		
+    if(cont==FALSE){
+    timeT<-paste("time",rep(1:T,sum(unlist(lapply(M,function(x){x@subject})))
+),sep="") }else{
+       timeT<-c(rep("time0",ncol(M[[1]]) ),paste("time",rep(1:T,sum(unlist(lapply( M[2:length(M)],function(x){x@subject})))
+),sep=""))
+
+}
+        
+     Fac<-as.factor( paste(condition,timeT,sep="."))
+
+if(contrast[[1]]!="condition"){
+		formule<-~-1+Fac
+		design<-model.matrix(formule)
+		colnames(design)<-levels(Fac)
+   }else{
+   	formule<-~-1+condition
+   	design<-model.matrix(formule)
+		colnames(design)<-levels(condition)
+   	}
+		  
+    model<-lmFit(Ma,design)
+       
+	
+		if(contrast[[1]]=="condition"){
+			contrastM<-makeContrasts(contrasts=paste("condition",contrast[[2]][1],"-condition",
+      contrast[[2]][2],
+			sep=""),levels=design)
+		}	
+		#if(contrast[[1]]=="time"){
+#			
+#			if(contrast[[2]][1]!=1){
+#				contrastM[contrast[[2]][1]+n]<-contrastM[contrast[[2]][1]+n]+1				
+#			}else{
+#				contrastM[1:n]<-contrastM[1:n]+1
+#				contrastM[(n+1):(n+T-1)]<-contrastM[(n+1):(n+T-1)]-1
+#				}
+#				
+#			if(contrast[[2]][2]!=1){
+#				contrastM[contrast[[2]][2]+n]<-contrastM[contrast[[2]][2]+n]-1				
+#			}else{
+#				contrastM[1:n]<-contrastM[1:n]-1
+#				contrastM[(n+1):(n+T-1)]<-contrastM[(n+1):(n+T-1)]+1
+#				}
+#	
+#			
+#		}
+#		
+
+			if(contrast[[1]]=="patterns" && (cont==FALSE || contrast[[2]][1] != 1)){
+			coma=NULL	
+			for(j in 1:Time){	
+			coma<-c(coma,paste("condition", contrast[[2]][1],".time", j,"-condition", contrast[[2]][2],".time", j,sep=""))
+			}
+			contrastM<-makeContrasts(contrasts=coma,levels=design)
+		
+				 }
+				 
+				 if(contrast[[1]]=="patterns" && (cont==TRUE  && contrast[[2]][1] == 1)){
+			coma=NULL	
+			for(j in 1:Time){	
+			coma<-c(coma,paste("condition", contrast[[2]][1],".time", 0,"-condition", contrast[[2]][2],".time", j,sep=""))
+			}
+			contrastM<-makeContrasts(contrasts=coma,levels=design)
+			
+				 }
+			 
+				if(contrast[[1]]=="condition&time"){
+				
+				
+			coma<-paste("condition", contrast[[2]][1],".time", contrast[[3]][1],"-condition", contrast[[2]][2],".time", contrast[[3]][2],sep="")
+			contrastM<-makeContrasts(contrasts=coma,levels=design)
+		
+				 } 
+		
+		
+     
+				model2<-contrasts.fit(model,-contrastM)
+		    model.test<-eBayes(model2)
+		
+ 	      p.val.ind<-model.test$p.value
+
+
+
+ 
+nb.tot<-length(M[[1]]@name)
+
+
+
+if(contrast[[1]]=="patterns"){
+tableT<-matrix(0,nb.tot,Time+1)	
+row.names(tableT)<-1:nb.tot
+tableT[,Time+1]<-model.test$F.p.value
+	for(j in 1:Time){
+		
+		p.val.all<-topTable(model.test,p.value=alpha,number=nb.tot,lfc=lfc,coef=j)
+		
+		if(is.null(p.val.all$ID)){
+		ID<-row.names(p.val.all)
+		p.val.all<-cbind(ID,p.val.all)
+		f_nom<-function(nom){
+			which(x[[1]]@name %in% nom)			
+		}
+		f_nom<-Vectorize(f_nom)
+		row.names(p.val.all)<-f_nom(p.val.all$ID)
+		}
+		tableT[as.numeric(row.names(p.val.all)),j]<-1
+	
+	}
+	
+	f.test<-function(x1){
+		rep<-FALSE
+		for(i in 1:nrow(contrast[[3]])){
+			if(sum(x1==contrast[[3]][i,])==Time){
+				rep<-TRUE
+			}
+		}
+		return(rep)
+	}
+	
+	B<-apply(tableT[,1:Time],1,f.test)
+	tableT<-tableT[B,]
+	tableT<-tableT[which(tableT[,Time+1]<alpha),]
+	tableT<-tableT[order(tableT[,Time+1]),]
+	nb.ret<-nrow(tableT)
+	if(tot.number>=1 && nb.ret>tot.number){
+	nb.ret<-tot.number
+}
+
+if(tot.number<1 && tot.number>0){
+	nb.ret<-round(nb.ret*tot.number)
+	
+}
+	K1<-M_mic[[contrast[[2]][1]]][as.numeric(row.names(tableT[1:nb.ret,])),]
+		K2<-M_mic[[contrast[[2]][2]]][as.numeric(row.names(tableT[1:nb.ret,])),]
+	
+	
+	
+	}else{
+
+p.val.all<-topTable(model.test,p.value=alpha,number=nb.tot,lfc=lfc)
+	if(is.null(p.val.all$ID)){
+		ID<-row.names(p.val.all)
+		p.val.all<-cbind(ID,p.val.all)
+		f_nom<-function(nom){
+			which(x[[1]]@name %in% nom)			
+		}
+		f_nom<-Vectorize(f_nom)
+		row.names(p.val.all)<-f_nom(p.val.all$ID)
+		}
+nb.ret<-dim(p.val.all)[1]
+
+if(tot.number>=1 && nb.ret>tot.number){
+	nb.ret<-tot.number
+}
+
+if(tot.number<1 && tot.number>0){
+	nb.ret<-round(nb.ret*tot.number)
+	
+}
+
+p.val.all<-p.val.all[1:nb.ret,]
+
+		
+		K1<-M_mic[[contrast[[2]][1]]][p.val.all$ID,]
+		K2<-M_mic[[contrast[[2]][2]]][p.val.all$ID,]
+	}
+	
+		
+		if(!is.null(f.asso) && cont==TRUE){
+		K1<-apply(K1,1,f.asso)
+		}
+		if(!is.null(f.asso) && cont==FALSE){
+		for(i in 1:Time){
+    K1[i,]<-apply(K1[seq(i,ncol(K1),by=Time),],1,f.asso)
+		}
+		}
+		 MM1<-K2 -K1
+		 
+		 if(contrast[[1]]=="patterns"){
+		 
+     f_gr<-function(x){ min(which(x==1))}
+		 
+		 group=apply(tableT[1:nb.ret,1:Time],1,f_gr)
+		  
+      
+      } else{
+          group=rep(0,nb.ret)
+      }
+
+		M<-new("micro_array",microarray=MM1,name=row.names(MM1),time=M[[contrast[[2]][2]]]@time,subject=Subj,group=group,start_time=group)
+		
+			
+			return(M)
+
+	}
+
+)
+
+
+
+setMethod(f="genePeakSelection", 
 	signature=c("micro_array","numeric"),
-	definition=function(M1,pic,M2=NULL,data_log=TRUE,durPic=c(1,1),abs_val=TRUE,alpha_diff=0.05){
+	definition=function(x,pic,y=NULL,data_log=TRUE,durPic=c(1,1),abs_val=TRUE,alpha_diff=0.05){
 			
-			
+			  M1<-x
+			  M2<-y
 			Select<-geneSelection(M1,tot.number=-1,M2,data_log=data_log,pic=pic)
 			
 			if(abs_val==FALSE){
@@ -576,14 +884,19 @@ setMethod(f="genePicSelection",
 		
 		}
 		)
-		
 
+		
 setMethod(f="unionMicro", 
 	signature=c("micro_array","micro_array"),
 	definition=function(M1,M2){
 		
-		nom1<-M1@name
-		nom2<-M2@name
+		
+		
+		nom1<-rownames(M1@microarray)
+		nom2<-rownames(M2@microarray)
+		corres<-cbind(c(M1@name,M2@name),c(nom1,nom2))
+		corres<-unique(unique(corres,MARGIN=2))
+		
 		NOM<-unique(c(nom1,nom2))
 		n<-length(NOM)
 		m1<-M1@microarray[which(nom1 %in% NOM),]
@@ -597,9 +910,25 @@ setMethod(f="unionMicro",
 		str1<-M1@start_time[which(nom1 %in% NOM)]
 		str2<-M2@start_time[which(nom2 %in% NOM2)]
 		str<-c(str1,str2)
-		rep<-new("micro_array",microarray=M,name=NOM,time=M1@time,subject=M1@subject,group=gr,start_time=str)
+		rep<-new("micro_array",microarray=M,name=corres[,1],time=M1@time,subject=M1@subject,group=gr,start_time=str)
 		return(rep)
 				}
 		
 		) 
  
+ 
+ setMethod(f="unionMicro", 
+	signature=c("list","ANY"),
+	definition=function(M1,M2){
+		
+		rep<-unionMicro(M1[[1]],M1[[1]])
+	if(length(M1)>1){	
+    for(i in 2:length(M1)){
+		         rep<-unionMicro(rep,M1[[i]])
+		
+		}
+         }
+    return(rep)
+				}
+		
+		)  
