@@ -259,3 +259,8 @@ CascadeFinit=function(sqF,ngrp){
   return(Finit)
 }
 
+majority_vote<-function(x){
+  
+  which.max(tabulate(x))
+}  
+
