@@ -37,4 +37,4 @@ export("network_random",
        "unsupervised_clustering",
        "as.micro_array",
        #"as.nextgen_seq",
-       "compare","replaceBand","replaceUp","replaceDown","CascadeFshape","CascadeFinit")
+       "compare","replaceBand","replaceUp","replaceDown","CascadeFshape","CascadeFinit","majority_vote")
