@@ -932,3 +932,169 @@ setMethod(f="unionMicro",
           }
           
 )  
+
+
+
+setMethod(f="clustExploration", 
+          signature=c("micro_array"),
+          definition=function(microarray){
+  
+  require(Mfuzz)
+  T<-length(microarray@time)
+  P<-microarray@subject
+  M1<-microarray@microarray
+  
+  M<-M1[,1:T]
+  for(i in 2:P ){
+    M<-rbind(M,M1[,1:T+(i-1)*T])
+  }
+  
+  M<-t(scale(t(M),scale=FALSE))
+  
+  M<-M/sqrt(diag((M)%*%t(M)))
+  
+  lambda_max<-max(eigen(M%*%t(M)/dim(M)[1])$values)
+  
+  
+  #for the choice of m, I recommend the lecture of :
+  # http://ccc.inaoep.mx/~ariel/2012/Analysis%20of%20parameter%20selections%20for%20fuzzy%20c-means.pdf
+  
+  
+  
+  if( lambda_max <0.5){
+    m_max<-min(1/(1-2*lambda_max),2.5)
+  }else{
+    m_max<-2.5
+  }
+  rownames(M)<-NULL
+  M_exp<- ExpressionSet(M)
+  
+  indic<-"continue"
+  k<-1
+  
+  while(indic=="continue"){
+    k<-k+1
+    cl <- mfuzz(M_exp, c = k,m=m_max)
+    M_clust<-matrix(cl$cluster,nrow(M1),P)
+    mv<-apply(M_clust,1,majority_vote)  
+    mind<-apply(M_clust,1,majority_indice)  
+    cont<-mean(mind/P)
+    if(cont<0.4 & k>2){indic="stop"}else{
+      aM_clust<-M_clust
+      amv<-mv
+      amind<-mind
+      acont<-cont
+    }
+    
+  }
+  k<-k-1
+  cl <- mfuzz(M_exp, c = k,m=m_max)
+  if(k<9){
+    mfuzz.plot(M_exp,cl=cl,mfrow=c(1,k))
+  }else{
+    mfuzz.plot(M_exp,cl=cl,mfrow=c(ceiling(sqrt(k)),ceiling(sqrt(k))))
+  }
+  
+  
+  return(data.frame(name=microarray@name,cluster=amv,maj.vote.index=amind))
+  
+  
+}  
+)
+
+
+
+
+setMethod(f="clustInference", 
+          signature=c("micro_array","numeric"),
+          definition=function(microarray,vote.index){  
+  require(Mfuzz)
+  T<-length(microarray@time)
+  P<-microarray@subject
+  M1<-microarray@microarray
+  
+  M<-M1[,1:T]
+  for(i in 2:P ){
+    M<-rbind(M,M1[,1:T+(i-1)*T])
+  }
+  
+  M<-t(scale(t(M),scale=FALSE))
+  
+  M<-M/sqrt(diag((M)%*%t(M)))
+  
+  lambda_max<-max(eigen(M%*%t(M)/dim(M)[1])$values)
+  
+  
+  
+  if( lambda_max <0.5){
+    m_max<-min(1/(1-2*lambda_max),2.5)
+  }else{
+    m_max<-2.5
+  }
+  rownames(M)<-NULL
+  M_exp<- ExpressionSet(M)
+  
+  indic<-"continue"
+  k<-1
+  within_error_hard<-NULL
+  while(indic=="continue"){
+    k<-k+1
+    cl<-mfuzz(M_exp, c = k,m=m_max)
+    we<-cl$withinerror
+    for(f in 1:50){
+      CL <- mfuzz(M_exp, c = k,m=m_max)
+      wee<-CL$withinerror
+      if(wee<we){
+        cl<-CL
+        we<-wee
+      }
+      
+    }
+    
+    M_clust<-matrix(cl$cluster,nrow(M1),P)
+    mv<-apply(M_clust,1,majority_vote)  
+    mind<-apply(M_clust,1,majority_indice)  
+    cont<-mean(mind/P)
+    within_error_hard<-c(within_error_hard,mean((M-cl$centers[cl$cluster,])^2))
+    
+    if((cont<vote.index|| min(table(mv))<(ceiling(((T)^2/P))+1)) & k>2){indic="stop"}else{
+      aM_clust<-M_clust
+      amv<-mv
+      amind<-mind
+      acont<-cont
+      acl<-cl
+    }
+    
+  }
+  
+  prop.clust<-rep(0,nrow(M))
+  Amv<-rep(amv,P)
+  
+  for(kk in 1:nrow(M)){
+    
+    prop.clust[kk]<-acl$member[kk,Amv[kk]]
+    
+    
+  }
+  
+  
+  within_error_hard<-within_error_hard[-length(within_error_hard)]
+  prop.matrix<-matrix(prop.clust,nrow(M1),P)
+  k<-k-1
+  cl <- mfuzz(M_exp, c = k,m=m_max)
+  plot(2:(length(within_error_hard)+1),within_error_hard)
+  
+  
+  
+  
+  if(k<9){
+    mfuzz.plot(M_exp,cl=cl,mfrow=c(1,k))
+  }else{
+    mfuzz.plot(M_exp,cl=cl,mfrow=c(ceiling(sqrt(k)),ceiling(sqrt(k))))
+  }
+  
+  
+  return(list(data.frame(name=microarray@name,cluster=amv,maj.vote.index=amind),prop.matrix=prop.matrix))
+  
+  
+}  

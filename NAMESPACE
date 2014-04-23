@@ -20,7 +20,9 @@ exportMethods(
     "summary",
     "unionMicro",
 #    "unionNGseq",
-    "gene_expr_simulation"
+    "gene_expr_simulation",
+    "clustInference",
+    "clustExploration"
 )
 
 exportClasses(
@@ -37,4 +39,4 @@ export("network_random",
        "unsupervised_clustering",
        "as.micro_array",
        #"as.nextgen_seq",
-       "compare","replaceBand","replaceUp","replaceDown","CascadeFshape","CascadeFinit","majority_vote")
+       "compare","replaceBand","replaceUp","replaceDown","CascadeFshape","CascadeFinit")

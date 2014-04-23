@@ -14,6 +14,9 @@ setGeneric("analyze_network",package="Patterns",def = function(Omega,nv,...){sta
 setGeneric("predict",package="Patterns",def = function(object,...){standardGeneric("predict")})
 setGeneric("gene_expr_simulation",def = function(network,...){standardGeneric("gene_expr_simulation")})
 setGeneric("gene_counts_simulation",def = function(network,...){standardGeneric("gene_counts_simulation")})
+setGeneric("clustExploration",def = function(microarray){standardGeneric("clustExploration")})
+setGeneric("clustInference",def = function(microarray,vote.index){standardGeneric("clustInference")})
+
 
 as.micro_array<-function(M,time,subject){
   if(is.null(row.names(M))){row.names(M)<-paste("gene",1:dim(M)[1])}
@@ -264,3 +267,7 @@ majority_vote<-function(x){
   which.max(tabulate(x))
 }  
 
+majority_indice<-function(x){
+  
+  max(tabulate(x))
+}    
