@@ -31,9 +31,9 @@ as.nextgen_seq<-function(C,time,subject){
 
 lasso_reg<-function(M,Y,K,eps){
   require(lars)
-  cvlars<-try(cv.lars(t(M),(Y),intercept=FALSE,K=K,plot.it=FALSE,eps=10^-5))
+  cvlars<-try(cv.lars(t(M),(Y),intercept=FALSE,K=K,plot.it=FALSE,eps=10^-5,use.Gram=FALSE))
   n<-try(cvlars$index[which.min(cvlars$cv)+max(1,which.min(cvlars$cv[which.min(cvlars$cv):length(cvlars$cv)]<=min(cvlars$cv)+cvlars$cv.error[which.min(cvlars$cv)])-1)-1])
-  model<-try(lars(t(M),(Y),intercept=FALSE,eps=10^-5))
+  model<-try(lars(t(M),(Y),intercept=FALSE,eps=10^-5,use.Gram=FALSE))
   repu<-try(coef(model,s=n,mode="fraction"))
   if(!is.vector(repu)){repu<-rep(0,dim(M)[1])}
   return(repu)
@@ -271,3 +271,143 @@ majority_indice<-function(x){
   
   max(tabulate(x))
 }    
+
+
+
+boost<-function(X,Y,corr=0.8,B=100,normalize=TRUE,eps=10^(-4)){
+  func<-"selec_meth"
+  selec_meth<-function(X,Y){
+    
+    N<-dim(X)[1]      
+    modd<-lars(X,Y)
+    tau2<-var(Y)
+    index<-which.min(N * log(2 * pi * tau2) + apply((predict(modd,newx=X)$fit-Y)^2,2,sum)/tau2 + log(N) * (apply(predict(modd,type="coef")$coef!=0,1,sum)+1))
+    predict(modd,s=index,type="coef")$coefficients
+    
+  }
+    group<-function(X,c0){
+      
+      Xcor<-abs(cor(X))
+      Xcor[Xcor<c0]<-0
+      Xcor[Xcor!=0]<-1
+      
+      dete<-function(x){which(x == 1)}
+      res<-apply(Xcor,2,dete)
+      return(res)
+      
+      
+    }
+  
+  
+  group2<-function(x)group(x,1)
+  
+  
+  #require(snowfall)
+  #require(lars)
+  
+  
+  #if(multi==FALSE){
+  #if(cpu>1){
+  #sfInit( parallel=TRUE, cpus=cpu )
+  #}else{
+  #sfInit( parallel=FALSE, cpus=cpu )	
+  #	}
+  #sfLibrary(movMF)
+  #sfLibrary(lars)
+  #sfLibrary(msgps)
+  
+  require(movMF)
+  require(lars)
+  require(msgps)
+  
+  #sfLibrary(snowfall)}
+  
+  if(normalize==TRUE){
+    
+    X<-X-matrix(rep(apply(X,2,mean),dim(X)[1]),dim(X)[1],dim(X)[2],byrow=TRUE)	
+    X<-t(t(X)/sqrt(diag(t(X)%*%X)))
+    
+  }
+  
+  Correlation_matrice<-t(X)%*%X
+  Correlation_indice<-Correlation_matrice*0	
+  Correlation_indice[which((Correlation_matrice)>=0)]<-1		
+  Correlation_indice[which(-(Correlation_matrice)>=0)]<--1	
+  diag(Correlation_indice)<-1
+  
+  groups<-group2(X)
+  
+  #nb_correlated_variables<-apply(abs(Correlation_indice),2,sum)
+  #		#cat("Number of correlated variables : \n")
+  
+  
+  Boot<-matrix(rep(0,dim(X)[2]*B),B,dim(X)[2])
+  
+  func_passage1<-function(x){
+    
+    Xpass<-matrix(0,dim(X)[1],dim(X)[1]-1)
+    Xpass[col(Xpass)>row(Xpass)]<-1
+    diag(Xpass)<-1
+    Xpass[col(Xpass)==(row(Xpass)-1)]<--(1:(dim(X)[1]-1))
+    Xpass<-t(t(Xpass)/sqrt(diag(t(Xpass)%*%Xpass)))
+    return(solve(t(Xpass)%*%Xpass)%*%t(Xpass)%*%x)
+  }	
+  
+  func_passage2<-function(x){
+    
+    Xpass<-matrix(0,dim(X)[1],dim(X)[1]-1)
+    Xpass[col(Xpass)>row(Xpass)]<-1
+    diag(Xpass)<-1
+    Xpass[col(Xpass)==(row(Xpass)-1)]<--(1:(dim(X)[1]-1))
+    Xpass<-t(t(Xpass)/sqrt(diag(t(Xpass)%*%Xpass)))
+    return(apply( matrix(rep(x,dim(X)[1]),dim(X)[1],dim(X)[1]-1,byrow=TRUE)*Xpass,1,sum))
+  }
+  
+  Xret<-array(0,c(dim(X)[1],dim(X)[2],B))
+  Xb<-X
+  
+  
+  
+  simul1<-function(j){
+    
+    if(length(groups[[j]])>=2){
+      
+      indice<-groups[[j]]
+      corr_set<-t(t(X[,indice])*Correlation_indice[j,indice])
+      corr_set2<-apply(corr_set,2,func_passage1)
+      BB<-coef(movMF(t(corr_set2),1))$theta
+      newv<-rmovMF(1,BB)
+      newv<-func_passage2(newv)
+    }else{
+      
+      newv<-X[,j]
+      
+    }
+    
+    
+    return(newv)			
+  }
+  
+  simul1<-Vectorize(simul1)
+  
+  simul2<-function(){simul1(1:(dim(X)[2]))}
+  
+  Xret<-replicate(B,simul2())
+  
+  
+  select<-function(k){
+    rr<-eval(parse(text=paste(func,"(Xret[,,",k,"],Y)",sep="")))
+    
+    return(rr)	
+  }
+  
+  
+  Boot<-lapply(1:B,select)
+  
+  Boot<-matrix(unlist(Boot),B,dim(X)[2],byrow=TRUE)
+  
+  Fs<-apply(abs(Boot)>eps,2,sum)
+  
+  
+  return(Fs/B)
+}

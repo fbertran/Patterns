@@ -196,8 +196,7 @@ setMethod(f="inference"
             # pour la cross validation
             if(is.null(nb.folds)){
               K<-sqF-1
-            }
-            else{
+            }            else{
               K<-nb.folds
             }
             
@@ -288,7 +287,7 @@ setMethod(f="inference"
             }
             
             #L'algorithme commence ici
-            while(tour<= tour.max && convO[length(convO)]>conv){ 
+            while((tour<= tour.max && convO[length(convO)]>conv) || tour<=2){ 
               #Condition d'arret : soit nombre de tour max atteint, 
               #soit la convergence de la matrice Omega est suffisante
               
@@ -461,7 +460,51 @@ setMethod(f="inference"
                   }
                 }
                 
-              } 
+                if(fitfun=="stability"){
+                  require(c060)
+                  
+                  fun_stab<-function(g){
+                    if(sum(pred)==0){
+                      return(rep(0,nrow(pred)))
+                                     
+                    }else{
+                  essai<-stabpath(g,t(pred))  
+                  varii<-stabsel(essai)$stable
+                  lambda<-stabsel(essai)$lambda
+                  L<-lars(t(pred),g)
+                
+                  LL<-predict(L,s=lambda,mode="lambda",type="coef")$coefficients
+                  LL[-varii]<-0
+                  return(LL)
+                  }
+                  }
+                
+                Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_stab)
+                }
+                if(fitfun=="robust"){
+                  require(movMF)
+                  require(lars)
+                  require(msgps)
+                  fun_robust<-function(g){
+                    if(sum(pred)==0){
+                      return(rep(0,nrow(pred)))
+                      
+                    }else{
+                      essai<-boost(t(pred)+rnorm(prod(dim(pred)),0,0.001),g)  
+                      varii<-which(essai==1)
+                      lambda<-0
+                      L<-lars(t(pred),g)
+                      
+                      LL<-predict(L,s=lambda,mode="lambda",type="coef")$coefficients
+                      LL[-varii]<-0
+                      return(LL)
+                    }
+                  }
+                  
+                  Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_robust)
+                  
+                }  
+              }
               #fin de la boucle for avec pic ; 
               #la matrice omega est inferee
               
@@ -585,6 +628,13 @@ setMethod(f="inference"
                 }
               } 
               #fin de la boucle pic
+              
+              if(tour==1 && type.inf=="noniterative"){
+                Omega<-Omega*0 
+                #Tous les pr?dicteurs sont remis egaux a 0
+                # dans le cadre de l'inf?rence non iterative
+              }
+              
               
               if( type.inf=="iterative"){
                 F<-(g(tour)*F+sauvF)/(1+g(tour))

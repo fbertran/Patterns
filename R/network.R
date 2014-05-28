@@ -1,9 +1,6 @@
-
-
 setClass(Class = "network",
          representation(network="matrix",name="vector",F="array",convF="matrix",convO="vector",time_pt="vector")
 )
-
 
 
 setMethod("print","network",function(x,...){

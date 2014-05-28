@@ -733,7 +733,12 @@ setMethod(f="geneSelection",
                 K1[i,]<-apply(K1[seq(i,ncol(K1),by=Time),],1,f.asso)
               }
             }
+            if(sum(dim(K1)==dim(K2))==2){
             MM1<-K2 -K1
+            }else{
+              warning("The number of patient is not equal. This function returns the stimulated expression (instead of log fold change)")
+              MM1<-K2
+            }
             
             if(contrast[[1]]=="patterns"){
               
@@ -989,7 +994,7 @@ setMethod(f="clustExploration",
   }
   k<-k-1
   cl <- mfuzz(M_exp, c = k,m=m_max)
-  if(k<9){
+  if(k<5){
     mfuzz.plot(M_exp,cl=cl,mfrow=c(1,k))
   }else{
     mfuzz.plot(M_exp,cl=cl,mfrow=c(ceiling(sqrt(k)),ceiling(sqrt(k))))
@@ -1087,7 +1092,7 @@ setMethod(f="clustInference",
   
   
   
-  if(k<9){
+  if(k<5){
     mfuzz.plot(M_exp,cl=cl,mfrow=c(1,k))
   }else{
     mfuzz.plot(M_exp,cl=cl,mfrow=c(ceiling(sqrt(k)),ceiling(sqrt(k))))
@@ -1098,3 +1103,4 @@ setMethod(f="clustInference",
   
   
 }  
+)
