@@ -1,7 +1,7 @@
 setClass(Class = "micro_array",
          representation(microarray="matrix",                        
                         name="vector",
-                        gene_ID="vector"
+                        gene_ID="vector",
                         group=c("vector",NULL),
                         start_time=c("vector",NULL),
                         time=c("vector",NULL),
@@ -58,6 +58,10 @@ setMethod("head","micro_array",function(x,...)
   cat("Vector of names :")
   cat("\n")
   print(head(x@name))
+  cat("...")
+  cat("Vector of geneID :")
+  cat("\n")
+  print(head(x@gene_ID))
   cat("...")
   cat("\n")
   cat("Vector of group :")

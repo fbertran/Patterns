@@ -18,9 +18,18 @@ setGeneric("clustExploration",def = function(microarray){standardGeneric("clustE
 setGeneric("clustInference",def = function(microarray,vote.index){standardGeneric("clustInference")})
 
 
-as.micro_array<-function(M,time,subject){
+as.micro_array<-function(M,time,subject,name_probe=NULL,gene_ID=NULL){
   if(is.null(row.names(M))){row.names(M)<-paste("gene",1:dim(M)[1])}
-  return(new("micro_array",microarray=as.matrix(M),name=row.names(M),time=time,subject=subject,group=0,start_time=0))	
+  if(!is.null(name_probe)){row.names(M)<-name_probe}
+     g<-0
+     if(!is.null(gene_ID)) g<-gene_ID
+  return(new("micro_array",microarray=as.matrix(M),
+             name=row.names(M),
+             gene_ID=g,
+             time=time,
+             subject=subject,
+             group=0,
+             start_time=0))	
 }
 
 as.nextgen_seq<-function(C,time,subject){
