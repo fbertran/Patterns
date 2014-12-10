@@ -16,7 +16,7 @@ setGeneric("gene_expr_simulation",def = function(network,...){standardGeneric("g
 setGeneric("gene_counts_simulation",def = function(network,...){standardGeneric("gene_counts_simulation")})
 setGeneric("clustExploration",def = function(microarray){standardGeneric("clustExploration")})
 setGeneric("clustInference",def = function(microarray,vote.index){standardGeneric("clustInference")})
-setGeneric("probeMerge",def = function(microarray,...){standardGeneric("probeMerge")})
+setGeneric("probeMerge",def = function(x,...){standardGeneric("probeMerge")})
 
 
 
