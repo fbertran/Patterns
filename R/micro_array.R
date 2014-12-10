@@ -188,6 +188,26 @@ setMethod("plot","micro_array",function(x,y,...)
 )
 
 
+setMethod("probeMerge","micro_array",function(x)
+{
+  probeID<-x@name
+  geneID<-x@geneID
+  M<-x@microarray
+  
+  selection<-collapseRows(datET=M,rowGroup=geneID,rowID=probeID,...)
+  
+  M1<-new("micro_array"
+          ,microarray=selection$datETcollapsed
+          ,name=selection$group2row$selectedRowID
+          ,geneID=selection$group2row$group
+          ,time=x@time
+          ,subject=x@subject
+          ,group=x@group[selection$selectedRow]
+          ,start_time=x@start_time[selection$selectedRow])
+  return(M1)
+})
+
+
 setMethod(f="unsupervised_clustering_auto_m_c", 	
           signature=c("micro_array"),
           definition=function(M1,clust=NULL,mestim=NULL,M2=NULL,data_log=TRUE,screen=NULL,crange=NULL,repeats=NULL,cselect=TRUE,dminimum=FALSE){
