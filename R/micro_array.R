@@ -764,7 +764,7 @@ setMethod(f="geneSelection",
               }
             }
             if(sum(dim(K1)==dim(K2))==2){
-            MM1<-K2 -K1
+            MM1<-K2 #-K1
             }else{
               warning("The number of patient is not equal. This function returns the stimulated expression (instead of log fold change)")
               MM1<-K2
@@ -781,7 +781,16 @@ setMethod(f="geneSelection",
               group=rep(0,nb.ret)
             }
             
-            M<-new("micro_array",microarray=MM1,name=row.names(MM1),time=M[[contrast[[2]][2]]]@time,subject=Subj,group=group,start_time=group)
+            head(x[[1]])
+            if(length(x[[1]]@gene_ID>2)&length(x[[1]]@name>2)){
+            azert<-cbind(x[[1]]@name,x[[1]]@gene_ID)
+            row.names(azert)<-x[[1]]@name
+            head(azert)
+            gene_ID<-azert[x[[1]]@name,2]
+            }else{
+              gene_ID<-0
+            }
+            M<-new("micro_array",microarray=MM1,name=row.names(MM1),gene_ID=gene_ID,time=M[[contrast[[2]][2]]]@time,subject=Subj,group=group,start_time=group)
             
             
             return(M)

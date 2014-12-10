@@ -21,8 +21,6 @@ m_agg_US<-as.micro_array(agg_US,c(60,90,210,390),5,name=CLL[,2],gene_ID=CLL[,1])
 m_agg_S<- as.micro_array(agg_S,c(60,90,210,390),5,name=CLL[,2],gene_ID=CLL[,1])
 
 
-
-
-geneSelection()
-
-
+selection<-geneSelection(list(m_agg_US,m_agg_S),list("condition",c(1,2)),-1)
+head(selection)
+print(selection)
