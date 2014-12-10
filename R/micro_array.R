@@ -1,5 +1,11 @@
 setClass(Class = "micro_array",
-         representation(microarray="matrix",name="vector",group=c("vector",NULL),start_time=c("vector",NULL),time=c("vector",NULL),subject="numeric"),
+         representation(microarray="matrix",                        
+                        name="vector",
+                        gene_ID="vector"
+                        group=c("vector",NULL),
+                        start_time=c("vector",NULL),
+                        time=c("vector",NULL),
+                        subject="numeric"),
          prototype = prototype(group = 0,start_time=0),
          validity=function(object){
            
