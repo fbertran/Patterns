@@ -27,8 +27,4 @@ print(selection)
 
 
 
-azerty
-
-
-b
 
