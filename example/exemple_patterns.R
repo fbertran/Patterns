@@ -5,8 +5,6 @@
 
 data(CLL)
 
-bla 
-
 hea_US<-CLL[,which((1:48)%%8<5&(1:48)%%8>0)+2]
 hea_S<-CLL[,which(!((1:48)%%8<5&(1:48)%%8>0))+2]
 
@@ -22,7 +20,6 @@ m_agg_S<- as.micro_array(agg_S,c(60,90,210,390),5,name=CLL[,2],gene_ID=CLL[,1])
 selection<-geneSelection(list(m_agg_US,m_agg_S),list("condition",c(1,2)),-1)
 head(selection)
 print(selection)
-kfesfl
 
-hahahahahaha
 
+PM<-probeMerge(selection)
