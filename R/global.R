@@ -16,20 +16,13 @@ setGeneric("gene_expr_simulation",def = function(network,...){standardGeneric("g
 setGeneric("gene_counts_simulation",def = function(network,...){standardGeneric("gene_counts_simulation")})
 setGeneric("clustExploration",def = function(microarray){standardGeneric("clustExploration")})
 setGeneric("clustInference",def = function(microarray,vote.index){standardGeneric("clustInference")})
+setGeneric("probeMerge",def = function(microarray,...){standardGeneric("probeMerge")})
 
 
-as.micro_array<-function(M,time,subject,name_probe=NULL,gene_ID=NULL){
+
+as.micro_array<-function(M,time,subject){
   if(is.null(row.names(M))){row.names(M)<-paste("gene",1:dim(M)[1])}
-  if(!is.null(name_probe)){row.names(M)<-name_probe}
-     g<-0
-     if(!is.null(gene_ID)) g<-gene_ID
-  return(new("micro_array",microarray=as.matrix(M),
-             name=row.names(M),
-             gene_ID=g,
-             time=time,
-             subject=subject,
-             group=0,
-             start_time=0))	
+  return(new("micro_array",microarray=as.matrix(M),name=row.names(M),time=time,subject=subject,group=0,start_time=0))	
 }
 
 as.nextgen_seq<-function(C,time,subject){
