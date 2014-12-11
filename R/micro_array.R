@@ -87,7 +87,7 @@ setMethod("head","micro_array",function(x,...)
 
 setMethod("print","micro_array",function(x,...)
 {
-  cat(paste("This is a micro_array S4 class. It contains : \n - (@microarray) a matrix of dimension ",dim(x@microarray)[1],"*",dim(x@microarray)[2],"\n          .... [gene expressions] \n - (@name) a vector of length ",length(x@name)," .... [gene names] \n","- (@group) a vector of length ",length(x@group)," .... [groups for genes] \n","- (@start_time) a vector of length ",length(x@start_time),"\n          .... [first differential expression for genes] \n","- (@time)a vector of length ",length(x@time)," .... [time points]\n","- (@subject) an integer  .... [number of subject]")) 	
+  cat(paste("This is a micro_array S4 class. It contains : \n - (@microarray) a matrix of dimension ",dim(x@microarray)[1],"*",dim(x@microarray)[2],"\n          .... [gene expressions] \n - (@name) a vector of length ",length(x@name)," .... [gene names (or probesets)] \n","\n - (@gene_ID) a vector of length ",length(x@gene_ID)," .... [gene ID] \n","- (@group) a vector of length ",length(x@group)," .... [groups for genes] \n","- (@start_time) a vector of length ",length(x@start_time),"\n          .... [first differential expression for genes] \n","- (@time)a vector of length ",length(x@time)," .... [time points]\n","- (@subject) an integer  .... [number of subject]")) 	
 })
 
 
