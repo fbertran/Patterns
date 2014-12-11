@@ -188,7 +188,7 @@ setMethod("plot","micro_array",function(x,y,...)
 )
 
 
-setMethod("probeMerge","micro_array",function(x)
+setMethod("probeMerge","micro_array",function(x,...)
 {
   
   require(WGCNA)
