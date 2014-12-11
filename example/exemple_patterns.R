@@ -33,7 +33,6 @@ save.image("travail.RData")
 
 
 
-
 #
 
 n<-80
