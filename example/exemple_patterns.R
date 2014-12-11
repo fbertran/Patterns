@@ -5,8 +5,6 @@
 
 data(CLL)
 
-bla 
-
 hea_US<-CLL[,which((1:48)%%8<5&(1:48)%%8>0)+2]
 hea_S<-CLL[,which(!((1:48)%%8<5&(1:48)%%8>0))+2]
 
@@ -24,3 +22,4 @@ head(selection)
 print(selection)
 
 
+PM<-probeMerge(selection)

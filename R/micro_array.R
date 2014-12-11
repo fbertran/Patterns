@@ -191,7 +191,7 @@ setMethod("plot","micro_array",function(x,y,...)
 setMethod("probeMerge","micro_array",function(x)
 {
   probeID<-x@name
-  geneID<-x@geneID
+  geneID<-x@gene_ID
   M<-x@microarray
   
   selection<-collapseRows(datET=M,rowGroup=geneID,rowID=probeID,...)
@@ -199,7 +199,7 @@ setMethod("probeMerge","micro_array",function(x)
   M1<-new("micro_array"
           ,microarray=selection$datETcollapsed
           ,name=selection$group2row$selectedRowID
-          ,geneID=selection$group2row$group
+          ,gene_ID=selection$group2row$group
           ,time=x@time
           ,subject=x@subject
           ,group=x@group[selection$selectedRow]
