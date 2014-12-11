@@ -21,5 +21,13 @@ selection<-geneSelection(list(m_agg_US,m_agg_S),list("condition",c(1,2)),-1)
 head(selection)
 print(selection)
 
+save.image("travail.RData")
 
+
+
+
+#
+
+data(travail)
 PM<-probeMerge(selection)
+

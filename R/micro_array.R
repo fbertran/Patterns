@@ -786,7 +786,7 @@ setMethod(f="geneSelection",
             azert<-cbind(x[[1]]@name,x[[1]]@gene_ID)
             row.names(azert)<-x[[1]]@name
             head(azert)
-            gene_ID<-azert[x[[1]]@name,2]
+            gene_ID<-azert[row.names(MM1),2]
             }else{
               gene_ID<-0
             }
