@@ -190,25 +190,23 @@ setMethod("plot","micro_array",function(x,y,...)
 
 setMethod("probeMerge","micro_array",function(x,...)
 {
-  
-  require(WGCNA)
+  library(WGCNA)
   probeID<-x@name
   geneID<-x@gene_ID
   M<-x@microarray
   
-  selection<-collapseRows(datET=M,rowGroup=geneID,rowID=probeID,...)
+  selec<-collapseRows(datET=M,rowGroup=geneID,rowID=probeID,...)
   
   M1<-new("micro_array"
-          ,microarray=selection$datETcollapsed
-          ,name=selection$group2row$selectedRowID
-          ,gene_ID=selection$group2row$group
+          ,microarray=selec$datETcollapsed
+          ,name=selec$group2row$selectedRowID
+          ,gene_ID=selec$group2row$group
           ,time=x@time
           ,subject=x@subject
-          ,group=x@group[selection$selectedRow]
-          ,start_time=x@start_time[selection$selectedRow])
+          ,group=x@group[selec$selectedRow]
+          ,start_time=x@start_time[selec$selectedRow])
   return(M1)
 })
-
 
 setMethod(f="unsupervised_clustering_auto_m_c", 	
           signature=c("micro_array"),
