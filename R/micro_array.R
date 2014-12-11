@@ -190,6 +190,8 @@ setMethod("plot","micro_array",function(x,y,...)
 
 setMethod("probeMerge","micro_array",function(x)
 {
+  
+  require(WGCNA)
   probeID<-x@name
   geneID<-x@gene_ID
   M<-x@microarray
