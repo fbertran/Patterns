@@ -13,6 +13,7 @@ exportMethods(
     "geneSelection",
     "head",
     "inference",
+    "probeMerge",
     "plot",
     "position",
     "predict",
