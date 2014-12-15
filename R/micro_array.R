@@ -753,8 +753,8 @@ setMethod(f="geneSelection",
               p.val.all<-p.val.all[1:nb.ret,]
               
               
-              K1<-M_mic[[contrast[[2]][1]]][p.val.all$ID,]
-              K2<-M_mic[[contrast[[2]][2]]][p.val.all$ID,]
+              K1<-M_mic[[contrast[[2]][1]]][as.character(p.val.all$ID),]
+              K2<-M_mic[[contrast[[2]][2]]][as.character(p.val.all$ID),]
             }
             
             
