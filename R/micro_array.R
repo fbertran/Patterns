@@ -195,12 +195,15 @@ setMethod("probeMerge","micro_array",function(x,...)
   geneID<-x@gene_ID
   M<-x@microarray
   
+  NAsPositions<-which(is.na(geneID))
+  geneID[NAsPositions]<-paste("Unknown",1:length(NAsPositions))
+  
   selec<-collapseRows(datET=M,rowGroup=geneID,rowID=probeID,...)
   
   M1<-new("micro_array"
           ,microarray=selec$datETcollapsed
-          ,name=selec$group2row$selectedRowID
-          ,gene_ID=selec$group2row$group
+          ,name=selec$group2row[,2]
+          ,gene_ID=selec$group2row[,1]
           ,time=x@time
           ,subject=x@subject
           ,group=x@group[selec$selectedRow]
