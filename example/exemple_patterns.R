@@ -26,6 +26,12 @@ m_hea_S<- as.micro_array(hea_S,c(60,90,210,390),6,name=CLL[,1],gene_ID=CLL[,2])
 m_agg_US<-as.micro_array((agg_US),c(60,90,210,390),5,name=CLL[,1],gene_ID=CLL[,2])
 m_agg_S<- as.micro_array((agg_S),c(60,90,210,390),5,name=CLL[,1],gene_ID=CLL[,2])
 
+
+#regard sur EGR1
+
+matplot(t(agg_S[which(CLL[,2] %in% "EGR1"),]/agg_US[which(CLL[,2] %in% "EGR1"),]),type="l",lty=1)
+
+
 selection1<-geneSelection(list(m_agg_US,m_agg_S),list("condition&time",c(1,2),c(1,1)),-1,alpha=0.1)
 selection2<-geneSelection(list(m_agg_US,m_agg_S),list("condition&time",c(1,2),c(1,1)+1),-1,alpha=0.1)
 selection3<-geneSelection(list(m_agg_US,m_agg_S),list("condition&time",c(1,2),c(1,1)+2),-1,alpha=0.05)
@@ -72,16 +78,16 @@ TFi<-function(x) length(which(TF %in% x))
 
 
 
-n<-80
+n<-10
 kre<-kmeans(selection@microarray,n)
 kre
-lll<-split(selection@name,kre$cluster)
+lll<-split(selection@gene_ID,kre$cluster)
 
-
-require("clusterProfiler")
-require("AnnotationFuncs")
-require(org.Hs.eg.db)
 require(DCGL)
+require("clusterProfiler")
+library("AnnotationFuncs")
+require(org.Hs.eg.db)
+
 pp<-list()
 
 for(k in 1:n){
@@ -96,9 +102,14 @@ pp[[k]]<-translate(lll[[k]],from=org.Hs.egSYMBOL2EG,simplify=TRUE)
 names(pp)<-paste("X",1:n,sep="")
 test<-compareCluster(pp,fun="enrichGO", organism="human", pvalueCutoff=0.15)
 
+
+test2<-enrichGO(translate(selection@gene_ID[tfs],from=org.Hs.egSYMBOL2EG,simplify=TRUE), organism = "human", ont = "MF", pvalueCutoff = 0.05,
+                          pAdjustMethod = "BH", qvalueCutoff = 0.2, minGSSize = 5,
+                          readable = FALSE)
+
 plot(test)
 
-
+translate(lll[[k]],from=org.Hs.egSYMBOL2EG,simplify=TRUE)
 
 
 
