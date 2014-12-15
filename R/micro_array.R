@@ -940,7 +940,8 @@ setMethod(f="unionMicro",
             nom2<-rownames(M2@microarray)
             corres<-cbind(c(M1@name,M2@name),c(nom1,nom2))
             corres<-unique(unique(corres,MARGIN=2))
-            
+            corres2<-cbind(c(M1@gene_ID,M2@gene_ID),c(nom1,nom2))
+            corres2<-unique(unique(corres2,MARGIN=2))
             NOM<-unique(c(nom1,nom2))
             n<-length(NOM)
             m1<-M1@microarray[which(nom1 %in% NOM),]
@@ -954,7 +955,7 @@ setMethod(f="unionMicro",
             str1<-M1@start_time[which(nom1 %in% NOM)]
             str2<-M2@start_time[which(nom2 %in% NOM2)]
             str<-c(str1,str2)
-            rep<-new("micro_array",microarray=M,name=corres[,1],time=M1@time,subject=M1@subject,group=gr,start_time=str)
+            rep<-new("micro_array",microarray=M,name=corres[,1],gene_ID=corres2[,1],time=M1@time,subject=M1@subject,group=gr,start_time=str)
             return(rep)
           }
           

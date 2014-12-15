@@ -2,7 +2,7 @@
 
 #Exemple d'utilisation de patterns
 
-
+###############################
 data(CLL)
 
 require(biomaRt)
@@ -20,21 +20,57 @@ hea_S<-CLL[,which(!((1:48)%%8<5&(1:48)%%8>0))+2]
 agg_US<-CLL[,which((1:40)%%8<5&(1:40)%%8>0)+98]
 agg_S<-CLL[,which(!((1:40)%%8<5&(1:40)%%8>0))+98]
 
-m_hea_US<-as.micro_array(hea_US,c(60,90,210,390),6,name=CLL[,2],gene_ID=CLL[,1])
-m_hea_S<- as.micro_array(hea_S,c(60,90,210,390),6,name=CLL[,2],gene_ID=CLL[,1])
+m_hea_US<-as.micro_array(hea_US,c(60,90,210,390),6,name=CLL[,1],gene_ID=CLL[,2])
+m_hea_S<- as.micro_array(hea_S,c(60,90,210,390),6,name=CLL[,1],gene_ID=CLL[,2])
   
-m_agg_US<-as.micro_array(agg_US,c(60,90,210,390),5,name=CLL[,2],gene_ID=CLL[,1])
-m_agg_S<- as.micro_array(agg_S,c(60,90,210,390),5,name=CLL[,2],gene_ID=CLL[,1])
+m_agg_US<-as.micro_array((agg_US),c(60,90,210,390),5,name=CLL[,1],gene_ID=CLL[,2])
+m_agg_S<- as.micro_array((agg_S),c(60,90,210,390),5,name=CLL[,1],gene_ID=CLL[,2])
 
-selection<-geneSelection(list(m_agg_US,m_agg_S),list("condition",c(1,2)),-1,alpha=0.1)
+selection1<-geneSelection(list(m_agg_US,m_agg_S),list("condition&time",c(1,2),c(1,1)),-1,alpha=0.1)
+selection2<-geneSelection(list(m_agg_US,m_agg_S),list("condition&time",c(1,2),c(1,1)+1),-1,alpha=0.1)
+selection3<-geneSelection(list(m_agg_US,m_agg_S),list("condition&time",c(1,2),c(1,1)+2),-1,alpha=0.05)
+selection4<-geneSelection(list(m_agg_US,m_agg_S),list("condition&time",c(1,2),c(1,1)+3),-1,alpha=0.05)
 
-print(selection)
+selection<-unionMicro(list(selection1,selection2,selection3,selection4))
+
 length(selection@gene_ID)
-save.image("travail.RData")
+save(list=c("selection","infos"),file="travail.RData")
+
+################################################################
 
 
 
-#
+require(biomaRt)
+data(travail)
+
+
+#################################################################
+
+#Etude des facteurs de transcription
+
+
+library(XML)
+
+doc <- readHTMLTable(
+  doc=htmlParse("http://www.bioguo.org/AnimalTFDB/BrowseAllTF.php?spe=Homo_sapiens",encoding = "UTF-8")
+)
+
+TF<-unique(as.character(doc[[5]][,4]))
+TF<-TF[order(TF)]
+TF<-TF[-1]
+
+
+#TF contient la liste des gene ID des FT
+
+tfs<-which(selection@gene_ID %in% TF)
+
+matplot(t(selection@microarray[tfs,]),type="l",lty=1)
+kk<-kmeans((selection@microarray[tfs,]),10)
+matplot(t(kk$centers),type="l",lty=1)
+
+TFi<-function(x) length(which(TF %in% x))
+
+
 
 n<-80
 kre<-kmeans(selection@microarray,n)
@@ -64,17 +100,7 @@ plot(test)
 
 
 
-library(XML)
 
-doc <- readHTMLTable(
-  doc=htmlParse("http://www.bioguo.org/AnimalTFDB/BrowseAllTF.php?spe=Homo_sapiens",encoding = "UTF-8")
-)
-
-TF<-unique(as.character(doc[[5]][,3]))
-TF<-TF[order(TF)]
-TF<-TF[-1]
-
-TFi<-function(x) length(which(TF %in% x))
 
 
 TFu<-(unlist(lapply(pp,TFi)))
