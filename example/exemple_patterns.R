@@ -29,7 +29,7 @@ m_agg_S<- as.micro_array((agg_S),c(60,90,210,390),5,name=CLL[,1],gene_ID=CLL[,2]
 
 #regard sur EGR1
 
-matplot(t(agg_S[which(CLL[,2] %in% "EGR1"),]/agg_US[which(CLL[,2] %in% "EGR1"),]),type="l",lty=1)
+matplot(t(log(agg_S[which(CLL[,2] %in% "EGR1"),])),type="l",lty=1)
 
 
 selection1<-geneSelection(list(m_agg_US,m_agg_S),list("condition&time",c(1,2),c(1,1)),-1,alpha=0.1)
@@ -74,18 +74,56 @@ matplot(t(selection@microarray[tfs,]),type="l",lty=1)
 kk<-kmeans((selection@microarray[tfs,]),10)
 matplot(t(kk$centers),type="l",lty=1)
 
+
+
+#etude des genes non selectionnes qui sont FT
+
+indice<-which(CLL[,2] %in% TF[tfs<-which(! TF %in% selection@gene_ID)])
+a<-1:200
+matplot(log(t(agg_S[indice[a],]/agg_US[indice[a],])),lty=1,type="l")
+kkk<-kmeans(log((agg_S[indice,]/agg_US[indice,])),10)
+matplot(t(kkk$centers),type="l",lty=1)
+
+poi<-indice[which(kkk$cluster==2 )]
+matmat<-log((agg_S[poi,]/agg_US[poi,]))
+
+addna<-function(mat,t,p){
+
+
+  mat2<-mat[,1:t]
+  for(i in 2:p){
+    print(1:t+(i-1)*t)
+    mat2<-cbind(mat2,rep(NA,nrow(mat2)),mat[,1:t+(i-1)*t])
+  }
+  return(mat2)
+}
+
+pdf("forgotten_TF.pdf",width=15,height=5)
+for(i in 1:15){
+poi<-indice[which(kkk$cluster==i )]
+if(length(poi)>2){
+matmat<-log((agg_S[poi,]/agg_US[poi,]))
+#matplot(t(matmat),lty=1,type="l")
+matplot(t(addna(matmat,4,5)),lty=1,type="l")}
+}
+dev.off()
+abline(v=c(2,6,10,14,18))
+
+
+poi<-indice[which(kkk$cluster==1 )]
+matplot(log(t(agg_S[poi,]/agg_US[poi,])),lty=1,type="l")
 TFi<-function(x) length(which(TF %in% x))
 
 
 
-n<-10
+n<-40
 kre<-kmeans(selection@microarray,n)
 kre
 lll<-split(selection@gene_ID,kre$cluster)
 
 require(DCGL)
 require("clusterProfiler")
-library("AnnotationFuncs")
+require("AnnotationFuncs")
 require(org.Hs.eg.db)
 
 pp<-list()
@@ -100,12 +138,8 @@ pp[[k]]<-translate(lll[[k]],from=org.Hs.egSYMBOL2EG,simplify=TRUE)
 }
 
 names(pp)<-paste("X",1:n,sep="")
-test<-compareCluster(pp,fun="enrichGO", organism="human", pvalueCutoff=0.15)
+test<-compareCluster(pp,fun="enrichGO", organism="human", pvalueCutoff=0.05)
 
-
-test2<-enrichGO(translate(selection@gene_ID[tfs],from=org.Hs.egSYMBOL2EG,simplify=TRUE), organism = "human", ont = "MF", pvalueCutoff = 0.05,
-                          pAdjustMethod = "BH", qvalueCutoff = 0.2, minGSSize = 5,
-                          readable = FALSE)
 
 plot(test)
 
