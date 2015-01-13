@@ -309,6 +309,8 @@ setMethod(f="geneSelection",
           signature=c("micro_array","micro_array","numeric"),
           definition=function(x,y,tot.number,data_log=TRUE,wanted.patterns=NULL,forbidden.patterns=NULL,pic=NULL,alpha=0.05,Design=NULL,lfc=0){
             
+            
+            warnings("The use of the geneSelection with signature c(micro_array,micro_array) is depreciated",immediate. =TRUE)
             BBB<-strsplit(sessionInfo()[5]$otherPkgs$limma$Version,"[.]")
             
             if( !(BBB[[1]][1]>3 || (BBB[[1]][1]==3 && BBB[[1]][2]>18) || 
@@ -528,12 +530,12 @@ setMethod(f="geneSelection",
           }
           
 )
-
-
 setMethod(f="geneSelection", 
           signature=c("list","list","numeric"),
           definition=function(x,y,tot.number,data_log=TRUE,alpha=0.05,cont=FALSE,lfc=0,f.asso=NULL){
             
+            
+            #here we check if the version of Limma is ok 
             
             BBB<-strsplit(sessionInfo()[5]$otherPkgs$limma$Version,"[.]")
             
@@ -542,11 +544,12 @@ setMethod(f="geneSelection",
             {stop("Upgrade your version of Limma (>= 3.18.13)")}
             
             
+            
+            
             M<-x
             contrast<-y
-            
             M_mic<-M
-            require(limma)		
+            require(limma)    
             n<-length(M)
             Time<-length(M[[2]]@time)
             
@@ -562,14 +565,13 @@ setMethod(f="geneSelection",
             if(data_log==TRUE){
               
               for(i in 1:n){
-                M_mic[[i]]<-log(M[[i]]@microarray)
+                M_mic[[i]]<-log(M[[i]]@microarray)/log(2)
               }
             } else{
               for(i in 1:n){
                 M_mic[[i]]<-(M[[i]]@microarray)
               }
             }
-            
             
             
             
@@ -730,6 +732,12 @@ setMethod(f="geneSelection",
             }else{
               
               p.val.all<-topTable(model.test,p.value=alpha,number=nb.tot,lfc=lfc)
+              if(dim(p.val.all)[1]==0){
+                print("The selection is empty")
+              }else{
+                print("The selection is not empty")
+              }
+              
               if(is.null(p.val.all$ID)){
                 ID<-row.names(p.val.all)
                 p.val.all<-cbind(ID,p.val.all)
@@ -738,6 +746,7 @@ setMethod(f="geneSelection",
                 }
                 f_nom<-Vectorize(f_nom)
                 row.names(p.val.all)<-f_nom(p.val.all$ID)
+                
               }
               nb.ret<-dim(p.val.all)[1]
               
@@ -767,9 +776,10 @@ setMethod(f="geneSelection",
               }
             }
             if(sum(dim(K1)==dim(K2))==2){
-            MM1<-K2 #-K1
+              print("This function returns the stimulated expression of the diffenrially expressed genes")
+              MM1<-K2 #-K1
             }else{
-              warning("The number of patient is not equal. This function returns the stimulated expression (instead of log fold change)")
+              warning("The number of patient is not equal. This function returns the stimulated expression")
               MM1<-K2
             }
             
@@ -786,10 +796,10 @@ setMethod(f="geneSelection",
             
             head(x[[1]])
             if(length(x[[1]]@gene_ID>2)&length(x[[1]]@name>2)){
-            azert<-cbind(x[[1]]@name,x[[1]]@gene_ID)
-            row.names(azert)<-x[[1]]@name
-            head(azert)
-            gene_ID<-azert[row.names(MM1),2]
+              azert<-cbind(x[[1]]@name,x[[1]]@gene_ID)
+              row.names(azert)<-x[[1]]@name
+              head(azert)
+              gene_ID<-azert[row.names(MM1),2]
             }else{
               gene_ID<-0
             }
@@ -801,8 +811,6 @@ setMethod(f="geneSelection",
           }
           
 )
-
-
 
 setMethod(f="genePeakSelection", 
           signature=c("micro_array","numeric"),
