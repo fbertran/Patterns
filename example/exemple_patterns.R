@@ -3,6 +3,7 @@
 #Exemple d'utilisation de patterns
 
 ###############################
+require(Patterns)
 data(CLL)
 
 require(biomaRt)
@@ -128,7 +129,7 @@ require(org.Hs.eg.db)
 
 pp<-list()
 
-for(k in 1:n){
+for(k in 1:2){
   print(k)
 pp[[k]]<-translate(lll[[k]],from=org.Hs.egSYMBOL2EG,simplify=TRUE)
 # GOs[[k]]<-enrichGO(pp, organism = "human", ont = "MF", pvalueCutoff = 0.05,
@@ -137,7 +138,7 @@ pp[[k]]<-translate(lll[[k]],from=org.Hs.egSYMBOL2EG,simplify=TRUE)
 
 }
 
-names(pp)<-paste("X",1:n,sep="")
+names(pp)<-paste("X",1:2,sep="")
 test<-compareCluster(pp,fun="enrichGO", organism="human", pvalueCutoff=0.05)
 
 

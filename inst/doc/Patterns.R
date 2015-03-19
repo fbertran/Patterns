@@ -1,90 +1,90 @@
 ### R code from vignette source 'Patterns.Rnw'
-### Encoding: ISO8859-1
+### Encoding: UTF-8
 
 ###################################################
-### code chunk number 1: Patterns.Rnw:27-29
+### code chunk number 1: Patterns.Rnw:28-30
 ###################################################
 options(width=60)
 options(continue="   ")
 
 
 ###################################################
-### code chunk number 2: Patterns.Rnw:77-78 (eval = FALSE)
+### code chunk number 2: Patterns.Rnw:78-79 (eval = FALSE)
 ###################################################
 ## install.packages("name_of_the_package")
 
 
 ###################################################
-### code chunk number 3: Patterns.Rnw:81-83 (eval = FALSE)
+### code chunk number 3: Patterns.Rnw:82-84 (eval = FALSE)
 ###################################################
 ## source("http://bioconductor.org/biocLite.R")
 ## biocLite("name_of_the_package")
 
 
 ###################################################
-### code chunk number 4: Patterns.Rnw:90-91
+### code chunk number 4: Patterns.Rnw:91-92
 ###################################################
 library(Patterns)
 
 
 ###################################################
-### code chunk number 5: Patterns.Rnw:99-101
+### code chunk number 5: Patterns.Rnw:100-102
 ###################################################
 data(micro_S)
 data(micro_US)
 
 
 ###################################################
-### code chunk number 6: Patterns.Rnw:110-111
+### code chunk number 6: Patterns.Rnw:111-112
 ###################################################
 colnames(micro_S)
 
 
 ###################################################
-### code chunk number 7: Patterns.Rnw:115-117
+### code chunk number 7: Patterns.Rnw:116-118
 ###################################################
 micro_S<-as.micro_array(micro_S,time=c(60,90,210,390),subject=6)
 micro_US<-as.micro_array(micro_US,time=c(60,90,210,390),subject=6)
 
 
 ###################################################
-### code chunk number 8: Patterns.Rnw:123-124
+### code chunk number 8: Patterns.Rnw:124-125
 ###################################################
 print(micro_S)
 
 
 ###################################################
-### code chunk number 9: Patterns.Rnw:129-130
+### code chunk number 9: Patterns.Rnw:130-131
 ###################################################
 head(micro_S)
 
 
 ###################################################
-### code chunk number 10: Patterns.Rnw:147-148
+### code chunk number 10: Patterns.Rnw:148-149
 ###################################################
 Selection<-geneSelection(M1=micro_S,M2=micro_US,tot.number=50,data_log=TRUE)
 
 
 ###################################################
-### code chunk number 11: Patterns.Rnw:161-162
+### code chunk number 11: Patterns.Rnw:162-163
 ###################################################
 summary(Selection)
 
 
 ###################################################
-### code chunk number 12: Patterns.Rnw:168-169
+### code chunk number 12: Patterns.Rnw:169-170
 ###################################################
 summary(Selection,nb.graph=2)
 
 
 ###################################################
-### code chunk number 13: Patterns.Rnw:172-173
+### code chunk number 13: Patterns.Rnw:173-174
 ###################################################
 summary(Selection,nb.graph=3)
 
 
 ###################################################
-### code chunk number 14: Patterns.Rnw:187-192
+### code chunk number 14: Patterns.Rnw:188-193
 ###################################################
 #If we want to select genes that are differentially 
 #at time t60 or t90 :
@@ -94,14 +94,14 @@ rbind(c(0,1,0,0),c(1,0,0,0),c(1,1,0,0)))
 
 
 ###################################################
-### code chunk number 15: Patterns.Rnw:199-201
+### code chunk number 15: Patterns.Rnw:200-202
 ###################################################
 Selection<-genePeakSelection(M1=micro_S,M2=micro_US,1,
 abs_val=FALSE,alpha_diff=0.01)
 
 
 ###################################################
-### code chunk number 16: Patterns.Rnw:206-227
+### code chunk number 16: Patterns.Rnw:207-228
 ###################################################
 #Select early genes (t1 or t2)
 Selection1<-geneSelection(M1=micro_S,M2=micro_US,20,
@@ -127,7 +127,7 @@ rbind(c(0,0,1,0),c(0,0,0,1),c(1,1,0,0)))
 
 
 ###################################################
-### code chunk number 17: Patterns.Rnw:232-236
+### code chunk number 17: Patterns.Rnw:233-237
 ###################################################
 Selection<-unionMicro(Selection1,Selection2)
 Selection<-unionMicro(Selection,Selection3)
@@ -136,27 +136,27 @@ print(Selection)
 
 
 ###################################################
-### code chunk number 18: Patterns.Rnw:238-240
+### code chunk number 18: Patterns.Rnw:239-241
 ###################################################
 #Prints the correlation graphics Figure 4:
 summary(Selection,3)
 
 
 ###################################################
-### code chunk number 19: Patterns.Rnw:245-246
+### code chunk number 19: Patterns.Rnw:246-247
 ###################################################
 summary(Selection,3)
 
 
 ###################################################
-### code chunk number 20: Patterns.Rnw:253-255
+### code chunk number 20: Patterns.Rnw:254-256
 ###################################################
 Selection2gp<-unionMicro(Selection1,Selection2)
 Selection2gp<-unionMicro(Selection2gp,Selection3)
 
 
 ###################################################
-### code chunk number 21: Patterns.Rnw:346-349 (eval = FALSE)
+### code chunk number 21: Patterns.Rnw:347-350 (eval = FALSE)
 ###################################################
 ## network<-inference(Selection)
 ## networkCascade<-inference(Selection,Finit=CascadeFinit(4,4),Fshape=CascadeFshape(4,4))
@@ -164,13 +164,13 @@ Selection2gp<-unionMicro(Selection2gp,Selection3)
 
 
 ###################################################
-### code chunk number 22: Patterns.Rnw:351-352
+### code chunk number 22: Patterns.Rnw:352-353
 ###################################################
 load(system.file("extdata", "networks.Rdata", package = "Patterns"))
 
 
 ###################################################
-### code chunk number 23: Patterns.Rnw:357-362 (eval = FALSE)
+### code chunk number 23: Patterns.Rnw:358-363 (eval = FALSE)
 ###################################################
 ## plot(network,choice="F")
 ## plot(networkCascade,choice="F")
@@ -180,76 +180,76 @@ load(system.file("extdata", "networks.Rdata", package = "Patterns"))
 
 
 ###################################################
-### code chunk number 24: Patterns.Rnw:368-369
+### code chunk number 24: Patterns.Rnw:369-370
 ###################################################
 plot(network,choice="F")
 
 
 ###################################################
-### code chunk number 25: Patterns.Rnw:372-373
+### code chunk number 25: Patterns.Rnw:373-374
 ###################################################
 plot(networkCascade,choice="F")
 
 
 ###################################################
-### code chunk number 26: Patterns.Rnw:376-377
+### code chunk number 26: Patterns.Rnw:377-378
 ###################################################
 plot(network2gp,choice="F")
 
 
 ###################################################
-### code chunk number 27: Patterns.Rnw:380-381
+### code chunk number 27: Patterns.Rnw:381-382
 ###################################################
 plot(network,choice="network",gr=Selection@group)
 
 
 ###################################################
-### code chunk number 28: Patterns.Rnw:384-385
+### code chunk number 28: Patterns.Rnw:385-386
 ###################################################
 plot(network2gp,choice="network",gr=Selection2gp@group)
 
 
 ###################################################
-### code chunk number 29: Patterns.Rnw:397-399 (eval = FALSE)
+### code chunk number 29: Patterns.Rnw:398-400 (eval = FALSE)
 ###################################################
 ## evolution(network,seq(0,0.4,by=0.01),gr=Selection@group,fix=TRUE)
 ## evolution(network,seq(0,0.4,by=0.01),gr=Selection@group,fix=FALSE)
 
 
 ###################################################
-### code chunk number 30: Patterns.Rnw:413-415
+### code chunk number 30: Patterns.Rnw:414-416
 ###################################################
 evol_cutoff<-cutoff(network)
 nv<-0.07
 
 
 ###################################################
-### code chunk number 31: Patterns.Rnw:423-424
+### code chunk number 31: Patterns.Rnw:424-425
 ###################################################
 plot(network,choice="network",gr=Selection@group,nv=0.07)
 
 
 ###################################################
-### code chunk number 32: Patterns.Rnw:427-428
+### code chunk number 32: Patterns.Rnw:428-429
 ###################################################
 plot(evol_cutoff$sequence,evol_cutoff$p.value.inter,type="l",xlab="cutoff",ylab="p.value")
 
 
 ###################################################
-### code chunk number 33: Patterns.Rnw:451-453
+### code chunk number 33: Patterns.Rnw:452-454
 ###################################################
 #analyze<-analyze_network(network,nv)
 #head(analyze)
 
 
 ###################################################
-### code chunk number 34: Patterns.Rnw:460-461 (eval = FALSE)
+### code chunk number 34: Patterns.Rnw:461-462 (eval = FALSE)
 ###################################################
 ## plot(network,nv=nv,gr=Selection@group,ani=TRUE)
 
 
 ###################################################
-### code chunk number 35: Patterns.Rnw:469-474 (eval = FALSE)
+### code chunk number 35: Patterns.Rnw:470-475 (eval = FALSE)
 ###################################################
 ## P<-position(network,nv=nv)
 ## #plotting the network with the group coloring:
@@ -259,13 +259,13 @@ plot(evol_cutoff$sequence,evol_cutoff$p.value.inter,type="l",xlab="cutoff",ylab=
 
 
 ###################################################
-### code chunk number 36: Patterns.Rnw:476-477
+### code chunk number 36: Patterns.Rnw:477-478
 ###################################################
 P<-position(network,nv=nv)
 
 
 ###################################################
-### code chunk number 37: Patterns.Rnw:488-492 (eval = FALSE)
+### code chunk number 37: Patterns.Rnw:489-493 (eval = FALSE)
 ###################################################
 ## geneNeighborhood(network,targets=16,nv=nv,ini=P,
 ## 	label.hub=TRUE,label_v=Selection@name)
@@ -274,14 +274,14 @@ P<-position(network,nv=nv)
 
 
 ###################################################
-### code chunk number 38: Patterns.Rnw:498-500
+### code chunk number 38: Patterns.Rnw:499-501
 ###################################################
 prediction_ko16<-predict(Selection,network,nv=nv,targets=16)
 prediction_ko16_2gp<-predict(Selection2gp,network2gp,nv=nv,targets=16)
 
 
 ###################################################
-### code chunk number 39: Patterns.Rnw:504-507 (eval = FALSE)
+### code chunk number 39: Patterns.Rnw:505-508 (eval = FALSE)
 ###################################################
 ## #We plot the results ; here for example we see changes at time point t2
 ## plot(prediction_ko16,time=2,ini=P,label.hub=TRUE,label_v=Selection@name)
@@ -289,19 +289,19 @@ prediction_ko16_2gp<-predict(Selection2gp,network2gp,nv=nv,targets=16)
 
 
 ###################################################
-### code chunk number 40: Patterns.Rnw:512-513
+### code chunk number 40: Patterns.Rnw:513-514
 ###################################################
 geneNeighborhood(network,targets=16,nv=nv,ini=P,label.hub=TRUE,label_v=Selection@name)
 
 
 ###################################################
-### code chunk number 41: Patterns.Rnw:516-517
+### code chunk number 41: Patterns.Rnw:517-518
 ###################################################
 plot(prediction_ko16,time=2,ini=P,label.hub=TRUE,label_v=Selection@name)
 
 
 ###################################################
-### code chunk number 42: Patterns.Rnw:520-521
+### code chunk number 42: Patterns.Rnw:521-522
 ###################################################
 plot(prediction_ko16_2gp,time=2,ini=P,label.hub=TRUE,label_v=Selection2gp@name)
 
@@ -383,14 +383,14 @@ plot(cut.seq$sequence,cut.seq$p.value.inter)
 
 
 ###################################################
-### code chunk number 48: Patterns.Rnw:605-607
+### code chunk number 48: Patterns.Rnw:606-608
 ###################################################
 plot(cut.seq$sequence,cut.seq$p.value.inter,type="l",xlab="cutoff",ylab="p.value")
 abline(v=0.24,col="red")
 
 
 ###################################################
-### code chunk number 49: Patterns.Rnw:610-612
+### code chunk number 49: Patterns.Rnw:611-613
 ###################################################
 plot(test.seq,F_score,type="b",xlab="cutoff",ylab="Fscore")
 abline(v=0.24,col="red")
