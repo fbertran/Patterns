@@ -40,7 +40,7 @@ as.nextgen_seq<-function(C,time,subject){
 }
 
 
-lasso_reg<-function(M,Y,K,eps){
+lasso_reg<-function(M,Y,K,eps,priors){
   require(lars)
   cvlars<-try(cv.lars(t(M),(Y),intercept=FALSE,K=K,plot.it=FALSE,eps=10^-5,use.Gram=FALSE))
   n<-try(cvlars$index[which.min(cvlars$cv)+max(1,which.min(cvlars$cv[which.min(cvlars$cv):length(cvlars$cv)]<=min(cvlars$cv)+cvlars$cv.error[which.min(cvlars$cv)])-1)-1])
@@ -50,6 +50,18 @@ lasso_reg<-function(M,Y,K,eps){
   return(repu)
 }
 
+
+lasso_reg2<-function(M,Y,eps,foldid=foldid,priors,nfolds){
+  require(glmnet)
+  foldid=rep(1:nfolds,each=ncol(M)/nfolds)
+  if(is.null(priors)) priors<-rep(1,nrow(M))
+  cvlars<-try(cv.glmnet(t(M),Y,nfolds=nfolds,foldid=foldid,penalty.factor=priors,intercept=FALSE))
+  n<-which(cvlars$cvm==min(cvlars$cvm))
+  lambda<-cvlars$lambda[n]
+  print(lambda)
+  model<-glmnet(t(M),Y,intercept=FALSE,thresh=10^(-5),penalty.factor=priors,lambda=lambda)
+  return( as.vector(coef(model)[-1]))
+}
 
 spls_reg<-function(M,Y,K,eps){
   require(spls)

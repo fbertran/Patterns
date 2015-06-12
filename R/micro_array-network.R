@@ -157,6 +157,7 @@ setMethod(f="inference"
                                ,Fshape=NULL
                                ,Finit=NULL
                                ,Omega=NULL
+                               ,priors=NULL
                                ,fitfun="LASSO"){
             
             #Fshape=NULL
@@ -364,6 +365,16 @@ setMethod(f="inference"
                 Omega[IND, which(gr %in% grpjj)]<-Omega[IND, which(gr %in% grpjj)]*0
                 
                 #Nous allons passer au Lasso
+                if(fitfun=="LASSO2"){
+                 
+                  if(norm(pred,type="F")>eps){     
+                    fun_lasso<-function(x){lasso_reg2(pred,x,nfolds=P,foldid=rep(1:P,each=ncol(pred)/P),priors=priors)} 
+                    Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_lasso)
+                    print("ahah")
+                  }
+                }
+                
+                
                 if(fitfun=="LASSO"){
                   if(norm(pred,type="F")>eps){     
                     fun_lasso<-function(x){lasso_reg(pred,x,K=K,eps)} 

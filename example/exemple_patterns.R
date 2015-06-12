@@ -35,12 +35,22 @@ matplot(t(log(agg_S[which(CLL[,2] %in% "EGR1"),])),type="l",lty=1)
 
 selection1<-geneSelection(list(m_agg_US,m_agg_S),list("condition&time",c(1,2),c(1,1)),-1,alpha=0.1)
 selection2<-geneSelection(list(m_agg_US,m_agg_S),list("condition&time",c(1,2),c(1,1)+1),-1,alpha=0.1)
-selection3<-geneSelection(list(m_agg_US,m_agg_S),list("condition&time",c(1,2),c(1,1)+2),-1,alpha=0.05)
-selection4<-geneSelection(list(m_agg_US,m_agg_S),list("condition&time",c(1,2),c(1,1)+3),-1,alpha=0.05)
+selection3<-geneSelection(list(m_agg_US,m_agg_S),list("condition&time",c(1,2),c(1,1)+2),50,alpha=0.005)
+selection4<-geneSelection(list(m_agg_US,m_agg_S),list("condition&time",c(1,2),c(1,1)+3),50,alpha=0.005)
 
 selection<-unionMicro(list(selection1,selection2,selection3,selection4))
 
 length(selection@gene_ID)
+
+selection@group<-rep(1:4,c(length(selection1),length(selection2),50,50))
+selection@group[1:10]<-1
+selection@group[11:20]<-2
+selection@group[21:100]<-3
+selection@group[101:169]<-4
+length(selection@group)
+network<-inference(selection,fitfun="LASSO2",Finit=CascadeFinit(4,4),Fshape=CascadeFshape(4,4),type.inf="noniterative")
+network
+
 save(list=c("selection","infos"),file="travail.RData")
 
 ################################################################
