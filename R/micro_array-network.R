@@ -178,6 +178,12 @@ setMethod(f="inference"
             require(nnls)
             #Quelques indicateurs
             mat<-M@microarray
+            
+            if(is.null(priors)) priors<-matrix(1,nrow(mat),nrow(mat))
+            if(!is.matrix(priors)) stop("priors should be a matrix")
+            if(!prod(dim(priors) == rep(nrow(mat),2))==1) stop("priors should have the same dimension than omega")
+            
+            
             #La matrice contenant les donnees
             gr<-M@group 
             N<-dim(mat)[1] 
@@ -366,10 +372,11 @@ setMethod(f="inference"
                 
                 #Nous allons passer au Lasso
                 if(fitfun=="LASSO2"){
-                 
+                 priors2<-priors[IND,which(gr %in% grpjj)]
+                 Y2<-cbind(1:nrow(Y),Y)
                   if(norm(pred,type="F")>eps){     
-                    fun_lasso<-function(x){lasso_reg2(pred,x,nfolds=P,foldid=rep(1:P,each=ncol(pred)/P),priors=priors)} 
-                    Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_lasso)
+                    fun_lasso<-function(x){lasso_reg2(pred,x[-1],nfolds=P,foldid=rep(1:P,each=ncol(pred)/P),priors=priors2[x[1],])} 
+                    Omega[IND, which(gr %in% grpjj)]<-apply(Y2,1,fun_lasso)
                     print("ahah")
                   }
                 }
