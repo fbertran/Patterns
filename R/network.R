@@ -36,26 +36,28 @@ setMethod("evolution","network",function(net
                                          ,list_nv
                                          ,gr=NULL
                                          ,color.vertex=NULL
+                                         ,color.edge=NULL
                                          ,fix=TRUE
-                                         ,gif=TRUE
                                          ,taille=c(2000,1000)
                                          ,label_v=1:dim(net@network)[1]
                                          ,legend.position="topleft"
                                          ,frame.color="black"
                                          ,label.hub=FALSE
+                                         ,outdir=getwd()
+                                         ,type.ani="HTML"
                                          #,edge.arrow.size=0.6*(1+size.ed)
                                          #,edge.thickness=1
 )
 {
   Omega<-net
-  
+
   if(length(list_nv)==1){
     list_nv=seq(0,max(net@network)-0.05,length.out=list_nv)	
   }
   
-  if(gif==TRUE){
+  if(type.ani=="html"){
     require(animation)
-    ani.options(ani.height=taille[2],ani.width=taille[1],outdir = getwd())
+    ani.options(ani.height=taille[2],ani.width=taille[1],outdir = outdir)
     saveHTML({
       
       POS<-position(net,nv=list_nv[1])
@@ -68,6 +70,7 @@ setMethod("evolution","network",function(net
                ,gr=gr
                ,ini=POS
                ,color.vertex=color.vertex
+               ,color.edge=color.edge
                ,label_v=label_v
                ,legend.position=legend.position
                ,frame.color=frame.color
@@ -81,6 +84,7 @@ setMethod("evolution","network",function(net
                ,nv=i
                ,gr=gr
                ,color.vertex=color.vertex
+               ,color.edge=color.edge
                ,label_v=label_v
                ,legend.position=legend.position
                ,frame.color=frame.color
@@ -95,7 +99,51 @@ setMethod("evolution","network",function(net
     })
   }
   
-  else{
+  if(type.ani=="latex"){
+    require(animation)
+    ani.options(ani.height=taille[2],ani.width=taille[1],outdir = outdir)#, qpdf = '/opt/local/bin/qpdf'
+    saveLatex({
+      
+      POS<-position(net,nv=list_nv[1])
+      
+      for(i in list_nv){
+        
+        if(fix==TRUE){
+          plot(Omega
+               ,nv=i
+               ,gr=gr
+               ,ini=POS
+               ,color.vertex=color.vertex
+               ,color.edge=color.edge
+               ,label_v=label_v
+               ,legend.position=legend.position
+               ,frame.color=frame.color
+               ,label.hub=label.hub
+               #,edge.arrow.size=edge.arrow.size
+               #,edge.thickness=edge.thickness
+          )
+        }
+        else{
+          plot(Omega
+               ,nv=i
+               ,gr=gr
+               ,color.vertex=color.vertex
+               ,color.edge=color.edge
+               ,label_v=label_v
+               ,legend.position=legend.position
+               ,frame.color=frame.color
+               ,label.hub=label.hub
+               #,edge.arrow.size=edge.arrow.size
+               #,edge.thickness=edge.thickness
+          )
+          
+        }
+        text(-1,1,round(i,3))
+      }
+    })
+  }
+  
+  if(type.ani=="gif"){
     par(ask=TRUE)
     POS<-position(net,nv=list_nv[1])
     if(is.null(gr)){gr<-rep(1,dim(Omega@network)[1])} 
@@ -105,6 +153,7 @@ setMethod("evolution","network",function(net
            ,gr=gr
            ,ini=POS
            ,color.vertex=color.vertex
+           ,color.edge=color.edge
            ,label_v=label_v
            ,legend.position=legend.position
            ,frame.color=frame.color
@@ -115,7 +164,8 @@ setMethod("evolution","network",function(net
     }
     par(ask=FALSE)	
   }
-}
+
+  }
 )
 
 setMethod("position","network",function(net,nv=0){
@@ -143,7 +193,7 @@ setMethod("position","network",function(net,nv=0){
   
   # dev.new(width=150,heigth=300,xlim=c(min(L[,1]),max(L[,1])))
   #par(mar=c(0,0,0,0), oma=c(0,0,0,0),mai=c(0,0,0,0))
-  L<-layout.fruchterman.reingold(G,xmin=0,xmax=150,ymin=0,ymax=300)
+  L<-layout.fruchterman.reingold(G,minx=rep(0,vcount(G)),maxx=rep(150,vcount(G)),miny=rep(0,vcount(G)),maxy=rep(300,vcount(G)))
   return(cbind(nom,L))
 }
 )
@@ -161,6 +211,7 @@ setMethod("plot"
                     ,gr=NULL
                     ,ini=NULL
                     ,color.vertex=NULL
+                    ,color.edge=NULL
                     ,video=TRUE
                     ,weight.node=NULL
                     ,ani=FALSE
@@ -171,6 +222,13 @@ setMethod("plot"
                     ,frame.color="black"
                     ,label.hub=FALSE
                     ,nround=2
+                    ,ani.img.name="Rplot"
+                    ,ani.imgdir="images"
+                    ,ani.htmlfile="index.html"
+                    ,outdir=getwd()
+                    ,ani.group.legend="Cluster"
+                    ,layout=ini
+                    ,alpha=1
                     #,edge.arrow.size=0.6*(1+size.ed)
                     #,edge.thickness=1
                     ,...
@@ -216,9 +274,9 @@ setMethod("plot"
               require(igraph)
               if(is.null(gr)){gr<-rep(1,dim(O)[1])}
               if(is.null(color.vertex)){
-                color.vertex<-rainbow(length(unique(gr)))
-                couleur<-1
+                color.vertex<-rainbow(length(unique(gr)),alpha=alpha)
               }
+              couleur<-1
               
               nom<-1:dim(O)[1]
               enle<-which(apply(O,1,sum)+apply(O,2,sum)==0)
@@ -233,7 +291,7 @@ setMethod("plot"
               if(!is.null(ini)){
                 ini<-ini[which(ini[,1] %in% nom),]
               }
-              nom2<-nom
+#              nom2<-nom
               nom2<-label_v[nom]
               if(!is.null(weight.node)){
                 size<-weight.node
@@ -271,10 +329,10 @@ setMethod("plot"
               
               
               if(ani==TRUE){
-                if(is.null(gr)){error("Need of groups")}
-                T<-length(x@time_pt)
+                if(is.null(gr)){grerror("Need of groups")}
+                T<-length(unique(gr))#length(x@time_pt)
                 require(animation)
-                ani.options(ani.height=taille[2],ani.width=taille[1],outdir = getwd())
+                ani.options(ani.height=taille[2],ani.width=taille[1],outdir = outdir)
                 
                 if(is.null(ini)){
                   ini<-position(x,nv)[]
@@ -304,7 +362,7 @@ setMethod("plot"
                          ,vertex.frame.color=frame.color
                     )
                   }
-                  for(i in 1:(ngrp)){
+                  for(i in 1:(T)){
                     
                     Ver.col<-rep(grey(0.95),length(nom))	
                     Edge.col<-rep(grey(0.95),dim(Q)[1])
@@ -316,31 +374,34 @@ setMethod("plot"
                       Ver.col[indi]<-rgb(coul[1],coul[2],coul[3],alpha=(p-1)*255/(mms), max = 255)
                       
                       
-                      for(k in 1:ngrp){
+                      for(k in 1:i){
                         coul<-col2rgb(color.vertex[k])	
                         indi3<-which(gr[Q[,1]]==k & gr[Q[,2]]==i )
                         
                         Edge.col[indi3]<-rgb(coul[1],coul[2],coul[3],alpha=255-(p-1)*255/(mms), max = 255)
                       }
                       
-                      if(i!=ngrp){
-                        for(k in 1:ngrp){
-                          for(k2 in (1:ngrp)[-k]){
+                      if(i!=T){
+#                        for(k in 1:ngrp){
+                        for(k in 1:i){
+#                          for(k2 in (1:ngrp)[-k]){
+                          for(k2 in min((i+1),T):T){
                             coul<-col2rgb(color.vertex[k])	
                             indi3<-which(gr[Q[,1]]==k & gr[Q[,2]]==k2 )
                             
                             
                             
                             
-                            al<-round(mms/(k2-k))
-                            ald<-min(1+al*(i-k),mms)
+                            al<-round(mms/abs(k2-k))
+                            ald<-min(1+al*abs(i-k),mms)
                             if(k2==(i+1)){
                               alf<-mms
                             }
                             else{
-                              alf<-min(al*(i-k+1),mms)}
+                            alf<-min(al*(i-k+1),mms)}
+                            #alf<-max(1,min(al*abs(i-k+1),mms))}
                             alseq<-seq(25,255,length.out=mms)
-                            
+#                            cat(al," ");cat(ald," ");cat(alf," ");cat(mms," ");cat(alseq," ");cat("\n")
                             alphaseq2<-seq(alseq[ald],alseq[alf],length.out=mms)
                             
                             Edge.col[indi3]<-rgb(coul[1],coul[2],coul[3],alpha=alphaseq2[p], max = 255)
@@ -348,7 +409,8 @@ setMethod("plot"
                       
                       plot(G
                            ,layout=ini
-                           #,vertex.size=size,edge.width=size.ed*5*edge.thickness
+                           ,vertex.size=size
+                           #,edge.width=size.ed*5*edge.thickness
                            #,edge.arrow.size=edge.arrow.size*size.ed*edge.thickness
                            #,edge.arrow.width=edge.arrow.size*size.ed*edge.thickness
                            ,edge.arrow.size=0.6*(1+size.ed)
@@ -367,7 +429,7 @@ setMethod("plot"
                                ,pch=21
                                ,pt.bg=color.vertex[unique(gr[nom])[order(unique(gr[nom]))]]
                                ,col=frame.color
-                               ,legend=paste("Cluster",unique(gr[nom])[order(unique(gr[nom]))])
+                               ,legend=paste(ani.group.legend,unique(gr[nom])[order(unique(gr[nom]))])
                         )
                       } 
                     }
@@ -377,14 +439,15 @@ setMethod("plot"
                   }
                   
                   
-                })
+                },img.name = ani.img.name, imgdir = ani.imgdir, htmlfile = ani.htmlfile)
                 
                 
               }	
               else{
                 par(mar=c(0,0,0,0), oma=c(0,0,0,0),mai=c(0,0,0,0))# Not in Cascade 1.03
-                if(length(unique(gr[nom])) >1){trr<-color.vertex[gr[Q[,2]]]}
-                else{trr<-"grey"} 
+                if(length(unique(gr[nom]))>1 & !is.null(color.edge)){trr<-color.edge[gr[Q[,1]]]} else {
+                  if(length(unique(gr[nom]))>1 & is.null(color.edge)){trr<-color.vertex[gr[Q[,2]]];cat(length(unique(gr[nom]))>1 & is.null(color.edge))} else {trr<-"grey";cat(length(unique(gr[nom]))>1 & is.null(color.edge))} 
+                }
                 
                 if(is.null(ini)){
                   L<-position(x,nv)[,2:3]
@@ -435,7 +498,7 @@ setMethod("plot"
                            ,pch=21
                            ,pt.bg=color.vertex[unique(gr[nom])[order(unique(gr[nom]))]]
                            ,col=frame.color
-                           ,legend=paste("Cluster",unique(gr[nom])[order(unique(gr[nom]))])
+                           ,legend=paste(ani.group.legend,unique(gr[nom])[order(unique(gr[nom]))])
                     ) 
                   }
                 }
@@ -483,13 +546,13 @@ setMethod("plot"
                            ,pch=21
                            ,pt.bg=color.vertex[unique(gr[nom])[order(unique(gr[nom]))]]
                            ,col=frame.color
-                           ,legend=paste("Cluster",unique(gr[nom])[order(unique(gr[nom]))])
+                           ,legend=paste(ani.group.legend,unique(gr[nom])[order(unique(gr[nom]))])
                     ) 
                   }
                   L<-ini
                 }
               }
-            }	
+              invisible(G)  }	
           }
 )
 

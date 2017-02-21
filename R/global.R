@@ -273,6 +273,46 @@ CascadeFinit=function(sqF,ngrp){
   return(Finit)
 }
 
+IndicFshape <- function(sqF,ngrp,Indic){
+  nF=ngrp*ngrp
+  Fshape<-array("0",c(sqF,sqF,nF))
+  for(ii in 1:ngrp){
+    for(jj in 1:ngrp){
+      if(!Indic[ii,jj]){
+        Fshape[,,(ii-1)*ngrp+jj]<-"0"
+      } else {
+        lchars <- paste("a",c(4,1,2,3),sep="")
+        tempFshape<-matrix("0",sqF,sqF)
+        for(bb in 0:(sqF-1)){
+          tempFshape<-replaceDown(tempFshape,matrix(lchars[bb+1],sqF,sqF),-bb)
+        }
+        tempFshape <- replaceBand(tempFshape,matrix("0",sqF,sqF),0)
+        Fshape[,,(ii-1)*ngrp+jj]<-tempFshape
+      }
+    }
+  }
+  return(Fshape)
+}
+
+IndicFinit <- function(sqF,ngrp,Indic,low.trig=TRUE){
+  nF=ngrp*ngrp
+  Finit<-array(0,c(sqF,sqF,nF))
+  for(ii in 1:ngrp){
+    for(jj in 1:ngrp){
+      if(!Indic[ii,jj]){
+        Finit[,,(ii-1)*ngrp+jj]<-0
+      } else {
+        if(low.trig){
+          Finit[,,(ii-1)*ngrp+jj]<-lower.tri(matrix(1,4,4))*matrix(1,4,4)
+        } else {
+          Finit[,,(ii-1)*ngrp+jj]<-cbind(rbind(rep(0,sqF-1),diag(1,sqF-1)),rep(0,sqF))
+        }
+      }
+    }
+  }
+  return(Finit)
+}
+
 majority_vote<-function(x){
   
   which.max(tabulate(x))

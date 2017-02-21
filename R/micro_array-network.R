@@ -157,7 +157,10 @@ setMethod(f="inference"
                                ,Fshape=NULL
                                ,Finit=NULL
                                ,Omega=NULL
-                               ,fitfun="LASSO"){
+                               ,fitfun="LASSO"
+                               ,use.Gram=TRUE
+                               ,error.stabsel=0.05
+                               ,pi_thr.stabsel=0.6){
             
             #Fshape=NULL
             #Finit=NULL
@@ -303,8 +306,9 @@ setMethod(f="inference"
               #u a un role essentiel, puisque qu'il determine 
               # laquelle des matrices Fab est indicee. 
               # Se referer plus haut pour en connaitre l'ordre
-              
+              cat("Computing Group (out of ",ngrp,") : ",sep="")
               for(grpjj in 1:ngrp){ 
+                cat("\n",grpjj);#if(grpjj < ngrp){cat(" ... ")}
                 #Comprendre ici que grpjj correspond au groupe du gene REPONSE.
                 #Ici nous cherchons les genes possiblement predicteurs.
                 #Nous recuperons le groupe des individus possiblement predicteurs.			
@@ -324,6 +328,7 @@ setMethod(f="inference"
                 #Ou ici avec Omega ponderation
                 
                 for(k in 1:ngrp) {
+                  #cat(paste("(",k,")",sep=""));
                   #Cette boucle sert a transformer les
                   #predicteurs en fonction des matrices Fab
                   #Le groupe de la variable reponse
@@ -461,17 +466,18 @@ setMethod(f="inference"
                 }
                 
                 if(fitfun=="stability"){
-                  require(c060)
+                  require(c060);#cat(".")
                   
                   fun_stab<-function(g){
+                    cat(".")
                     if(sum(pred)==0){
                       return(rep(0,nrow(pred)))
                                      
                     }else{
                   essai<-stabpath(g,t(pred))  
-                  varii<-stabsel(essai)$stable
-                  lambda<-stabsel(essai)$lambda
-                  L<-lars(t(pred),g)
+                  varii<-stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$stable
+                  lambda<-stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$lambda
+                  L<-lars(t(pred),g,use.Gram=use.Gram)
                 
                   LL<-predict(L,s=lambda,mode="lambda",type="coef")$coefficients
                   LL[-varii]<-0
@@ -505,6 +511,7 @@ setMethod(f="inference"
                   
                 }  
               }
+              cat("\n")
               #fin de la boucle for avec pic ; 
               #la matrice omega est inferee
               
