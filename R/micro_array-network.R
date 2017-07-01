@@ -161,7 +161,8 @@ setMethod(f="inference"
                                ,fitfun="LASSO"
                                ,use.Gram=TRUE
                                ,error.stabsel=0.05
-                               ,pi_thr.stabsel=0.6){
+                               ,pi_thr.stabsel=0.6
+                               ,mc.cores=getOption("mc.cores", 2L)){
 =======
                                ,priors=NULL
                                ,fitfun="LASSO"){
@@ -381,10 +382,11 @@ setMethod(f="inference"
                 
                 #Nous allons passer au Lasso
                 if(fitfun=="LASSO2"){
+                  
                  priors2<-priors[IND,which(gr %in% grpjj)]
                  Y2<-cbind(1:nrow(Y),Y)
                   if(norm(pred,type="F")>eps){     
-                    fun_lasso<-function(x){lasso_reg2(pred,x[-1],nfolds=P,foldid=rep(1:P,each=ncol(pred)/P),priors=priors2[x[1],])} 
+                    fun_lasso<-function(x){cat(".");lasso_reg2(pred,x[-1],nfolds=P,foldid=rep(1:P,each=ncol(pred)/P),priors=priors2[x[1],])} 
                     Omega[IND, which(gr %in% grpjj)]<-apply(Y2,1,fun_lasso)
                     print("ahah")
                   }
@@ -486,8 +488,32 @@ setMethod(f="inference"
                       }
                   }
                 }
-                
-                if(fitfun=="stability"){
+
+            
+                if(fitfun=="stability.stabs"){
+                  require(c060);#cat(".")
+                  
+                  fun_stab<-function(g){
+                    cat(".")
+                    if(sum(pred)==0){
+                      return(rep(0,nrow(pred)))
+                      
+                    }else{
+                      essai<-stabpath(g,t(pred),mc.cores=mc.cores)  
+                      varii<-stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$stable
+                      lambda<-stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$lambda
+                      L<-lars(t(pred),g,use.Gram=use.Gram)
+                      
+                      LL<-predict(L,s=lambda,mode="lambda",type="coef")$coefficients
+                      LL[-varii]<-0
+                      return(LL)
+                    }
+                  }
+                  
+                  Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_stab)
+                }                
+                                
+                if(fitfun=="stability.c060"){
                   require(c060);#cat(".")
                   
                   fun_stab<-function(g){
