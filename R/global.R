@@ -55,12 +55,16 @@ lasso_reg2<-function(M,Y,eps,foldid=foldid,priors,nfolds){
   require(glmnet)
   foldid=rep(1:nfolds,each=ncol(M)/nfolds)
   if(is.null(priors)) priors<-rep(1,nrow(M))
-  cvlars<-try(cv.glmnet(t(M),Y,nfolds=nfolds,foldid=foldid,penalty.factor=priors,intercept=FALSE))
-  n<-which(cvlars$cvm==min(cvlars$cvm))
-  lambda<-cvlars$lambda[n]
-  print(lambda)
-  model<-glmnet(t(M),Y,intercept=FALSE,thresh=10^(-5),penalty.factor=priors,lambda=lambda)
-  return( as.vector(coef(model)[-1]))
+  cvglmnet<-try(cv.glmnet(t(M),Y,nfolds=nfolds,foldid=foldid,penalty.factor=priors,intercept=FALSE))
+#  n<-try(which(cvglmnet$cvm==min(cvglmnet$cvm)))
+#  lambda<-try(cvglmnet$lambda[n])
+#  try(print(lambda))
+#  model<-try(glmnet(t(M),Y,intercept=FALSE,thresh=10^(-5),penalty.factor=priors,lambda=lambda))
+#  coef(cv.fit,s="lambda.min")
+#  repu<-try(as.vector(coef(model)[-1]))
+  repu<-try(as.vector(coef(cvglmnet,s="lambda.min")[-1]))
+  if(!is.vector(repu)){repu<-rep(0,dim(M)[1])}
+  return(repu)
 }
 
 spls_reg<-function(M,Y,K,eps){

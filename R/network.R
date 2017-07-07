@@ -229,6 +229,7 @@ setMethod("plot"
                     ,ani.group.legend="Cluster"
                     ,layout=ini
                     ,alpha=1
+                    ,pixmap.color=terrain.colors(20)
                     #,edge.arrow.size=0.6*(1+size.ed)
                     #,edge.thickness=1
                     ,...
@@ -257,6 +258,31 @@ setMethod("plot"
               color2D.matplot(x=FF,cs1=c(0,.5,1),cs2=c(.5,1,0),cs3=c(1,2,0),show.values=nround,axes=FALSE,main="",xlab="",ylab="",show.legend=FALSE)
               abline(h=4*(1:(ngrp-1)),lwd=3)
               abline(v=4*(1:(ngrp-1)),lwd=3)
+            }
+            if(choice=="Fpixmap"){
+              library(plotrix)
+              F<-x@F
+              nF<-dim(F)[3]
+              ngrp=sqrt(dim(F)[3])
+              ymax<-max(F)
+              couleur<-rainbow(ngrp)
+              #  par(mfrow=c(ngrp,ngrp))
+              FF=NULL
+              for(i in 1:ngrp){
+                FFa=NULL
+                for(j in 1:ngrp){
+                  FFa=cbind(FFa,round(F[,,(i-1)*ngrp+j],nround))
+                  #par(mai=c(0.1,0.1,0.1,0.1))
+                  #color2D.matplot(x=round(F[,,(i-1)*ngrp+j],2),cs1=c(0,1,1),cs2=c(1,1,0),cs3=0,show.values=TRUE,axes=FALSE,main="",xlab="",ylab="",show.legend=TRUE)
+                }
+                FF=rbind(FF,FFa)
+              }
+              par(mar=c(0,0,0,0), oma=c(0,0,0,0),mai=c(0,0,0,0))
+              x.temp<-pixmapGrey(data=FF,cellres=c(2,2))
+              plot(x.temp)
+#              abline(h=4*(1:(ngrp-1)),lwd=3)
+#              abline(v=4*(1:(ngrp-1)),lwd=3)
+              rm(x.temp)
             }
             if(choice=="network"){
               

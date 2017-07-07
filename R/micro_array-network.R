@@ -157,17 +157,14 @@ setMethod(f="inference"
                                ,Fshape=NULL
                                ,Finit=NULL
                                ,Omega=NULL
-<<<<<<< HEAD
                                ,fitfun="LASSO"
                                ,use.Gram=TRUE
                                ,error.stabsel=0.05
                                ,pi_thr.stabsel=0.6
-                               ,mc.cores=getOption("mc.cores", 2L)){
-=======
                                ,priors=NULL
-                               ,fitfun="LASSO"){
->>>>>>> origin/master
-            
+                               ,mc.cores=getOption("mc.cores", 2L)
+                               ,intercept.stabpath=TRUE){
+
             #Fshape=NULL
             #Finit=NULL
             #
@@ -190,7 +187,7 @@ setMethod(f="inference"
             if(is.null(priors)) priors<-matrix(1,nrow(mat),nrow(mat))
             if(!is.matrix(priors)) stop("priors should be a matrix")
             if(!prod(dim(priors) == rep(nrow(mat),2))==1) stop("priors should have the same dimension than omega")
-            
+            #cat(str(priors))
             
             #La matrice contenant les donnees
             gr<-M@group 
@@ -386,9 +383,11 @@ setMethod(f="inference"
                  priors2<-priors[IND,which(gr %in% grpjj)]
                  Y2<-cbind(1:nrow(Y),Y)
                   if(norm(pred,type="F")>eps){     
-                    fun_lasso<-function(x){cat(".");lasso_reg2(pred,x[-1],nfolds=P,foldid=rep(1:P,each=ncol(pred)/P),priors=priors2[x[1],])} 
-                    Omega[IND, which(gr %in% grpjj)]<-apply(Y2,1,fun_lasso)
-                    print("ahah")
+                    fun_lasso2<-function(x){cat(".");
+                      lasso_reg2(pred,x[-1],nfolds=P,foldid=rep(1:P,each=ncol(pred)/P),priors=priors2[,x[1]])}
+                    options(show.error.messages = FALSE)
+                    Omega[IND, which(gr %in% grpjj)]<-apply(Y2,1,fun_lasso2)
+                    options(show.error.messages = TRUE)
                   }
                 }
                 
@@ -489,52 +488,139 @@ setMethod(f="inference"
                   }
                 }
 
-            
-                if(fitfun=="stability.stabs"){
-                  require(c060);#cat(".")
-                  
-                  fun_stab<-function(g){
-                    cat(".")
-                    if(sum(pred)==0){
-                      return(rep(0,nrow(pred)))
-                      
-                    }else{
-                      essai<-stabpath(g,t(pred),mc.cores=mc.cores)  
-                      varii<-stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$stable
-                      lambda<-stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$lambda
-                      L<-lars(t(pred),g,use.Gram=use.Gram)
-                      
-                      LL<-predict(L,s=lambda,mode="lambda",type="coef")$coefficients
-                      LL[-varii]<-0
-                      return(LL)
-                    }
-                  }
-                  
-                  Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_stab)
-                }                
-                                
+              
+                
                 if(fitfun=="stability.c060"){
                   require(c060);#cat(".")
+                  cat("mc.cores=",mc.cores,sep="")
                   
-                  fun_stab<-function(g){
-                    cat(".")
+                  fun_stab<-function(g,mc.cores=mc.cores,intercept.stabpath=intercept.stabpath){
+                    
                     if(sum(pred)==0){
                       return(rep(0,nrow(pred)))
-                                     
+                      cat(".")               
                     }else{
-                  essai<-stabpath(g,t(pred))  
-                  varii<-stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$stable
-                  lambda<-stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$lambda
-                  L<-lars(t(pred),g,use.Gram=use.Gram)
-                
-                  LL<-predict(L,s=lambda,mode="lambda",type="coef")$coefficients
-                  LL[-varii]<-0
+                  LL=rep(0,nrow(pred));error.inf=TRUE
+                  #cat(intercept.stabpath)
+                  try({essai<-stabpath(g,t(pred),mc.cores=mc.cores,intercept=intercept.stabpath);
+                  varii<-stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$stable;
+                  lambda<-stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$lambda;
+#                  L<-lars(t(pred),g,use.Gram=use.Gram)
+#                  LL<-predict(L,s=lambda,mode="lambda",type="coef")$coefficients
+                  L<-glmnet::glmnet(t(pred),g,intercept=intercept.stabpath);
+                  LL<-as.matrix(predict(L,s=lambda,type="coef"))[-1,1]})
+                  try({LL[-varii]<-0;
+                  error.inf=FALSE})
+                  if(error.inf){cat("!")} else {cat(".")}
+                  if(!is.vector(LL)){LL<-rep(0,nrow(pred))}
                   return(LL)
                   }
                   }
                 
-                Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_stab)
+                Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_stab,mc.cores=mc.cores,intercept.stabpath=intercept.stabpath,penalty.factor=priors2[,g[1]])
                 }
+                
+                
+                
+                
+                
+                if(fitfun=="stability.c060.weighted"){
+                  require(c060);#cat(".")
+                  cat("mc.cores=",mc.cores,sep="")
+                  priors2<-priors[IND,which(gr %in% grpjj)]
+                  Y2<-cbind(1:nrow(Y),Y)
+                  
+                  fun_stab_weighted<-function(g,mc.cores=mc.cores,intercept.stabpath=intercept.stabpath,penalty.factor=penalty.factor){
+
+                      if(sum(pred)==0){
+                      return(rep(0,nrow(pred)))
+                        cat(".")               
+                    }else{
+                      stabpath <- function (y, x, size = 0.632, steps = 100, penalty.factor = rep(1,ncol(x)), weakness=1, mc.cores = getOption("mc.cores", 
+                                                                                                                                               2L), ...) 
+                      {
+                        fit <- glmnet::glmnet(x, y, ...)
+                        if (class(fit)[1] == "multnet" | class(fit)[1] == "lognet") 
+                        y <- as.factor(y)
+                        p <- ncol(x)
+                        subsets <- sapply(1:steps, function(v) {
+                          sample(1:nrow(x), nrow(x) * size)
+                        })
+                        if (.Platform$OS.type != "windows") {
+                          res <- parallel::mclapply(1:steps, mc.cores = mc.cores, glmnet.subset.weighted, 
+                                                    subsets, x, y, lambda = fit$lambda, penalty.factor, weakness, p, 
+                                                    ...)
+                        }
+                        else {
+                          cl <- makePSOCKcluster(mc.cores)
+                          clusterExport(cl, c("glmnet", "drop0"))
+                          res <- parLapply(cl, 1:steps, glmnet.subset.weighted, subsets, 
+                                           x, y, lambda = fit$lambda, penalty.factor, weakness, p, ...)
+                          stopCluster(cl)
+                        }
+                        res <- res[unlist(lapply(lapply(res, dim), function(x) x[2] == 
+                                                   dim(res[[1]])[2]))]
+                        x <- as.matrix(res[[1]])
+                        qmat <- matrix(ncol = ncol(res[[1]]), nrow = length(res))
+                        qmat[1, ] <- colSums(as.matrix(res[[1]]))
+                        for (i in 2:length(res)) {
+                          qmat[i, ] <- colSums(as.matrix(res[[i]]))
+                          x <- x + as.matrix(res[[i]])
+                        }
+                        x <- x/length(res)
+                        qs <- colMeans(qmat)
+                        out <- list(fit = fit, x = x, qs = qs)
+                        class(out) <- "stabpath"
+                        return(out)
+                      }
+                      
+                      glmnet.subset.weighted <- function (index, subsets, x, y, lambda, penalty.factor, weakness, p, ...) 
+                      {
+                        if (length(dim(y)) == 2 | class(y) == "Surv") {
+                          glmnet::glmnet(x[subsets[, index], ], y[subsets[, index], ], 
+                                         lambda = lambda, penalty.factor = penalty.factor*1/runif(p, weakness, 1), ...)$beta != 0
+                        }
+                        else {
+                          if (is.factor(y) & length(levels(y)) > 2) {
+                            temp <- glmnet::glmnet(x[subsets[, index], ], y[subsets[, 
+                                                                                    index]], lambda = lambda, penalty.factor = penalty.factor*1/runif(p, weakness, 1), ...)[[2]]
+                            temp <- lapply(temp, as.matrix)
+                            Reduce("+", lapply(temp, function(x) x != 0))
+                          }
+                          else {
+                            glmnet::glmnet(x[subsets[, index], ], y[subsets[, index]], 
+                                           lambda = lambda, penalty.factor = penalty.factor*1/runif(p, weakness, 1), ...)$beta != 0
+                          }
+                        }
+                      }
+                      
+#                      res <- stabpath(y,x,penalty.factor=c(rep(1,999),rep(0,1)),mc.cores=2)
+                      #assignInNamespace("stabpath",,ns="c060")    
+                      #assignInNamespace("glmnet.subset",, ns="c060") 
+                      #assignInNamespace("glmnet.subset.weighted",, ns="c060")    
+                      
+                      rm(varii)
+                      LL=rep(0,nrow(pred));error.inf=TRUE
+                      #cat(intercept.stabpath)
+                      try({essai<-stabpath(g[-1],t(pred),mc.cores=mc.cores,intercept=intercept.stabpath,penalty.factor=priors2[,g[1]]);
+                      varii<-stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$stable;
+                      lambda<-stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$lambda;
+                      #                  L<-lars(t(pred),g,use.Gram=use.Gram)
+                      #                  LL<-predict(L,s=lambda,mode="lambda",type="coef")$coefficients
+                      L<-glmnet::glmnet(t(pred),g[-1],intercept=intercept.stabpath,penalty.factor=priors2[,g[1]]);
+                      LL<-as.matrix(predict(L,s=lambda,type="coef"))[-1,1]})
+                      try({LL[-varii]<-0;error.inf=FALSE})
+                      if(error.inf){cat("!")} else {cat(".")}
+                      if(!is.vector(LL)){LL<-rep(0,nrow(pred))}
+                      return(LL)
+                    }
+                  }
+                  
+                  Omega[IND, which(gr %in% grpjj)]<-apply(Y2,1,fun_stab_weighted,mc.cores=mc.cores,intercept.stabpath=intercept.stabpath)
+                }
+                
+                
+                
                 if(fitfun=="robust"){
                   require(movMF)
                   require(lars)
