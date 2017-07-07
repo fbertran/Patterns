@@ -517,7 +517,9 @@ setMethod(f="inference"
                   }
                   }
                 
-                Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_stab,mc.cores=mc.cores,intercept.stabpath=intercept.stabpath,penalty.factor=priors2[,g[1]])
+                  options(show.error.messages = FALSE)
+                  Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_stab,mc.cores=mc.cores,intercept.stabpath=intercept.stabpath,penalty.factor=priors2[,g[1]])
+                  options(show.error.messages = TRUE)
                 }
                 
                 
@@ -616,7 +618,9 @@ setMethod(f="inference"
                     }
                   }
                   
+                  options(show.error.messages = FALSE)
                   Omega[IND, which(gr %in% grpjj)]<-apply(Y2,1,fun_stab_weighted,mc.cores=mc.cores,intercept.stabpath=intercept.stabpath)
+                  options(show.error.messages = TRUE)
                 }
                 
                 
