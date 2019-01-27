@@ -163,7 +163,11 @@ setMethod(f="inference"
                                ,pi_thr.stabsel=0.6
                                ,priors=NULL
                                ,mc.cores=getOption("mc.cores", 2L)
-                               ,intercept.stabpath=TRUE){
+                               ,intercept.stabpath=TRUE
+                               ,steps.seq=.95
+                               ,limselect=.95
+                               ,use.parallel=TRUE
+                               ){
 
             #Fshape=NULL
             #Finit=NULL
@@ -518,7 +522,7 @@ setMethod(f="inference"
                   }
                 
                   options(show.error.messages = FALSE)
-                  Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_stab,mc.cores=mc.cores,intercept.stabpath=intercept.stabpath,penalty.factor=priors2[,g[1]])
+                  Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_stab,mc.cores=mc.cores,intercept.stabpath=intercept.stabpath)
                   options(show.error.messages = TRUE)
                 }
                 
@@ -560,6 +564,7 @@ setMethod(f="inference"
                                            x, y, lambda = fit$lambda, penalty.factor, weakness, p, ...)
                           stopCluster(cl)
                         }
+                        #str(res)
                         res <- res[unlist(lapply(lapply(res, dim), function(x) x[2] == 
                                                    dim(res[[1]])[2]))]
                         x <- as.matrix(res[[1]])
@@ -602,17 +607,21 @@ setMethod(f="inference"
                       #assignInNamespace("glmnet.subset.weighted",, ns="c060")    
                       
                       rm(varii)
-                      LL=rep(0,nrow(pred));error.inf=TRUE
+                      LL=rep(0,nrow(pred));error.comp=TRUE;error.inf=TRUE
                       #cat(intercept.stabpath)
-                      try({essai<-stabpath(g[-1],t(pred),mc.cores=mc.cores,intercept=intercept.stabpath,penalty.factor=priors2[,g[1]]);
+                      try({
+                      essai<-stabpath(g[-1],t(pred),mc.cores=mc.cores,intercept=intercept.stabpath,penalty.factor=priors2[,g[1]]);
                       varii<-stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$stable;
                       lambda<-stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$lambda;
                       #                  L<-lars(t(pred),g,use.Gram=use.Gram)
                       #                  LL<-predict(L,s=lambda,mode="lambda",type="coef")$coefficients
                       L<-glmnet::glmnet(t(pred),g[-1],intercept=intercept.stabpath,penalty.factor=priors2[,g[1]]);
-                      LL<-as.matrix(predict(L,s=lambda,type="coef"))[-1,1]})
+                      LL<-as.matrix(predict(L,s=lambda,type="coef"))[-1,1];
+                      error.comp=FALSE
+                      })
+                      if(error.comp){cat("!",geterrmessage(),"\n")} else {cat("")}
                       try({LL[-varii]<-0;error.inf=FALSE})
-                      if(error.inf){cat("!")} else {cat(".")}
+                      if(!error.comp&error.inf){cat("!",geterrmessage(),"\n")} else {cat(".")}
                       if(!is.vector(LL)){LL<-rep(0,nrow(pred))}
                       return(LL)
                     }
@@ -632,7 +641,6 @@ setMethod(f="inference"
                   fun_robust<-function(g){
                     if(sum(pred)==0){
                       return(rep(0,nrow(pred)))
-                      
                     }else{
                       essai<-boost(t(pred)+rnorm(prod(dim(pred)),0,0.001),g)  
                       varii<-which(essai==1)
@@ -648,6 +656,43 @@ setMethod(f="inference"
                   Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_robust)
                   
                 }  
+                
+                if(fitfun=="selectboost.weighted"){
+                  require(movMF)
+                  require(lars)
+                  require(msgps)
+                  require(SelectBoost)
+                  priors2<-priors[IND,which(gr %in% grpjj)]
+                  Y2<-cbind(1:nrow(Y),Y)
+
+                  fun_robust_weighted<-function(g,mc.cores=mc.cores, steps.seq = steps.seq, limselect = limselect, use.parallel = use.parallel){
+                    if(norm(pred,type="F")<=eps){     
+                      return(rep(0,nrow(pred)))
+                      cat(".")               
+                    }else{
+                      if(exists("varii")){rm(varii)}
+                      LL=rep(0,nrow(pred));error.comp=TRUE;error.inf=TRUE
+                      #cat(intercept.stabpath)
+                      try({
+                      essai<-suppressMessages(fastboost(t(pred),g[-1],group_func_2,lasso_cv_glmnet_min_weighted,corrfunc="crossprod",normalize=TRUE, B=100, use.parallel=use.parallel, ncores=mc.cores,c0lim=FALSE, steps.seq = steps.seq, priors=priors2[,g[1]]))
+                      varii<-which(essai>=limselect)
+
+                      resultat<-glmnet::cv.glmnet(t(pred),g[-1],nfolds=10,penalty.factor=priors2[,g[1]])
+                      LL<-predict(resultat,s="lambda.min",type="coef")[-1,1]
+                      error.comp=FALSE
+                      })
+                      if(error.comp){cat("!",geterrmessage(),"\n")} else {cat("")}
+                      try({LL[-varii]<-0;error.inf=FALSE})
+                      if(!error.comp&error.inf){cat("!",geterrmessage(),"\n")} else {cat(".")}
+                      if(!is.vector(LL)){LL<-rep(0,nrow(pred))}
+                      return(LL)
+                    }
+                  }
+                  Omega[IND, which(gr %in% grpjj)]<-apply(Y2,1,fun_robust_weighted,mc.cores=mc.cores,steps.seq=.95,limselect=.95,use.parallel=use.parallel)
+                  }  
+                
+                
+                                
               }
               cat("\n")
               #fin de la boucle for avec pic ; 

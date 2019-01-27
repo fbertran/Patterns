@@ -67,6 +67,7 @@ lasso_reg2<-function(M,Y,eps,foldid=foldid,priors,nfolds){
   return(repu)
 }
 
+
 spls_reg<-function(M,Y,K,eps){
   require(spls)
   cvspls<-try(cv.spls(t(M),(Y),fold=K,K=1:10,eta = seq(0.1,0.9,0.1),plot.it=FALSE))
