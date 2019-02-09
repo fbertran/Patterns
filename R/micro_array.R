@@ -311,7 +311,13 @@ setMethod(f="geneSelection",
             
             
             warnings("The use of the geneSelection with signature c(micro_array,micro_array) is depreciated",immediate. =TRUE)
-            BBB<-strsplit(sessionInfo()$otherPkgs$limma$Version,"[.]")
+            if(!is.null(sessionInfo()$otherPkgs$limma$Version)){
+              BBB<-strsplit(sessionInfo()$otherPkgs$limma$Version,"[.]")
+            } else {
+              if(!is.null(sessionInfo()$loadedOnly$limma$Version)){
+                BBB<-strsplit(sessionInfo()$loadedOnly$limma$Version,"[.]")
+              } else {stop("Please install the limma BioConductor package")}
+            }
             
             if( !(BBB[[1]][1]>3 || (BBB[[1]][1]==3 && BBB[[1]][2]>18) || 
                     (BBB[[1]][1]==3 && BBB[[1]][2]==18 && BBB[[1]][3]>=13 ) ))
@@ -537,7 +543,13 @@ setMethod(f="geneSelection",
             
             #here we check if the version of Limma is ok 
             
-            BBB<-strsplit(sessionInfo()$otherPkgs$limma$Version,"[.]")
+            if(!is.null(sessionInfo()$otherPkgs$limma$Version)){
+              BBB<-strsplit(sessionInfo()$otherPkgs$limma$Version,"[.]")
+            } else {
+              if(!is.null(sessionInfo()$loadedOnly$limma$Version)){
+                BBB<-strsplit(sessionInfo()$loadedOnly$limma$Version,"[.]")
+              } else {stop("Please install the limma BioConductor package")}
+            }
             
             if( !(BBB[[1]][1]>3 || (BBB[[1]][1]==3 && BBB[[1]][2]>18) || 
                     (BBB[[1]][1]==3 && BBB[[1]][2]==18 && BBB[[1]][3]>=13 ) ))
