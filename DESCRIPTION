@@ -1,14 +1,27 @@
 Package: Patterns
 Type: Package
-Title: Selection, Reverse Engineering, Prediction and Simulation for patterned expressions in networks
-Version: 0.3
-Date: 2014-18-04
-Author: Frederic Bertrand, Nicolas Jung, Laurent Vallat, Myriam Maumy Bertrand
+Title: Deciphering Biological Networks with Patterned Heterogeneous Measurements
+Version: 0.4
+Date: 2019-04-19
+Depends: R (>= 2.10)
+Imports: abind, animation, cluster, graphics, grDevices, grid, igraph, lars, lattice, 
+         limma, magic, methods, nnls, plotrix, splines, stats4, survival, tnet, VGAM
+Suggests: 
+    R.rsp,
+    CascadeData,
+    knitr
+Authors@R: c(
+	person(given = "Frederic", family= "Bertrand", role = c("cre", "aut"), email = "frederic.bertrand@math.unistra.fr", comment = c(ORCID = "0000-0002-0837-8281")),
+	person(given = "Myriam", family= "Maumy-Bertrand", role = c("aut"), email = "myriam.maumy-bertrand@math.unistra.fr", comment = c(ORCID = "0000-0002-4615-1512")))
+Author: Frederic Bertrand [cre, aut] (<https://orcid.org/0000-0002-0837-8281>), Myriam Maumy-Bertrand [aut] (<https://orcid.org/0000-0002-4615-1512>)
 Maintainer: Frederic Bertrand <frederic.bertrand@math.unistra.fr>
-Description: ...
+Description: A modeling tool dedicated to biological network modeling. It allows for single or joint modeling of, for instance, genes and proteins. It starts with the selection of the actors that will be the used in the reverse engineering upcoming step. An actor can be included in that selection based on its differential measurement (for instance gene expression or protein abundance) or on its time course profile. Wrappers for actors clustering functions and cluster analysis are provided. It also allows reverse engineering of biological networks taking into account the observed time course patterns of the actors. Many inference functions are provided and dedicated to get specific features for the inferred network such as sparsity, robust links, high confidence links or stable through resampling links. Some simulation and prediction tools are also available for cascade networks. Example of use with microarray or RNA-Seq data are provided.
 License: GPL (>= 2)
-Depends: methods, abind, animation, cluster, graphics, grDevices,
-        igraph, lars, lattice, limma, magic, methods, nnls, plotrix, R (>= 2.10), splines,
-        stats, stats4, survival, tnet, utils, VGAM
+Encoding: UTF-8
 Collate: global.R micro_array.R network.R micro_array-network.R
 	micropredict.R
+Classification/MSC: 62J05, 62J07, 62J99, 92C42
+VignetteBuilder: R.rsp
+RoxygenNote: 6.1.1
+URL: http://www-irma.u-strasbg.fr/~fbertran/, https://github.com/fbertran/Patterns
+BugReports: https://github.com/fbertran/Patterns/issues

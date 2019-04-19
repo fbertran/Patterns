@@ -1,30 +1,21 @@
 citHeader("To cite the Patterns package in publications use:")
 
 titl <- meta$Title
-year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date)
+titl <- "Patterns: reverse engineering of biological networks with patterned expressions"
+year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date, perl = TRUE)
 vers <- paste("R package version", meta$Version)
+auth <- personList(as.person("Frederic Bertrand"),
+                             as.person("Myriam Maumy-Bertrand"))
 
 citEntry(entry="Manual",
          title = titl,
-         author = personList(as.person("F. Bertrand"), as.person("N. Jung"), as.person("L. Vallat"), as.person("M. Maumy-Bertrand")),
+         author = personList(as.person("F. Bertrand"), as.person("M. Maumy-Bertrand")),
 	 publisher = "manual",
          year         = year,
          note         = vers,
-         url          = "http://www-math.u-strasbg.fr/genpred/spip.php?article5",
-         textVersion = 
-         paste("F. Bertrand, N. Jung, L. Vallat and M. Maumy-Bertrand (",year ,"). ", 
-               titl, ", ", vers, ".", sep=""
-               )
-)
-
-citEntry(entry="article",
-         title = "Reverse-engineering the genetic circuitry of a cancer cell with predicted intervention in chronic lymphocytic leukemia.",
-         author = personList(as.person("L. Vallat"), as.person("et al.")),
-	 journal = "PNAS",
-	 publisher = "",
-         year         = 2013,
-         note         = "",
          url          = "",
          textVersion = 
-         paste("Vallat, L., et al. (2013)","Reverse-engineering the genetic circuitry of a cancer cell with predicted intervention in chronic lymphocytic leukemia.", "PNAS", "110(2),", "459-464.")
+         paste("F. Bertrand and M. Maumy-Bertrand (",year ,"). ", 
+               titl, ", ", vers, ".", sep=""
+               )
 )
