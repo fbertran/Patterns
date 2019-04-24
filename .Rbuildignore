@@ -14,3 +14,5 @@
 ^README\.md$
 #Specific
 ^TO_USE_example*$
+^TO_PRUNE_man*$
+^TO_PRUNE_R*$

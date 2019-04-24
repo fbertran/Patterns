@@ -1,0 +1,186 @@
+---
+title: "Deciphering Biological Networks with Patterned Heterogeneous Measurements"
+author: "Frédéric Bertrand and Myriam Maumy-Bertrand"
+output: github_document
+---
+
+[![CRAN status](https://www.r-pkg.org/badges/version/Patterns)](https://cran.r-project.org/package=Patterns)
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%",
+  dpi=300,fig.width=7,
+  fig.keep="all"
+)
+```
+# Patterns
+
+
+![Reverse-engineered network.](man/figures/figure_article_def.png)
+
+![Simulation of an intervention on a gene of the network.](man/figures/figure_network_pred2.png)
+
+This website and these examples were created by F. Bertrand and M. Maumy-Bertrand.
+
+## Installation
+
+You can install the released version of Patterns from [CRAN](https://CRAN.R-project.org) with:
+
+```{r, eval = FALSE}
+install.packages("Patterns")
+```
+
+You can install the development version of Patterns from [github](https://github.com) with:
+
+```{r, eval = FALSE}
+devtools::install_github("fbertran/Patterns")
+```
+
+## Examples
+
+### Data management
+Import Cascade Data (repeated measurements on several subjects) from the CascadeData package and turn them into a micro array object. The second line makes sure the CascadeData package is installed.
+```{r microarrayclass, warning=TRUE}
+library(Patterns)
+if(!require(CascadeData)){install.packages("CascadeData")}
+data(micro_US)
+micro_US<-as.micro_array(micro_US,time=c(60,90,210,390),subject=6)
+str(micro_US)
+```
+
+Get a summay and plots of the data:
+```{r plotmicroarrayclass}
+summary(micro_US)
+plot(micro_US)
+```
+
+### Gene selection
+There are several functions to carry out gene selection before the inference. They are detailed in the vignette of the package. 
+
+### Data simulation
+Let's simulate some cascade data and then do some reverse engineering.
+
+We first design the F matrix
+```{r createF}
+Ti<-4
+Ngrp<-4
+
+Fmat=array(0,dim=c(Ti,Ti,Ngrp^2))
+
+for(i in 1:(Ti^2)){
+  if(((i-1) %% Ti) > (i-1) %/% Ti){
+    Fmat[,,i][outer(1:Ti,1:Ti,function(x,y){0<(x-y) & (x-y)<2})]<-1
+    }
+}
+```
+
+The `Patterns` function `CascadeFinit` is an utility function to easily define such an F matrix.
+```{r CascadeInit}
+Fbis=Patterns::CascadeFinit(Ti,Ngrp,low.trig=FALSE)
+str(Fbis)
+```
+
+Check if the two matrices `Fmat` and `Fbis` are identical.
+```{r CascadeInitCheck}
+print(all(Fmat==Fbis))
+```
+
+End of F matrix definition.
+```{r CascadeInitCheck}
+Fmat[,,3]<-Fmat[,,3]*0.2
+Fmat[3,1,3]<-1
+Fmat[4,2,3]<-1
+Fmat[,,4]<-Fmat[,,3]*0.3
+Fmat[4,1,4]<-1
+Fmat[,,8]<-Fmat[,,3]
+```
+
+We set the seed to make the results reproducible and draw a scale free random network.
+```{r randomN}
+set.seed(1)
+Net<-Patterns::network_random(
+  nb=100,
+  time_label=rep(1:4,each=25),
+  exp=1,
+  init=1,
+  regul=round(rexp(100,1))+1,
+  min_expr=0.1,
+  max_expr=2,
+  casc.level=0.4
+)
+Net@F<-Fmat
+str(Net)
+```
+
+Plot the simulated network.
+```{r plotnet}
+plot(Net, choice="network")
+```
+
+If a gene clustering is known, it can be used as a coloring scheme.
+```{r plotnet}
+plot(Net, choice="network", gr=rep(1:4,each=25))
+```
+
+Plot the F matrix, for low dimensional F matrices.
+```{r plotF}
+plot(Net, choice="F")
+```
+
+Plot the F matrix using the `pixmap` package, for high dimensional F matrices.
+```{r plotF}
+plot(Net, choice="Fpixmap")
+```
+
+We simulate gene expression according to the network that was previously drawn
+```{r genesimul, message=FALSE, warning=FALSE}
+M <- Patterns::gene_expr_simulation(
+  network=Net,
+  time_label=rep(1:4,each=25),
+  subject=5,
+  peak_level=200,
+  act_time_group=1:4)
+str(M)
+```
+
+Get a summay and plots of the simulated data:
+```{r summarysimuldata}
+summary(M)
+```
+
+```{r plotsimuldata}
+plot(M)
+```
+
+### Network inferrence
+We infer the new network using subjectwise leave one out cross-validation (all measurement from the same subject are removed from the dataset)
+```{r netinf}
+Net_inf_P <- Patterns::inference(M, cv.subjects=TRUE)
+```
+
+Heatmap of the coefficients of the Omega matrix of the network
+```{r heatresults}
+stats::heatmap(Net_inf_P@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
+```
+
+###Post inference network analysis
+We switch to data that were derived from the inferrence of a real biological network and try to detect the optimal cutoff value: the best cutoff value for a network to fit a scale free network.
+
+```{r cutoff, cache=TRUE}
+data("network")
+set.seed(1)
+cutoff(network)
+```
+
+Analyze the network with a cutoff set to the previouly found 0.14 optimal value.
+
+```{r analyzenet, warning=FALSE}
+analyze_network(network,nv=0.14)
+```
+
+

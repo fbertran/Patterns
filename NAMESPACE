@@ -1,18 +1,32 @@
-importFrom(VGAM,rlaplace)
+importFrom("grDevices", "col2rgb", "colorRamp", "dev.cur", "dev.new",
+           "grey", "rainbow", "rgb", "terrain.colors")
+importFrom("graphics", "abline", "hist", "legend", "lines", "matplot",
+           "par", "rect", "text", "grid")
+importFrom("stats", "aggregate", "cor", "hclust", "lm", "loess",
+           "model.matrix", "quantile", "rbinom", "reshape",
+           "rmultinom", "rnorm", "runif", "var", "wilcox.test")
+importFrom("methods", "new")
+importFrom("utils", "sessionInfo")
+    
+importFrom(VGAM,rlaplace,rpareto,zeta)
 
 importFrom(abind,abind)
-#importFrom(VGAM,rlaplace,rpareto,zeta)
 
 import(#abind, 
 #animation, 
 #cluster, 
+#glmnet,
 #graphics, 
 #grDevices, 
+#grid,
 igraph, 
 #lars, 
-lattice, 
+#lattice, 
 limma, 
 magic, 
+#movMF,
+msgps,
+#Mfuzz,
 #methods, 
 nnls, 
 plotrix, 
@@ -21,11 +35,14 @@ splines,
 stats4, 
 survival, 
 tnet#, 
-#utils
+#utils,
+#WGCNA
 )
 
 exportMethods(
     "analyze_network",
+    "clustExploration",
+    "clustInference",
     "cutoff",
     "dim",
     "evolution",
@@ -42,9 +59,7 @@ exportMethods(
     "summary",
     "unionMicro",
 #    "unionNGseq",
-    "gene_expr_simulation",
-    "clustInference",
-    "clustExploration"
+    "gene_expr_simulation"
 )
 
 exportClasses(

@@ -18,7 +18,8 @@ gene_expr_simulation(network,...)
 \item{...}{\describe{
   \item{time_label}{a vector containing the time labels.}
   \item{subject}{the number of subjects}
-  \item{level_pic}{the mean level of pics. }
+  \item{peak_level}{the mean level of peaks. }
+	\item{act_time_group}{ [NULL] vector ; at which time the groups (defined by sort(unique(group))) are activated ?}
 }}
 }
 
@@ -26,12 +27,8 @@ gene_expr_simulation(network,...)
 A micro_array object.
 }
 
-\references{
-Vallat, L., Kemper, C. A., Jung, N., Maumy-Bertrand, M., Bertrand, F., Meyer, N., ... & Bahram, S. (2013). Reverse-engineering the genetic circuitry of a cancer cell with predicted intervention in chronic lymphocytic leukemia. \emph{Proceedings of the National Academy of Sciences}, 110(2), 459-464.
-}
-
 \author{
-Nicolas Jung, Bertrand Frederic, Myriam Maumy-Bertrand.
+Bertrand Frederic, Myriam Maumy-Bertrand.
 }
 
 

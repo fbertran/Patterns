@@ -172,3 +172,27 @@ geneName<-translate(entrez[which(TF %in% entrez)],from=org.Hs.egSYMBOL,simplify=
 
 which(selection@gene_ID %in% "EGR1")
 
+
+
+
+
+
+
+
+
+
+
+
+
+data(simul)
+plot(Net)
+plot(M)
+
+data(Selection)
+data(network)
+nv<-0.11
+plot(network,choice="network",gr=Selection@group,nv=nv,label_v=Selection@gene_ID,
+     edge.arrow.size=0.9,edge.thickness=1.5)
+
+
+

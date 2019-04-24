@@ -8,7 +8,7 @@ Coerce a matrix into a micro_array object.
 Coerce a matrix into a micro_array object.
 }
 \usage{
-as.micro_array(M, time, subject)
+as.micro_array(M, time, subject, name_probe = NULL, gene_ID = NULL)
 }
 
 \arguments{
@@ -21,22 +21,27 @@ A vector. The time points measurements.
   \item{subject}{
 The number of subjects. 
 }
+  \item{name_probe}{
+Vector with the row names of the micro_array. 
+}
+  \item{gene_ID}{
+Vector with the gene IDs of the row names of the micro array. 
+}
 }
 
 \value{A micro_array object.}
 
-\references{
-Vallat, L., Kemper, C. A., Jung, N., Maumy-Bertrand, M., Bertrand, F., Meyer, N., ... & Bahram, S. (2013). Reverse-engineering the genetic circuitry of a cancer cell with predicted intervention in chronic lymphocytic leukemia. \emph{Proceedings of the National Academy of Sciences}, 110(2), 459-464.
-}
-
 \author{
-Nicolas Jung, Bertrand Frederic, Myriam Maumy-Bertrand.
+Bertrand Frederic, Myriam Maumy-Bertrand.
 }
 
 
 
 
 \examples{
-	data(micro_US)
-	micro_US<-as.micro_array(micro_US,time=c(60,90,210,390),subject=6)
+if(require(CascadeData)){
+	data(micro_US, package="CascadeData")
+	micro_US<-as.micro_array(micro_US[1:100,],time=c(60,90,210,390),subject=6)
+	plot(micro_US)
+	}
 }

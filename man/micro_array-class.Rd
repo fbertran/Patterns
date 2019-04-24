@@ -16,6 +16,7 @@ Objects can be created by calls of the form \code{new("micro_array", ...)}.
   \describe{
     \item{\code{microarray}:}{Object of class \code{"matrix"} ~~ }
     \item{\code{name}:}{Object of class \code{"vector"} ~~ }
+    \item{\code{gene_ID}:}{Object of class \code{"vector"} ~~ }
     \item{\code{group}:}{Object of class \code{"vector"} ~~ }
     \item{\code{start_time}:}{Object of class \code{"vector"} ~~ }
     \item{\code{time}:}{Object of class \code{"vector"} ~~ }
@@ -25,7 +26,7 @@ Objects can be created by calls of the form \code{new("micro_array", ...)}.
 \section{Methods}{
   \describe{
     \item{dim}{\code{signature(x = "micro_array")}: ... }
-    \item{genePeakSelection}{\code{signature(M1 = "micro_array", M2 = "micro_array", pic = "numeric")}: ... }
+    \item{genePeakSelection}{\code{signature(M1 = "micro_array", M2 = "micro_array", peak = "numeric")}: ... }
     \item{geneSelection}{\code{signature(M1 = "micro_array", M2 = "micro_array", tot.number = "numeric")}: ... }
     \item{head}{\code{signature(x = "micro_array")}: ... }
     \item{inference}{\code{signature(M = "micro_array")}: ... }
@@ -37,22 +38,7 @@ Objects can be created by calls of the form \code{new("micro_array", ...)}.
     \item{unionMicro}{\code{signature(M1 = "micro_array", M2 = "micro_array")}: ... }
 	 }
 }
-\references{
-%%  ~~put references to the literature/web site here~~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%%  ~~objects to See Also as \code{\link{~~fun~~}}, ~~~
-%%  ~~or \code{\linkS4class{CLASSNAME}} for links to other classes ~~~
-}
 \examples{
 showClass("micro_array")
 }

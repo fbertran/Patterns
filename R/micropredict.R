@@ -60,14 +60,14 @@ setMethod("plot"
               for(j in long){
                 
                 if(M[j]>0){
-                  color[j]<-rgb(couleur2(max(M[j],0.2)),alpha=255,max=255)
+                  color[j]<-rgb(couleur2(max(M[j],0.2)),alpha=255,maxColorValue=255)
                 }
                 else{
-                  color[j]<-rgb(couleur1(max(-M[j],0.2)),alpha=255,max=255)
+                  color[j]<-rgb(couleur1(max(-M[j],0.2)),alpha=255,maxColorValue=255)
                   
                 }
                 if(M[j]==0){
-                  color[j]<- rgb(couleur2(0),alpha=255,max=255)
+                  color[j]<- rgb(couleur2(0),alpha=255,maxColorValue=255)
                 }
                 
               }
@@ -76,7 +76,7 @@ setMethod("plot"
                    edge.arrow.size=edge.arrow.size,edge.thickness=edge.thickness)
               couleur3<-colorRamp(c("blue","grey","red"))
               nb.col<-300
-              coll<-rgb(couleur3(1:nb.col/nb.col),max=255)
+              coll<-rgb(couleur3(1:nb.col/nb.col),maxColorValue=255)
               
               rect(seq(-1,-0.5,length.out=nb.col)[1:(nb.col-1)],-1,seq(-1,-0.5,length.out=nb.col)[2:nb.col],-0.95,border="transparent",col=coll)
               text(-1,-1.05,-maxi)

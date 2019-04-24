@@ -1,12 +1,12 @@
-setGeneric("unsupervised_clustering_auto_m_c",package="Mfuzz",def=function(M1,... ){standardGeneric("unsupervised_clustering_auto_m_c")})
-setGeneric("unsupervised_clustering",package="Mfuzz",def=function(M1,clust,mestim,... ){standardGeneric("unsupervised_clustering")})
+setGeneric("unsupervised_clustering_auto_m_c",package="Patterns",def=function(M1,... ){standardGeneric("unsupervised_clustering_auto_m_c")})
+setGeneric("unsupervised_clustering",package="Patterns",def=function(M1,clust,mestim,... ){standardGeneric("unsupervised_clustering")})
 setGeneric("geneSelection",package="Patterns",def = function(x,y,tot.number,... ){standardGeneric("geneSelection")})
-setGeneric("genePeakSelection",package="Patterns",def = function(x,pic,... ){standardGeneric("genePeakSelection")})
-setGeneric("unionMicro",package="Limma",def = function(M1,M2 ){standardGeneric("unionMicro")})
-setGeneric("unionNGseq",package="Limma",def = function(C1,C2 ){standardGeneric("unionNGseq")})
-setGeneric("position",package="igraph",def = function(net,... ){standardGeneric("position")})
-setGeneric("geneNeighborhood",package="igraph",def = function(net,targets,... ){standardGeneric("geneNeighborhood")})
-setGeneric("evolution",package="igraph",def = function(net,list_nv,... ){standardGeneric("evolution")})
+setGeneric("genePeakSelection",package="Patterns",def = function(x,peak,... ){standardGeneric("genePeakSelection")})
+setGeneric("unionMicro",package="Patterns",def = function(M1,M2 ){standardGeneric("unionMicro")})
+setGeneric("unionNGseq",package="Patterns",def = function(C1,C2 ){standardGeneric("unionNGseq")})
+setGeneric("position",package="Patterns",def = function(net,... ){standardGeneric("position")})
+setGeneric("geneNeighborhood",package="Patterns",def = function(net,targets,... ){standardGeneric("geneNeighborhood")})
+setGeneric("evolution",package="Patterns",def = function(net,list_nv,... ){standardGeneric("evolution")})
 setGeneric("inferenceCascade",package="Patterns",def = function(M,... ){standardGeneric("inferenceCascade")})
 setGeneric("inference",package="Patterns",def = function(M,... ){standardGeneric("inference")})
 setGeneric("cutoff",package="Patterns",def = function(Omega,... ){standardGeneric("cutoff")})
@@ -14,80 +14,339 @@ setGeneric("analyze_network",package="Patterns",def = function(Omega,nv,...){sta
 setGeneric("predict",package="Patterns",def = function(object,...){standardGeneric("predict")})
 setGeneric("gene_expr_simulation",def = function(network,...){standardGeneric("gene_expr_simulation")})
 setGeneric("gene_counts_simulation",def = function(network,...){standardGeneric("gene_counts_simulation")})
-setGeneric("clustExploration",def = function(microarray){standardGeneric("clustExploration")})
-setGeneric("clustInference",def = function(microarray,vote.index){standardGeneric("clustInference")})
+setGeneric("clustExploration",def = function(microarray,...){standardGeneric("clustExploration")})
+setGeneric("clustInference",def = function(microarray,vote.index,...){standardGeneric("clustInference")})
 setGeneric("probeMerge",def = function(x,...){standardGeneric("probeMerge")})
 
 
 
-as.micro_array<-function(M,time,subject,name_probe=NULL,gene_ID=NULL){
-  if(is.null(row.names(M))){row.names(M)<-paste("gene",1:dim(M)[1])}
-  if(!is.null(name_probe)){row.names(M)<-name_probe}
-  g<-0
-  if(!is.null(gene_ID)) g<-gene_ID
-  return(new("micro_array",microarray=as.matrix(M),
-             name=row.names(M),
-             gene_ID=g,
-             time=time,
-             subject=subject,
-             group=0,
-             start_time=0))    
+as.micro_array <-
+  function(M,
+           time,
+           subject,
+           name_probe = NULL,
+           gene_ID = NULL) {
+    if (is.null(row.names(M))) {
+      row.names(M) <- paste("gene", 1:dim(M)[1])
+    }
+    if (!is.null(name_probe)) {
+      row.names(M) <- name_probe
+    }
+    g <- 0
+    if (!is.null(gene_ID))
+      g <- gene_ID
+    return(
+      new(
+        "micro_array",
+        microarray = as.matrix(M),
+        name = row.names(M),
+        gene_ID = g,
+        time = time,
+        subject = subject,
+        group = 0,
+        start_time = 0
+      )
+    )
+  }
+
+as.nextgen_seq <- function(C, time, subject) {
+  if (is.null(row.names(C))) {
+    row.names(C) <- paste("gene", 1:dim(C)[1])
+  }
+  return(
+    new(
+      "nextgen_seq",
+      nextgenseq = as.matrix(C),
+      name = row.names(C),
+      time = time,
+      subject = subject,
+      group = 0,
+      start_time = 0
+    )
+  )
 }
 
-as.nextgen_seq<-function(C,time,subject){
-  if(is.null(row.names(C))){row.names(C)<-paste("gene",1:dim(M)[1])}
-  return(new("nextgen_seq",nextgenseq=as.matrix(C),name=row.names(C),time=time,subject=subject,group=0,start_time=0))	
+
+cv.lars1 <- function (x, y, K = 10, index, trace = FALSE, plot.it = TRUE, 
+                      se = TRUE, type = c("lasso", "lar", "forward.stagewise", 
+                                          "stepwise"), mode = c("fraction", "step"), cv.fun
+                      #, cv.fun.name
+                      , ...) 
+{
+  #  requireNamespace("lars")
+  #  cat(cv.fun.name)
+  type = match.arg(type)
+  if (missing(mode)) {
+    mode = switch(type, lasso = "fraction", lar = "step", 
+                  forward.stagewise = "fraction", stepwise = "step")
+  }
+  else mode = match.arg(mode)
+  all.folds <- cv.fun(length(y), K)
+  #  cat(all.folds[[1]],"\n")
+  if (missing(index)) {
+    index = seq(from = 0, to = 1, length = 100)
+    if (mode == "step") {
+      fit = lars::lars(x, y, type = type, ...)
+      nsteps = nrow(fit$beta)
+      maxfold = max(sapply(all.folds, length))
+      nsteps = min(nsteps, length(y) - maxfold)
+      index = seq(nsteps)
+    }
+  }
+  residmat <- matrix(0, length(index), K)
+  for (i in seq(K)) {
+    omit <- all.folds[[i]]
+    fit <- lars::lars(x[-omit, , drop = FALSE], y[-omit], trace = trace, 
+                      type = type, ...)
+    fit <- lars::predict.lars(fit, x[omit, , drop = FALSE], mode = mode, 
+                              s = index)$fit
+    if (length(omit) == 1) 
+      fit <- matrix(fit, nrow = 1)
+    residmat[, i] <- apply((y[omit] - fit)^2, 2, mean)
+    if (trace) 
+      cat("\n CV Fold", i, "\n\n")
+  }
+  cv <- apply(residmat, 1, mean)
+  cv.error <- sqrt(apply(residmat, 1, var)/K)
+  object <- list(index = index, cv = cv, cv.error = cv.error, 
+                 mode = mode)
+  if (plot.it) 
+    lars::plotCVLars(object, se = se)
+  invisible(object)
 }
 
 
-lasso_reg<-function(M,Y,K,eps,priors){
-  require(lars)
-  cvlars<-try(cv.lars(t(M),(Y),intercept=FALSE,K=K,plot.it=FALSE,eps=10^-5,use.Gram=FALSE))
+lasso_reg<-function(M,Y,K,eps,priors,cv.fun=lars::cv.folds
+                    #,cv.fun.name="lars::cv.folds"
+){
+  #  require(lars)
+  #  cat("lasso_reg",cv.fun.name,"\n")
+  cvlars1<-try(cv.lars1(t(M),(Y),intercept=FALSE,K=K,plot.it=FALSE,eps=10^-5,cv.fun=cv.fun
+                      #, cv.fun.name=cv.fun.name
+  ))
+  n<-try(cvlars1$index[which.min(cvlars1$cv)+max(1,which.min(cvlars1$cv[which.min(cvlars1$cv):length(cvlars1$cv)]<=min(cvlars1$cv)+cvlars1$cv.error[which.min(cvlars1$cv)])-1)-1])
+  model<-try(lars::lars(t(M),(Y),intercept=FALSE,eps=10^-5,use.Gram=FALSE))
+  repu<-try(lars::coef.lars(model,s=n,mode="fraction"))
+  if(!is.vector(repu)){repu<-rep(0,dim(M)[1])}
+  return(repu)
+}
+
+
+lasso_reg_old<-function(M,Y,K,eps,priors){
+  cvlars<-try(lars::cv.lars(t(M),(Y),intercept=FALSE,K=K,plot.it=FALSE,eps=10^-5,use.Gram=FALSE))
   n<-try(cvlars$index[which.min(cvlars$cv)+max(1,which.min(cvlars$cv[which.min(cvlars$cv):length(cvlars$cv)]<=min(cvlars$cv)+cvlars$cv.error[which.min(cvlars$cv)])-1)-1])
-  model<-try(lars(t(M),(Y),intercept=FALSE,eps=10^-5,use.Gram=FALSE))
-  repu<-try(coef(model,s=n,mode="fraction"))
+  model<-try(lars::lars(t(M),(Y),intercept=FALSE,eps=10^-5,use.Gram=FALSE))
+  repu<-try(lars::coef.lars(model,s=n,mode="fraction"))
   if(!is.vector(repu)){repu<-rep(0,dim(M)[1])}
   return(repu)
 }
 
 
 lasso_reg2<-function(M,Y,eps,foldid=foldid,priors,nfolds){
-  require(glmnet)
+  #require(glmnet)
   foldid=rep(1:nfolds,each=ncol(M)/nfolds)
   if(is.null(priors)) priors<-rep(1,nrow(M))
-  cvglmnet<-try(cv.glmnet(t(M),Y,nfolds=nfolds,foldid=foldid,penalty.factor=priors,intercept=FALSE))
+  cvglmnet<-try(glmnet::cv.glmnet(t(M),Y,nfolds=nfolds,foldid=foldid,penalty.factor=priors,intercept=FALSE))
 #  n<-try(which(cvglmnet$cvm==min(cvglmnet$cvm)))
 #  lambda<-try(cvglmnet$lambda[n])
 #  try(print(lambda))
 #  model<-try(glmnet(t(M),Y,intercept=FALSE,thresh=10^(-5),penalty.factor=priors,lambda=lambda))
 #  coef(cv.fit,s="lambda.min")
 #  repu<-try(as.vector(coef(model)[-1]))
-  repu<-try(as.vector(coef(cvglmnet,s="lambda.min")[-1]))
+  repu<-try(as.vector(glmnet::coef.cv.glmnet(cvglmnet,s="lambda.min")[-1]))
   if(!is.vector(repu)){repu<-rep(0,dim(M)[1])}
   return(repu)
 }
 
 
-spls_reg<-function(M,Y,K,eps){
-  require(spls)
-  cvspls<-try(cv.spls(t(M),(Y),fold=K,K=1:10,eta = seq(0.1,0.9,0.1),plot.it=FALSE))
-  model<-try(spls(t(M),(Y),eta=cvspls$eta.opt,K=cvspls$K.opt,eps=10^-5))
-  repu<-try(coef(model))
-  if(!is.vector(repu)){repu<-rep(0,dim(M)[1])}
-  return(repu)
+cv.spls1 <- function (x, y, fold = 10, K, eta, kappa = 0.5, select = "pls2", 
+                      fit = "simpls", scale.x = TRUE, scale.y = FALSE, plot.it = TRUE, cv.fun
+                      #, cv.fun.name
+                      , ...) 
+{
+  x <- as.matrix(x)
+  n <- nrow(x)
+  p <- ncol(x)
+  ip <- c(1:p)
+  y <- as.matrix(y)
+  q <- ncol(y)
+  correctp1 <- function (x, y, eta, K, kappa, select, fit) 
+  {
+    if (min(eta) < 0 | max(eta) >= 1) {
+      if (max(eta) == 1) {
+        stop("eta should be strictly less than 1!")
+      }
+      if (length(eta) == 1) {
+        stop("eta should be between 0 and 1!")
+      }
+      else {
+        stop("eta should be between 0 and 1! \n  Choose appropriate range of eta!")
+      }
+    }
+    if (max(K) > ncol(x)) {
+      stop("K cannot exceed the number of predictors! Pick up smaller K!")
+    }
+    if (max(K) >= nrow(x)) {
+      stop("K cannot exceed the sample size! Pick up smaller K!")
+    }
+    if (min(K) <= 0 | !all(K%%1 == 0)) {
+      if (length(K) == 1) {
+        stop("K should be a positive integer!")
+      }
+      else {
+        stop("K should be a positive integer! \n  Choose appropriate range of K!")
+      }
+    }
+    if (kappa > 0.5 | kappa < 0) {
+      cat("kappa should be between 0 and 0.5! kappa=0.5 is used. \n\n")
+      kappa <- 0.5
+    }
+    if (select != "pls2" & select != "simpls") {
+      cat("Invalid PLS algorithm for variable selection.\n")
+      cat("pls2 algorithm is used. \n\n")
+      select <- "pls2"
+    }
+    fits <- c("simpls", "kernelpls", "widekernelpls", "oscorespls")
+    if (!any(fit == fits)) {
+      cat("Invalid PLS algorithm for model fitting\n")
+      cat("simpls algorithm is used. \n\n")
+      fit <- "simpls"
+    }
+    list(K = K, eta = eta, kappa = kappa, select = select, fit = fit)
+  }
+  type <- correctp1(x, y, eta, K, kappa, select, fit)
+  eta <- type$eta
+  K <- type$K
+  kappa <- type$kappa
+  select <- type$select
+  fit <- type$fit
+  foldi <- cv.fun(length(y), fold)
+  mspemat <- matrix(0, length(eta), length(K))
+  for (i in 1:length(eta)) {
+    cat(paste("eta =", eta[i], "\n"))
+    mspemati <- matrix(0, fold, length(K))
+    for (j in 1:fold) {
+      omit <- foldi[[j]]
+      object <- spls::spls(x[-omit, , drop = FALSE], y[-omit, 
+                                                 , drop = FALSE], eta = eta[i], kappa = kappa, 
+                     K = max(K), select = select, fit = fit, scale.x = scale.x, 
+                     scale.y = scale.y, trace = FALSE)
+      newx <- x[omit, , drop = FALSE]
+      newx <- scale(newx, object$meanx, object$normx)
+      betamat <- object$betamat
+      for (k in K) {
+        pred <- newx %*% betamat[[k]] + matrix(1, nrow(newx), 
+                                               1) %*% object$mu
+        mspemati[j, (k - min(K) + 1)] <- mean(apply((y[omit, 
+                                                       ] - pred)^2, 2, mean))
+      }
+    }
+    mspemat[i, ] <- apply(mspemati, 2, mean)
+  }
+  minpmse <- min(mspemat)
+  rownames(mspemat) <- eta
+  colnames(mspemat) <- K
+  mspecol <- apply(mspemat, 2, min)
+  msperow <- apply(mspemat, 1, min)
+  K.opt <- min(K[mspecol == minpmse])
+  eta.opt <- max(eta[msperow == minpmse])
+  cat(paste("\nOptimal parameters: eta = ", eta.opt, ", ", 
+            sep = ""))
+  cat(paste("K = ", K.opt, "\n", sep = ""))
+  if (plot.it) {
+    spls::heatmap.spls(t(mspemat), xlab = "K", ylab = "eta", main = "CV MSPE Plot", 
+                 coln = 16, as = "n")
+  }
+  rownames(mspemat) <- paste("eta=", eta)
+  colnames(mspemat) <- paste("K =", K)
+  cv <- list(mspemat = mspemat, eta.opt = eta.opt, K.opt = K.opt)
+  invisible(cv)
+}
+
+
+
+spls_reg<-function(M,Y,K,eps,cv.fun=cv.fun
+                   #, cv.fun.name=cv.fun.name
+                   ){
+                   cvspls<-try(cv.spls1(t(M),(Y),fold=K,K=1:10,eta = seq(0.1,0.9,0.1),plot.it=FALSE,cv.fun=cv.fun
+                                        #, cv.fun.name=cv.fun.name
+                   ))
+                   model<-try(spls::spls(t(M),(Y),eta=cvspls$eta.opt,K=cvspls$K.opt,eps=10^-5))
+                   repu<-try(spls::coef.spls(model))
+                   if(!is.vector(repu)){repu<-rep(0,dim(M)[1])}
+                   return(repu)
+                   }
+
+
+
+spls_reg_old<-function(M,Y,K,eps){
+                   cvspls<-try(spls::cv.spls(t(M),(Y),fold=K,K=1:10,eta = seq(0.1,0.9,0.1),plot.it=FALSE))
+                   model<-try(spls::spls(t(M),(Y),eta=cvspls$eta.opt,K=cvspls$K.opt,eps=10^-5))
+                   repu<-try(spls::coef.spls(model))
+                   if(!is.vector(repu)){repu<-rep(0,dim(M)[1])}
+                   return(repu)
+                   }
+
+
+cv.enet1 <- function (x, y, K = 10, lambda, s, mode, trace = FALSE, plot.it = TRUE, 
+                      se = TRUE, cv.fun
+                      #, cv.fun.name
+                      , ...)  
+{
+  all.folds <- cv.fun(length(y), K)
+  residmat <- matrix(0, length(s), K)
+  for (i in seq(K)) {
+    omit <- all.folds[[i]]
+    fit <- elasticnet::enet(x[-omit, ], y[-omit], lambda = lambda, ...)
+    fit <- elasticnet::predict.enet(fit, x[omit, , drop = FALSE], s = s, mode = mode)$fit
+    if (length(omit) == 1) {
+      fit <- matrix(fit, nrow = 1)
+    }
+    residmat[, i] <- apply((y[omit] - fit)^2, 2, mean)
+    if (trace) 
+      cat("\n CV Fold", i, "\n\n")
+  }
+  cv <- apply(residmat, 1, mean)
+  cv.error <- sqrt(apply(residmat, 1, var)/K)
+  object <- list(s = s, cv = cv, cv.error = cv.error)
+  if (plot.it) {
+    plot(s, cv, type = "b", xlab = mode, ylim = range(cv, 
+                                                      cv + cv.error, cv - cv.error))
+    if (se) 
+      lars::error.bars(s, cv + cv.error, cv - cv.error, width = 1/length(s))
+  }
+  invisible(object)
 }
 
 
 enet_reg<-function(M,Y,K,eps){
-  require(elasticnet)
+  # require(elasticnet)
   M<-t(M)
   colnames(M)<-1:dim(M)[2]	  
   M2<-(M[,which(apply(M,2,sum)!=0)])
-  cvenetP<-try(cv.enet((M2),(Y),lambda=0.05,s=seq(0,1,length=100),mode="fraction",intercept=FALSE,K=K,plot.it=FALSE,eps=10^-5))
+  cvenetP<-try(cv.enet1((M2),(Y),lambda=0.05,s=seq(0,1,length=100),mode="fraction",intercept=FALSE,K=K,plot.it=FALSE,eps=10^-5))
   cvenet<-cvenetP
   n<-try(cvenetP$s[which.min(cvenet$cv)+max(1,which.min(cvenet$cv[which.min(cvenet$cv):length(cvenet$cv)]<=min(cvenet$cv)+cvenet$cv.error[which.min(cvenet$cv)])-1)-1])	  
-  modelP<-try(enet((M2),(Y),intercept=FALSE,eps=10^-5))
-  repu2 <- predict(modelP, s=n, type="coef", mode="fraction")	  
+  modelP<-try(elasticnet::enet((M2),(Y),intercept=FALSE,eps=10^-5))
+  repu2 <- elasticnet::predict.enet(modelP, s=n, type="coef", mode="fraction")	  
+  repu<-rep(0,dim(M)[2])
+  #    print(sum((apply(M,1,sum)!=0)))
+  repu[as.numeric(names(repu2$coefficients))]<-repu2$coefficients
+  if(!is.vector(repu)){repu<-rep(0,dim(M)[2])}  
+  return(repu)
+}
+
+
+enet_reg_old<-function(M,Y,K,eps){
+  # require(elasticnet)
+  M<-t(M)
+  colnames(M)<-1:dim(M)[2]	  
+  M2<-(M[,which(apply(M,2,sum)!=0)])
+  cvenetP<-try(elasticnet::cv.enet((M2),(Y),lambda=0.05,s=seq(0,1,length=100),mode="fraction",intercept=FALSE,K=K,plot.it=FALSE,eps=10^-5))
+  cvenet<-cvenetP
+  n<-try(cvenetP$s[which.min(cvenet$cv)+max(1,which.min(cvenet$cv[which.min(cvenet$cv):length(cvenet$cv)]<=min(cvenet$cv)+cvenet$cv.error[which.min(cvenet$cv)])-1)-1])	  
+  modelP<-try(elasticnet::enet((M2),(Y),intercept=FALSE,eps=10^-5))
+  repu2 <- elasticnet::predict.enet(modelP, s=n, type="coef", mode="fraction")	  
   repu<-rep(0,dim(M)[2])
   #    print(sum((apply(M,1,sum)!=0)))
   repu[as.numeric(names(repu2$coefficients))]<-repu2$coefficients
@@ -276,15 +535,18 @@ CascadeFshape=function(sqF,ngrp){
 }
 
 
-CascadeFinit=function(sqF,ngrp){
+CascadeFinit=function(sqF,ngrp,low.trig=TRUE){
   nF=ngrp*ngrp
   Finit<-array(0,c(sqF,sqF,nF))
   for(ii in 1:nF){   
     if((ii-1)%/%ngrp+1>=ifelse(ii%%ngrp==0,ngrp,ii%%ngrp)){
       Finit[,,ii]<-0
     } else {
-      #       Finit[,,ii]<-lower.tri(matrix(1,4,4))*matrix(1,4,4)
-      Finit[,,ii]<-cbind(rbind(rep(0,sqF-1),diag(1,sqF-1)),rep(0,sqF))
+      if(low.trig){
+        Finit[,,ii]<-lower.tri(matrix(1,sqF,sqF))*matrix(1,sqF,sqF)
+      } else {
+        Finit[,,ii]<-cbind(rbind(rep(0,sqF-1),diag(1,sqF-1)),rep(0,sqF))
+      }
     }
   }
   return(Finit)
@@ -320,7 +582,7 @@ IndicFinit <- function(sqF,ngrp,Indic,low.trig=TRUE){
         Finit[,,(ii-1)*ngrp+jj]<-0
       } else {
         if(low.trig){
-          Finit[,,(ii-1)*ngrp+jj]<-lower.tri(matrix(1,4,4))*matrix(1,4,4)
+          Finit[,,(ii-1)*ngrp+jj]<-lower.tri(matrix(1,sqF,sqF))*matrix(1,sqF,sqF)
         } else {
           Finit[,,(ii-1)*ngrp+jj]<-cbind(rbind(rep(0,sqF-1),diag(1,sqF-1)),rep(0,sqF))
         }
@@ -347,10 +609,10 @@ boost<-function(X,Y,corr=0.8,B=100,normalize=TRUE,eps=10^(-4)){
   selec_meth<-function(X,Y){
     
     N<-dim(X)[1]      
-    modd<-lars(X,Y)
+    modd<-lars::lars(X,Y)
     tau2<-var(Y)
-    index<-which.min(N * log(2 * pi * tau2) + apply((predict(modd,newx=X)$fit-Y)^2,2,sum)/tau2 + log(N) * (apply(predict(modd,type="coef")$coef!=0,1,sum)+1))
-    predict(modd,s=index,type="coef")$coefficients
+    index<-which.min(N * log(2 * pi * tau2) + apply((lars::predict.lars(modd,newx=X)$fit-Y)^2,2,sum)/tau2 + log(N) * (apply(lars::predict.lars(modd,type="coef")$coef!=0,1,sum)+1))
+    lars::predict.lars(modd,s=index,type="coef")$coefficients
     
   }
     group<-function(X,c0){
@@ -384,9 +646,9 @@ boost<-function(X,Y,corr=0.8,B=100,normalize=TRUE,eps=10^(-4)){
   #sfLibrary(lars)
   #sfLibrary(msgps)
   
-  require(movMF)
-  require(lars)
-  require(msgps)
+  #require(movMF)
+  #require(lars)
+  #require(msgps)
   
   #sfLibrary(snowfall)}
   
@@ -443,8 +705,8 @@ boost<-function(X,Y,corr=0.8,B=100,normalize=TRUE,eps=10^(-4)){
       indice<-groups[[j]]
       corr_set<-t(t(X[,indice])*Correlation_indice[j,indice])
       corr_set2<-apply(corr_set,2,func_passage1)
-      BB<-coef(movMF(t(corr_set2),1))$theta
-      newv<-rmovMF(1,BB)
+      BB<-coef(movMF::movMF(t(corr_set2),1))$theta
+      newv<-movMF::rmovMF(1,BB)
       newv<-func_passage2(newv)
     }else{
       

@@ -2,54 +2,75 @@ setMethod("predict"
           ,c("micro_array")
           ,function(object
                     ,Omega
+                    ,act_time_group=NULL
                     ,nv=0
                     ,targets=NULL
                     ,adapt=TRUE
           ){
-            require(magic)
+#            require(magic)
             
             micro<-object
             if(!is.null(targets)){
               micro@microarray[targets,]<-0
             }
-            #groupes
-            groupe<-object@group
-            #Le microarray
+            if(is.null(act_time_group)){
+              stop("Cluster activation times must be provided in the act_time_group numeric vector.")
+            }
+            #groups
+            groupe<-micro@group
+            #measurements
             M<-micro@microarray
-            #Nombre de temps
-            T<-length(object@time)
-            #Genes
-            gene<-1:length(groupe)
+            #number of timepoints
+            T<-length(micro@time)
+            #gene groups
+            gr<-micro@group 
+
+            #group vector
+            ngrp<-length(unique(gr))
+            vgrp<-sort(unique(gr))
+
+            if(all(micro@gene_ID==0)){
+              gene<-1:length(groupe)
+            } else {
+              gene<-micro@gene_ID
+            }
             gene2<-gene
-            #Premiers temps
+            #First timepoints for all the subjects
             supp<-seq(1,T*object@subject,T)
-            #Tous les temps
+            #All the timepoints
             supp2<-1:(T*object@subject)
-            #Tous les temps moins les premiers
+            #All timepoints except the first one
             supp2<-supp2[-supp]
-            #On enleve les genes silences
+            #Removing silenced genes
             if(!is.null(targets)){
               gene<-gene[-targets]
             }
-            #Les poids
+            #Links
             O<-Omega@network
             #Cutoff
             O[abs(O)<nv]<-0
-            #Matrices F
+            #F matrix
             F<-Omega@F
             #Encore le microarray
             microP<-micro
-            #predicteurs
+            #predictors
             sup_pred<-rep(1:T,micro@subject)+rep(seq(0,T*(micro@subject-1),T),each=T)
             
             
-            #Encore le microarray
+            #still micro_array
             micro2<-micro
-            #Indice pour les matrices F
+            #F matrix index
             u<-0
-            for(grpjj in 1:ngrp){
-              #On garde les groupes predicteurs
-              IND<-which(groupe[gene]%in%(1:ngrp)[-grpjj])
+
+            #loop on the T timepoints to iteratively fill the expression data
+            #we need to select the gene groups that were activated before time peak
+            #act_time_group
+#
+
+            for(peak in 2:(T)){
+            for(grpjj in vgrp[act_time_group==peak]){
+               #On garde les groupes predicteurs
+              IND<-which(groupe[gene2]%in%vgrp[act_time_group<peak])
               grIND<-groupe[IND]
               #On silence les targets
               if(!is.null(targets)){micro2@microarray[targets,]<-micro@microarray[targets,]}
@@ -101,6 +122,7 @@ setMethod("predict"
                 }
                 
               }
+            }
             }
             #Pour pouvoir faire un plot
             micro33<-micro2
@@ -398,102 +420,51 @@ setMethod(f="inference"
                 
                 if(fitfun=="LASSO"){
                   if(norm(pred,type="F")>eps){     
-                    fun_lasso<-function(x){lasso_reg(pred,x,K=K,eps)} 
-                    retenir<-lars::cv.folds 
-                    #Ceci permet de changer une fonction interne de lars
-                    # qui s'occupe de la validation croisee. 
                     if(cv.subjects==TRUE){
-                      assignInNamespace("cv.folds",function(n,folds){ split(1:dim(pred)[2],rep(1:P,each=dim(pred)[2]/P))}, ns="lars")
-                      Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_lasso)
-                      assignInNamespace("cv.folds",retenir, ns="lars")
+                      cv.folds1=function(n,folds){
+                      split(1:dim(pred)[2]
+                            ,rep(1:P,each=dim(pred)[2]/P))}
+                    #                  cv.fun.name="cv.folds1"
+                    } else {
+                      cv.folds1=lars::cv.folds
+                    #                    cv.fun.name="lars::cv.folds"
                     }
-                    else
-                    {
-                      Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_lasso)
-                    }
+                  #                cat(cv.fun.name)
+                  fun_lasso<-function(x){lasso_reg(pred,x,K=K,eps,cv.fun=cv.folds1
+                                                 #,cv.fun.name=cv.fun.name
+                  )} 
+                  # retenir<-lars::cv.folds 
+                  #Ceci permet de changer une fonction interne de lars
+                  # qui s'occupe de la validation croisee. 
+                  Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_lasso)
                   }
                 }
                 if(fitfun=="SPLS"){
                   if(norm(pred,type="F")>eps){     
-                    fun_spls<-function(x){spls_reg(pred,x,K=K,eps)} 
-                    retenir<-lars::cv.folds #Ceci permet de changer une fonction interne de spls qui s'occupe de la validation croisée. 
                     if(cv.subjects==TRUE){
-                      assignInNamespace("cv.spls",function (x, y, fold = 10, K, eta, kappa = 0.5, select = "pls2", fit = "simpls", scale.x = TRUE, scale.y = FALSE, plot.it = TRUE) {
-                        x <- as.matrix(x)
-                        n <- nrow(x)
-                        p <- ncol(x)
-                        ip <- c(1:p)
-                        y <- as.matrix(y)
-                        q <- ncol(y)
-                        type <- correctp(x, y, eta, K, kappa, select, fit)
-                        eta <- type$eta
-                        K <- type$K
-                        kappa <- type$kappa
-                        select <- type$select
-                        fit <- type$fit
-                        foldi <- split(1:dim(pred)[2],rep(1:P,each=dim(pred)[2]/P))
-                        mspemat <- matrix(0, length(eta), length(K))
-                        for (i in 1:length(eta)) {
-                          cat(paste("eta =", eta[i], "\n"))
-                          mspemati <- matrix(0, fold, length(K))
-                          for (j in 1:fold) {
-                            omit <- foldi[[j]]
-                            object <- spls(x[-omit, , drop = FALSE], y[-omit, 
-                                                                       , drop = FALSE], eta = eta[i], kappa = kappa, 
-                                           K = max(K), select = select, fit = fit, scale.x = scale.x, 
-                                           scale.y = scale.y, trace = FALSE)
-                            newx <- x[omit, , drop = FALSE]
-                            newx <- scale(newx, object$meanx, object$normx)
-                            betamat <- object$betamat
-                            for (k in K) {
-                              pred <- newx %*% betamat[[k]] + matrix(1, nrow(newx), 
-                                                                     1) %*% object$mu
-                              mspemati[j, (k - min(K) + 1)] <- mean(apply((y[omit, 
-                                                                             ] - pred)^2, 2, mean))
-                            }
-                          }
-                          mspemat[i, ] <- apply(mspemati, 2, mean)
+                      cv.folds1=function(n,folds){
+                        split(1:dim(pred)[2],rep(1:P,each=dim(pred)[2]/P))
                         }
-                        minpmse <- min(mspemat)
-                        rownames(mspemat) <- eta
-                        colnames(mspemat) <- K
-                        mspecol <- apply(mspemat, 2, min)
-                        msperow <- apply(mspemat, 1, min)
-                        K.opt <- min(K[mspecol == minpmse])
-                        eta.opt <- max(eta[msperow == minpmse])
-                        cat(paste("\nOptimal parameters: eta = ", eta.opt, ", ", 
-                                  sep = ""))
-                        cat(paste("K = ", K.opt, "\n", sep = ""))
-                        if (plot.it) {
-                          heatmap.spls(t(mspemat), xlab = "K", ylab = "eta", main = "CV MSPE Plot", 
-                                       coln = 16, as = "n")
-                        }
-                        rownames(mspemat) <- paste("eta=", eta)
-                        colnames(mspemat) <- paste("K =", K)
-                        cv <- list(mspemat = mspemat, eta.opt = eta.opt, K.opt = K.opt)
-                        invisible(cv)        
-                      }, ns="spls")
-                      Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_spls)
-                      assignInNamespace("cv.folds",retenir, ns="lars")}else{
-                        Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_spls)
+                    } else {
+                      cv.folds1=function(n, folds){return(split(sample(1:n), rep(1:folds, length = n)))}
                       }
+                      fun_spls<-function(x){spls_reg(pred,x,K=K,eps)} 
+                      Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_spls)
                   }
                 }
                 if(fitfun=="ELASTICNET"){
                   if(norm(pred,type="F")>eps){     
-                    fun_enet<-function(x){enet_reg(pred,x,K=K,eps)} 
-                    retenir<-lars::cv.folds #Ceci permet de changer une fonction interne de lars qui s'occupe de la validation croisée. 
                     if(cv.subjects==TRUE){
-                      assignInNamespace("cv.folds",function(n,folds){ split(1:dim(pred)[2],rep(1:P,each=dim(pred)[2]/P))}, ns="lars")
-                      Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_enet)
-                      assignInNamespace("cv.folds",retenir, ns="lars")}else{
-                        Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_enet)
+                      cv.folds1=function(n,folds){
+                        split(1:dim(pred)[2],rep(1:P,each=dim(pred)[2]/P))
+                        }
+                    }else{
+                      cv.folds1=lars::cv.folds
                       }
+                      fun_enet<-function(x){lasso_reg(pred,x,K=K,eps,cv.fun=cv.folds1)} 
+                      Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_enet)
                   }
                 }
-
-              
-                
                 if(fitfun=="stability.c060"){
                   require(c060);#cat(".")
                   cat("mc.cores=",mc.cores,sep="")
@@ -506,9 +477,9 @@ setMethod(f="inference"
                     }else{
                   LL=rep(0,nrow(pred));error.inf=TRUE
                   #cat(intercept.stabpath)
-                  try({essai<-stabpath(g,t(pred),mc.cores=mc.cores,intercept=intercept.stabpath);
-                  varii<-stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$stable;
-                  lambda<-stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$lambda;
+                  try({essai<-c060::stabpath(g,t(pred),mc.cores=mc.cores,intercept=intercept.stabpath);
+                  varii<-c060::stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$stable;
+                  lambda<-c060::stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$lambda;
 #                  L<-lars(t(pred),g,use.Gram=use.Gram)
 #                  LL<-predict(L,s=lambda,mode="lambda",type="coef")$coefficients
                   L<-glmnet::glmnet(t(pred),g,intercept=intercept.stabpath);
@@ -558,11 +529,11 @@ setMethod(f="inference"
                                                     ...)
                         }
                         else {
-                          cl <- makePSOCKcluster(mc.cores)
-                          clusterExport(cl, c("glmnet", "drop0"))
-                          res <- parLapply(cl, 1:steps, glmnet.subset.weighted, subsets, 
+                          cl <- parallel::makePSOCKcluster(mc.cores)
+                          parallel::clusterExport(cl, c("glmnet", "drop0"))
+                          res <- parallel::parLapply(cl, 1:steps, glmnet.subset.weighted, subsets, 
                                            x, y, lambda = fit$lambda, penalty.factor, weakness, p, ...)
-                          stopCluster(cl)
+                          parallel::stopCluster(cl)
                         }
                         #str(res)
                         res <- res[unlist(lapply(lapply(res, dim), function(x) x[2] == 
@@ -611,8 +582,8 @@ setMethod(f="inference"
                       #cat(intercept.stabpath)
                       try({
                       essai<-stabpath(g[-1],t(pred),mc.cores=mc.cores,intercept=intercept.stabpath,penalty.factor=priors2[,g[1]]);
-                      varii<-stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$stable;
-                      lambda<-stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$lambda;
+                      varii<-c060::stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$stable;
+                      lambda<-c060::stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$lambda;
                       #                  L<-lars(t(pred),g,use.Gram=use.Gram)
                       #                  LL<-predict(L,s=lambda,mode="lambda",type="coef")$coefficients
                       L<-glmnet::glmnet(t(pred),g[-1],intercept=intercept.stabpath,penalty.factor=priors2[,g[1]]);
@@ -635,9 +606,9 @@ setMethod(f="inference"
                 
                 
                 if(fitfun=="robust"){
-                  require(movMF)
+                  #require(movMF)
                   require(lars)
-                  require(msgps)
+                  #require(msgps)
                   fun_robust<-function(g){
                     if(sum(pred)==0){
                       return(rep(0,nrow(pred)))
@@ -645,7 +616,7 @@ setMethod(f="inference"
                       essai<-boost(t(pred)+rnorm(prod(dim(pred)),0,0.001),g)  
                       varii<-which(essai==1)
                       lambda<-0
-                      L<-lars(t(pred),g)
+                      L<-lars::lars(t(pred),g)
                       
                       LL<-predict(L,s=lambda,mode="lambda",type="coef")$coefficients
                       LL[-varii]<-0
@@ -658,10 +629,10 @@ setMethod(f="inference"
                 }  
                 
                 if(fitfun=="selectboost.weighted"){
-                  require(movMF)
+                  #require(movMF)
                   require(lars)
-                  require(msgps)
-                  require(SelectBoost)
+                  #require(msgps)
+                  requireNamespace("SelectBoost")
                   priors2<-priors[IND,which(gr %in% grpjj)]
                   Y2<-cbind(1:nrow(Y),Y)
 
@@ -674,7 +645,7 @@ setMethod(f="inference"
                       LL=rep(0,nrow(pred));error.comp=TRUE;error.inf=TRUE
                       #cat(intercept.stabpath)
                       try({
-                      essai<-suppressMessages(fastboost(t(pred),g[-1],group_func_2,lasso_cv_glmnet_min_weighted,corrfunc="crossprod",normalize=TRUE, B=100, use.parallel=use.parallel, ncores=mc.cores,c0lim=FALSE, steps.seq = steps.seq, priors=priors2[,g[1]]))
+                      essai<-suppressMessages(SelectBoost::fastboost(t(pred),g[-1],SelectBoost::group_func_2,SelectBoost::lasso_cv_glmnet_min_weighted,corrfunc="crossprod",normalize=TRUE, B=100, use.parallel=use.parallel, ncores=mc.cores,c0lim=FALSE, steps.seq = steps.seq, priors=priors2[,g[1]]))
                       varii<-which(essai>=limselect)
 
                       resultat<-glmnet::cv.glmnet(t(pred),g[-1],nfolds=10,penalty.factor=priors2[,g[1]])
@@ -695,7 +666,7 @@ setMethod(f="inference"
                                 
               }
               cat("\n")
-              #fin de la boucle for avec pic ; 
+              #fin de la boucle for avec peak ; 
               #la matrice omega est inferee
               
               co<-apply(Omega,2,sumabso)
@@ -817,7 +788,7 @@ setMethod(f="inference"
                   }
                 }
               } 
-              #fin de la boucle pic
+              #fin de la boucle peak
               
               if(tour==1 && type.inf=="noniterative"){
                 Omega<-Omega*0 
@@ -837,7 +808,7 @@ setMethod(f="inference"
             
             if(type.inf=="iterative"){
               plot(convO[-1],type="l")
-              if(!attr(dev.cur(),"names")=="pdf"){dev.new()}
+              #if(!attr(dev.cur(),"names")=="pdf"){dev.new()}
               matplot(t(convF),type="l")
             }
             else{
@@ -861,7 +832,8 @@ setMethod("gene_expr_simulation"
           ,function(network
                     ,time_label=1:4
                     ,subject=5
-                    ,level_pic=100
+                    ,peak_level=100
+                    ,act_time_group=1:4
           ){
             require(VGAM)
             
@@ -870,16 +842,16 @@ setMethod("gene_expr_simulation"
             T<-length(unique(time_label))
             gene1<-which(time_label==1)
             supp<-seq(1,dim(M)[2],by=length(unique(time_label)))
-            M[gene1,supp]<-rlaplace(length(supp)*length(gene1),level_pic,level_pic*0.9)*(-1)^rbinom(length(supp)*length(gene1),1,0.5)
+            M[gene1,supp]<-VGAM::rlaplace(length(supp)*length(gene1),peak_level,peak_level*0.9)*(-1)^rbinom(length(supp)*length(gene1),1,0.5)
             supp<-(1:dim(M)[2])[-supp]
-            M[gene1,supp]<-rlaplace(length(supp)*length(gene1),0,level_pic*0.3) 
+            M[gene1,supp]<-VGAM::rlaplace(length(supp)*length(gene1),0,peak_level*0.3) 
             
             
             for(i in 2:T){
               
               genei<-which(time_label==i)
               supp<-seq(1,dim(M)[2],by=length(unique(time_label)))
-              M[genei,supp]<-rlaplace(length(supp)*length(genei),0,level_pic*0.3)
+              M[genei,supp]<-VGAM::rlaplace(length(supp)*length(genei),0,peak_level*0.3)
               for(j in genei){
                 for( t in 2:T){
                   M[j,supp+t-1]<-apply(N[,j]*M[,supp+(t-2)],2,sum) + 	rnorm(length(supp+t),0,50)	
@@ -896,7 +868,7 @@ setMethod("gene_expr_simulation"
             
             
             
-            G<-predict(MM,network)@microarray_predict #Before Cascade 1.03, we have G<-predict(MM,network,adapt=FALSE)@microarray_predict
+            G<-Patterns::predict(MM,Omega=network,act_time_group=act_time_group)@microarray_predict #Before Cascade 1.03, we have G<-predict(MM,network,adapt=FALSE)@microarray_predict
             supp<-seq(1,dim(M)[2],by=length(unique(time_label)))
             G@microarray[,supp]<-M[, supp]	
             return(G)

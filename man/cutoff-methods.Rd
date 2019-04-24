@@ -38,9 +38,11 @@ Nicolas Jung, Bertrand Frederic, Myriam Maumy-Bertrand.
 
 
 \examples{
+\donttest{
 		data(network)
 		cutoff(network)
 		#See vignette for more details
+}
 }
 
 \keyword{methods}

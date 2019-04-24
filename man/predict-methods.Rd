@@ -5,19 +5,39 @@
 \alias{predict,micro_array-method}
 \title{  Methods for Function \code{predict}  }
 \description{
-Prediction for knock out intervention in the gene regulatory network.
+ Prediction of the gene expressions after a knock-out experience for cascade networks
 }
-
 \usage{
-	predict(object,Omega,nv=0,target=NULL)
+	predict(object,...)
 }
 
 \arguments{
  \item{object}{a micro_array object}
- \item{Omega}{a network object.}
+ \item{...}{Other arguments: 
+ 	\describe{
+    \item{Omega}{a netowork object.}
  	\item{nv}{ [=0] numeric ; the level of the cutoff}	
  	 	\item{targets}{ [NULL] vector ; which genes are knocked out ?}
+ 	 	\item{act_time_group}{ [NULL] vector ; at which time the groups (defined by sort(unique(group))) are activated ?}
        }
+  }
+}
 
+\examples{
+\donttest{
+data(Selection)
+data(network)
+#A nv value can chosen using the cutoff function
+nv=.11
+EGR1<-which(match(Selection@gene_ID,"EGR1")==1)
+P<-position(network,nv=nv)
+
+#We predict gene expression modulations within the network if EGR1 is experimentaly knocked-out. 
+prediction_ko5<-predict(Selection,network@network,nv=nv,targets=EGR1)
+
+#Then we plot the results. Here for example we see changes at time point t2:
+plot(prediction_ko5,time=2,ini=P,label_v=Selection@name)
+}
+}
 \keyword{methods}
 
