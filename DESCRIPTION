@@ -1,12 +1,12 @@
 Package: Patterns
 Type: Package
 Title: Deciphering Biological Networks with Patterned Heterogeneous Measurements
-Version: 0.5
+Version: 0.6
 Date: 2019-04-21
 Depends: R (>= 2.10)
 Imports: abind, animation, Biobase, c060, cluster, elasticnet, glmnet, gplots, graphics, 
          grDevices, grid, igraph, jetset, KernSmooth, lars, lattice, limma, magic, methods, 
-         Mfuzz, movMF, msgps, nnls, plotrix, SelectBoost, splines, spls, stats4, survival, tnet, VGAM, WGCNA
+         Mfuzz, movMF, msgps, nnls, pixmap, plotrix, SelectBoost, splines, spls, stats4, survival, tnet, VGAM, WGCNA
 Suggests: 
     R.rsp,
     CascadeData,

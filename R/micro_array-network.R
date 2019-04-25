@@ -503,7 +503,7 @@ setMethod(f="inference"
                 
                 if(fitfun=="stability.c060.weighted"){
                   require(c060);#cat(".")
-                  cat("mc.cores=",mc.cores,sep="")
+                  cat("mc.cores=",mc.cores," ",sep="")
                   priors2<-priors[IND,which(gr %in% grpjj)]
                   Y2<-cbind(1:nrow(Y),Y)
                   
@@ -612,6 +612,7 @@ setMethod(f="inference"
                   fun_robust<-function(g){
                     if(sum(pred)==0){
                       return(rep(0,nrow(pred)))
+                      cat(".")               
                     }else{
                       essai<-boost(t(pred)+rnorm(prod(dim(pred)),0,0.001),g)  
                       varii<-which(essai==1)
@@ -620,6 +621,7 @@ setMethod(f="inference"
                       
                       LL<-predict(L,s=lambda,mode="lambda",type="coef")$coefficients
                       LL[-varii]<-0
+                      cat(".")               
                       return(LL)
                     }
                   }
@@ -797,7 +799,7 @@ setMethod(f="inference"
               }
               
               
-              if( type.inf=="iterative"){
+              if(type.inf=="iterative"){
                 F<-(g(tour)*F+sauvF)/(1+g(tour))
               }
               cc<-rep(0,nF)

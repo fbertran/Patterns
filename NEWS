@@ -1,3 +1,7 @@
+.7 Updated evolution and animation functions. Updated compare fonction. Adapted new example dataset and completed help pages.
+
+.6 New plot functions. Prediction was enabled for cascade networks. Gene_Id is kept by selection.
+
 .5 Package was reshaped.
 
 .4 Help pages were completed and examples added for every function. It required new datasets that were added to the package.

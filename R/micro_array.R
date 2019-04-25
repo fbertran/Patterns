@@ -107,7 +107,7 @@ setMethod("summary","micro_array",function(object,nb.graph=NULL,...)
                     par.settings = list(layout.widths = list(axis.key.padding = 0,
                                                              ylab.right = 2))))
   }
-  if(is.null(nb.graph)){dev.new()}
+  #if(is.null(nb.graph)){dev.new()}
   G<-object@microarray
   colnames(G)<-paste(rep(paste("T",object@time),object@subject), as.character(rep(paste("subject",1:object@subject),each=length(object@time))))
   w<-cluster::agnes(t(G))[1]$order
@@ -122,7 +122,7 @@ setMethod("summary","micro_array",function(object,nb.graph=NULL,...)
                                                              ylab.right = 2))))
   }
   if(dim(object@microarray)[1]<1000){
-    if(is.null(nb.graph)){dev.new()}
+    #if(is.null(nb.graph)){dev.new()}
     
     R<-object@microarray
     w<-cluster::agnes(R)[1]$order
@@ -162,13 +162,13 @@ setMethod("plot","micro_array",function(x,...)
   
   if(length(unique(x@group))>1){
     gr<-rep(paste("Cluster",x@group,sep=" "),each=x@subject*length(x@time))
-    if(!attr(dev.cur(),"names")=="pdf"){dev.new()}
+    #if(!attr(dev.cur(),"names")=="pdf"){dev.new()}
     print(lattice::xyplot(V$conc~V$ys|V$suj,as.table=TRUE,xlab="Time",ylab="Gene Expression",group=rep(1:(x@subject*dim(xs)[2]),each=length(x@time)),type="l",scales=list(x=list(relation="free",at=x@time),y=list(relation="free")),col=rep(x@group,each=x@subject),key=list(
       space="right",
       lines=list(type="l",col=cclus),
       text=list(text=paste("Cluster",as.character(cclus)))
     )))
-    if(!attr(dev.cur(),"names")=="pdf"){dev.new()}
+    #if(!attr(dev.cur(),"names")=="pdf"){dev.new()}
     print(lattice::xyplot(V$conc~V$ys|gr,as.table=TRUE,xlab="Time",ylab="Gene Expression",group=rep(1:(x@subject*dim(xs)[2]),each=length(x@time)),type="l",scales=list(x=list(relation="free",at=x@time),y=list(relation="free")),col=rep(1:x@subject,dim(xs)[2]),key=list(
       space="right",
       lines=list(type="l",col=1:x@subject),
@@ -177,7 +177,7 @@ setMethod("plot","micro_array",function(x,...)
     for(i in 1:x@subject){
       ss<-V$suj
       sss<-ss==paste("Subject",i,sep=" ")
-      if(!attr(dev.cur(),"names")=="pdf"){dev.new()}
+      #if(!attr(dev.cur(),"names")=="pdf"){dev.new()}
       print(lattice::xyplot(V$conc[sss]~V$ys[sss]|gr[sss],as.table=TRUE,xlab="Time",ylab="Gene Expression",type="l",main=paste("Subject",i,sep=" "),group=rep(1:(x@subject*dim(xs)[2]),each=length(x@time))[sss],scales=list(x=list(relation="free",at=x@time),y=list(relation="free"))))
     }
   }
@@ -292,7 +292,7 @@ setMethod(f="unsupervised_clustering",
                 } else {Mfuzz::mfuzz.plot(Em.s,cl,mfrow=screen,new.window=FALSE)}}  
             if(heatmap){
               require(gplots,quietly = TRUE)
-              if(!attr(dev.cur(),"names")=="pdf"){dev.new()}
+              #if(!attr(dev.cur(),"names")=="pdf"){dev.new()}
               gplots::heatmap.2(Biobase::exprs(Em.s), dendrogram = 'row', Colv = FALSE, col = gplots::greenred(75), 
                         key = FALSE, keysize = 1.0, symkey = FALSE, density.info = 'none',
                         trace = 'none', colsep = rep(1:10), sepcolor = 'white', sepwidth = 0.05,
@@ -598,6 +598,7 @@ setMethod(
         "micro_array",
         microarray = MM1,
         name = M1@name[r3(choix)],
+        gene_ID = M1@gene_ID[r3(choix)],
         time = M1@time,
         subject = M1@subject,
         group = as.vector(R),
@@ -623,7 +624,8 @@ setMethod(
                         alpha = 0.05,
                         cont = FALSE,
                         lfc = 0,
-                        f.asso = NULL) {
+                        f.asso = NULL,
+                        return.diff=FALSE) {
     #here we check if the version of Limma is ok
     
     if (!is.null(sessionInfo()$otherPkgs$limma$Version)) {
@@ -941,10 +943,17 @@ setMethod(
       }
     }
     if (sum(dim(K1) == dim(K2)) == 2) {
-      print(
-        "This function returns the stimulated expression of the differentially expressed genes"
-      )
-      MM1 <- K2 - K1 #-K1
+      if(return.diff){
+        print(
+          "This function returns the stimulated expression of the differentially expressed genes"
+        )
+        MM1 <- K2 - K1 #-K1
+      } else {
+        print(
+          "This function returns the stimulated expression"
+        )
+        MM1 <- K2
+      }
     } else{
       warning("The number of patient is not equal. This function returns the stimulated expression")
       MM1 <- K2
@@ -1070,7 +1079,7 @@ setMethod(f="genePeakSelection",
               #N2<-Select2@name
               
               N<-c(N1,N11)
-              Mi<-new("micro_array",microarray=Select@microarray[which(Select@name %in% N ),],name=N,time=M1@time,subject=M1@subject,start_time=Select@start_time[which(Select@name %in% N)],group=rep(peak,length(N)))			
+              Mi<-new("micro_array",microarray=Select@microarray[which(Select@name %in% N ),],name=N,gene_ID=Select@gene_ID[which(Select@name %in% N ),],time=M1@time,subject=M1@subject,start_time=Select@start_time[which(Select@name %in% N)],group=rep(peak,length(N)))			
               return(Mi)
             } 		
             else{
@@ -1109,7 +1118,7 @@ setMethod(f="genePeakSelection",
               #N2<-Select2@name
               
               
-              Mi<-new("micro_array",microarray=Select@microarray[which(Select@name %in% N ),],name=N,time=M1@time,subject=M1@subject,group=rep(peak,length(N)),start_time=Select@start_time[which(Select@name %in% N)])	
+              Mi<-new("micro_array",microarray=Select@microarray[which(Select@name %in% N ),],name=N,gene_ID=Select@gene_ID[which(Select@name %in% N ),],time=M1@time,subject=M1@subject,group=rep(peak,length(N)),start_time=Select@start_time[which(Select@name %in% N)])	
               
               
             }

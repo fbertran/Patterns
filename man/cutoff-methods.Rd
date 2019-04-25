@@ -5,7 +5,7 @@
 \title{Choose the best cutoff}
 
 \description{
-Allows estimating the best cutoff. For a sequence of cutoff, the p value corresponding 
+Allows estimating the best cutoff. For a sequence of cutoff, the p value corresponding to each cutoff value of the sequence. Mainly recommended for single time cascade networks. To achieve more sparsity in other settings, please use a fiiting function based on the stability selection or selectboost algorithms.
 }
 \usage{
 	cutoff(Omega,...)
@@ -28,12 +28,9 @@ Allows estimating the best cutoff. For a sequence of cutoff, the p value corresp
   \item{p.value.inter}{the smoothed p value vector, using the loess function}
 }
 
-\references{
-Vallat, L., Kemper, C. A., Jung, N., Maumy-Bertrand, M., Bertrand, F., Meyer, N., ... & Bahram, S. (2013). Reverse-engineering the genetic circuitry of a cancer cell with predicted intervention in chronic lymphocytic leukemia. \emph{Proceedings of the National Academy of Sciences}, 110(2), 459-464.
-}
 
 \author{
-Nicolas Jung, Bertrand Frederic, Myriam Maumy-Bertrand.
+Bertrand Frederic, Myriam Maumy-Bertrand.
 }
 
 

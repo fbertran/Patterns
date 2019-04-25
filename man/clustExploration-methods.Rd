@@ -28,6 +28,7 @@ if(require(CascadeData)){
 data(micro_S, package="CascadeData")
 D<-as.micro_array(micro_S[1:100,],1:4,6)
 a<-clustExploration(D)
+a
 }
 }
 \keyword{cluster}

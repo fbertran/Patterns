@@ -1,3 +1,15 @@
+# Patterns .7
+
+Updated evolution and animation functions. Updated compare fonction. Adapted new example dataset and completed help pages.
+
+# Patterns .6
+
+New plot functions. Prediction was enabled for cascade networks. Gene_Id is kept by selection. Solved issues when loading the package.
+
+# Patterns .5
+
+Package was reshaped.
+
 # Patterns .4
 
 * Help pages were completed and examples added for every function. It required new datasets that were added to the package.

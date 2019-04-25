@@ -18,7 +18,7 @@ An array of sizes c(sqF, sqF, ngrp).
 }
 
 \examples{
-CascadeFshape(4,3)
+CascadeFshape(3,2)
 CascadeFshape(4,3)
 }
 

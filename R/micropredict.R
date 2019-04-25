@@ -45,9 +45,9 @@ setMethod("plot"
             }
             else{K<-time}
             for(time in K){
-              if(length(K)>1){
-                if(!attr(dev.cur(),"names")=="pdf"){dev.new()}
-              }
+              #if(length(K)>1){
+                #if(!attr(dev.cur(),"names")=="pdf"){dev.new()}
+              #}
               if(time==length(micro@time)){time<-0}
               sup_pred<-1:dim(micro@microarray)[2]
               sup_pred<-sup_pred[sup_pred%%length(micro@time)==time]

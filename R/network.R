@@ -43,8 +43,6 @@ setMethod("print", "network", function(x, ...) {
   )
 })
 
-
-
 setMethod("analyze_network", "network", function(Omega, nv, label_v = NULL) {
   require(tnet)
   if (is.null(label_v)) {
@@ -54,17 +52,13 @@ setMethod("analyze_network", "network", function(Omega, nv, label_v = NULL) {
   Omega <- Omega@network
   O[abs(O) <= nv] <- 0
   G <- graph.adjacency(O, weighted = TRUE)
-  #   	if(.Platform$OS.type=="unix"){ #No longer in Cascade 1.03
-  #    get.edgelist(G)+1->Q
-  #    }else{
   get.edgelist(G) -> Q
-  #    	}
   weight <- rep(0, dim(Q)[1])
   for (i in 1:dim(Q)[1]) {
     weight[i] <- Omega[Q[i, 1], Q[i, 2]]
   }
   R <- cbind(Q, abs(weight))
-  G <- as.tnet(R)
+  G <- as.tnet(R,type="weighted one-mode tnet")
   C <-
     data.frame(label_v,
                betweenness_w(G)[, 2],
@@ -75,238 +69,425 @@ setMethod("analyze_network", "network", function(Omega, nv, label_v = NULL) {
 })
 
 
-setMethod("evolution", "network", function(net
-                                           ,
-                                           list_nv
-                                           ,
-                                           gr = NULL
-                                           ,
-                                           color.vertex = NULL
-                                           ,
-                                           color.edge = NULL
-                                           ,
-                                           fix = TRUE
-                                           ,
-                                           taille = c(2000, 1000)
-                                           ,
-                                           label_v = 1:dim(net@network)[1]
-                                           ,
-                                           legend.position = "topleft"
-                                           ,
-                                           frame.color = "black"
-                                           ,
-                                           label.hub = FALSE
-                                           ,
-                                           outdir = getwd()
-                                           ,
-                                           type.ani = "HTML"
-                                           #,edge.arrow.size=0.6*(1+size.ed)
-                                           #,edge.thickness=1
-                                           )
-                                           {
-                                             Omega <- net
-                                             
-                                             if (length(list_nv) == 1) {
-                                               list_nv = seq(0, max(net@network) - 0.05, length.out = list_nv)
-                                             }
-                                             
-                                             if (type.ani == "html") {
-                                               require(animation)
-                                               animation::ani.options(ani.height = taille[2],
-                                                                      ani.width = taille[1],
-                                                                      outdir = outdir)
-                                               animation::saveHTML({
-                                                 POS <- position(net, nv = list_nv[1])
-                                                 
-                                                 for (i in list_nv) {
-                                                   if (fix == TRUE) {
-                                                     plot(
-                                                       Omega
-                                                       ,
-                                                       nv = i
-                                                       ,
-                                                       gr = gr
-                                                       ,
-                                                       ini = POS
-                                                       ,
-                                                       color.vertex = color.vertex
-                                                       ,
-                                                       color.edge = color.edge
-                                                       ,
-                                                       label_v = label_v
-                                                       ,
-                                                       legend.position = legend.position
-                                                       ,
-                                                       frame.color = frame.color
-                                                       ,
-                                                       label.hub = label.hub
-                                                       #,edge.arrow.size=edge.arrow.size
-                                                       #,edge.thickness=edge.thickness
-                                                     )
-                                                   }
-                                                   else{
-                                                     plot(
-                                                       Omega
-                                                       ,
-                                                       nv = i
-                                                       ,
-                                                       gr = gr
-                                                       ,
-                                                       color.vertex = color.vertex
-                                                       ,
-                                                       color.edge = color.edge
-                                                       ,
-                                                       label_v = label_v
-                                                       ,
-                                                       legend.position = legend.position
-                                                       ,
-                                                       frame.color = frame.color
-                                                       ,
-                                                       label.hub = label.hub
-                                                       #,edge.arrow.size=edge.arrow.size
-                                                       #,edge.thickness=edge.thickness
-                                                     )
-                                                     
-                                                   }
-                                                   text(-1, 1, round(i, 3))
-                                                 }
-                                               })
-                                             }
-                                             
-                                             if (type.ani == "latex") {
-                                               require(animation)
-                                               animation::ani.options(ani.height = taille[2],
-                                                                      ani.width = taille[1],
-                                                                      outdir = outdir)#, qpdf = '/opt/local/bin/qpdf'
-                                               animation::saveLatex({
-                                                 POS <- position(net, nv = list_nv[1])
-                                                 
-                                                 for (i in list_nv) {
-                                                   if (fix == TRUE) {
-                                                     plot(
-                                                       Omega
-                                                       ,
-                                                       nv = i
-                                                       ,
-                                                       gr = gr
-                                                       ,
-                                                       ini = POS
-                                                       ,
-                                                       color.vertex = color.vertex
-                                                       ,
-                                                       color.edge = color.edge
-                                                       ,
-                                                       label_v = label_v
-                                                       ,
-                                                       legend.position = legend.position
-                                                       ,
-                                                       frame.color = frame.color
-                                                       ,
-                                                       label.hub = label.hub
-                                                       #,edge.arrow.size=edge.arrow.size
-                                                       #,edge.thickness=edge.thickness
-                                                     )
-                                                   }
-                                                   else{
-                                                     plot(
-                                                       Omega
-                                                       ,
-                                                       nv = i
-                                                       ,
-                                                       gr = gr
-                                                       ,
-                                                       color.vertex = color.vertex
-                                                       ,
-                                                       color.edge = color.edge
-                                                       ,
-                                                       label_v = label_v
-                                                       ,
-                                                       legend.position = legend.position
-                                                       ,
-                                                       frame.color = frame.color
-                                                       ,
-                                                       label.hub = label.hub
-                                                       #,edge.arrow.size=edge.arrow.size
-                                                       #,edge.thickness=edge.thickness
-                                                     )
-                                                     
-                                                   }
-                                                   text(-1, 1, round(i, 3))
-                                                 }
-                                               })
-                                             }
-                                             
-                                             if (type.ani == "gif") {
-                                               par(ask = TRUE)
-                                               POS <- position(net, nv = list_nv[1])
-                                               if (is.null(gr)) {
-                                                 gr <- rep(1, dim(Omega@network)[1])
-                                               }
-                                               for (i in list_nv) {
-                                                 plot(
-                                                   Omega
-                                                   ,
-                                                   nv = i
-                                                   ,
-                                                   gr = gr
-                                                   ,
-                                                   ini = POS
-                                                   ,
-                                                   color.vertex = color.vertex
-                                                   ,
-                                                   color.edge = color.edge
-                                                   ,
-                                                   label_v = label_v
-                                                   ,
-                                                   legend.position = legend.position
-                                                   ,
-                                                   frame.color = frame.color
-                                                   ,
-                                                   label.hub = label.hub
-                                                   #,edge.arrow.size=edge.arrow.size
-                                                   #,edge.thickness=edge.thickness
-                                                 )
-                                               }
-                                               par(ask = FALSE)
-                                             }
-                                             
-                                           })
+setMethod("evolution", "network", 
+          function(net
+                   ,
+                   list_nv
+                   ,
+                   gr = NULL
+                   ,
+                   color.vertex = NULL
+                   ,
+                   color.edge = NULL
+                   ,
+                   fix = TRUE
+                   ,
+                   size = c(2000, 1000)
+                   ,
+                   label_v = 1:dim(net@network)[1]
+                   ,
+                   legend.position = "topleft"
+                   ,
+                   frame.color = "black"
+                   ,
+                   label.hub = FALSE
+                   ,
+                   outdir = getwd()
+                   ,
+                   type.ani = "html"
+                   #,edge.arrow.size=0.6*(1+size.ed)
+                   #,edge.thickness=1
+                   )
+                   {
+                     Omega <- net
+                     
+                     if (length(list_nv) == 1) {
+                       list_nv = seq(0, max(net@network) - 0.05, length.out = list_nv)
+                     }
+                     
+                     if (type.ani == "html") {
+                       require(animation)
+                       animation::ani.options(ani.height = size[2],
+                                              ani.width = size[1],
+                                              outdir = outdir)
+                       animation::saveHTML({
+                         POS <- position(net, nv = list_nv[1])
+                         
+                         for (i in list_nv) {
+                           if (fix == TRUE) {
+                             plot(
+                               Omega
+                               ,
+                               nv = i
+                               ,
+                               gr = gr
+                               ,
+                               ini = POS
+                               ,
+                               color.vertex = color.vertex
+                               ,
+                               color.edge = color.edge
+                               ,
+                               label_v = label_v
+                               ,
+                               legend.position = legend.position
+                               ,
+                               frame.color = frame.color
+                               ,
+                               label.hub = label.hub
+                               #,edge.arrow.size=edge.arrow.size
+                               #,edge.thickness=edge.thickness
+                             )
+                           }
+                           else{
+                             plot(
+                               Omega
+                               ,
+                               nv = i
+                               ,
+                               gr = gr
+                               ,
+                               color.vertex = color.vertex
+                               ,
+                               color.edge = color.edge
+                               ,
+                               label_v = label_v
+                               ,
+                               legend.position = legend.position
+                               ,
+                               frame.color = frame.color
+                               ,
+                               label.hub = label.hub
+                               #,edge.arrow.size=edge.arrow.size
+                               #,edge.thickness=edge.thickness
+                             )
+                             
+                           }
+                           text(-1, 1, round(i, 3))
+                         }
+                       })
+                     }
+                     if (type.ani == "latex") {
+                       require(animation)
+                       animation::ani.options(ani.height = size[2],
+                                              ani.width = size[1],
+                                              outdir = outdir)#, qpdf = '/opt/local/bin/qpdf'
+                       animation::saveLatex({
+                         POS <- position(net, nv = list_nv[1])
+                         
+                         for (i in list_nv) {
+                           if (fix == TRUE) {
+                             plot(
+                               Omega
+                               ,
+                               nv = i
+                               ,
+                               gr = gr
+                               ,
+                               ini = POS
+                               ,
+                               color.vertex = color.vertex
+                               ,
+                               color.edge = color.edge
+                               ,
+                               label_v = label_v
+                               ,
+                               legend.position = legend.position
+                               ,
+                               frame.color = frame.color
+                               ,
+                               label.hub = label.hub
+                               #,edge.arrow.size=edge.arrow.size
+                               #,edge.thickness=edge.thickness
+                             )
+                           }
+                           else{
+                             plot(
+                               Omega
+                               ,
+                               nv = i
+                               ,
+                               gr = gr
+                               ,
+                               color.vertex = color.vertex
+                               ,
+                               color.edge = color.edge
+                               ,
+                               label_v = label_v
+                               ,
+                               legend.position = legend.position
+                               ,
+                               frame.color = frame.color
+                               ,
+                               label.hub = label.hub
+                               #,edge.arrow.size=edge.arrow.size
+                               #,edge.thickness=edge.thickness
+                             )
+                             
+                           }
+                           text(-1, 1, round(i, 3))
+                         }
+                       })
+                     }
+                     if (type.ani == "swf") {
+                       require(animation)
+                       animation::ani.options(ani.height = size[2],
+                                              ani.width = size[1],
+                                              outdir = outdir)#, qpdf = '/opt/local/bin/qpdf'
+                       animation::saveSWF({
+                         POS <- position(net, nv = list_nv[1])
+                         
+                         for (i in list_nv) {
+                           if (fix == TRUE) {
+                             plot(
+                               Omega
+                               ,
+                               nv = i
+                               ,
+                               gr = gr
+                               ,
+                               ini = POS
+                               ,
+                               color.vertex = color.vertex
+                               ,
+                               color.edge = color.edge
+                               ,
+                               label_v = label_v
+                               ,
+                               legend.position = legend.position
+                               ,
+                               frame.color = frame.color
+                               ,
+                               label.hub = label.hub
+                               #,edge.arrow.size=edge.arrow.size
+                               #,edge.thickness=edge.thickness
+                             )
+                           }
+                           else{
+                             plot(
+                               Omega
+                               ,
+                               nv = i
+                               ,
+                               gr = gr
+                               ,
+                               color.vertex = color.vertex
+                               ,
+                               color.edge = color.edge
+                               ,
+                               label_v = label_v
+                               ,
+                               legend.position = legend.position
+                               ,
+                               frame.color = frame.color
+                               ,
+                               label.hub = label.hub
+                               #,edge.arrow.size=edge.arrow.size
+                               #,edge.thickness=edge.thickness
+                             )
+                             
+                           }
+                           text(-1, 1, round(i, 3))
+                         }
+                       })
+                     }
+                     if (type.ani == "video") {
+                       require(animation)
+                       animation::ani.options(ani.height = size[2],
+                                              ani.width = size[1],
+                                              outdir = outdir)#, qpdf = '/opt/local/bin/qpdf'
+                       animation::saveVideo({
+                         POS <- position(net, nv = list_nv[1])
+                         
+                         for (i in list_nv) {
+                           if (fix == TRUE) {
+                             plot(
+                               Omega
+                               ,
+                               nv = i
+                               ,
+                               gr = gr
+                               ,
+                               ini = POS
+                               ,
+                               color.vertex = color.vertex
+                               ,
+                               color.edge = color.edge
+                               ,
+                               label_v = label_v
+                               ,
+                               legend.position = legend.position
+                               ,
+                               frame.color = frame.color
+                               ,
+                               label.hub = label.hub
+                               #,edge.arrow.size=edge.arrow.size
+                               #,edge.thickness=edge.thickness
+                             )
+                           }
+                           else{
+                             plot(
+                               Omega
+                               ,
+                               nv = i
+                               ,
+                               gr = gr
+                               ,
+                               color.vertex = color.vertex
+                               ,
+                               color.edge = color.edge
+                               ,
+                               label_v = label_v
+                               ,
+                               legend.position = legend.position
+                               ,
+                               frame.color = frame.color
+                               ,
+                               label.hub = label.hub
+                               #,edge.arrow.size=edge.arrow.size
+                               #,edge.thickness=edge.thickness
+                             )
+                             
+                           }
+                           text(-1, 1, round(i, 3))
+                         }
+                       })
+                     }
+                     if (type.ani == "gif") {
+                       require(animation)
+                       animation::ani.options(ani.height = size[2],
+                                              ani.width = size[1],
+                                              outdir = outdir)#, qpdf = '/opt/local/bin/qpdf'
+                       animation::saveGIF({
+                         POS <- position(net, nv = list_nv[1])
+                         
+                         for (i in list_nv) {
+                           if (fix == TRUE) {
+                             plot(
+                               Omega
+                               ,
+                               nv = i
+                               ,
+                               gr = gr
+                               ,
+                               ini = POS
+                               ,
+                               color.vertex = color.vertex
+                               ,
+                               color.edge = color.edge
+                               ,
+                               label_v = label_v
+                               ,
+                               legend.position = legend.position
+                               ,
+                               frame.color = frame.color
+                               ,
+                               label.hub = label.hub
+                               #,edge.arrow.size=edge.arrow.size
+                               #,edge.thickness=edge.thickness
+                             )
+                           }
+                           else{
+                             plot(
+                               Omega
+                               ,
+                               nv = i
+                               ,
+                               gr = gr
+                               ,
+                               color.vertex = color.vertex
+                               ,
+                               color.edge = color.edge
+                               ,
+                               label_v = label_v
+                               ,
+                               legend.position = legend.position
+                               ,
+                               frame.color = frame.color
+                               ,
+                               label.hub = label.hub
+                               #,edge.arrow.size=edge.arrow.size
+                               #,edge.thickness=edge.thickness
+                             )
+                             
+                           }
+                           text(-1, 1, round(i, 3))
+                         }
+                       })
+                     }
+                     if (type.ani == "manual_gif") {
+                       par(ask = TRUE)
+                       POS <-
+                         position(net, nv = list_nv[1])
+                       if (is.null(gr)) {
+                         gr <- rep(1, dim(Omega@network)[1])
+                       }
+                       for (i in list_nv) {
+                         plot(
+                           Omega
+                           ,
+                           nv = i
+                           ,
+                           gr = gr
+                           ,
+                           ini = POS
+                           ,
+                           color.vertex = color.vertex
+                           ,
+                           color.edge = color.edge
+                           ,
+                           label_v = label_v
+                           ,
+                           legend.position = legend.position
+                           ,
+                           frame.color = frame.color
+                           ,
+                           label.hub = label.hub
+                           #,edge.arrow.size=edge.arrow.size
+                           #,edge.thickness=edge.thickness
+                         )
+                       }
+                       par(ask = FALSE)
+                     }
+                   }
+          )
           
-          setMethod("position", "network", function(net, nv = 0) {
-            require(igraph)
-            O <- net@network
-            Omega <- net@network
-            O[abs(O) <= nv] <- 0
-            O[abs(O) > nv] <- 1
-            
-            nom <- 1:dim(O)[1]
-            enle <- which(apply(O, 1, sum) + apply(O, 2, sum) == 0)
-            if (length(enle) != 0) {
-              nom <- nom[-enle]
-              O <- O[-enle, -enle]
-            }
-            
-            G <- graph.adjacency(O, weighted = TRUE)
-            #    	if(.Platform$OS.type=="unix"){
-            #    get.edgelist(G)+1->Q
-            #    }else{
-            get.edgelist(G) -> Q
-            #    	}
-            Q[, 1] <- nom[Q[, 1]]
-            Q[, 2] <- nom[Q[, 2]]
-            
-            # dev.new(width=150,heigth=300,xlim=c(min(L[,1]),max(L[,1])))
-            #par(mar=c(0,0,0,0), oma=c(0,0,0,0),mai=c(0,0,0,0))
-            L <-
-              layout.fruchterman.reingold(
-                G,
-                minx = rep(0, vcount(G)),
-                maxx = rep(150, vcount(G)),
-                miny = rep(0, vcount(G)),
-                maxy = rep(300, vcount(G))
-              )
-            return(cbind(nom, L))
-          })
+
+setMethod("position", "network", function(net, nv = 0) {
+  require(igraph)
+  O <- net@network
+  Omega <- net@network
+  O[abs(O) <= nv] <- 0
+  O[abs(O) > nv] <- 1
+  
+  nom <- 1:dim(O)[1]
+  enle <- which(apply(O, 1, sum) + apply(O, 2, sum) == 0)
+  if (length(enle) != 0) {
+    nom <- nom[-enle]
+    O <- O[-enle, -enle]
+  }
+  
+  G <- graph.adjacency(O, weighted = TRUE)
+  #    	if(.Platform$OS.type=="unix"){
+  #    get.edgelist(G)+1->Q
+  #    }else{
+  get.edgelist(G) -> Q
+  #    	}
+  Q[, 1] <- nom[Q[, 1]]
+  Q[, 2] <- nom[Q[, 2]]
+  
+  # dev.new(width=150,heigth=300,xlim=c(min(L[,1]),max(L[,1])))
+  #par(mar=c(0,0,0,0), oma=c(0,0,0,0),mai=c(0,0,0,0))
+  L <-
+    layout.fruchterman.reingold(
+      G,
+      minx = rep(0, vcount(G)),
+      maxx = rep(150, vcount(G)),
+      miny = rep(0, vcount(G)),
+      maxy = rep(300, vcount(G))
+    )
+  return(cbind(nom, L))
+})
           
 #######################################
 #######################################
@@ -336,7 +517,7 @@ setMethod("plot"
                      ,
                      ani = FALSE
                      ,
-                     taille = c(2000, 1000)
+                     size = c(2000, 1000)
                      ,
                      label_v = 1:dim(x@network)[1]
                      ,
@@ -518,8 +699,8 @@ setMethod("plot"
                 }
                 T <- length(unique(gr))#length(x@time_pt)
                 require(animation)
-                animation::ani.options(ani.height = taille[2],
-                                       ani.width = taille[1],
+                animation::ani.options(ani.height = size[2],
+                                       ani.width = size[1],
                                        outdir = outdir)
                 
                 if (is.null(ini)) {
@@ -1183,7 +1364,7 @@ setMethod("cutoff", "network", function(Omega,
         z    <- z[z >= xmin]
         n    <- length(z)
         # estimate alpha via direct maximization of likelihood function
-        #  vectorized version of numerical calculation
+        #  vectorized version of numerical computation
         # matlab: zdiff = sum( repmat((1:xmin-1)',1,length(vec)).^-repmat(vec,xmin-1,1) ,1);
         if (xmin == 1) {
           zdiff <- rep(0, length(vec))
@@ -1314,8 +1495,8 @@ setMethod("cutoff", "network", function(Omega,
       nof <- rep(0, Bt)
       
       if (!quiet) {
-        print("Power-law Distribution, parameter error calculation")
-        print("Warning: This can be a slow calculation; please be patient.")
+        print("Power-law Distribution, parameter error computation")
+        print("Warning: This can be a slow computation; please be patient.")
         print(paste(" n =", N, "xmin =", xmin, "- reps =", Bt, fdattype))
       }
       #
@@ -1483,7 +1664,7 @@ setMethod("cutoff", "network", function(Omega,
               zq   <- zq[zq >= qmin]
               nq    <- length(zq)
               if (nq > 1) {
-                # vectorized version of numerical calculation
+                # vectorized version of numerical computation
                 if (qmin == 1) {
                   #WARNING
                   #zdiff <- rep(1,length(vec))
@@ -1563,7 +1744,7 @@ setMethod("cutoff", "network", function(Omega,
   f <- rep(0, length(sequence_test))
   
   #Boucle sur les valeurs candidates pour le cutoff
-  print("This calculation may be long")
+  print("This computation may be long")
   for (cc in sequence_test) {
     u <- u + 1
     print(paste(u, length(sequence_test), sep = "/"))
@@ -1644,3 +1825,39 @@ setMethod("cutoff", "network", function(Omega,
     sequence = sequence_test
   ))
 })
+
+
+setMethod("compare",c("network","network","numeric"),function(Net,
+                                                              Net_inf,
+                                                              nv=1){
+  N1<-Net@network
+  N2<-Net_inf@network
+  N1[abs(N1)>0]<-1
+  N1[abs(N1)<=0]<-0
+  N2[abs(N2)>nv]<-1
+  N2[abs(N2)<=nv]<-0
+  Nb<-sum(N1)
+  sens<-0
+  if(sum(N1==1)){
+    sens<-sum((N1-2*N2)==-1)/sum(N1==1)
+  }
+  spe<-0
+  if(sum(N2==1)){
+    spe<-sum((N1-2*N2)==-1)/sum(N2==1)
+  }
+  Fscore<-0
+  Fscore12<-0
+  Fscore2<-0
+  if(sens !=0){
+    Fscore<-2*spe*sens/(spe+sens)
+    Fscore12<-(1+0.5^2)*spe*sens/(spe/4+sens)
+    Fscore2<-(1+2^2)*spe*sens/(spe*4+sens)
+    crits=c(sens,spe,Fscore,Fscore12,Fscore2)
+    names(crits) <- c("Sensitivity","PPV","F-score","F-score 1/2","F-score 2")
+    return(crits)
+  }
+  crits=c(sens,spe,Fscore,Fscore12,Fscore2)
+  names(crits) <- c("Sensitivity","PPV","F-score","F-score 1/2","F-score 2")
+  return(crits)
+}
+)

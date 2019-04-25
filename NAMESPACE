@@ -1,4 +1,4 @@
-importFrom("grDevices", "col2rgb", "colorRamp", "dev.cur", "dev.new",
+importFrom("grDevices", "col2rgb", "colorRamp", "dev.cur", # "dev.new",
            "grey", "rainbow", "rgb", "terrain.colors")
 importFrom("graphics", "abline", "hist", "legend", "lines", "matplot",
            "par", "rect", "text", "grid")
@@ -28,8 +28,10 @@ magic,
 msgps,
 #Mfuzz,
 #methods, 
+pixmap,
+plotrix,
 nnls, 
-plotrix, 
+#plotrix, 
 splines, 
 #stats, 
 stats4, 
@@ -43,9 +45,11 @@ exportMethods(
     "analyze_network",
     "clustExploration",
     "clustInference",
+    "compare",
     "cutoff",
     "dim",
     "evolution",
+    "gene_expr_simulation",
     "geneNeighborhood",
     "genePeakSelection",
     "geneSelection",
@@ -57,9 +61,8 @@ exportMethods(
     "predict",
     "print",
     "summary",
-    "unionMicro",
+    "unionMicro"
 #    "unionNGseq",
-    "gene_expr_simulation"
 )
 
 exportClasses(
@@ -74,8 +77,8 @@ export("network_random",
        "unsupervised_clustering_auto_m_c",
        "unsupervised_clustering",
        "as.micro_array",
+       "plotF",
        #"as.nextgen_seq",
-       "compare",
        "replaceBand",
        "replaceUp",
        "replaceDown",

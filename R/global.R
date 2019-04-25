@@ -1,22 +1,23 @@
+setGeneric("analyze_network",package="Patterns",def = function(Omega,nv,...){standardGeneric("analyze_network")})
+setGeneric("clustExploration",package="Patterns",def = function(microarray,...){standardGeneric("clustExploration")})
+setGeneric("clustInference",package="Patterns",def = function(microarray,vote.index,...){standardGeneric("clustInference")})
+setGeneric("compare",package="Patterns",def = function(Net,Net_inf,nv){standardGeneric("compare")})
+setGeneric("cutoff",package="Patterns",def = function(Omega,... ){standardGeneric("cutoff")})
+setGeneric("evolution",package="Patterns",def = function(net,list_nv,... ){standardGeneric("evolution")})
+setGeneric("gene_expr_simulation",package="Patterns",def = function(network,...){standardGeneric("gene_expr_simulation")})
+#setGeneric("gene_counts_simulation",package="Patterns",def = function(network,...){standardGeneric("gene_counts_simulation")})
+setGeneric("geneNeighborhood",package="Patterns",def = function(net,targets,... ){standardGeneric("geneNeighborhood")})
+setGeneric("genePeakSelection",package="Patterns",def = function(x,peak,... ){standardGeneric("genePeakSelection")})
+setGeneric("geneSelection",package="Patterns",def = function(x,y,tot.number,... ){standardGeneric("geneSelection")})
+setGeneric("inference",package="Patterns",def = function(M,... ){standardGeneric("inference")})
+setGeneric("position",package="Patterns",def = function(net,... ){standardGeneric("position")})
+#setGeneric("inferenceCascade",package="Patterns",def = function(M,... ){standardGeneric("inferenceCascade")})
+#setGeneric("predict",package="Patterns",def = function(object,...){standardGeneric("predict")})
+setGeneric("probeMerge",package="Patterns",def = function(x,...){standardGeneric("probeMerge")})
+setGeneric("unionMicro",package="Patterns",def = function(M1,M2 ){standardGeneric("unionMicro")})
+#setGeneric("unionNGseq",package="Patterns",def = function(C1,C2 ){standardGeneric("unionNGseq")})
 setGeneric("unsupervised_clustering_auto_m_c",package="Patterns",def=function(M1,... ){standardGeneric("unsupervised_clustering_auto_m_c")})
 setGeneric("unsupervised_clustering",package="Patterns",def=function(M1,clust,mestim,... ){standardGeneric("unsupervised_clustering")})
-setGeneric("geneSelection",package="Patterns",def = function(x,y,tot.number,... ){standardGeneric("geneSelection")})
-setGeneric("genePeakSelection",package="Patterns",def = function(x,peak,... ){standardGeneric("genePeakSelection")})
-setGeneric("unionMicro",package="Patterns",def = function(M1,M2 ){standardGeneric("unionMicro")})
-setGeneric("unionNGseq",package="Patterns",def = function(C1,C2 ){standardGeneric("unionNGseq")})
-setGeneric("position",package="Patterns",def = function(net,... ){standardGeneric("position")})
-setGeneric("geneNeighborhood",package="Patterns",def = function(net,targets,... ){standardGeneric("geneNeighborhood")})
-setGeneric("evolution",package="Patterns",def = function(net,list_nv,... ){standardGeneric("evolution")})
-setGeneric("inferenceCascade",package="Patterns",def = function(M,... ){standardGeneric("inferenceCascade")})
-setGeneric("inference",package="Patterns",def = function(M,... ){standardGeneric("inference")})
-setGeneric("cutoff",package="Patterns",def = function(Omega,... ){standardGeneric("cutoff")})
-setGeneric("analyze_network",package="Patterns",def = function(Omega,nv,...){standardGeneric("analyze_network")})
-setGeneric("predict",package="Patterns",def = function(object,...){standardGeneric("predict")})
-setGeneric("gene_expr_simulation",def = function(network,...){standardGeneric("gene_expr_simulation")})
-setGeneric("gene_counts_simulation",def = function(network,...){standardGeneric("gene_counts_simulation")})
-setGeneric("clustExploration",def = function(microarray,...){standardGeneric("clustExploration")})
-setGeneric("clustInference",def = function(microarray,vote.index,...){standardGeneric("clustInference")})
-setGeneric("probeMerge",def = function(x,...){standardGeneric("probeMerge")})
 
 
 
@@ -25,7 +26,9 @@ as.micro_array <-
            time,
            subject,
            name_probe = NULL,
-           gene_ID = NULL) {
+           gene_ID = NULL,
+           group=0,
+           start_time=0) {
     if (is.null(row.names(M))) {
       row.names(M) <- paste("gene", 1:dim(M)[1])
     }
@@ -43,8 +46,8 @@ as.micro_array <-
         gene_ID = g,
         time = time,
         subject = subject,
-        group = 0,
-        start_time = 0
+        group = group,
+        start_time = start_time
       )
     )
   }
@@ -407,7 +410,7 @@ choice_cutoff<-function(O,nb,eps,hub,plot.g=FALSE,prop.hub=NULL){
   if(plot.g==TRUE){
     matplot(t(Mcut),type="l")
     
-    if(!attr(dev.cur(),"names")=="pdf"){dev.new()}
+    #if(!attr(dev.cur(),"names")=="pdf"){dev.new()}
     plot(sequence[which(hh>0)],hh[hh>0],type="l",xlab="cut off",ylab="Proportion of hubs")
   }
   
@@ -476,21 +479,6 @@ network_random<-function(nb,time_label,exp,init,regul,min_expr,max_expr,casc.lev
   F<-CascadeFinit(T,T)
   N<-new("network",network=net2,name=paste("gene",1:nb),F=F,convO=0,convF=matrix(0,1,1),time_pt=1:length(unique(time_label)))
   return(N)
-}
-
-compare<-function(Net,Net_inf,nv){
-  N1<-Net@network
-  N2<-Net_inf@network
-  N1[abs(N1)>0]<-1
-  N1[abs(N1)<=0]<-0
-  N2[abs(N2)>nv]<-1
-  N2[abs(N2)<=nv]<-0
-  Nb<-sum(N1)
-  sens<-sum((N1-2*N2)==-1)/sum(N1==1)
-  spe<-sum((N1-2*N2)==-1)/sum(N2==1)
-  Fscore<-2*sens*spe/(sens+spe)
-  return(c(sens,spe,Fscore))
-  
 }
 
 # Band text matrices
@@ -603,33 +591,207 @@ majority_indice<-function(x){
 }    
 
 
+plotF <- function(x
+                  ,
+                  choice = "Fshape"
+                  ,
+                  nround = 2
+                  ,
+                  pixmap.color = terrain.colors(20))
+{
+  if (choice == "F") {
+    requireNamespace("plotrix", quietly = TRUE)
+    F <- x
+    nF <- dim(F)[3]
+    ngrp = sqrt(dim(F)[3])
+    ymax <- max(F)
+    coloring <- rainbow(ngrp)
 
-boost<-function(X,Y,corr=0.8,B=100,normalize=TRUE,eps=10^(-4)){
-  func<-"selec_meth"
-  selec_meth<-function(X,Y){
+    FF = NULL
+    for (i in 1:ngrp) {
+      FFa = NULL
+      for (j in 1:ngrp) {
+        FFa = cbind(FFa, round(F[, , (i - 1) * ngrp + j], nround))
+      }
+      FF = rbind(FF, FFa)
+    }
+    par(
+      mar = c(0, 0, 0, 0),
+      oma = c(0, 0, 0, 0),
+      mai = c(0, 0, 0, 0)
+    )
+    plotrix::color2D.matplot(
+      x = FF,
+      cs1 = c(0, .5, 1),
+      cs2 = c(.5, 1, 0),
+      cs3 = c(1, 2, 0),
+      show.values = nround,
+      axes = FALSE,
+      main = "",
+      xlab = "",
+      ylab = "",
+      show.legend = FALSE
+    )
+    abline(h = 4 * (1:(ngrp - 1)), lwd = 3)
+    abline(v = 4 * (1:(ngrp - 1)), lwd = 3)
+  }
+  if (choice == "Fpixmap") {
+    F <- x
+    nF <- dim(F)[3]
+    ngrp = sqrt(dim(F)[3])
+    ymax <- max(F)
+    coloring <- rainbow(ngrp)
+
+    FF = NULL
+    for (i in 1:ngrp) {
+      FFa = NULL
+      for (j in 1:ngrp) {
+        FFa = cbind(FFa, round(F[, , (i - 1) * ngrp + j], nround))
+      }
+      FF = rbind(FF, FFa)
+    }
+    par(
+      mar = c(0, 0, 0, 0),
+      oma = c(0, 0, 0, 0),
+      mai = c(0, 0, 0, 0)
+    )
+    x.temp <- pixmap::pixmapGrey(data = FF, cellres = c(2, 2))
+    plot(x.temp)
+    rm(x.temp)
+  }
+  if (choice == "Fshape") {
+    requireNamespace("plotrix", quietly = TRUE)
+    Fshape <- x
+    nF <- dim(Fshape)[3]
+    ngrp = sqrt(dim(Fshape)[3])
+    ymax <- max(Fshape)
+    nround = 0
     
-    N<-dim(X)[1]      
-    modd<-lars::lars(X,Y)
-    tau2<-var(Y)
-    index<-which.min(N * log(2 * pi * tau2) + apply((lars::predict.lars(modd,newx=X)$fit-Y)^2,2,sum)/tau2 + log(N) * (apply(lars::predict.lars(modd,type="coef")$coef!=0,1,sum)+1))
-    lars::predict.lars(modd,s=index,type="coef")$coefficients
+    Fshape[Fshape == "0"] <- NA
+    
+    allcoefFtheo = unique(as.vector(Fshape))
+    ncoefFtheo = length(allcoefFtheo)
+    coloring <- rainbow(ncoefFtheo)
+    
+    Ftemp = array(NA, c(nrow(Fshape), ncol(Fshape), nF))
+    for (coefFtheo in 1:ncoefFtheo) {
+      Ftemp[Fshape == allcoefFtheo[coefFtheo]] <- coefFtheo
+    }
+    
+    FF = NULL
+    for (i in 1:ngrp) {
+      FFa = NULL
+      for (j in 1:ngrp) {
+        FFa = cbind(FFa, round(Ftemp[, , (i - 1) * ngrp + j], nround))
+      }
+      FF = rbind(FF, FFa)
+    }
+    par(
+      mar = c(0, 0, 0, 0),
+      oma = c(0, 0, 0, 0),
+      mai = c(0, 0, 0, 0)
+    )
+    plotrix::color2D.matplot(
+      x = FF,
+      cs1 = c(0, .5, 1),
+      cs2 = c(.5, 1, 0),
+      cs3 = c(1, 2, 0),
+      show.values = nround,
+      axes = FALSE,
+      main = "",
+      xlab = "",
+      ylab = "",
+      show.legend = FALSE
+    )
+    abline(h = 4 * (1:(ngrp - 1)), lwd = 3)
+    abline(v = 4 * (1:(ngrp - 1)), lwd = 3)
+  }
+  if (choice == "Fshapepixmap") {
+    Fshape <- x
+    nF <- dim(Fshape)[3]
+    ngrp = sqrt(dim(Fshape)[3])
+    ymax <- max(Fshape)
+    
+    allcoefFtheo = unique(as.vector(Fshape))
+    ncoefFtheo = length(allcoefFtheo)
+    coloring <- rainbow(ncoefFtheo)
+    
+    Ftemp = array(NA, c(nrow(Fshape), ncol(Fshape), nF))
+    for (coefFtheo in 1:ncoefFtheo) {
+      Ftemp[Fshape == allcoefFtheo[coefFtheo]] <- coefFtheo
+    }
+    
+    FF = NULL
+    for (i in 1:ngrp) {
+      FFa = NULL
+      for (j in 1:ngrp) {
+        FFa = cbind(FFa, round(Ftemp[, , (i - 1) * ngrp + j], nround))
+      }
+      FF = rbind(FF, FFa)
+    }
+    par(
+      mar = c(0, 0, 0, 0),
+      oma = c(0, 0, 0, 0),
+      mai = c(0, 0, 0, 0)
+    )
+    x.temp <- pixmap::pixmapGrey(data = FF, cellres = c(2, 2))
+    plot(x.temp)
+    rm(x.temp)
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+boost <- function(X,
+                  Y,
+                  corr = 0.8,
+                  B = 100,
+                  normalize = TRUE,
+                  eps = 10 ^ (-4)) {
+  func <- "selec_meth"
+  selec_meth <- function(X, Y) {
+    N <- dim(X)[1]
+    modd <- lars::lars(X, Y)
+    tau2 <- var(Y)
+    index <-
+      which.min(N * log(2 * pi * tau2) + apply((
+        lars::predict.lars(modd, newx = X)$fit - Y
+      ) ^ 2, 2, sum) / tau2 + log(N) * (apply(
+        lars::predict.lars(modd, type = "coef")$coef != 0, 1, sum
+      ) + 1))
+    lars::predict.lars(modd, s = index, type = "coef")$coefficients
     
   }
-    group<-function(X,c0){
-      
-      Xcor<-abs(cor(X))
-      Xcor[Xcor<c0]<-0
-      Xcor[Xcor!=0]<-1
-      
-      dete<-function(x){which(x == 1)}
-      res<-apply(Xcor,2,dete)
-      return(res)
-      
-      
+  group <- function(X, c0) {
+    Xcor <- abs(cor(X))
+    Xcor[Xcor < c0] <- 0
+    Xcor[Xcor != 0] <- 1
+    
+    dete <- function(x) {
+      which(x == 1)
     }
+    res <- apply(Xcor, 2, dete)
+    return(res)
+    
+    
+  }
   
   
-  group2<-function(x)group(x,1)
+  group2 <- function(x)
+    group(x, 1)
   
   
   #require(snowfall)
@@ -640,7 +802,7 @@ boost<-function(X,Y,corr=0.8,B=100,normalize=TRUE,eps=10^(-4)){
   #if(cpu>1){
   #sfInit( parallel=TRUE, cpus=cpu )
   #}else{
-  #sfInit( parallel=FALSE, cpus=cpu )	
+  #sfInit( parallel=FALSE, cpus=cpu )
   #	}
   #sfLibrary(movMF)
   #sfLibrary(lars)
@@ -652,92 +814,92 @@ boost<-function(X,Y,corr=0.8,B=100,normalize=TRUE,eps=10^(-4)){
   
   #sfLibrary(snowfall)}
   
-  if(normalize==TRUE){
-    
-    X<-X-matrix(rep(apply(X,2,mean),dim(X)[1]),dim(X)[1],dim(X)[2],byrow=TRUE)	
-    X<-t(t(X)/sqrt(diag(t(X)%*%X)))
+  if (normalize == TRUE) {
+    X <-
+      X - matrix(rep(apply(X, 2, mean), dim(X)[1]), dim(X)[1], dim(X)[2], byrow =
+                   TRUE)
+    X <- t(t(X) / sqrt(diag(t(X) %*% X)))
     
   }
   
-  Correlation_matrice<-t(X)%*%X
-  Correlation_indice<-Correlation_matrice*0	
-  Correlation_indice[which((Correlation_matrice)>=0)]<-1		
-  Correlation_indice[which(-(Correlation_matrice)>=0)]<--1	
-  diag(Correlation_indice)<-1
+  Correlation_matrice <- t(X) %*% X
+  Correlation_indice <- Correlation_matrice * 0
+  Correlation_indice[which((Correlation_matrice) >= 0)] <- 1
+  Correlation_indice[which(-(Correlation_matrice) >= 0)] <- -1
+  diag(Correlation_indice) <- 1
   
-  groups<-group2(X)
+  groups <- group2(X)
   
   #nb_correlated_variables<-apply(abs(Correlation_indice),2,sum)
   #		#cat("Number of correlated variables : \n")
   
   
-  Boot<-matrix(rep(0,dim(X)[2]*B),B,dim(X)[2])
+  Boot <- matrix(rep(0, dim(X)[2] * B), B, dim(X)[2])
   
-  func_passage1<-function(x){
-    
-    Xpass<-matrix(0,dim(X)[1],dim(X)[1]-1)
-    Xpass[col(Xpass)>row(Xpass)]<-1
-    diag(Xpass)<-1
-    Xpass[col(Xpass)==(row(Xpass)-1)]<--(1:(dim(X)[1]-1))
-    Xpass<-t(t(Xpass)/sqrt(diag(t(Xpass)%*%Xpass)))
-    return(solve(t(Xpass)%*%Xpass)%*%t(Xpass)%*%x)
-  }	
-  
-  func_passage2<-function(x){
-    
-    Xpass<-matrix(0,dim(X)[1],dim(X)[1]-1)
-    Xpass[col(Xpass)>row(Xpass)]<-1
-    diag(Xpass)<-1
-    Xpass[col(Xpass)==(row(Xpass)-1)]<--(1:(dim(X)[1]-1))
-    Xpass<-t(t(Xpass)/sqrt(diag(t(Xpass)%*%Xpass)))
-    return(apply( matrix(rep(x,dim(X)[1]),dim(X)[1],dim(X)[1]-1,byrow=TRUE)*Xpass,1,sum))
+  func_passage1 <- function(x) {
+    Xpass <- matrix(0, dim(X)[1], dim(X)[1] - 1)
+    Xpass[col(Xpass) > row(Xpass)] <- 1
+    diag(Xpass) <- 1
+    Xpass[col(Xpass) == (row(Xpass) - 1)] <- -(1:(dim(X)[1] - 1))
+    Xpass <- t(t(Xpass) / sqrt(diag(t(Xpass) %*% Xpass)))
+    return(solve(t(Xpass) %*% Xpass) %*% t(Xpass) %*% x)
   }
   
-  Xret<-array(0,c(dim(X)[1],dim(X)[2],B))
-  Xb<-X
+  func_passage2 <- function(x) {
+    Xpass <- matrix(0, dim(X)[1], dim(X)[1] - 1)
+    Xpass[col(Xpass) > row(Xpass)] <- 1
+    diag(Xpass) <- 1
+    Xpass[col(Xpass) == (row(Xpass) - 1)] <- -(1:(dim(X)[1] - 1))
+    Xpass <- t(t(Xpass) / sqrt(diag(t(Xpass) %*% Xpass)))
+    return(apply(matrix(
+      rep(x, dim(X)[1]), dim(X)[1], dim(X)[1] - 1, byrow = TRUE
+    ) * Xpass, 1, sum))
+  }
+  
+  Xret <- array(0, c(dim(X)[1], dim(X)[2], B))
+  Xb <- X
   
   
   
-  simul1<-function(j){
-    
-    if(length(groups[[j]])>=2){
-      
-      indice<-groups[[j]]
-      corr_set<-t(t(X[,indice])*Correlation_indice[j,indice])
-      corr_set2<-apply(corr_set,2,func_passage1)
-      BB<-coef(movMF::movMF(t(corr_set2),1))$theta
-      newv<-movMF::rmovMF(1,BB)
-      newv<-func_passage2(newv)
-    }else{
-      
-      newv<-X[,j]
+  simul1 <- function(j) {
+    if (length(groups[[j]]) >= 2) {
+      indice <- groups[[j]]
+      corr_set <- t(t(X[, indice]) * Correlation_indice[j, indice])
+      corr_set2 <- apply(corr_set, 2, func_passage1)
+      BB <- coef(movMF::movMF(t(corr_set2), 1))$theta
+      newv <- movMF::rmovMF(1, BB)
+      newv <- func_passage2(newv)
+    } else{
+      newv <- X[, j]
       
     }
     
     
-    return(newv)			
+    return(newv)
   }
   
-  simul1<-Vectorize(simul1)
+  simul1 <- Vectorize(simul1)
   
-  simul2<-function(){simul1(1:(dim(X)[2]))}
+  simul2 <- function() {
+    simul1(1:(dim(X)[2]))
+  }
   
-  Xret<-replicate(B,simul2())
+  Xret <- replicate(B, simul2())
   
   
-  select<-function(k){
-    rr<-eval(parse(text=paste(func,"(Xret[,,",k,"],Y)",sep="")))
+  select <- function(k) {
+    rr <- eval(parse(text = paste(func, "(Xret[,,", k, "],Y)", sep = "")))
     
-    return(rr)	
+    return(rr)
   }
   
   
-  Boot<-lapply(1:B,select)
+  Boot <- lapply(1:B, select)
   
-  Boot<-matrix(unlist(Boot),B,dim(X)[2],byrow=TRUE)
+  Boot <- matrix(unlist(Boot), B, dim(X)[2], byrow = TRUE)
   
-  Fs<-apply(abs(Boot)>eps,2,sum)
+  Fs <- apply(abs(Boot) > eps, 2, sum)
   
   
-  return(Fs/B)
+  return(Fs / B)
 }
