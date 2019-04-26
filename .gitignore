@@ -17,3 +17,4 @@ rsconnect/
 
 # Files for review
 review/
+.DS_Store
