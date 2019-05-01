@@ -1,3 +1,5 @@
+.8 Finalized readme and help pages.
+
 .7 Updated evolution and animation functions. Updated compare fonction. Adapted new example dataset and completed help pages.
 
 .6 New plot functions. Prediction was enabled for cascade networks. Gene_Id is kept by selection.
@@ -10,7 +12,6 @@
 
 .3 Added weighted stability selection inference function
 
-.2 Cascade 0.2
+.2 Added weighted lasso and selectboost inference function
 
-.1 Cascade 0.1
 .1 Creation and review of the package 

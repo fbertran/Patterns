@@ -19,6 +19,6 @@ IndicFinit(sqF, ngrp, Indic, low.trig = TRUE)
 An array of size (sqF, sqF, ngrp).
 }
 \examples{
-IndicFinit(3, 2, matrix(1,2,2))
+IndicFinit(3, 2, matrix(1,2,2)-diag(2))
 }
 \keyword{models}

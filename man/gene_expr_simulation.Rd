@@ -34,5 +34,14 @@ Bertrand Frederic, Myriam Maumy-Bertrand.
 
 
 \examples{
-	#See vignette
+data(simul)
+set.seed(1)
+
+#We simulate gene expressions according to the network Net
+Msim<-Patterns::gene_expr_simulation(
+	network=Net,
+	time_label=rep(1:4,each=25),
+	subject=5,
+	peak_level=200)
+head(Msim)
 }

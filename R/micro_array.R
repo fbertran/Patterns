@@ -260,7 +260,7 @@ setMethod(f="unsupervised_clustering_auto_m_c",
 
 setMethod(f="unsupervised_clustering", 	
           signature=c("micro_array","numeric","numeric"),
-          definition=function(M1,clust,mestim,M2=NULL,data_log=TRUE,screen=NULL,heatmap=TRUE){
+          definition=function(M1,clust,mestim,M2=NULL,data_log=TRUE,screen=NULL,heatmap=TRUE,new.window=TRUE){
             require("Mfuzz", quietly = TRUE, warn.conflicts = FALSE)
             if(is.null(M2)){
               if(data_log==TRUE){
@@ -286,8 +286,8 @@ setMethod(f="unsupervised_clustering",
             cl <- Mfuzz::mfuzz(Em.s,c=clust,m=mestim)
             Mfuzz::overlap.plot(cl,over =Mfuzz::overlap(cl), thres = 0.05)
             if(!attr(dev.cur(),"names")=="pdf"){
-              if(is.null(screen)){Mfuzz::mfuzz.plot(Em.s,cl)
-              } else {Mfuzz::mfuzz.plot(Em.s,cl,mfrow=screen)}} else {
+              if(is.null(screen)){Mfuzz::mfuzz.plot(Em.s,cl,new.window=new.window)
+              } else {Mfuzz::mfuzz.plot(Em.s,cl,mfrow=screen,new.window=new.window)}} else {
                 if(is.null(screen)){Mfuzz::mfuzz.plot(Em.s,cl,new.window=FALSE)
                 } else {Mfuzz::mfuzz.plot(Em.s,cl,mfrow=screen,new.window=FALSE)}}  
             if(heatmap){

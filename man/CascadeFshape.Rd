@@ -19,7 +19,9 @@ An array of sizes c(sqF, sqF, ngrp).
 
 \examples{
 CascadeFshape(3,2)
+plotF(CascadeFshape(3,2),choice = "Fshape")
 CascadeFshape(4,3)
+plotF(CascadeFshape(4,3),choice = "Fshape")
 }
 
 \keyword{models}

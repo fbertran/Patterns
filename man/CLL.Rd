@@ -6,6 +6,8 @@ Expression data from healthy and malignant (chronic lymphocytic leukemia, CLL) h
 }
 \description{
 B-cells were negatively selected from healthy donors and previously untreated CLL patients. BCR stimulated and unstimulated control B-cells were treated at four time points after stimulation for total RNA extraction and hybridization on Affymetrix microarrays.
+
+The dataset provided with package is the first five lines of the full dataset. The full dataset can be downloaded from the github repository of the package (https://raw.githubusercontent.com/fbertran/Patterns/master/add_data/CLL.RData).
 }
 \usage{data("CLL")}
 \format{
@@ -24,6 +26,11 @@ Vallat, L., Kemper, C. A., Jung, N., Maumy-Bertrand, M., Bertrand, F., Meyer, N.
 }
 \examples{
 data(CLL)
+str(CLL)
+
+CLLfile <- "https://raw.githubusercontent.com/fbertran/Patterns/master/add_data/CLL.RData"
+load(CLLfile)
+
 str(CLL)
 }
 \keyword{datasets}

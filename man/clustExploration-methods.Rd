@@ -24,9 +24,10 @@ clustExploration(microarray,...)
 A data.frame of nrows(microarray) observations of 3 variables (name, cluster, maj.vote.index).
 }
 \examples{
+library(Patterns)
 if(require(CascadeData)){
 data(micro_S, package="CascadeData")
-D<-as.micro_array(micro_S[1:100,],1:4,6)
+D<-Patterns::as.micro_array(micro_S[1:100,],1:4,6)
 a<-clustExploration(D)
 a
 }

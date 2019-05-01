@@ -24,9 +24,10 @@ if(require(CascadeData)){
 data(micro_S, package="CascadeData")
 M<-as.micro_array(micro_S[1:100,],1:4,6)
 mc<-unsupervised_clustering_auto_m_c(M)
-MwithGrp=unsupervised_clustering(M, 8, mc$m, screen=NULL, heatmap=FALSE)
+MwithGrp=unsupervised_clustering(M, 8, mc$m, screen=NULL, heatmap=FALSE, new.window = FALSE)
 # Other options
-unsupervised_clustering(M, 8, mc$m, screen=c(3,3), heatmap=TRUE)
+unsupervised_clustering(M, 8, mc$m, screen=c(3,3), heatmap=TRUE, new.window = FALSE)
+# Plot the clusters
 plot(MwithGrp)
 }
 }

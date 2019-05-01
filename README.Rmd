@@ -20,10 +20,47 @@ knitr::opts_chunk$set(
 ```
 # Patterns
 
+A modeling tool dedicated to biological network modeling. It allows for single or joint modeling of, for instance, genes and proteins. 
 
-![Reverse-engineered network.](man/figures/figure_article_def.png)
+* It starts with the selection of the actors that will be the used in the reverse engineering upcoming step. An actor can be included in that selection based on its differential effects (for instance gene expression or protein abundance) or on its time course profile. 
+* Wrappers for actors clustering functions and cluster analysis are provided. 
+* It also allows reverse engineering of biological networks taking into account the observed time course patterns of the actors. Many inference functions are provided and dedicated to get specific features for the inferred network such as sparsity, robust links, high confidence links or stable through resampling links. 
+* aa
+* bb
+There are various fitting functions provided with the `Patterns` package:
+\describe{
+\item{"LASSO", from the `lars` package}
+\item{"LASSO2", from the `glmnet` package}
+\item{"SPLS", from the `spls` package}
+\item{"ELASTICNET", from the `elasticnet` package}
+\item{"stability.c060", from the `c060` package implementation of stability selection}
+\item{"stability.c060.weighted", a new weighted version of the `c060` package implementation of stability selection}
+\item{"robust", lasso from the `lars` package with light random Gaussian noise added to the explanatory variables}
+\item{"selectboost.weighted", a new weighted version of the `selectboost` package implementation of the selectboost algorithm to look for the more stable links against resampling that takes into account the correlated structure of the predictors. If no weights are provided, equal weigths are for all the variables (=non weighted case).}
+}
 
-![Simulation of an intervention on a gene of the network.](man/figures/figure_network_pred2.png)
+* Some simulation and prediction tools are also available for cascade networks. 
+* Examples of use with microarray or RNA-Seq data are provided.
+
+
+The Patterns package is a complete 
+
+
+![Infered F matrix of the network (General shape).](docs/reference/figures/README-Fresults-1.png)
+
+![Infered F matrix of the network (cascade shape).](docs/reference/figures/README-FresultsLC-1.png)
+
+![Reverse-engineered network.](docs/reference/figures/README-plotnet2-1.png)
+
+![Evolution of a reverse-engineered network with increasing cut-off values.](docs/reference/evolution/animation.gif)
+
+![Evolution of a reverse-engineered network with increasing cut-off values (mp4).](docs/reference/evolution/animation.mp4){width=400 height=300}
+
+Evolution of a reverse-engineered network with increasing cut-off values (mp4).
+
+<video width="400" height="320" controls>
+  <source src="docs/reference/evolution/animation.mp4" type="video/mp4">
+</video>
 
 This website and these examples were created by F. Bertrand and M. Maumy-Bertrand.
 
@@ -54,7 +91,7 @@ str(micro_US)
 ```
 
 Get a summay and plots of the data:
-```{r plotmicroarrayclass, fig.keep='all'}
+```{r plotmicroarrayclass, fig.keep='all', cache=TRUE}
 summary(micro_US)
 plot(micro_US)
 ```
@@ -65,7 +102,7 @@ There are several functions to carry out gene selection before the inference. Th
 ### Data simulation
 Let's simulate some cascade data and then do some reverse engineering.
 
-We first design the F matrix
+We first design the F matrix for $T_i=4$ times and $Ngrp=4$ groups. The `Fmat`object is an array of sizes $(T_i,T-i,Ngrp^2)=(4,4,16)$.
 ```{r createF}
 Ti<-4
 Ngrp<-4
@@ -91,7 +128,7 @@ print(all(Fmat==Fbis))
 ```
 
 End of F matrix definition.
-```{r CascadeInitCheck}
+```{r CascadeFinalize}
 Fmat[,,3]<-Fmat[,,3]*0.2
 Fmat[3,1,3]<-1
 Fmat[4,2,3]<-1
@@ -118,12 +155,12 @@ str(Net)
 ```
 
 Plot the simulated network.
-```{r plotnet}
+```{r plotnet1}
 Patterns::plot(Net, choice="network")
 ```
 
 If a gene clustering is known, it can be used as a coloring scheme.
-```{r plotnet}
+```{r plotnet2}
 plot(Net, choice="network", gr=rep(1:4,each=25))
 ```
 
@@ -133,12 +170,13 @@ plot(Net, choice="F")
 ```
 
 Plot the F matrix using the `pixmap` package, for high dimensional F matrices.
-```{r plotF}
+```{r plotFpixmap}
 plot(Net, choice="Fpixmap")
 ```
 
 We simulate gene expression according to the network that was previously drawn
 ```{r genesimul, message=FALSE, warning=FALSE}
+set.seed(1)
 M <- Patterns::gene_expr_simulation(
   network=Net,
   time_label=rep(1:4,each=25),
@@ -149,56 +187,59 @@ str(M)
 ```
 
 Get a summay and plots of the simulated data:
-```{r summarysimuldata}
+```{r summarysimuldata, cache=TRUE}
 summary(M)
 ```
 
-```{r plotsimuldata, fig.keep='all'}
+```{r plotsimuldata, fig.keep='all', cache=TRUE}
 plot(M)
 ```
 
 ### Network inferrence
 We infer the new network using subjectwise leave one out cross-validation (default setting): all measurements from the same subject are removed from the dataset). The inference is carried out with a general Fshape.
-```{r netinfdefault}
+```{r netinfdefault, cache=TRUE}
 Net_inf_P <- Patterns::inference(M, cv.subjects=TRUE)
 ```
 
-plot()
+Plot of the inferred F matrix
+```{r Fresults}
 plot(Net_inf_P, choice="F")
+```
 
-
-Heatmap of the coefficients of the Omega matrix of the network
+Heatmap of the inferred coefficients of the Omega matrix
 ```{r heatresults}
 stats::heatmap(Net_inf_P@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
 ```
 
 
-Default values fot the $F$ matrices. The `Finit` matrix (starting values for the algorithm).
+Default values fot the $F$ matrices. The `Finit` matrix (starting values for the algorithm). In our case, the `Finit`object is an array of sizes $(T_i,T-i,Ngrp^2)=(4,4,16)$.
 ```{r Finitshow}
-Finit<-array(0,c(sqF,sqF,nF))	
+Ti<-4;
+ngrp<-4
+nF<-ngrp^2
+Finit<-array(0,c(Ti,Ti,nF))	
               for(ii in 1:nF){    
                 if((ii%%(ngrp+1))==1){
                   Finit[,,ii]<-0
                 } else {
-                  Finit[,,ii]<-cbind(rbind(rep(0,sqF-1),diag(1,sqF-1)),rep(0,sqF))+rbind(cbind(rep(0,sqF-1),diag(1,sqF-1)),rep(0,sqF))
+                  Finit[,,ii]<-cbind(rbind(rep(0,Ti-1),diag(1,Ti-1)),rep(0,Ti))+rbind(cbind(rep(0,Ti-1),diag(1,Ti-1)),rep(0,Ti))
                 }
               }
 ```
 
 The `Fshape` matrix (default shape for `F` matrix the algorithm). Any interaction between groups and times are permitted except the retro-actions (a group on itself, or an action at the same time for an actor on another one).
 ```{r Fshapeshow}
-sqF=4;ngrp=4;nF=ngrp^2
-Fshape<-array("0",c(sqF,sqF,nF)) 
+Fshape<-array("0",c(Ti,Ti,nF)) 
 for(ii in 1:nF){  
   if((ii%%(ngrp+1))==1){
     Fshape[,,ii]<-"0"
   } else {
-    lchars <- paste("a",1:(2*sqF-1),sep="")
-    tempFshape<-matrix("0",sqF,sqF)
-    for(bb in (-sqF+1):(sqF-1)){
-      tempFshape<-replaceUp(tempFshape,matrix(lchars[bb+sqF],sqF,sqF),-bb)
+    lchars <- paste("a",1:(2*Ti-1),sep="")
+    tempFshape<-matrix("0",Ti,Ti)
+    for(bb in (-Ti+1):(Ti-1)){
+      tempFshape<-replaceUp(tempFshape,matrix(lchars[bb+Ti],Ti,Ti),-bb)
     }
-    tempFshape <- replaceBand(tempFshape,matrix("0",sqF,sqF),0)
+    tempFshape <- replaceBand(tempFshape,matrix("0",Ti,Ti),0)
     Fshape[,,ii]<-tempFshape
   }
 }
@@ -208,14 +249,14 @@ Any other form can be used. A "0" coefficient is missing from the model. It allo
 
 The `IndicFshape` function allows to design custom F matrix for cascade networks with equally spaced measurements by specifying the zero and non zero $F_{ij}$ cells of the $F$ matrix. It is useful for models featuring several clusters of actors that are activated at the time. Let's define the following indicatrix matrix (action of all groups on each other, which is not a possible real modeling setting and is only used as an example):
 ```{r Fshapeothershow}
-TestIndic=matrix(!((1:(sqF^2))%%(ngrp+1)==1),byrow=TRUE,ngrp,ngrp)
+TestIndic=matrix(!((1:(Ti^2))%%(ngrp+1)==1),byrow=TRUE,ngrp,ngrp)
 TestIndic
 ```
 
 For that choice, we get those init and shape $F$ matrices.
 ```{r Fshapeothershow2}
-IndicFinit(sqF,ngrp,TestIndic)
-IndicFshape(sqF,ngrp,TestIndic)
+IndicFinit(Ti,ngrp,TestIndic)
+IndicFshape(Ti,ngrp,TestIndic)
 ```
 
 Those $F$ matrices are lower diagonal ones to enforce that an observed value at a given time can only be predicted by a value that was observed in the past only (i.e. neither at the same moment or in the future). 
@@ -226,22 +267,27 @@ The `plotF` is convenient to display F matrices. Here are the the displays of th
 plotF(Fshape,choice="Fshape")
 ```
 
-```{r plotfshape1}
+```{r plotfshape2}
 plotF(CascadeFshape(4,4),choice="Fshape")
 ```
-```{r plotfshape1}
-plotF(IndicFshape(sqF,ngrp,TestIndic),choice="Fshape")
+```{r plotfshape3}
+plotF(IndicFshape(Ti,ngrp,TestIndic),choice="Fshape")
 ```
 
 We now fit the model with an $F$ matrix that is designed for cascade networks.
 
 Specific Fshape
-```{r netinfdefault}
+```{r netinfLC, cache=TRUE}
 Net_inf_P_S <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=CascadeFshape(4,4))
 ```
 
+Plot of the inferred F matrix
+```{r FresultsLC}
+plot(Net_inf_P_S, choice="F")
+```
+
 Heatmap of the coefficients of the Omega matrix of the network. They reflect the use of a special $F$ matrix. It is an example of an F matrix specifically designed to deal with cascade networks.
-```{r heatresults}
+```{r heatresultsLC}
 stats::heatmap(Net_inf_P_S@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
 ```
 
@@ -258,47 +304,158 @@ There are various fitting functions provided with the `Patterns` package:
 \item{"selectboost.weighted", a new weighted version of the `selectboost` package implementation of the selectboost algorithm to look for the more stable links against resampling that takes into account the correlated structure of the predictors. If no weights are provided, equal weigths are for all the variables (=non weighted case).}
 }
 
-```{r netinflasso2}
+```{r netinflasso2, cache=TRUE}
 Net_inf_P_Lasso2 <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=CascadeFshape(4,4), fitfun="LASSO2")
 ```
 
-```{r netinf}
+Plot of the inferred F matrix
+```{r Fresultslasso2}
+plot(Net_inf_P_Lasso2, choice="F")
+```
+
+Heatmap of the coefficients of the Omega matrix of the network
+```{r heatresultslasso2}
+stats::heatmap(Net_inf_P_Lasso2@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
+```
+
+We create a weighting vector to perform weighted lasso inference.
+```{r netinfPriors}
+Weights_Net=slot(Net,"network")
+Weights_Net[Net@network!=0]=.1        
+Weights_Net[Net@network==0]=1000
+```
+
+```{r netinflasso2Weighted, cache=TRUE}
+Net_inf_P_Lasso2_Weighted <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=CascadeFshape(4,4), fitfun="LASSO2", priors=Weights_Net)
+```
+
+Plot of the inferred F matrix
+```{r Fresultslasso2Weighted}
+plot(Net_inf_P_Lasso2_Weighted, choice="F")
+```
+
+Heatmap of the coefficients of the Omega matrix of the network
+```{r heatresultslasso2Weighted}
+stats::heatmap(Net_inf_P_Lasso2_Weighted@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
+```
+
+
+```{r netinfSPLS, cache=TRUE}
 Net_inf_P_SPLS <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=CascadeFshape(4,4), fitfun="SPLS")
 ```
 
-```{r netinf}
+Plot of the inferred F matrix
+```{r FresultsSPLS}
+plot(Net_inf_P_SPLS, choice="F")
+```
+
+Heatmap of the coefficients of the Omega matrix of the network
+```{r heatresultsSPLS}
+stats::heatmap(Net_inf_P_SPLS@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
+```
+
+```{r netinfEN, cache=TRUE}
 Net_inf_P_ELASTICNET <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=CascadeFshape(4,4), fitfun="ELASTICNET")
 ```
 
+Plot of the inferred F matrix
+```{r FresultsEN}
+plot(Net_inf_P_ELASTICNET, choice="F")
+```
+
 Heatmap of the coefficients of the Omega matrix of the network
-```{r heatresults}
+```{r heatresultsEN}
 stats::heatmap(Net_inf_P_ELASTICNET@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
 ```
 
-```{r netinf}
+```{r netinfStab, cache=TRUE}
 Net_inf_P_stability <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=CascadeFshape(4,4), fitfun="stability.c060")
 ```
 
+Plot of the inferred F matrix
+```{r FresultsStab}
+plot(Net_inf_P_stability, choice="F")
+```
+
 Heatmap of the coefficients of the Omega matrix of the network
-```{r heatresults}
+```{r heatresultsStab}
 stats::heatmap(Net_inf_P_stability@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
 ```
 
-```{r netinf}
-Net_inf_P_ELASTICNET <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=CascadeFshape(4,4), fitfun="stability.c060.weighted")
+```{r netinfStabWeight, cache=TRUE}
+Net_inf_P_StabWeight <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=CascadeFshape(4,4), fitfun="stability.c060.weighted", priors=Weights_Net)
 ```
 
-```{r netinf}
-Net_inf_P_ELASTICNET <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=CascadeFshape(4,4), fitfun="robust")
+Plot of the inferred F matrix
+```{r FresultsStabWeight}
+plot(Net_inf_P_StabWeight, choice="F")
 ```
 
-```{r netinf}
-Net_inf_P_ELASTICNET <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=CascadeFshape(4,4), fitfun="selectboost.weighted")
+Heatmap of the coefficients of the Omega matrix of the network
+```{r heatresultsStabWeight}
+stats::heatmap(Net_inf_P_StabWeight@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
+```
+
+```{r netinfRobust, cache=TRUE}
+Net_inf_P_Robust <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=CascadeFshape(4,4), fitfun="robust")
+```
+
+Plot of the inferred F matrix
+```{r FresultsRobust}
+plot(Net_inf_P_Robust, choice="F")
+```
+
+Heatmap of the coefficients of the Omega matrix of the network
+```{r heatresultsRobust}
+stats::heatmap(Net_inf_P_Robust@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
+```
+
+```{r netinfSB, cache=TRUE}
+Weights_Net_1 <- Weights_Net
+Weights_Net_1[,] <- 1
+Net_inf_P_SelectBoost <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=CascadeFshape(4,4), fitfun="selectboost.weighted",priors=Weights_Net_1)
+```
+
+Plot of the inferred F matrix
+```{r FresultsSB}
+plot(Net_inf_P_SelectBoost, choice="F")
+```
+
+Heatmap of the coefficients of the Omega matrix of the network
+```{r heatresultsSB}
+stats::heatmap(Net_inf_P_SelectBoost@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
+```
+
+```{r netinfSBW, cache=TRUE}
+Net_inf_P_SelectBoostWeighted <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=CascadeFshape(4,4), fitfun="selectboost.weighted",priors=Weights_Net)
+```
+
+Plot of the inferred F matrix
+```{r FresultsSBW, message=TRUE, warning=FALSE}
+plot(Net_inf_P_SelectBoostWeighted, choice="F")
+```
+
+Heatmap of the coefficients of the Omega matrix of the network
+```{r heatresultsSBW}
+stats::heatmap(Net_inf_P_SelectBoostWeighted@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
 ```
 
 ###Post inference network analysis
 Such an analysis is only required if the model was not fitted using the stability selection or the selectboost algorithm.
 
+Create an animation of the network with increasing cutoffs with an animated .gif format or a  html webpage.
+```{r evolutation, warning=FALSE, eval=FALSE}
+data(network)
+sequence<-seq(0,0.2,length.out=20)
+evolution(network,sequence,type.ani = "gif")
+evolution(network,sequence,type.ani = "html")
+```
+![Evolution as .gif.](docs/reference/evolution/animation.gif)
+
+[Evolution as .html.](docs/reference/evolution/index.html)
+
+Evolution of some properties of a reverse-engineered network with increasing cut-off values.
+![Evolution of some properties of a reverse-engineered network with increasing cut-off values.](docs/reference/compare-methods-1.png)
 
 We switch to data that were derived from the inferrence of a real biological network and try to detect the optimal cutoff value: the best cutoff value for a network to fit a scale free network. The `cutoff` was validated only single group cascade networks (number of actors groups = number of timepoints) and for genes dataset. Instead of the `cutoff` function, manual curation or the stability selection or the selectboost algorithm should be used.
 
@@ -309,8 +466,7 @@ cutoff(networkCascade)
 ```
 
 Analyze the network with a cutoff set to the previouly found 0.133 optimal value.
-
-```{r analyzenet, warning=FALSE}
+```{r analyzenet, warning=FALSE, cache=TRUE}
 analyze_network(networkCascade,nv=0.133)
 ```
 
@@ -318,6 +474,10 @@ analyze_network(networkCascade,nv=0.133)
 data(Selection)
 plot(networkCascade,nv=0.133, gr=Selection@group)
 ```
+
+
+
+
 
 ### Perform gene selection
 
@@ -327,28 +487,27 @@ library(Patterns)
 library(CascadeData)
 data(micro_S)
 micro_S<-as.micro_array(micro_S,time=c(60,90,210,390),subject=6,gene_ID=rownames(micro_S))
+data(micro_US)
+micro_US<-as.micro_array(micro_US,time=c(60,90,210,390),subject=6,gene_ID=rownames(micro_US))
 ```
 
 Select early genes (t1 or t2):
-```{r microselection1, warning=FALSE}
-Selection1<-geneSelection(x=micro_S,y=micro_US,20,
-wanted.patterns=
-rbind(c(0,1,0,0),c(1,0,0,0),c(1,1,0,0)))
+```{r microselection1, warning=FALSE, cache=TRUE}
+Selection1<-geneSelection(x=micro_S,y=micro_US,20,wanted.patterns=rbind(c(0,1,0,0),c(1,0,0,0),c(1,1,0,0)))
 ```
 
 Section genes with first significant differential  expression at t1:
-```{r microselection2, warning=FALSE}
-Selection2<-geneSelection(x=micro_S,y=micro_US,20,
-peak=1)
+```{r microselection2, warning=FALSE, cache=TRUE}
+Selection2<-geneSelection(x=micro_S,y=micro_US,20,peak=1)
 ```
 
 Section genes with first significant differential expression at t2:
-```{r microselection3, warning=FALSE}
+```{r microselection3, warning=FALSE, cache=TRUE}
 Selection3<-geneSelection(x=micro_S,y=micro_US,20,peak=2)
 ```
 
 Select later genes (t3 or t4)
-```{r microselection4, warning=FALSE}
+```{r microselection4, warning=FALSE, cache=TRUE}
 Selection4<-geneSelection(x=micro_S,y=micro_US,50,
 wanted.patterns=rbind(c(0,0,1,0),c(0,0,0,1),c(1,1,0,0)))
 ```
@@ -372,3 +531,9 @@ plot(Selection)
 ```
 
 This process could be improved by retrieve a real gene_ID using the `bitr` function of the `ClusterProfiler` package or by performing independent filtering using `jetset` package to only keep at most only probeset (the best one, if there is one good enough) per gene_ID.
+
+
+
+
+
+

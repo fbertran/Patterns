@@ -44,10 +44,6 @@ Several types of outputs are available using the type.ani option.
 \value{ A HTML page with the evolution of the network.}
 
 
-\references{
-Vallat, L., Kemper, C. A., Jung, N., Maumy-Bertrand, M., Bertrand, F., Meyer, N., ... & Bahram, S. (2013). Reverse-engineering the genetic circuitry of a cancer cell with predicted intervention in chronic lymphocytic leukemia. \emph{Proceedings of the National Academy of Sciences}, 110(2), 459-464.
-}
-
 \author{
 Bertrand Frederic, Myriam Maumy-Bertrand.
 }
@@ -58,8 +54,9 @@ Bertrand Frederic, Myriam Maumy-Bertrand.
 \donttest{
 	data(network)
 	sequence<-seq(0,0.2,length.out=20)
+	if(in_pkgdown()){setwd("~/Github/Patterns/docs/reference/evolution/")}
 	evolution(network,sequence,type.ani = "html")
-	evolution(network,sequence,type.ani = "gif")
+	evolution(network,sequence,type.ani = "gif", outdir=destdir)
 }
 }
 

@@ -20,8 +20,6 @@ License: \tab GNU 2.0\cr
 This package has been written by Frederic Bertrand in collaboration with Myriam Maumy-Bertrand.
 Maintainer:  <fbertran@math.unistra.fr>
 }
-%\references{
-%}
 
 \keyword{ package }
 

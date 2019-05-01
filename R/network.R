@@ -554,6 +554,7 @@ setMethod("plot"
             if (choice == "F") {
               require(plotrix, quietly = TRUE)
               F <- x@F
+              sizeF <- dim(F)[1]
               nF <- dim(F)[3]
               ngrp = sqrt(dim(F)[3])
               ymax <- max(F)
@@ -586,8 +587,8 @@ setMethod("plot"
                 ylab = "",
                 show.legend = FALSE
               )
-              abline(h = 4 * (1:(ngrp - 1)), lwd = 3)
-              abline(v = 4 * (1:(ngrp - 1)), lwd = 3)
+              abline(h = sizeF * (1:(ngrp - 1)), lwd = 3, col="grey50")
+              abline(v = sizeF * (1:(ngrp - 1)), lwd = 3, col="grey50")
             }
             if (choice == "Fpixmap") {
               require(plotrix, quietly = TRUE)

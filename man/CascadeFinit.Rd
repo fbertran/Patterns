@@ -21,7 +21,9 @@ An array of sizes c(sqF, sqF, ngrp).
 \examples{
 CascadeFinit(3,2)
 CascadeFinit(4,3)
+plotF(CascadeFinit(4,3),choice = "F")
 CascadeFinit(3,2,low.trig=FALSE)
 CascadeFinit(4,3,low.trig=FALSE)
+plotF(CascadeFinit(4,3,low.trig=FALSE),choice = "F")
 }
 \keyword{models}

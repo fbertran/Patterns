@@ -26,9 +26,10 @@ clustInference(microarray, vote.index, ...)
   \item{prop.matrix}{Additionnal info}
 }
 \examples{
-  if(require(CascadeData)){
+library(Patterns)
+if(require(CascadeData)){
 data(micro_S, package="CascadeData")
-D<-as.micro_array(micro_S[1:100,],1:4,6)
+D<-Patterns::as.micro_array(micro_S[1:100,],1:4,6)
 b<-clustInference(D,0.5)
 b
 }

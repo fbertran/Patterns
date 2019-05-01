@@ -165,7 +165,7 @@ lasso_reg2<-function(M,Y,eps,foldid=foldid,priors,nfolds){
 cv.spls1 <- function (x, y, fold = 10, K, eta, kappa = 0.5, select = "pls2", 
                       fit = "simpls", scale.x = TRUE, scale.y = FALSE, plot.it = TRUE, cv.fun
                       #, cv.fun.name
-                      , ...) 
+                      , verbose=FALSE, ...) 
 {
   x <- as.matrix(x)
   n <- nrow(x)
@@ -223,10 +223,12 @@ cv.spls1 <- function (x, y, fold = 10, K, eta, kappa = 0.5, select = "pls2",
   kappa <- type$kappa
   select <- type$select
   fit <- type$fit
-  foldi <- cv.fun(length(y), fold)
+  foldi <- cv.fun(n=n, folds=fold)
   mspemat <- matrix(0, length(eta), length(K))
   for (i in 1:length(eta)) {
-    cat(paste("eta =", eta[i], "\n"))
+    if(verbose){
+      cat(paste("eta =", eta[i], "\n"))
+    }
     mspemati <- matrix(0, fold, length(K))
     for (j in 1:fold) {
       omit <- foldi[[j]]
@@ -253,9 +255,11 @@ cv.spls1 <- function (x, y, fold = 10, K, eta, kappa = 0.5, select = "pls2",
   msperow <- apply(mspemat, 1, min)
   K.opt <- min(K[mspecol == minpmse])
   eta.opt <- max(eta[msperow == minpmse])
-  cat(paste("\nOptimal parameters: eta = ", eta.opt, ", ", 
+  if(verbose){
+    cat(paste("\nOptimal parameters: eta = ", eta.opt, ", ", 
             sep = ""))
-  cat(paste("K = ", K.opt, "\n", sep = ""))
+    cat(paste("K = ", K.opt, "\n", sep = ""))
+  }
   if (plot.it) {
     spls::heatmap.spls(t(mspemat), xlab = "K", ylab = "eta", main = "CV MSPE Plot", 
                  coln = 16, as = "n")
@@ -271,11 +275,17 @@ cv.spls1 <- function (x, y, fold = 10, K, eta, kappa = 0.5, select = "pls2",
 spls_reg<-function(M,Y,K,eps,cv.fun=cv.fun
                    #, cv.fun.name=cv.fun.name
                    ){
-                   cvspls<-try(cv.spls1(t(M),(Y),fold=K,K=1:10,eta = seq(0.1,0.9,0.1),plot.it=FALSE,cv.fun=cv.fun
+                   repu=M[,1]
+                   repu[]<-0
+                   VarM=apply(M,1,var)
+                   NonZeroVarM=!(VarM<eps)
+                   NonZeroM<-M[NonZeroVarM,]
+                   cvspls<-try(cv.spls1(t(NonZeroM),Y,fold=K,K=1:10,eta = seq(0.1,0.9,0.1),plot.it=FALSE,cv.fun=cv.fun
                                         #, cv.fun.name=cv.fun.name
                    ))
-                   model<-try(spls::spls(t(M),(Y),eta=cvspls$eta.opt,K=cvspls$K.opt,eps=10^-5))
-                   repu<-try(spls::coef.spls(model))
+                   model<-try(spls::spls(t(NonZeroM),Y,eta=cvspls$eta.opt,K=cvspls$K.opt,eps=10^-5))
+                   tempcoefs<-try(spls::coef.spls(model)[,1])
+                   repu[names(tempcoefs)] <- tempcoefs
                    if(!is.vector(repu)){repu<-rep(0,dim(M)[1])}
                    return(repu)
                    }
@@ -322,12 +332,15 @@ cv.enet1 <- function (x, y, K = 10, lambda, s, mode, trace = FALSE, plot.it = TR
 }
 
 
-enet_reg<-function(M,Y,K,eps){
+enet_reg<-function(M,Y,K,eps,cv.fun=cv.fun
+                   #, cv.fun.name=cv.fun.name
+                   ){
   # require(elasticnet)
   M<-t(M)
   colnames(M)<-1:dim(M)[2]	  
   M2<-(M[,which(apply(M,2,sum)!=0)])
-  cvenetP<-try(cv.enet1((M2),(Y),lambda=0.05,s=seq(0,1,length=100),mode="fraction",intercept=FALSE,K=K,plot.it=FALSE,eps=10^-5))
+  cvenetP<-try(cv.enet1(M2,Y,lambda=0.05,s=seq(0,1,length=100),mode="fraction",intercept=FALSE,K=K,plot.it=FALSE,
+                        eps=10^-5, cv.fun=cv.fun))
   cvenet<-cvenetP
   n<-try(cvenetP$s[which.min(cvenet$cv)+max(1,which.min(cvenet$cv[which.min(cvenet$cv):length(cvenet$cv)]<=min(cvenet$cv)+cvenet$cv.error[which.min(cvenet$cv)])-1)-1])	  
   modelP<-try(elasticnet::enet((M2),(Y),intercept=FALSE,eps=10^-5))
@@ -602,6 +615,7 @@ plotF <- function(x
   if (choice == "F") {
     requireNamespace("plotrix", quietly = TRUE)
     F <- x
+    sizeF <- dim(F)[1]
     nF <- dim(F)[3]
     ngrp = sqrt(dim(F)[3])
     ymax <- max(F)
@@ -632,8 +646,8 @@ plotF <- function(x
       ylab = "",
       show.legend = FALSE
     )
-    abline(h = 4 * (1:(ngrp - 1)), lwd = 3)
-    abline(v = 4 * (1:(ngrp - 1)), lwd = 3)
+    abline(h = sizeF * (1:(ngrp - 1)), lwd = 3, col="grey50")
+    abline(v = sizeF * (1:(ngrp - 1)), lwd = 3, col="grey50")
   }
   if (choice == "Fpixmap") {
     F <- x
@@ -662,6 +676,7 @@ plotF <- function(x
   if (choice == "Fshape") {
     requireNamespace("plotrix", quietly = TRUE)
     Fshape <- x
+    sizeF <- dim(Fshape)[1]
     nF <- dim(Fshape)[3]
     ngrp = sqrt(dim(Fshape)[3])
     ymax <- max(Fshape)
@@ -669,7 +684,7 @@ plotF <- function(x
     
     Fshape[Fshape == "0"] <- NA
     
-    allcoefFtheo = unique(as.vector(Fshape))
+    allcoefFtheo = na.omit(unique(as.vector(Fshape)))
     ncoefFtheo = length(allcoefFtheo)
     coloring <- rainbow(ncoefFtheo)
     
@@ -679,13 +694,21 @@ plotF <- function(x
     }
     
     FF = NULL
+    FFc = NULL
     for (i in 1:ngrp) {
       FFa = NULL
+      FFcol = NULL
       for (j in 1:ngrp) {
-        FFa = cbind(FFa, round(Ftemp[, , (i - 1) * ngrp + j], nround))
+        FFa = cbind(FFa, Ftemp[, , (i - 1) * ngrp + j])
+        FFcol = cbind(FFcol, apply(Ftemp[, , (i - 1) * ngrp + j],c(1,2),function(x) {coloring[x]}))
       }
       FF = rbind(FF, FFa)
+      FFc = rbind(FFc, FFcol)
     }
+    
+    FFa[is.na(FFa)]<-0
+    FFcol[is.na(FFcol)]<-"#000000"
+    
     par(
       mar = c(0, 0, 0, 0),
       oma = c(0, 0, 0, 0),
@@ -701,10 +724,11 @@ plotF <- function(x
       main = "",
       xlab = "",
       ylab = "",
-      show.legend = FALSE
+      show.legend = FALSE,
+      cellcolors = FFc
     )
-    abline(h = 4 * (1:(ngrp - 1)), lwd = 3)
-    abline(v = 4 * (1:(ngrp - 1)), lwd = 3)
+    abline(h = sizeF * (1:(ngrp - 1)), lwd = 3, col="grey50")
+    abline(v = sizeF * (1:(ngrp - 1)), lwd = 3, col="grey50")
   }
   if (choice == "Fshapepixmap") {
     Fshape <- x

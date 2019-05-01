@@ -18,6 +18,6 @@ IndicFshape(sqF, ngrp, Indic)
 An array of size (sqF, sqF, ngrp).
 }
 \examples{
-IndicFshape(3, 2, matrix(1,2,2))
+IndicFshape(3, 2, matrix(1,2,2)-diag(2))
 }
 \keyword{models}

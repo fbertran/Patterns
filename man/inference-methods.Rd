@@ -29,7 +29,7 @@ Reverse-engineer the network.
 \item{use.Gram=TRUE}{Optional parameter for the lasso in the `lars` package.}
 \item{error.stabsel=0.05}{Optional parameter for the stability selection algorithm in the `c060` package.}
 \item{pi_thr.stabsel=0.6}{Optional parameter for the stability selection algorithm in the `c060` package.}
-\item{priors=NULL}{A priori weights for the links between genes.}
+\item{priors=NULL}{A priori weights for the links between the actors. 0 means that an actor is always included in the predictive model, 1 is a neutral weighting and +infinity that the actor is never used in the model. For a given predictive model, the weighting vector is normalized so that its sum is equal to the number of predictors in the model.}
 \item{mc.cores=getOption("mc.cores", 2L)}{Number of cores.}
 \item{intercept.stabpath=TRUE}{Use intercept in stability selection models?}
 \item{steps.seq=.95}{Optional parameter for the SelectBoost algorithm in the `SelectBoost` package.}
@@ -65,9 +65,30 @@ Bertrand Frederic, Myriam Maumy-Bertrand.
 
 
 \examples{
-	#data(micro_US)
-	#inference(micro_US)
-	#See vignette for more details
+\donttest{
+#With simulated data, default shaped F matrix and default LASSO from the lars package
+#as fitting function
+data(simul)
+infM <- inference(M)
+str(infM)
+plot(infM, choice="F", nround=0)
+plot(infM, choice="F", nround=1)
+
+#With simulated data, cascade network shaped F matrix (1 group per time measurement case) 
+#and default LASSO from the lars package as fitting function
+infMcasc <- inference(M, Finit=CascadeFinit(4,4), Fshape=CascadeFshape(4,4))
+str(infMcasc)
+plot(infMcasc, choice="F", nround=0)
+plot(infMcasc, choice="F", nround=1)
+
+#With selection of genes from GSE39411
+data(Selection)
+infSel <- inference(Selection, Finit=CascadeFinit(4,4), Fshape=CascadeFshape(4,4))
+str(infSel)
+str(infSel)
+plot(infSel, choice="F", nround=0)
+plot(infSel, choice="F", nround=1)
+}
 }
 
 \keyword{methods}

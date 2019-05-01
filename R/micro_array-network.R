@@ -1,168 +1,195 @@
 setMethod("predict"
-          ,c("micro_array")
-          ,function(object
-                    ,Omega
-                    ,act_time_group=NULL
-                    ,nv=0
-                    ,targets=NULL
-                    ,adapt=TRUE
-          ){
-#            require(magic)
+          , c("micro_array")
+          , function(object
+                     ,
+                     Omega
+                     ,
+                     act_time_group = NULL
+                     ,
+                     nv = 0
+                     ,
+                     targets = NULL
+                     ,
+                     adapt = TRUE) {
+            #            require(magic)
             
-            micro<-object
-            if(!is.null(targets)){
-              micro@microarray[targets,]<-0
+            micro <- object
+            if (!is.null(targets)) {
+              micro@microarray[targets, ] <- 0
             }
-            if(is.null(act_time_group)){
+            if (is.null(act_time_group)) {
               stop("Cluster activation times must be provided in the act_time_group numeric vector.")
             }
             #groups
-            groupe<-micro@group
+            groupe <- micro@group
             #measurements
-            M<-micro@microarray
+            #M <- micro@microarray
             #number of timepoints
-            T<-length(micro@time)
+            T <- length(micro@time)
             #gene groups
-            gr<-micro@group 
-
+            gr <- micro@group
+            
             #group vector
-            ngrp<-length(unique(gr))
-            vgrp<-sort(unique(gr))
-
-            if(all(micro@gene_ID==0)){
-              gene<-1:length(groupe)
+            ngrp <- length(unique(gr))
+            vgrp <- sort(unique(gr))
+            
+            if (all(micro@gene_ID == 0)) {
+              gene <- 1:length(groupe)
             } else {
-              gene<-micro@gene_ID
+              gene <- micro@gene_ID
             }
-            gene2<-gene
+            gene2 <- gene
+            #Naming groupe vector for easy retrieving of group membership
+            names(groupe) <- gene2
             #First timepoints for all the subjects
-            supp<-seq(1,T*object@subject,T)
+            supp <- seq(1, T * object@subject, T)
             #All the timepoints
-            supp2<-1:(T*object@subject)
+            supp2 <- 1:(T * object@subject)
             #All timepoints except the first one
-            supp2<-supp2[-supp]
+            supp2 <- supp2[-supp]
             #Removing silenced genes
-            if(!is.null(targets)){
-              gene<-gene[-targets]
+            if (!is.null(targets)) {
+              gene <- gene[-targets]
             }
             #Links
-            O<-Omega@network
+            O <- Omega@network
             #Cutoff
-            O[abs(O)<nv]<-0
+            O[abs(O) < nv] <- 0
+            colnames(O) <- gene2
+            rownames(O) <- gene2
             #F matrix
-            F<-Omega@F
+            F <- Omega@F
             #Encore le microarray
-            microP<-micro
+            microP <- micro
             #predictors
-            sup_pred<-rep(1:T,micro@subject)+rep(seq(0,T*(micro@subject-1),T),each=T)
+            sup_pred <-
+              rep(1:T, micro@subject) + rep(seq(0, T * (micro@subject - 1), T), each =
+                                              T)
             
             
             #still micro_array
-            micro2<-micro
+            micro2 <- micro
             #F matrix index
-            u<-0
-
+            u <- 0
+            
             #loop on the T timepoints to iteratively fill the expression data
             #we need to select the gene groups that were activated before time peak
             #act_time_group
-#
-
-            for(peak in 2:(T)){
-            for(grpjj in vgrp[act_time_group==peak]){
-               #On garde les groupes predicteurs
-              IND<-which(groupe[gene2]%in%vgrp[act_time_group<peak])
-              grIND<-groupe[IND]
-              #On silence les targets
-              if(!is.null(targets)){micro2@microarray[targets,]<-micro@microarray[targets,]}
-              #Genes predicteurs aux temps 1..T
-              pred<-micro2@microarray[IND,sup_pred]
-              #print(pred[IND==72,])
-              #Pour chaque groupe sauf le grpjj
-              for(k in (1:ngrp)[-grpjj]) {
-                #On prend les indices du kieme groupe
-                ind<-which(grIND %in% k)
-                #Fonction produit de la matrice F avec un vecteur
-                f<-function(x){(F[,,grpjj+(k-1)*ngrp]%*%(x))}#/(sqrt(sum((F[,,grpjj+(k-1)*ngrp]%*%(x))^2)))}
-                #Pour chaque sujet
-                for(i in 1:micro@subject){
-                  pred[ind,1:T+(i-1)*T]<-t(apply(pred[ind,1:T+(i-1)*T, drop = FALSE],1,f))
+            #
+            
+            for (peak in 2:(T)) {
+              for (grpjj in vgrp[act_time_group == peak]) {
+                #On garde les groupes predicteurs
+                IND <- which(groupe[gene2] %in% vgrp[act_time_group < peak])
+                grIND <- groupe[IND]
+                #On silence les targets
+                if (!is.null(targets)) {
+                  micro2@microarray[targets, ] <- micro@microarray[targets, ]
                 }
-              }
-              pred[is.na(pred)]<-0
-              #Indices des genes du groupe d'interet
-              IND2<-which(groupe[gene]==(grpjj))
-              #Pour chaque gene du groupe reponse
-              for(j in gene[IND2]){
-                #predj<-(pred)*O[IND,j]
-                #Pour chaque gene on cherche les genes du groupe predicteur qui ont un lien non nul
-                predj<-pred[O[IND,j]!=0,]
-                #Si il y en a
-                if(length(predj)!=0){
-                  #On isole les valeurs finales dans Y (reponse)
-                  Y<-micro@microarray[j,sup_pred]
-                  if(adapt==TRUE){
-                    if(!is.null(dim(predj))){
-                      mm<-lm(Y~t(predj)-1)
-                    }
-                    else{
-                      mm<-lm(Y~(predj)-1)
-                    }
-                    #On remplace par la valeur inferee
-                    micro2@microarray[j,sup_pred]<-predict(mm)
-                    #On update les coefficients de Omega
-                    O[IND,j][O[IND,j]!=0]<-coef(mm)[]
+                #Genes predicteurs aux temps 1..T
+                pred <- micro2@microarray[IND, sup_pred]
+                #print(pred[IND==72,])
+                #Pour chaque groupe sauf le grpjj
+                for (k in (1:ngrp)[-grpjj]) {
+                  #On prend les indices du kieme groupe
+                  ind <- which(grIND %in% k)
+                  #Fonction produit de la matrice F avec un vecteur
+                  f <-
+                    function(x) {
+                      (F[, , grpjj + (k - 1) * ngrp] %*% (x))
+                    }#/(sqrt(sum((F[,,grpjj+(k-1)*ngrp]%*%(x))^2)))}
+                  #Pour chaque sujet
+                  for (i in 1:micro@subject) {
+                    pred[ind, 1:T + (i - 1) * T] <-
+                      t(apply(pred[ind, 1:T + (i - 1) * T, drop = FALSE], 1, f))
                   }
-                  #Si il n'y en a pas
                 }
-                else{
-                  #On prend la somme ponderee des sorties 
-                  #des genes exprimes aux autres temps
-                  predj<-apply((pred)*O[IND,j],2,sum)	
-                  micro2@microarray[j,sup_pred]<-predj[sup_pred]
+                pred[is.na(pred)] <- 0
+                #Indices des genes du groupe d'interet
+                IND2 <- which(groupe[gene] == (grpjj))
+                #Pour chaque gene du groupe reponse
+                for (j in gene[IND2]) {
+                  #predj<-(pred)*O[IND,j]
+                  #Pour chaque gene on cherche les genes du groupe predicteur qui ont un lien non nul
+                  predj <- pred[O[IND, j] != 0, ]
+                  #Si il y en a
+                  if (length(predj) != 0) {
+                    #On isole les valeurs finales dans Y (reponse)
+                    Y <- micro@microarray[j, sup_pred]
+                    if (adapt == TRUE) {
+                      if (!is.null(dim(predj))) {
+                        mm <- lm(Y ~ t(predj) - 1)
+                      }
+                      else{
+                        mm <- lm(Y ~ (predj) - 1)
+                      }
+                      #On remplace par la valeur inferee
+                      micro2@microarray[j, sup_pred] <- predict(mm)
+                      #On update les coefficients de Omega
+                      O[IND, j][O[IND, j] != 0] <- coef(mm)[]
+                    }
+                    #Si il n'y en a pas
+                  }
+                  else{
+                    #On prend la somme ponderee des sorties
+                    #des genes exprimes aux autres temps
+                    predj <- apply((pred) * O[IND, j], 2, sum)
+                    micro2@microarray[j, sup_pred] <- predj[sup_pred]
+                  }
+                  
                 }
-                
               }
-            }
             }
             #Pour pouvoir faire un plot
-            micro33<-micro2
-            if(!is.null(targets)){ 
-              pppp<- unique(unlist(geneNeighborhood(Omega,targets,nv,graph=FALSE)))
-              genes3<-gene2[-pppp]                           
+            micro33 <- micro2
+            if (!is.null(targets)) {
+              pppp <-
+                unique(unlist(geneNeighborhood(Omega, targets, nv, graph = FALSE)))
+              genes3 <- gene2[-pppp]
             }            else{
-              genes3<-gene2
+              genes3 <- gene2
             }
-            if(!is.null(targets)){
-              micro33@microarray[ genes3,]<-micro@microarray[genes3,]
-            }		
-            
-            if(is.null(targets)){
-              targets<- -1
+            if (!is.null(targets)) {
+              micro33@microarray[genes3, ] <- micro@microarray[genes3, ]
             }
-            subjects<-object@subject
-            times<-object@time
-            ntimes<-length(times)
-            patients<-paste(rep("P",subjects*ntimes),rep(1:subjects,each=ntimes),sep="")
-            temps<-paste(rep("T",subjects*ntimes),rep(times,subjects),sep="")
-            indicateurs<-paste(patients,temps,sep="")
-            expr<-rep("log(S/US)",subjects*ntimes)
-            nomscol<-paste(expr,":",indicateurs)
-            #nomscol<-paste(patients,timestring1)
             
-            colnames(object@microarray)<-nomscol
-            colnames(micro@microarray)<-nomscol
-            colnames(micro33@microarray)<-nomscol
-            return(new("micropredict"
-                       ,microarray_unchanged=object
-                       ,microarray_changed=micro
-                       ,microarray_predict=micro33
-                       ,nv=nv
-                       ,network=Omega#Avant =network
-                       ,targets=targets
+            if (is.null(targets)) {
+              targets <- -1
+            }
+            subjects <- object@subject
+            times <- object@time
+            ntimes <- length(times)
+            patients <-
+              paste(rep("P", subjects * ntimes),
+                    rep(1:subjects, each = ntimes),
+                    sep = "")
+            temps <-
+              paste(rep("T", subjects * ntimes), rep(times, subjects), sep = "")
+            indicateurs <- paste(patients, temps, sep = "")
+            expr <- rep("log(S/US)", subjects * ntimes)
+            nomscol <- paste(expr, ":", indicateurs)
+            
+            colnames(object@microarray) <- nomscol
+            colnames(micro@microarray) <- nomscol
+            colnames(micro33@microarray) <- nomscol
+            return(
+              new(
+                "micropredict"
+                ,
+                microarray_unchanged = object
+                ,
+                microarray_changed = micro
+                ,
+                microarray_predict = micro33
+                ,
+                nv = nv
+                ,
+                network = Omega
+                ,
+                targets = targets
+              )
             )
-            )	
-          }
-)
+          })
 
 
 
@@ -430,7 +457,7 @@ setMethod(f="inference"
                     #                    cv.fun.name="lars::cv.folds"
                     }
                   #                cat(cv.fun.name)
-                  fun_lasso<-function(x){lasso_reg(pred,x,K=K,eps,cv.fun=cv.folds1
+                  fun_lasso<-function(x){cat(".");lasso_reg(pred,x,K=K,eps,cv.fun=cv.folds1
                                                  #,cv.fun.name=cv.fun.name
                   )} 
                   # retenir<-lars::cv.folds 
@@ -448,7 +475,7 @@ setMethod(f="inference"
                     } else {
                       cv.folds1=function(n, folds){return(split(sample(1:n), rep(1:folds, length = n)))}
                       }
-                      fun_spls<-function(x){spls_reg(pred,x,K=K,eps)} 
+                      fun_spls<-function(x){cat(".");spls_reg(pred,x,K=K,eps,cv.fun=cv.folds1)} 
                       Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_spls)
                   }
                 }
@@ -461,7 +488,7 @@ setMethod(f="inference"
                     }else{
                       cv.folds1=lars::cv.folds
                       }
-                      fun_enet<-function(x){lasso_reg(pred,x,K=K,eps,cv.fun=cv.folds1)} 
+                      fun_enet<-function(x){cat(".");enet_reg(pred,x,K=K,eps,cv.fun=cv.folds1)} 
                       Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_enet)
                   }
                 }
@@ -577,7 +604,7 @@ setMethod(f="inference"
                       #assignInNamespace("glmnet.subset",, ns="c060") 
                       #assignInNamespace("glmnet.subset.weighted",, ns="c060")    
                       
-                      rm(varii)
+                      suppressWarnings(rm(varii))
                       LL=rep(0,nrow(pred));error.comp=TRUE;error.inf=TRUE
                       #cat(intercept.stabpath)
                       try({
@@ -650,7 +677,7 @@ setMethod(f="inference"
                       essai<-suppressMessages(SelectBoost::fastboost(t(pred),g[-1],SelectBoost::group_func_2,SelectBoost::lasso_cv_glmnet_min_weighted,corrfunc="crossprod",normalize=TRUE, B=100, use.parallel=use.parallel, ncores=mc.cores,c0lim=FALSE, steps.seq = steps.seq, priors=priors2[,g[1]]))
                       varii<-which(essai>=limselect)
 
-                      resultat<-glmnet::cv.glmnet(t(pred),g[-1],nfolds=10,penalty.factor=priors2[,g[1]])
+                      resultat<-suppressWarnings(glmnet::cv.glmnet(t(pred),g[-1],nfolds=10,penalty.factor=priors2[,g[1]]))
                       LL<-predict(resultat,s="lambda.min",type="coef")[-1,1]
                       error.comp=FALSE
                       })
