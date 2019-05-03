@@ -43,9 +43,6 @@
   </a>
 </li>
 <li>
-  <a href="articles/Patterns.html">Get started</a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -57,6 +54,9 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="articles/ExampleCLL.html">Network inference and analysis of CLL data</a>
+    </li>
+    <li>
+      <a href="articles/IntroPatterns.html">Patterns: a modeling tool dedicated to biological network modeling</a>
     </li>
   </ul>
 </li>
@@ -95,24 +95,27 @@
 <ul>
 <li>It starts with the <strong>selection of the actors</strong> that will be the used in the reverse engineering upcoming step. An actor can be included in that selection based on its <strong>differential effects</strong> (for instance gene expression or protein abundance) or on its <strong>time course profile</strong>.</li>
 <li>Wrappers for <strong>actors clustering</strong> functions and cluster analysis are provided.</li>
-<li>It also allows <strong>reverse engineering</strong> of biological networks taking into account the observed time course patterns of the actors. Many <strong>inference functions</strong> are provided with the <code>Patterns</code> package and dedicated to get <strong>specific features</strong> for the inferred network such as <strong>sparsity</strong>, <strong>robust links</strong>, <strong>high confidence links</strong> or <strong>stable through resampling links</strong>.
+<li>It also allows <strong>reverse engineering</strong> of biological networks taking into account the observed time course patterns of the actors. Interactions between clusters of actors can be set by the user. Any number of clusters can be activated at a single time.</li>
+<li>Many <strong>inference functions</strong> are provided with the <code>Patterns</code> package and dedicated to get <strong>specific features</strong> for the inferred network such as <strong>sparsity</strong>, <strong>robust links</strong>, <strong>high confidence links</strong> or <strong>stable through resampling links</strong>.
 <ul>
 <li>
-<strong>LASSO</strong>, from the <code>lars</code> package</li>
+<strong>lasso</strong>, from the <code>lars</code> package</li>
 <li>
-<strong>LASSO2</strong>, from the <code>glmnet</code> package. An unweighted and a weighted version of the algorithm are available</li>
+<strong>lasso</strong>, from the <code>glmnet</code> package. An unweighted and a weighted version of the algorithm are available</li>
 <li>
-<strong>SPLS</strong>, from the <code>spls</code> package</li>
+<strong>spls</strong>, from the <code>spls</code> package</li>
 <li>
-<strong>ELASTICNET</strong>, from the <code>elasticnet</code> package</li>
+<strong>elasticnet</strong>, from the <code>elasticnet</code> package</li>
 <li>
-<strong>stability.c060</strong>, from the <code>c060</code> package implementation of stability selection</li>
+<strong>stability selection</strong>, from the <code>c060</code> package implementation of stability selection</li>
 <li>
-<strong>stability.c060.weighted</strong>, a new weighted version of the <code>c060</code> package implementation of stability selection</li>
+<strong>weighted stability selection</strong>, a new weighted version of the <code>c060</code> package implementation of stability selection that I created for the package</li>
 <li>
 <strong>robust</strong>, lasso from the <code>lars</code> package with light random Gaussian noise added to the explanatory variables</li>
 <li>
-<strong>selectboost.weighted</strong>, a new weighted version of the <code>selectboost</code> package implementation of the selectboost algorithm to look for the more stable links against resampling that takes into account the correlated structure of the predictors. If no weights are provided, equal weigths are for all the variables (=non weighted case).</li>
+<strong>selectboost</strong>, from the <code>selectboost</code> package. The selectboost algorithm looks for the more stable links against resampling that takes into account the correlated structure of the predictors</li>
+<li>
+<strong>weighted selectboost</strong>, a new weighted version of the <code>selectboost</code>.</li>
 </ul>
 </li>
 <li>Some <strong>simulation</strong> and <strong>prediction</strong> tools are also available for cascade networks.</li>

@@ -8,6 +8,10 @@
 #For the cached chunks of README.Rmd
 ^cache*$
 ^README_cache*$
+#For the cached chunks of the vignettes
+^vignettes.*cache$
+#For the image outputs of the vignettes
+^vignettes.*files$
 #If README too big, not on CRAN but only on git
 ^man/figures*$
 ^README\.Rmd$
