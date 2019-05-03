@@ -1,7 +1,6 @@
 \name{plot-methods}
 \docType{methods}
 \alias{plot-methods}
-\alias{plot,ANY,ANY-method}
 \alias{plot,micro_array,ANY-method}
 \alias{plot,micropredict,ANY-method}
 \alias{plot,network,ANY-method}
@@ -45,6 +44,10 @@ Considering the class of the argument which is passed to plot, the graphical out
 }}
 }
 }
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
+
 \examples{
 if(require(CascadeData)){
 data(micro_US, package="CascadeData")

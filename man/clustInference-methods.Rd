@@ -25,6 +25,11 @@ clustInference(microarray, vote.index, ...)
   \item{res.matrix}{A data.frame of nrows(microarray) observations of 3 variables (name, cluster, maj.vote.index).}
   \item{prop.matrix}{Additionnal info}
 }
+
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
+
 \examples{
 library(Patterns)
 if(require(CascadeData)){

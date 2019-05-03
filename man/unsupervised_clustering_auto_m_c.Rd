@@ -19,6 +19,10 @@ unsupervised_clustering_auto_m_c(M1, ...)
 \item{c}{Estimate of the optimal number of clusters.}
 \item{csearch}{More result from the cselection function of the Mfuzz package}
 }
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
+
 \examples{
 if(require(CascadeData)){
 data(micro_S, package="CascadeData")

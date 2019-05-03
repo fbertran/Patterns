@@ -18,5 +18,8 @@
 %%  ~~describe this method here~~
 }
 }}
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
 \keyword{methods}
-\keyword{ ~~ other possible keyword(s) ~~ }
+

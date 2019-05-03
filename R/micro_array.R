@@ -1160,7 +1160,21 @@ setMethod(f="unionMicro",
           
 ) 
 
-
+setMethod(f="unionMicro", 
+          signature=c("list","ANY"),
+          definition=function(M1,M2){
+            
+            rep<-unionMicro(M1[[1]],M1[[1]])
+            if(length(M1)>1){	
+              for(i in 2:length(M1)){
+                rep<-unionMicro(rep,M1[[i]])
+                
+              }
+            }
+            return(rep)
+          }
+          
+)
 
 
 

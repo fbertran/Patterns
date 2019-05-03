@@ -19,6 +19,9 @@ Returns a micro_array object which is the union of M1 and M2.
 Returns a micro_array object which is the union of the elements of M1. 
 }
 }}
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
 
 \examples{
 if(require(CascadeData)){

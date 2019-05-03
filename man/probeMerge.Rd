@@ -17,6 +17,10 @@ probeMerge(x, ...)
 \value{
 Formal class 'micro_array' [package "Patterns"] with 7 slots
 }
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
+
 \examples{
 if(require(CascadeData)){
 data(micro_S)

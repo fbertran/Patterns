@@ -26,6 +26,9 @@ Gives an overview.
 	head(micro_US)
 	}
 }
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
 
 \keyword{methods}
 

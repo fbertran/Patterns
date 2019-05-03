@@ -1,17 +1,21 @@
-.8 Finalized readme and help pages.
+0.99 First vignette completion and second vignette creation. Github Release of the package.
 
-.7 Updated evolution and animation functions. Updated compare fonction. Adapted new example dataset and completed help pages.
+0.9 Vignette creation.
 
-.6 New plot functions. Prediction was enabled for cascade networks. Gene_Id is kept by selection.
+0.8 Finalized readme and help pages.
 
-.5 Package was reshaped.
+0.7 Updated evolution and animation functions. Updated compare fonction. Adapted new example dataset and completed help pages.
 
-.4 Help pages were completed and examples added for every function. It required new datasets that were added to the package.
-.4 Added a `NEWS.md` file to track changes to the package.
-.4 Package and especially its code was transformed to cope with CRAN requirements
+0.6 New plot functions. Prediction was enabled for cascade networks. Gene_Id is kept by selection.
 
-.3 Added weighted stability selection inference function
+0.5 Package was reshaped.
 
-.2 Added weighted lasso and selectboost inference function
+0.4 Help pages were completed and examples added for every function. It required new datasets that were added to the package.
+0.4 Added a `NEWS.md` file to track changes to the package.
+0.4 Package and especially its code was transformed to cope with CRAN requirements
 
-.1 Creation and review of the package 
+0.3 Added weighted stability selection inference function
+
+0.2 Added weighted lasso and selectboost inference function
+
+0.1 Creation and review of the package 

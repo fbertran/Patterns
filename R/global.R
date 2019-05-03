@@ -145,11 +145,10 @@ lasso_reg_old<-function(M,Y,K,eps,priors){
 }
 
 
-lasso_reg2<-function(M,Y,eps,foldid=foldid,priors,nfolds){
+lasso_reg2<-function(M,Y,eps,foldid=foldid,priors){
   #require(glmnet)
-  foldid=rep(1:nfolds,each=ncol(M)/nfolds)
   if(is.null(priors)) priors<-rep(1,nrow(M))
-  cvglmnet<-try(glmnet::cv.glmnet(t(M),Y,nfolds=nfolds,foldid=foldid,penalty.factor=priors,intercept=FALSE))
+  cvglmnet<-try(glmnet::cv.glmnet(t(M),Y,foldid=foldid,penalty.factor=priors,intercept=FALSE))
 #  n<-try(which(cvglmnet$cvm==min(cvglmnet$cvm)))
 #  lambda<-try(cvglmnet$lambda[n])
 #  try(print(lambda))
@@ -779,7 +778,7 @@ plotF <- function(x
 
 
 
-boost <- function(X,
+robustboost <- function(X,
                   Y,
                   corr = 0.8,
                   B = 100,
@@ -788,6 +787,7 @@ boost <- function(X,
   func <- "selec_meth"
   selec_meth <- function(X, Y) {
     N <- dim(X)[1]
+    Nc <- dim(X)[2]
     modd <- lars::lars(X, Y)
     tau2 <- var(Y)
     index <-
@@ -813,34 +813,15 @@ boost <- function(X,
     
   }
   
-  
   group2 <- function(x)
     group(x, 1)
   
-  
-  #require(snowfall)
-  #require(lars)
-  
-  
-  #if(multi==FALSE){
-  #if(cpu>1){
-  #sfInit( parallel=TRUE, cpus=cpu )
-  #}else{
-  #sfInit( parallel=FALSE, cpus=cpu )
-  #	}
-  #sfLibrary(movMF)
-  #sfLibrary(lars)
-  #sfLibrary(msgps)
-  
-  #require(movMF)
-  #require(lars)
-  #require(msgps)
-  
-  #sfLibrary(snowfall)}
+  N <- dim(X)[1]
+  Nc <- dim(X)[2]
   
   if (normalize == TRUE) {
     X <-
-      X - matrix(rep(apply(X, 2, mean), dim(X)[1]), dim(X)[1], dim(X)[2], byrow =
+      X - matrix(rep(apply(X, 2, mean), N), N, Nc, byrow =
                    TRUE)
     X <- t(t(X) / sqrt(diag(t(X) %*% X)))
     
@@ -854,33 +835,27 @@ boost <- function(X,
   
   groups <- group2(X)
   
-  #nb_correlated_variables<-apply(abs(Correlation_indice),2,sum)
-  #		#cat("Number of correlated variables : \n")
+  Boot <- matrix(rep(0, Nc * B), B, Nc)
+
+  Xpass <- matrix(0, N, N - 1)
+  Xpass[col(Xpass) > row(Xpass)] <- 1
+  diag(Xpass) <- 1
+  Xpass[col(Xpass) == (row(Xpass) - 1)] <- -(1:(N - 1))
+  Xpass <- t(t(Xpass) / sqrt(diag(t(Xpass) %*% Xpass)))
+  olsXpass <- solve(t(Xpass) %*% Xpass) %*% t(Xpass)
+  nXpass <- t(t(Xpass) / sqrt(diag(t(Xpass) %*% Xpass)))
   
-  
-  Boot <- matrix(rep(0, dim(X)[2] * B), B, dim(X)[2])
-  
-  func_passage1 <- function(x) {
-    Xpass <- matrix(0, dim(X)[1], dim(X)[1] - 1)
-    Xpass[col(Xpass) > row(Xpass)] <- 1
-    diag(Xpass) <- 1
-    Xpass[col(Xpass) == (row(Xpass) - 1)] <- -(1:(dim(X)[1] - 1))
-    Xpass <- t(t(Xpass) / sqrt(diag(t(Xpass) %*% Xpass)))
-    return(solve(t(Xpass) %*% Xpass) %*% t(Xpass) %*% x)
+  func_passage1 <- function(x, olsXpass = olsXpass) {
+    return(olsXpass %*% x)
   }
   
-  func_passage2 <- function(x) {
-    Xpass <- matrix(0, dim(X)[1], dim(X)[1] - 1)
-    Xpass[col(Xpass) > row(Xpass)] <- 1
-    diag(Xpass) <- 1
-    Xpass[col(Xpass) == (row(Xpass) - 1)] <- -(1:(dim(X)[1] - 1))
-    Xpass <- t(t(Xpass) / sqrt(diag(t(Xpass) %*% Xpass)))
+  func_passage2 <- function(x, N = N, nXpass = nXpass) {
     return(apply(matrix(
-      rep(x, dim(X)[1]), dim(X)[1], dim(X)[1] - 1, byrow = TRUE
-    ) * Xpass, 1, sum))
+      rep(x, N), N, N - 1, byrow = TRUE
+    ) * nXpass, 1, sum))
   }
   
-  Xret <- array(0, c(dim(X)[1], dim(X)[2], B))
+  Xret <- array(0, c(N, Nc, B))
   Xb <- X
   
   
@@ -905,7 +880,7 @@ boost <- function(X,
   simul1 <- Vectorize(simul1)
   
   simul2 <- function() {
-    simul1(1:(dim(X)[2]))
+    simul1(1:(Nc))
   }
   
   Xret <- replicate(B, simul2())
@@ -920,7 +895,7 @@ boost <- function(X,
   
   Boot <- lapply(1:B, select)
   
-  Boot <- matrix(unlist(Boot), B, dim(X)[2], byrow = TRUE)
+  Boot <- matrix(unlist(Boot), B, Nc, byrow = TRUE)
   
   Fs <- apply(abs(Boot) > eps, 2, sum)
   

@@ -24,6 +24,9 @@ The plot of prediction of knock down experiments (i.e. targets<>NULL) is still i
        }
   }
 }
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
 
 \examples{
 \donttest{

@@ -15,3 +15,5 @@
 #Specific
 ^evolution_example*$
 ^add_data
+^doc$
+^Meta$

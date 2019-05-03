@@ -34,6 +34,10 @@ Objects can be created by calls of the form \code{new("network", ...)}.
 	 }
 }
 
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
+
 \examples{
 showClass("network")
 }

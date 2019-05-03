@@ -18,49 +18,79 @@ knitr::opts_chunk$set(
   fig.keep="all"
 )
 ```
-# Patterns
+# Patterns: a modeling tool dedicated to biological network modeling
 
-A modeling tool dedicated to biological network modeling. It allows for single or joint modeling of, for instance, genes and proteins. 
+It allows for **single** or **joint modeling** of, for instance, genes and proteins. It is design to work with **patterned data**. Famous examples of problems related to patterned data are:
+* recovering **signals** in networks after a **stimulation** (cascade network reverse engineering),
+* analysing **periodic signals**.
 
-* It starts with the selection of the actors that will be the used in the reverse engineering upcoming step. An actor can be included in that selection based on its differential effects (for instance gene expression or protein abundance) or on its time course profile. 
-* Wrappers for actors clustering functions and cluster analysis are provided. 
-* It also allows reverse engineering of biological networks taking into account the observed time course patterns of the actors. Many inference functions are provided and dedicated to get specific features for the inferred network such as sparsity, robust links, high confidence links or stable through resampling links. 
-* aa
-* bb
-There are various fitting functions provided with the `Patterns` package:
-\describe{
-\item{"LASSO", from the `lars` package}
-\item{"LASSO2", from the `glmnet` package}
-\item{"SPLS", from the `spls` package}
-\item{"ELASTICNET", from the `elasticnet` package}
-\item{"stability.c060", from the `c060` package implementation of stability selection}
-\item{"stability.c060.weighted", a new weighted version of the `c060` package implementation of stability selection}
-\item{"robust", lasso from the `lars` package with light random Gaussian noise added to the explanatory variables}
-\item{"selectboost.weighted", a new weighted version of the `selectboost` package implementation of the selectboost algorithm to look for the more stable links against resampling that takes into account the correlated structure of the predictors. If no weights are provided, equal weigths are for all the variables (=non weighted case).}
-}
 
-* Some simulation and prediction tools are also available for cascade networks. 
+
+* It starts with the **selection of the actors** that will be the used in the reverse engineering upcoming step. An actor can be included in that selection based on its **differential effects** (for instance gene expression or protein abundance) or on its **time course profile**. 
+* Wrappers for **actors clustering** functions and cluster analysis are provided. 
+* It also allows **reverse engineering** of biological networks taking into account the observed time course patterns of the actors. Many **inference functions** are provided with the `Patterns` package and dedicated to get **specific features** for the inferred network such as **sparsity**, **robust links**, **high confidence links** or **stable through resampling links**. 
+    + **LASSO**, from the `lars` package
+    + **LASSO2**, from the `glmnet` package. An unweighted and a weighted version of the algorithm are available
+    + **SPLS**, from the `spls` package
+    + **ELASTICNET**, from the `elasticnet` package
+    + **stability.c060**, from the `c060` package implementation of stability selection
+    + **stability.c060.weighted**, a new weighted version of the `c060` package implementation of stability selection
+    + **robust**, lasso from the `lars` package with light random Gaussian noise added to the explanatory variables
+    + **selectboost.weighted**, a new weighted version of the `selectboost` package implementation of the selectboost algorithm to look for the more stable links against resampling that takes into account the correlated structure of the predictors. If no weights are provided, equal weigths are for all the variables (=non weighted case).
+* Some **simulation** and **prediction** tools are also available for cascade networks. 
 * Examples of use with microarray or RNA-Seq data are provided.
 
 
-The Patterns package is a complete 
+The weights are viewed as a penalty factors in the penalized regression model: it is a number that multiplies the lambda value in the minimization problem to allow differential shrinkage, [Friedman et al. 2010](https://web.stanford.edu/~hastie/Papers/glmnet.pdf), equation 1 page 3. If equal to 0, it implies no shrinkage, and that variable is always included in the model. Default is 1 for all variables. Infinity means that the variable is excluded from the model. Note that the weights are rescaled to sum to the number of variables.
+
 
 
 ![Infered F matrix of the network (General shape).](docs/reference/figures/README-Fresults-1.png)
 
+
+
+![Infered coefficient matrix of the network (General shape).](docs/reference/figures/README-heatresults-1.png)
+
+
+
 ![Infered F matrix of the network (cascade shape).](docs/reference/figures/README-FresultsLC-1.png)
+
+
+
+![Infered coefficient matrix of the network (cascade shape).](docs/reference/figures/README-heatresultsLC-1.png)
+
+
 
 ![Reverse-engineered network.](docs/reference/figures/README-plotnet2-1.png)
 
+
+
 ![Evolution of a reverse-engineered network with increasing cut-off values.](docs/reference/evolution/animation.gif)
 
-![Evolution of a reverse-engineered network with increasing cut-off values (mp4).](docs/reference/evolution/animation.mp4){width=400 height=300}
 
-Evolution of a reverse-engineered network with increasing cut-off values (mp4).
 
-<video width="400" height="320" controls>
-  <source src="docs/reference/evolution/animation.mp4" type="video/mp4">
-</video>
+![Plot of simulated data for cascade networks featuring cluster membership.](docs/reference/figures/README-plotsimuldata-1.png)
+
+
+
+![Plot of simulated data for cascade networks featuring subject membership.](docs/reference/figures/README-plotsimuldata-2.png)
+
+
+A word for those that have been using our seminal work, the `Cascade` package that we created several years ago and that was a very efficient network reverse engineering tool for cascade networks 
+(Jung, N., Bertrand, F., Bahram, S., Vallat, L., and Maumy-Bertrand, M. (2014), <https://doi.org/10.1093/bioinformatics/btt705>, <https://cran.r-project.org/package=Cascade>, <https://github.com/fbertran/Cascade> and <https://fbertran.github.io/Cascade/>).
+
+
+The `Patterns` package is more than (at least) a threeway major extension of the `Cascade` package :
+
+* **any number of groups** can be used whereas in the `Cascade` package only 1 group for each timepoint could be created, which prevented the users to create homogeneous clusters of genes in datasets that featured more than a few dozens of genes.
+* **custom** $F$ matrices shapes whereas in the `Cascade` package only 1 shape was provided:
+    + interaction between groups
+    + custom design of inner cells of the $F$ matrix
+* the custom $F$ matrices allow to deal with **heteregeneous networks** with several kinds of actors such as mixing genes and proteins in a single network to perform **joint inference**.
+* about **nine inference algorithms** are provided, whereas 1 (lasso) in `Cascade`.
+
+Hence the `Patterns` package should be viewed more as a completely new modelling tools than as an extension of the `Cascade` package.
+
 
 This website and these examples were created by F. Bertrand and M. Maumy-Bertrand.
 
@@ -82,8 +112,10 @@ devtools::install_github("fbertran/Patterns")
 
 ### Data management
 Import Cascade Data (repeated measurements on several subjects) from the CascadeData package and turn them into a micro array object. The second line makes sure the CascadeData package is installed.
-```{r microarrayclass, message=FALSE, warning=FALSE}
+```{r loadpackage, message=FALSE, warning=FALSE, cache=FALSE}
 library(Patterns)
+```
+```{r microarrayclass, message=FALSE, warning=FALSE}
 if(!require(CascadeData)){install.packages("CascadeData")}
 data(micro_US)
 micro_US<-as.micro_array(micro_US[1:100,],time=c(60,90,210,390),subject=6)
@@ -292,17 +324,16 @@ stats::heatmap(Net_inf_P_S@network, Rowv = NA, Colv = NA, scale="none", revC=TRU
 ```
 
 
-There are various fitting functions provided with the `Patterns` package:
-\describe{
-\item{"LASSO", from the `lars` package}
-\item{"LASSO2", from the `glmnet` package}
-\item{"SPLS", from the `spls` package}
-\item{"ELASTICNET", from the `elasticnet` package}
-\item{"stability.c060", from the `c060` package implementation of stability selection}
-\item{"stability.c060.weighted", a new weighted version of the `c060` package implementation of stability selection}
-\item{"robust", lasso from the `lars` package with light random Gaussian noise added to the explanatory variables}
-\item{"selectboost.weighted", a new weighted version of the `selectboost` package implementation of the selectboost algorithm to look for the more stable links against resampling that takes into account the correlated structure of the predictors. If no weights are provided, equal weigths are for all the variables (=non weighted case).}
-}
+There are many fitting functions provided with the `Patterns` package in order to search for **specific features** for the inferred network such as **sparsity**, **robust links**, **high confidence links** or **stable through resampling links**. :
+
+* **LASSO**, from the `lars` package
+* **LASSO2**, from the `glmnet` package. An unweighted and a weighted version of the algorithm are available
+* **SPLS**, from the `spls` package
+* **ELASTICNET**, from the `elasticnet` package
+* **stability.c060**, from the `c060` package implementation of stability selection
+* **stability.c060.weighted**, a new weighted version of the `c060` package implementation of stability selection
+* **robust**, lasso from the `lars` package with light random Gaussian noise added to the explanatory variables
+* **selectboost.weighted**, a new weighted version of the `selectboost` package implementation of the selectboost algorithm to look for the more stable links against resampling that takes into account the correlated structure of the predictors. If no weights are provided, equal weigths are for all the variables (=non weighted case).
 
 ```{r netinflasso2, cache=TRUE}
 Net_inf_P_Lasso2 <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=CascadeFshape(4,4), fitfun="LASSO2")
@@ -416,6 +447,12 @@ Weights_Net_1[,] <- 1
 Net_inf_P_SelectBoost <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=CascadeFshape(4,4), fitfun="selectboost.weighted",priors=Weights_Net_1)
 ```
 
+
+```{r reloadPatternsSB, eval=TRUE, echo=FALSE}
+detach("package:Patterns", unload=TRUE)
+library(Patterns)
+```
+
 Plot of the inferred F matrix
 ```{r FresultsSB}
 plot(Net_inf_P_SelectBoost, choice="F")
@@ -426,8 +463,14 @@ Heatmap of the coefficients of the Omega matrix of the network
 stats::heatmap(Net_inf_P_SelectBoost@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
 ```
 
-```{r netinfSBW, cache=TRUE}
+```{r netinflibrary(), cache=TRUE}
 Net_inf_P_SelectBoostWeighted <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=CascadeFshape(4,4), fitfun="selectboost.weighted",priors=Weights_Net)
+```
+
+
+```{r reloadPatternsSBW, eval=TRUE, echo=FALSE}
+detach("package:Patterns", unload=TRUE)
+library(Patterns)
 ```
 
 Plot of the inferred F matrix

@@ -15,6 +15,10 @@ Dataset with information on the affy_hg_u133_plus_2 platform such as probeset na
 \details{
 Data.frame with 8859 rows and 8 variables.
 }
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
+
 \examples{
 data(infos)
 }

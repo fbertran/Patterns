@@ -10,8 +10,8 @@ A modeling tool dedicated to biological network modeling. It allows for single o
 \tabular{ll}{
 Package: \tab Patterns\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
-Date: \tab 2019-04-20\cr
+Version: \tab 0.9\cr
+Date: \tab 2019-05-01\cr
 License: \tab GNU 2.0\cr
 }
 

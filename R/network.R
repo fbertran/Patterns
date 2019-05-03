@@ -454,7 +454,7 @@ setMethod("evolution", "network",
           
 
 setMethod("position", "network", function(net, nv = 0) {
-  require(igraph)
+  require(igraph, quietly = TRUE, warn.conflicts = FALSE);on.exit(unloadNamespace("package:igraph"))
   O <- net@network
   Omega <- net@network
   O[abs(O) <= nv] <- 0
@@ -631,7 +631,7 @@ setMethod("plot"
               
               
               
-              require(igraph)
+              require(igraph, quietly = TRUE, warn.conflicts = FALSE);on.exit(unloadNamespace("package:igraph"))
               if (is.null(gr)) {
                 gr <- rep(1, dim(O)[1])
               }
@@ -672,12 +672,12 @@ setMethod("plot"
               }
               
               
-              G <- graph.adjacency(O, weighted = TRUE)
+              G <- igraph::graph.adjacency(O, weighted = TRUE)
               
               #    	if(.Platform$OS.type=="unix"){
               #    get.edgelist(G)+1->Q
               #    }else{
-              get.edgelist(G) -> Q
+              igraph::get.edgelist(G) -> Q
               #    	}
               Q[, 1] <- nom[Q[, 1]]
               Q[, 2] <- nom[Q[, 2]]
@@ -872,7 +872,7 @@ setMethod("plot"
                   mar = c(0, 0, 0, 0),
                   oma = c(0, 0, 0, 0),
                   mai = c(0, 0, 0, 0)
-                )# Not in Cascade 1.03
+                )
                 if (length(unique(gr[nom])) > 1 &
                     !is.null(color.edge)) {
                   trr <- color.edge[gr[Q[, 1]]]
@@ -1077,7 +1077,7 @@ setMethod("geneNeighborhood", "network"
                      graph = TRUE
                      ,
                      names = F) {
-            require(igraph)
+            require(igraph, quietly = TRUE, warn.conflicts = FALSE);on.exit(unloadNamespace("package:igraph"))
             O <- net@network
             Omega <- net@network
             O[abs(O) <= nv] <- 0

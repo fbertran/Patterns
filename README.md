@@ -9,24 +9,78 @@ output: github_document
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 
-# Patterns
+# Patterns: a modeling tool dedicated to biological network modeling
 
-A modeling tool dedicated to biological network modeling. It allows for single or joint modeling of, for instance, genes and proteins. 
+It allows for **single** or **joint modeling** of, for instance, genes and proteins. It is design to work with **patterned data**. Famous examples of problems related to patterned data are:
+* recovering **signals** in networks after a **stimulation** (cascade network reverse engineering),
+* analysing **periodic signals**.
 
-* It starts with the selection of the actors that will be the used in the reverse engineering upcoming step. An actor can be included in that selection based on its differential effects (for instance gene expression or protein abundance) or on its time course profile. 
-* Wrappers for actors clustering functions and cluster analysis are provided. 
-* It also allows reverse engineering of biological networks taking into account the observed time course patterns of the actors. Many inference functions are provided and dedicated to get specific features for the inferred network such as sparsity, robust links, high confidence links or stable through resampling links. 
-* Some simulation and prediction tools are also available for cascade networks. 
+
+
+* It starts with the **selection of the actors** that will be the used in the reverse engineering upcoming step. An actor can be included in that selection based on its **differential effects** (for instance gene expression or protein abundance) or on its **time course profile**. 
+* Wrappers for **actors clustering** functions and cluster analysis are provided. 
+* It also allows **reverse engineering** of biological networks taking into account the observed time course patterns of the actors. Many **inference functions** are provided with the `Patterns` package and dedicated to get **specific features** for the inferred network such as **sparsity**, **robust links**, **high confidence links** or **stable through resampling links**. 
+    + **LASSO**, from the `lars` package
+    + **LASSO2**, from the `glmnet` package. An unweighted and a weighted version of the algorithm are available
+    + **SPLS**, from the `spls` package
+    + **ELASTICNET**, from the `elasticnet` package
+    + **stability.c060**, from the `c060` package implementation of stability selection
+    + **stability.c060.weighted**, a new weighted version of the `c060` package implementation of stability selection
+    + **robust**, lasso from the `lars` package with light random Gaussian noise added to the explanatory variables
+    + **selectboost.weighted**, a new weighted version of the `selectboost` package implementation of the selectboost algorithm to look for the more stable links against resampling that takes into account the correlated structure of the predictors. If no weights are provided, equal weigths are for all the variables (=non weighted case).
+* Some **simulation** and **prediction** tools are also available for cascade networks. 
 * Examples of use with microarray or RNA-Seq data are provided.
+
+
+The weights are viewed as a penalty factors in the penalized regression model: it is a number that multiplies the lambda value in the minimization problem to allow differential shrinkage, [Friedman et al. 2010](https://web.stanford.edu/~hastie/Papers/glmnet.pdf), equation 1 page 3. If equal to 0, it implies no shrinkage, and that variable is always included in the model. Default is 1 for all variables. Infinity means that the variable is excluded from the model. Note that the weights are rescaled to sum to the number of variables.
+
 
 
 ![Infered F matrix of the network (General shape).](docs/reference/figures/README-Fresults-1.png)
 
+
+
+![Infered coefficient matrix of the network (General shape).](docs/reference/figures/README-heatresults-1.png)
+
+
+
 ![Infered F matrix of the network (cascade shape).](docs/reference/figures/README-FresultsLC-1.png)
+
+
+
+![Infered coefficient matrix of the network (cascade shape).](docs/reference/figures/README-heatresultsLC-1.png)
+
+
 
 ![Reverse-engineered network.](docs/reference/figures/README-plotnet2-1.png)
 
+
+
 ![Evolution of a reverse-engineered network with increasing cut-off values.](docs/reference/evolution/animation.gif)
+
+
+
+![Plot of simulated data for cascade networks featuring cluster membership.](docs/reference/figures/README-plotsimuldata-1.png)
+
+
+
+![Plot of simulated data for cascade networks featuring subject membership.](docs/reference/figures/README-plotsimuldata-2.png)
+
+
+A word for those that have been using our seminal work, the `Cascade` package that we created several years ago and that was a very efficient network reverse engineering tool for cascade networks 
+(Jung, N., Bertrand, F., Bahram, S., Vallat, L., and Maumy-Bertrand, M. (2014), <https://doi.org/10.1093/bioinformatics/btt705>, <https://cran.r-project.org/package=Cascade>, <https://github.com/fbertran/Cascade> and <https://fbertran.github.io/Cascade/>).
+
+
+The `Patterns` package is more than (at least) a threeway major extension of the `Cascade` package :
+
+* **any number of groups** can be used whereas in the `Cascade` package only 1 group for each timepoint could be created, which prevented the users to create homogeneous clusters of genes in datasets that featured more than a few dozens of genes.
+* **custom** $F$ matrices shapes whereas in the `Cascade` package only 1 shape was provided:
+    + interaction between groups
+    + custom design of inner cells of the $F$ matrix
+* the custom $F$ matrices allow to deal with **heteregeneous networks** with several kinds of actors such as mixing genes and proteins in a single network to perform **joint inference**.
+* about **nine inference algorithms** are provided, whereas 1 (lasso) in `Cascade`.
+
+Hence the `Patterns` package should be viewed more as a completely new modelling tools than as an extension of the `Cascade` package.
 
 
 This website and these examples were created by F. Bertrand and M. Maumy-Bertrand.
@@ -54,6 +108,9 @@ Import Cascade Data (repeated measurements on several subjects) from the Cascade
 
 ```r
 library(Patterns)
+```
+
+```r
 if(!require(CascadeData)){install.packages("CascadeData")}
 data(micro_US)
 micro_US<-as.micro_array(micro_US[1:100,],time=c(60,90,210,390),subject=6)
@@ -806,17 +863,16 @@ stats::heatmap(Net_inf_P_S@network, Rowv = NA, Colv = NA, scale="none", revC=TRU
 <img src="man/figures/README-heatresultsLC-1.png" title="plot of chunk heatresultsLC" alt="plot of chunk heatresultsLC" width="100%" />
 
 
-There are various fitting functions provided with the `Patterns` package:
-\describe{
-\item{"LASSO", from the `lars` package}
-\item{"LASSO2", from the `glmnet` package}
-\item{"SPLS", from the `spls` package}
-\item{"ELASTICNET", from the `elasticnet` package}
-\item{"stability.c060", from the `c060` package implementation of stability selection}
-\item{"stability.c060.weighted", a new weighted version of the `c060` package implementation of stability selection}
-\item{"robust", lasso from the `lars` package with light random Gaussian noise added to the explanatory variables}
-\item{"selectboost.weighted", a new weighted version of the `selectboost` package implementation of the selectboost algorithm to look for the more stable links against resampling that takes into account the correlated structure of the predictors. If no weights are provided, equal weigths are for all the variables (=non weighted case).}
-}
+There are many fitting functions provided with the `Patterns` package in order to search for **specific features** for the inferred network such as **sparsity**, **robust links**, **high confidence links** or **stable through resampling links**. :
+
+* **LASSO**, from the `lars` package
+* **LASSO2**, from the `glmnet` package. An unweighted and a weighted version of the algorithm are available
+* **SPLS**, from the `spls` package
+* **ELASTICNET**, from the `elasticnet` package
+* **stability.c060**, from the `c060` package implementation of stability selection
+* **stability.c060.weighted**, a new weighted version of the `c060` package implementation of stability selection
+* **robust**, lasso from the `lars` package with light random Gaussian noise added to the explanatory variables
+* **selectboost.weighted**, a new weighted version of the `selectboost` package implementation of the selectboost algorithm to look for the more stable links against resampling that takes into account the correlated structure of the predictors. If no weights are provided, equal weigths are for all the variables (=non weighted case).
 
 
 ```r
@@ -1228,38 +1284,41 @@ Net_inf_P_SelectBoost <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.0058
+#> The convergence of the network is (L1 norm) : 0.0057
 #> We are at step :  2
 #> Computing Group (out of 4) : 
 #>  1
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.0022
+#> The convergence of the network is (L1 norm) : 0.0018
 #> We are at step :  3
 #> Computing Group (out of 4) : 
 #>  1
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.0016
+#> The convergence of the network is (L1 norm) : 0.00132
 #> We are at step :  4
 #> Computing Group (out of 4) : 
 #>  1
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.00116
-#> We are at step :  5
-#> Computing Group (out of 4) : 
-#>  1
-#>  2.........................
-#>  3.........................
-#>  4.........................
-#> The convergence of the network is (L1 norm) : 0.00086
+#> The convergence of the network is (L1 norm) : 0.00092
 ```
 
 <img src="man/figures/README-netinfSB-1.png" title="plot of chunk netinfSB" alt="plot of chunk netinfSB" width="100%" /><img src="man/figures/README-netinfSB-2.png" title="plot of chunk netinfSB" alt="plot of chunk netinfSB" width="100%" />
+
+
+
+```
+#> 
+#> Attaching package: 'Patterns'
+#> The following object is masked from 'package:igraph':
+#> 
+#>     compare
+```
 
 Plot of the inferred F matrix
 
@@ -1283,44 +1342,32 @@ Net_inf_P_SelectBoostWeighted <- Patterns::inference(M, Finit=CascadeFinit(4,4),
 #> We are at step :  1
 #> Computing Group (out of 4) : 
 #>  1
+#> Loading required namespace: SelectBoost
+#> 
 #>  2.........................
 #>  3.........................
-#>  4.Error in applyfunction(iforeach) : 
-#>   task 7 failed - "l'argument de remplacement est de longueur nulle"
-#> ! Error in applyfunction(iforeach) : 
-#>   task 7 failed - "l'argument de remplacement est de longueur nulle"
-#>  
-#> Error in try({ : objet 'varii' introuvable
-#> ........................
-#> The convergence of the network is (L1 norm) : 0.0063
+#>  4.........................
+#> The convergence of the network is (L1 norm) : 0.007
 #> We are at step :  2
 #> Computing Group (out of 4) : 
 #>  1
 #>  2.........................
 #>  3.........................
-#>  4Error in applyfunction(iforeach) : 
-#>   task 6 failed - "l'argument de remplacement est de longueur nulle"
-#> ! Error in applyfunction(iforeach) : 
-#>   task 6 failed - "l'argument de remplacement est de longueur nulle"
-#>  
-#> Error in try({ : objet 'varii' introuvable
-#> .Error in applyfunction(iforeach) : 
-#>   task 63 failed - "l'argument de remplacement est de longueur nulle"
-#> ! Error in applyfunction(iforeach) : 
-#>   task 63 failed - "l'argument de remplacement est de longueur nulle"
-#>  
-#> Error in try({ : objet 'varii' introuvable
-#> ....Error in applyfunction(iforeach) : 
-#>   task 60 failed - "l'argument de remplacement est de longueur nulle"
-#> ! Error in applyfunction(iforeach) : 
-#>   task 60 failed - "l'argument de remplacement est de longueur nulle"
-#>  
-#> Error in try({ : objet 'varii' introuvable
-#> ....................
-#> The convergence of the network is (L1 norm) : 0.00078
+#>  4.........................
+#> The convergence of the network is (L1 norm) : 0.00048
 ```
 
-<img src="man/figures/README-netinfSBW-1.png" title="plot of chunk netinfSBW" alt="plot of chunk netinfSBW" width="100%" /><img src="man/figures/README-netinfSBW-2.png" title="plot of chunk netinfSBW" alt="plot of chunk netinfSBW" width="100%" />
+<img src="man/figures/README-netinflibrary()-1.png" title="plot of chunk netinflibrary()" alt="plot of chunk netinflibrary()" width="100%" /><img src="man/figures/README-netinflibrary()-2.png" title="plot of chunk netinflibrary()" alt="plot of chunk netinflibrary()" width="100%" />
+
+
+
+```
+#> 
+#> Attaching package: 'Patterns'
+#> The following object is masked from 'package:igraph':
+#> 
+#>     compare
+```
 
 Plot of the inferred F matrix
 
@@ -1351,7 +1398,7 @@ evolution(network,sequence,type.ani = "html")
 ```
 ![Evolution as .gif.](docs/reference/evolution/animation.gif)
 
-[Evolution as .html.](reference/evolution/index.html)
+[Evolution as .html.](docs/reference/evolution/index.html)
 
 Evolution of some properties of a reverse-engineered network with increasing cut-off values.
 ![Evolution of some properties of a reverse-engineered network with increasing cut-off values.](docs/reference/compare-methods-1.png)
@@ -1403,10 +1450,8 @@ analyze_network(networkCascade,nv=0.133)
 ```r
 data(Selection)
 plot(networkCascade,nv=0.133, gr=Selection@group)
-#> TRUE
+#> Error in plot(networkCascade, nv = 0.133, gr = Selection@group): objet 'networkCascade' introuvable
 ```
-
-<img src="man/figures/README-plotnet-1.png" title="plot of chunk plotnet" alt="plot of chunk plotnet" width="100%" />
 
 
 
@@ -1492,7 +1537,6 @@ Summarize the final selection:
 
 ```r
 summary(Selection)
-#> Loading required package: cluster
 #>       US60               US90               US210        
 #>  Min.   :-2.76841   Min.   :-2.369525   Min.   :-1.6147  
 #>  1st Qu.:-0.18028   1st Qu.:-0.181425   1st Qu.: 0.1985  
@@ -1549,7 +1593,6 @@ summary(Selection)
 #>  Mean   : 0.21171  
 #>  3rd Qu.: 0.42511  
 #>  Max.   : 2.14903
-#> Loading required package: lattice
 ```
 
 <img src="man/figures/README-microselection6-1.png" title="plot of chunk microselection6" alt="plot of chunk microselection6" width="100%" /><img src="man/figures/README-microselection6-2.png" title="plot of chunk microselection6" alt="plot of chunk microselection6" width="100%" /><img src="man/figures/README-microselection6-3.png" title="plot of chunk microselection6" alt="plot of chunk microselection6" width="100%" />

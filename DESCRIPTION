@@ -1,16 +1,20 @@
 Package: Patterns
 Type: Package
 Title: Deciphering Biological Networks with Patterned Heterogeneous Measurements
-Version: 0.8
-Date: 2019-05-01
+Version: 0.99
+Date: 2019-05-03
 Depends: R (>= 2.10)
+biocViews:
 Imports: abind, animation, Biobase, c060, cluster, elasticnet, glmnet, gplots, graphics, 
          grDevices, grid, igraph, jetset, KernSmooth, lars, lattice, limma, magic, methods, 
          Mfuzz, movMF, msgps, nnls, pixmap, plotrix, SelectBoost, splines, spls, stats4, survival, tnet, VGAM, WGCNA
 Suggests: 
+    repmis,
+    biomaRt,
     R.rsp,
     CascadeData,
-    knitr
+    knitr,
+    rmarkdown
 Authors@R: c(
 	person(given = "Frederic", family= "Bertrand", role = c("cre", "aut"), email = "frederic.bertrand@math.unistra.fr", comment = c(ORCID = "0000-0002-0837-8281")),
 	person(given = "Myriam", family= "Maumy-Bertrand", role = c("aut"), email = "myriam.maumy-bertrand@math.unistra.fr", comment = c(ORCID = "0000-0002-4615-1512")))
@@ -22,7 +26,7 @@ Encoding: UTF-8
 Collate: global.R micro_array.R network.R micro_array-network.R
 	micropredict.R
 Classification/MSC: 62J05, 62J07, 62J99, 92C42
-VignetteBuilder: R.rsp
+VignetteBuilder: knitr
 RoxygenNote: 6.1.1
 URL: http://www-irma.u-strasbg.fr/~fbertran/, https://github.com/fbertran/Patterns
 BugReports: https://github.com/fbertran/Patterns/issues

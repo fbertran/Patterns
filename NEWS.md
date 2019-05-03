@@ -1,27 +1,36 @@
-# Patterns .8
+# Patterns 0.99
+
+* First vignette completion and second vignette creation.
+* Github Release of the package.
+
+# Patterns 0.9
+
+* Vignette creation.
+
+# Patterns 0.8
 
 * Readme and help pages were enhanced. 
 * Minor fixes for some functions.
 * Only the header of the `CLL` dataset is now shipped with the package. The remaining part can be downloaded from the github repository of the package using the code provided in the manual section.
 
-# Patterns .7
+# Patterns 0.7
 
 * Updated `evolution` and `animation` functions. 
 * Updated `compare` fonction. 
 * Adapted new example dataset and completed help pages.
 
-# Patterns .6
+# Patterns 0.6
 
 * New `plot` functions. 
 * Prediction was enabled for cascade networks. 
 * Gene_Id is kept by selection. 
 * Solved issues when loading the package.
 
-# Patterns .5
+# Patterns 0.5
 
 * Package was reshaped.
 
-# Patterns .4
+# Patterns 0.4
 
 * Help pages were completed and examples added for every function. It required new datasets that were added to the package.
 * Added a `NEWS.md` file to track changes to the package.

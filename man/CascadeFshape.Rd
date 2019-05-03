@@ -16,6 +16,9 @@ CascadeFshape(sqF, ngrp)
 \value{
 An array of sizes c(sqF, sqF, ngrp).
 }
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
 
 \examples{
 CascadeFshape(3,2)

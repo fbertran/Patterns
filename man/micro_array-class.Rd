@@ -38,6 +38,9 @@ Objects can be created by calls of the form \code{new("micro_array", ...)}.
     \item{unionMicro}{\code{signature(M1 = "micro_array", M2 = "micro_array")}: ... }
 	 }
 }
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
 
 \examples{
 showClass("micro_array")

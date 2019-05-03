@@ -11,6 +11,9 @@
 \section{Objects from the Class}{
 Objects can be created by calls of the form \code{new("micropred", ...)}.
 }
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
 
 \examples{
 showClass("network")

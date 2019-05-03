@@ -19,6 +19,10 @@ unsupervised_clustering(M1, clust, mestim, ...)
 \value{
 An object of class micro_array with the group slot updated by groups deduced from the soft clustering result.
 }
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
+
 \examples{
 if(require(CascadeData)){
 data(micro_S, package="CascadeData")

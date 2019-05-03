@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Patterns</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8</span>
       </span>
     </div>
 
@@ -138,61 +138,29 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>data(Selection)
-data(infos)
-#Find probesets for EGR1
-pbst_EGR1 = infos[infos$hgnc_symbol=="EGR1", "affy_hg_u133_plus_2"]
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>Selection</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>infos</span>)
+<span class='co'>#Find probesets for EGR1</span>
+<span class='no'>pbst_EGR1</span> <span class='kw'>=</span> <span class='no'>infos</span>[<span class='no'>infos</span>$<span class='no'>hgnc_symbol</span><span class='kw'>==</span><span class='st'>"EGR1"</span>, <span class='st'>"affy_hg_u133_plus_2"</span>]
 
-gene_IDs = infos[match(Selection@name, infos$affy_hg_u133_plus_), "hgnc_symbol"]
+<span class='no'>gene_IDs</span> <span class='kw'>=</span> <span class='no'>infos</span>[<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/match'>match</a></span>(<span class='no'>Selection</span>@<span class='kw'>name</span>, <span class='no'>infos</span>$<span class='no'>affy_hg_u133_plus_</span>), <span class='st'>"hgnc_symbol"</span>]
 
-data(network)
-#A nv value can chosen using the cutoff function
-nv=.11 
-EGR1<-which(Selection@name </div><div class='output co'>#&gt; <span class='error'>Error: &lt;text&gt;:12:0: unexpected end of input</span>
-#&gt; <span class='error'>10: nv=.11 </span>
-#&gt; <span class='error'>11: EGR1&lt;-which(Selection@name </span>
-#&gt; <span class='error'>   ^</span></div># NOT RUN {
-<!-- %in% pbst_EGR1) -->
-# }
-<div class='input'><span class='no'>P</span><span class='kw'>&lt;-</span><span class='fu'><a href='position.html'>position</a></span>(<span class='no'>network</span>,<span class='kw'>nv</span><span class='kw'>=</span><span class='no'>nv</span>)
-
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>network</span>)
+<span class='co'>#A nv value can chosen using the cutoff function</span>
+<span class='no'>nv</span><span class='kw'>=</span><span class='fl'>.11</span>
+<span class='no'>EGR1</span><span class='kw'>&lt;-</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/which'>which</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sets'>is.element</a></span>(<span class='no'>Selection</span>@<span class='kw'>name</span>,<span class='no'>pbst_EGR1</span>))
+<span class='no'>P</span><span class='kw'>&lt;-</span><span class='fu'><a href='position.html'>position</a></span>(<span class='no'>network</span>,<span class='kw'>nv</span><span class='kw'>=</span><span class='no'>nv</span>)</div><div class='output co'>#&gt; <span class='message'>Le chargement a nécessité le package : igraph</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attachement du package : ‘igraph’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:Patterns’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    compare</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:DynDoc’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    path</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    decompose, spectrum</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:base’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    union</span></div><div class='input'>
 <span class='fu'>geneNeighborhood</span>(<span class='no'>network</span>,<span class='kw'>targets</span><span class='kw'>=</span><span class='no'>EGR1</span>,<span class='kw'>nv</span><span class='kw'>=</span><span class='no'>nv</span>,<span class='kw'>ini</span><span class='kw'>=</span><span class='no'>P</span>,
-<span class='kw'>label_v</span><span class='kw'>=</span><span class='no'>gene_IDs</span>)</div><div class='output co'>#&gt; FALSE</div><div class='img'><img src='geneNeighborhood-methods-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; [[1]]
-#&gt; [[1]][[1]]
-#&gt; + 1/102 vertex, from b600943:
-#&gt; [1] 25
-#&gt; 
-#&gt; [[1]][[2]]
-#&gt; + 2/102 vertices, from b600943:
-#&gt; [1] 26 10
-#&gt; 
-#&gt; 
-#&gt; [[2]]
-#&gt; [[2]][[1]]
-#&gt; + 1/102 vertex, from b600943:
-#&gt; [1] 25
-#&gt; 
-#&gt; [[2]][[2]]
-#&gt; + 43/102 vertices, from b600943:
-#&gt;  [1] 26 10  3  4  7  8 12 13 14 15 17 18 19 20 21 23 24 25 28 29 30 31 33 34 35
-#&gt; [26] 36 38 39 58 59 60 65 71 72 76 82 84 85 86 89 90 93 97
-#&gt; 
-#&gt; 
-#&gt; [[3]]
-#&gt; [[3]][[1]]
-#&gt; + 1/102 vertex, from b600943:
-#&gt; [1] 25
-#&gt; 
-#&gt; [[3]][[2]]
-#&gt; + 97/102 vertices, from b600943:
-#&gt;  [1]  26  10   3   4   7   8  12  13  14  15  17  18  19  20  21  23  24  25  28
-#&gt; [20]  29  30  31  33  34  35  36  38  39  58  59  60  65  71  72  76  82  84  85
-#&gt; [39]  86  89  90  93  97  41  55  61  64  68  70  74  79  98   2   9  16  47  48
-#&gt; [58]  73  75  77  80  81  92 102  62  96  42  66  87  44  45  46  54  57  69  78
-#&gt; [77]  91 100  43  53  67  49  50  88  94  56  95  83 101  37  40  11   5  22  32
-#&gt; [96]  27   6
-#&gt; 
-#&gt; </div></pre>
+<span class='kw'>label_v</span><span class='kw'>=</span><span class='no'>gene_IDs</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mget(plabels[hasSubclass], env): premier argument incorrect</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

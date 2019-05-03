@@ -15,6 +15,10 @@ This dataset is a network example with 102 nodes, 4 times and 4 groups.
 \details{
 A network class object [package "Patterns"] with 6 slots.
 }
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
+
 \examples{
 data(network)
 str(network)

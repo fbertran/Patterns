@@ -17,6 +17,9 @@ CascadeFinit(sqF, ngrp, low.trig = TRUE)
 \value{
 An array of sizes c(sqF, sqF, ngrp).
 }
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
 
 \examples{
 CascadeFinit(3,2)

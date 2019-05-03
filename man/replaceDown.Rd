@@ -17,6 +17,10 @@ replaceDown(a, b, k)
 \value{
 A matrix (same size as a) 
 }
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
+
 \examples{
 a=matrix(1:9,3,3)
 b=matrix(1,3,3)

@@ -59,7 +59,6 @@ setMethod("predict"
             rownames(O) <- gene2
             #F matrix
             F <- Omega@F
-            #Encore le microarray
             microP <- micro
             #predictors
             sup_pred <-
@@ -67,7 +66,6 @@ setMethod("predict"
                                               T)
             
             
-            #still micro_array
             micro2 <- micro
             #F matrix index
             u <- 0
@@ -79,42 +77,28 @@ setMethod("predict"
             
             for (peak in 2:(T)) {
               for (grpjj in vgrp[act_time_group == peak]) {
-                #On garde les groupes predicteurs
                 IND <- which(groupe[gene2] %in% vgrp[act_time_group < peak])
                 grIND <- groupe[IND]
-                #On silence les targets
                 if (!is.null(targets)) {
                   micro2@microarray[targets, ] <- micro@microarray[targets, ]
                 }
-                #Genes predicteurs aux temps 1..T
                 pred <- micro2@microarray[IND, sup_pred]
-                #print(pred[IND==72,])
-                #Pour chaque groupe sauf le grpjj
                 for (k in (1:ngrp)[-grpjj]) {
-                  #On prend les indices du kieme groupe
                   ind <- which(grIND %in% k)
-                  #Fonction produit de la matrice F avec un vecteur
                   f <-
                     function(x) {
                       (F[, , grpjj + (k - 1) * ngrp] %*% (x))
-                    }#/(sqrt(sum((F[,,grpjj+(k-1)*ngrp]%*%(x))^2)))}
-                  #Pour chaque sujet
+                    }
                   for (i in 1:micro@subject) {
                     pred[ind, 1:T + (i - 1) * T] <-
                       t(apply(pred[ind, 1:T + (i - 1) * T, drop = FALSE], 1, f))
                   }
                 }
                 pred[is.na(pred)] <- 0
-                #Indices des genes du groupe d'interet
                 IND2 <- which(groupe[gene] == (grpjj))
-                #Pour chaque gene du groupe reponse
                 for (j in gene[IND2]) {
-                  #predj<-(pred)*O[IND,j]
-                  #Pour chaque gene on cherche les genes du groupe predicteur qui ont un lien non nul
                   predj <- pred[O[IND, j] != 0, ]
-                  #Si il y en a
                   if (length(predj) != 0) {
-                    #On isole les valeurs finales dans Y (reponse)
                     Y <- micro@microarray[j, sup_pred]
                     if (adapt == TRUE) {
                       if (!is.null(dim(predj))) {
@@ -123,16 +107,11 @@ setMethod("predict"
                       else{
                         mm <- lm(Y ~ (predj) - 1)
                       }
-                      #On remplace par la valeur inferee
                       micro2@microarray[j, sup_pred] <- predict(mm)
-                      #On update les coefficients de Omega
                       O[IND, j][O[IND, j] != 0] <- coef(mm)[]
                     }
-                    #Si il n'y en a pas
                   }
                   else{
-                    #On prend la somme ponderee des sorties
-                    #des genes exprimes aux autres temps
                     predj <- apply((pred) * O[IND, j], 2, sum)
                     micro2@microarray[j, sup_pred] <- predj[sup_pred]
                   }
@@ -140,7 +119,6 @@ setMethod("predict"
                 }
               }
             }
-            #Pour pouvoir faire un plot
             micro33 <- micro2
             if (!is.null(targets)) {
               pppp <-
@@ -218,47 +196,22 @@ setMethod(f="inference"
                                ,use.parallel=TRUE
                                ){
 
-            #Fshape=NULL
-            #Finit=NULL
-            #
-            #M<-Selection
-            #tour.max=30
-            #g=function(x){1/x}
-            #conv=0.001
-            #cv.subjects=TRUE
-            #nb.folds=NULL
-            #eps=10^-5
-            #type.inf="iterative"
-            #Omega=NULL
-            #TempEnforce=FALSE
-            
-            #Package requis
-            require(nnls)
-            #Quelques indicateurs
+            require(nnls, quietly = TRUE, warn.conflicts = FALSE);on.exit(unloadNamespace("package:nnls"))
             mat<-M@microarray
             
             if(is.null(priors)) priors<-matrix(1,nrow(mat),nrow(mat))
             if(!is.matrix(priors)) stop("priors should be a matrix")
             if(!prod(dim(priors) == rep(nrow(mat),2))==1) stop("priors should have the same dimension than omega")
-            #cat(str(priors))
-            
-            #La matrice contenant les donnees
+
             gr<-M@group 
             N<-dim(mat)[1] 
-            # Le vecteur des groupes
             ngrp<-length(unique(gr))
-            #Nombre de genes
             T<-length(unique(M@time)) 
-            #Nombre de mesures par patient (souvent nombre de temps de mesures)
             sqF<-length(unique(M@time)) 
-            #Nombre de patients
             P<-M@subject
-            #On compte toutes les matrices m?mes celles sur la diagonales. F est form?e de T*T blocs
             nF<-ngrp*ngrp 	
             charslist=vector("list",nF)
             
-            #La condition suivante determine le nombre de folds 
-            # pour la cross validation
             if(is.null(nb.folds)){
               K<-sqF-1
             }            else{
@@ -266,16 +219,6 @@ setMethod(f="inference"
             }
             
             if(is.null(Finit)){
-              #Initialisation des matrices Fabinit par defaut
-              # F[,,1] correspond à la matrice F11
-              # F[,,2] correspond à la matrice F12
-              # F[,,T+1] correspond à la matrice F21
-              # F[,,T+2] correspond à la matrice F22
-              # F[,,2T] correspond à la matrice F2T
-              # ... (toutes les matrices y compris les nulles sont indicées F11 par exemple)
-              #Lexicographic order for matrices 11 -> 1T -> 21 -> 2T -> 32 -> .... TT
-              #row number is (ii-1)%/%T+1
-              #column number is ii%%T if ii%%T!=0 and T if ii%%T==0
               Finit<-array(0,c(sqF,sqF,nF))	
               for(ii in 1:nF){    
                 if((ii%%(ngrp+1))==1){
@@ -290,17 +233,6 @@ setMethod(f="inference"
             }
             F <- Finit
             if(is.null(Fshape)){
-              #Initialisation des matrices Fabshape par defaut
-              #J'ai prefere construire une matrice F tri dimensionnelle laquelle contient toutes les matrices Fab
-              # F[,,1] correspond a la matrice F11
-              # F[,,2] correspond a la matrice F12
-              # F[,,T+1] correspond a la matrice F21
-              # F[,,T+2] correspond a la matrice F22
-              # F[,,2T] correspond a la matrice F2T
-              # ... (toutes les matrices y compris les nulles sont indicées F11 par exemple)
-              #Lexicographic order for matrices 11 -> 1T -> 21 -> 2T -> 32 -> .... TT
-              #row number is (ii-1)%/%T+1
-              #column number is ii%%T if ii%%T!=0 and T if ii%%T==0
               Fshape<-array("0",c(sqF,sqF,nF)) 
               for(ii in 1:nF){  
                 if((ii%%(ngrp+1))==1){
@@ -320,8 +252,6 @@ setMethod(f="inference"
               if((dim(Fshape)[1]!=sqF)|(dim(Fshape)[2]!=sqF)){stop("Fshape matrices must be squared of order ",sqF,".",sep="")}
             }
             
-            #Initialisation de la matrice Omega
-            
             if(is.null(Omega)){
               Omega<-array(0,c(N,N))
             } else 
@@ -331,114 +261,67 @@ setMethod(f="inference"
               #if(any(Omega<0|Omega>1)){stop("The Omega coordinates must all lie between 0 and 1")}
             }
             
-            
-            #Initialisation des deux indicateurs de convergence
             convF<-rep(mean(F^2),nF)
             convO<-mean(mat^2)
             
-            #Support : correspond aux colonnes de mat qui servent pour la prediction
-            #Attention le modele se sert que des temps 1 a T-1 pour chaque patient pour les predicteurs
-            
             sup_pred<-rep(1:sqF,P)+rep(seq(0,sqF*(P-1),sqF),each=sqF)
             
-            #Initialisation du nombre de tours	
             tour<-1
             
-            #Si on veut faire la version non iterative
-            # il faut deux passages : dans le premier on infere
-            # F et dans le second on infere omega
             if(type.inf=="noniterative"){
               tour.max<-2
             }
             
-            #L'algorithme commence ici
             while((tour<= tour.max && convO[length(convO)]>conv) || tour<=2){ 
-              #Condition d'arret : soit nombre de tour max atteint, 
-              #soit la convergence de la matrice Omega est suffisante
-              
+
               cat(paste("We are at step : ",tour))
               cat("\n") 
-              #Pour montrer que l'algorithme est en train de calculer
-              
               OmegaS<-Omega 
-              #OmegaS comme sauvegarde ; necessaire pour calculer 
-              # la convergence
-              
+
               u<-0 
-              #u a un role essentiel, puisque qu'il determine 
-              # laquelle des matrices Fab est indicee. 
-              # Se referer plus haut pour en connaitre l'ordre
               cat("Computing Group (out of ",ngrp,") : ",sep="")
               for(grpjj in 1:ngrp){ 
                 cat("\n",grpjj);#if(grpjj < ngrp){cat(" ... ")}
-                #Comprendre ici que grpjj correspond au groupe du gene REPONSE.
-                #Ici nous cherchons les genes possiblement predicteurs.
-                #Nous recuperons le groupe des individus possiblement predicteurs.			
-                
+
                 IND<-which(gr %in% (1:ngrp)[-(grpjj)])
-                #Ici nous cherchons les genes possiblement 
-                # PREDICTEURS.
-                #En effet, le gene reponse etant de groupe grpjj, 
-                # un predicteur ne peut etre du groupe grpjj
-                
+
                 grIND<-gr[IND] 			
-                #Nous recuperons le groupe des individus possiblement
-                # predicteurs.
-                #Agir ici avec Omega binaire
                 pred<-mat[IND,sup_pred]		
-                #Nous creons la matrice des predicteurs 
-                #Ou ici avec Omega ponderation
-                
+
                 for(k in 1:ngrp) {
-                  #cat(paste("(",k,")",sep=""));
-                  #Cette boucle sert a transformer les
-                  #predicteurs en fonction des matrices Fab
-                  #Le groupe de la variable reponse
-                  # etant ngrp, les groupes des predicteurs 
-                  # sont tous les groupes
-                  
+
                   ind<-which(grIND %in% k) 
-                  #On regarde successivement, et dans 
-                  # l'ordre, tous les groupes possibles			
-                  #						u<-u+1 
-                  #u est initialise a 0. 
-                  #La premiere fois, u vaut donc 1, grpjj 1, et k =1. Donc F[,,u]=F11.
-                  #La deuxieme fois qu'on arrive ici, grpjj est 1, et k vaut 2 F[,,u]=F21
-                  #La troisieme fois grpjj=1 k=3 donc F[,,u]=F31
-                  # ... c'est bien l'ordre dans lequel nous avons range les F			
-                  #       grpjj+(k-1)*ngrp  grpjj=1 k=1 u=1 F11
-                  #       grpjj+(k-1)*ngrp  grpjj=1 k=2 u=5 F21
-                  
+
                   f<-function(xf){(F[,, grpjj+(k-1)*ngrp]%*%xf)} 
-                  #On construit une fonction generique
+                  #generic function
                   
                   for(i in 1:P){			
                     pred[ind,1:(sqF)+(i-1)*(sqF)]<-t(apply(pred[ind,1:(sqF)+(i-1)*(sqF)],1,f)) 
-                    #La transformation est faite ici.
+                    #transform is done here.
                   }
                 }
-                #En sortant de la boucle avec k, pred 
-                #contient les genes predicteurs correctement 
-                #transformes. 				
+                #predictors gens are now in pred and correctly transfromed
                 
                 pred[is.na(pred)]<-0 
-                #Ceci est une securite, au cas ou une matrice F
-                #deviendrait nulle
+                #Protection in case of a F matrix becoming null.
                 
-                #On construit ci dessous la matrice des vecteurs
-                # reponse
+                #Responses' matrix
                 Y<-mat[which(gr %in% grpjj),sup_pred]
                 Omega[IND, which(gr %in% grpjj)]<-Omega[IND, which(gr %in% grpjj)]*0
                 
-                #Nous allons passer au Lasso
                 if(fitfun=="LASSO2"){
                   
                  priors2<-priors[IND,which(gr %in% grpjj)]
                  Y2<-cbind(1:nrow(Y),Y)
-                  if(norm(pred,type="F")>eps){     
-                    fun_lasso2<-function(x){cat(".");
-                      lasso_reg2(pred,x[-1],nfolds=P,foldid=rep(1:P,each=ncol(pred)/P),priors=priors2[,x[1]])}
+                  if(norm(pred,type="F")>eps){
                     options(show.error.messages = FALSE)
+                    if(cv.subjects==TRUE){
+                      fun_lasso2<-function(x){cat(".");
+                        lasso_reg2(pred,x[-1],foldid=rep(1:P,each=ncol(pred)/P),priors=priors2[,x[1]])}
+                    } else {
+                      fun_lasso2<-function(x){cat(".");
+                        lasso_reg2(pred,x[-1],foldid=sample(rep(1:K,length=ncol(pred))),priors=priors2[,x[1]])}
+                    }
                     Omega[IND, which(gr %in% grpjj)]<-apply(Y2,1,fun_lasso2)
                     options(show.error.messages = TRUE)
                   }
@@ -451,18 +334,12 @@ setMethod(f="inference"
                       cv.folds1=function(n,folds){
                       split(1:dim(pred)[2]
                             ,rep(1:P,each=dim(pred)[2]/P))}
-                    #                  cv.fun.name="cv.folds1"
                     } else {
                       cv.folds1=lars::cv.folds
-                    #                    cv.fun.name="lars::cv.folds"
                     }
-                  #                cat(cv.fun.name)
                   fun_lasso<-function(x){cat(".");lasso_reg(pred,x,K=K,eps,cv.fun=cv.folds1
                                                  #,cv.fun.name=cv.fun.name
                   )} 
-                  # retenir<-lars::cv.folds 
-                  #Ceci permet de changer une fonction interne de lars
-                  # qui s'occupe de la validation croisee. 
                   Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_lasso)
                   }
                 }
@@ -493,7 +370,7 @@ setMethod(f="inference"
                   }
                 }
                 if(fitfun=="stability.c060"){
-                  require(c060);#cat(".")
+                  require(c060);
                   cat("mc.cores=",mc.cores,sep="")
                   
                   fun_stab<-function(g,mc.cores=mc.cores,intercept.stabpath=intercept.stabpath){
@@ -503,12 +380,10 @@ setMethod(f="inference"
                       cat(".")               
                     }else{
                   LL=rep(0,nrow(pred));error.inf=TRUE
-                  #cat(intercept.stabpath)
                   try({essai<-c060::stabpath(g,t(pred),mc.cores=mc.cores,intercept=intercept.stabpath);
-                  varii<-c060::stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$stable;
-                  lambda<-c060::stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$lambda;
-#                  L<-lars(t(pred),g,use.Gram=use.Gram)
-#                  LL<-predict(L,s=lambda,mode="lambda",type="coef")$coefficients
+                  respath<-c060::stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel);
+                  varii<-respath$stable;
+                  lambda<-respath$lambda;
                   L<-glmnet::glmnet(t(pred),g,intercept=intercept.stabpath);
                   LL<-as.matrix(predict(L,s=lambda,type="coef"))[-1,1]})
                   try({LL[-varii]<-0;
@@ -529,7 +404,7 @@ setMethod(f="inference"
                 
                 
                 if(fitfun=="stability.c060.weighted"){
-                  require(c060);#cat(".")
+                  require(c060);
                   cat("mc.cores=",mc.cores," ",sep="")
                   priors2<-priors[IND,which(gr %in% grpjj)]
                   Y2<-cbind(1:nrow(Y),Y)
@@ -562,7 +437,6 @@ setMethod(f="inference"
                                            x, y, lambda = fit$lambda, penalty.factor, weakness, p, ...)
                           parallel::stopCluster(cl)
                         }
-                        #str(res)
                         res <- res[unlist(lapply(lapply(res, dim), function(x) x[2] == 
                                                    dim(res[[1]])[2]))]
                         x <- as.matrix(res[[1]])
@@ -599,20 +473,13 @@ setMethod(f="inference"
                         }
                       }
                       
-#                      res <- stabpath(y,x,penalty.factor=c(rep(1,999),rep(0,1)),mc.cores=2)
-                      #assignInNamespace("stabpath",,ns="c060")    
-                      #assignInNamespace("glmnet.subset",, ns="c060") 
-                      #assignInNamespace("glmnet.subset.weighted",, ns="c060")    
-                      
                       suppressWarnings(rm(varii))
                       LL=rep(0,nrow(pred));error.comp=TRUE;error.inf=TRUE
-                      #cat(intercept.stabpath)
                       try({
                       essai<-stabpath(g[-1],t(pred),mc.cores=mc.cores,intercept=intercept.stabpath,penalty.factor=priors2[,g[1]]);
-                      varii<-c060::stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$stable;
-                      lambda<-c060::stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel)$lambda;
-                      #                  L<-lars(t(pred),g,use.Gram=use.Gram)
-                      #                  LL<-predict(L,s=lambda,mode="lambda",type="coef")$coefficients
+                      respath<-c060::stabsel(essai,error=error.stabsel,pi_thr=pi_thr.stabsel);
+                      varii<-respath$stable;
+                      lambda<-respath$lambda;
                       L<-glmnet::glmnet(t(pred),g[-1],intercept=intercept.stabpath,penalty.factor=priors2[,g[1]]);
                       LL<-as.matrix(predict(L,s=lambda,type="coef"))[-1,1];
                       error.comp=FALSE
@@ -633,15 +500,13 @@ setMethod(f="inference"
                 
                 
                 if(fitfun=="robust"){
-                  #require(movMF)
                   require(lars)
-                  #require(msgps)
                   fun_robust<-function(g){
                     if(sum(pred)==0){
                       return(rep(0,nrow(pred)))
                       cat(".")               
                     }else{
-                      essai<-boost(t(pred)+rnorm(prod(dim(pred)),0,0.001),g)  
+                      essai<-robustboost(t(pred)+rnorm(prod(dim(pred)),0,0.001),g)  
                       varii<-which(essai==1)
                       lambda<-0
                       L<-lars::lars(t(pred),g)
@@ -658,14 +523,28 @@ setMethod(f="inference"
                 }  
                 
                 if(fitfun=="selectboost.weighted"){
-                  #require(movMF)
-                  require(lars)
-                  #require(msgps)
-                  requireNamespace("SelectBoost")
+                  requireNamespace("SelectBoost");on.exit(unloadNamespace("package:SelectBoost"))
                   priors2<-priors[IND,which(gr %in% grpjj)]
                   Y2<-cbind(1:nrow(Y),Y)
-
-                  fun_robust_weighted<-function(g,mc.cores=mc.cores, steps.seq = steps.seq, limselect = limselect, use.parallel = use.parallel){
+                  
+                  if(cv.subjects==TRUE){
+                    folds_id_glmnet=rep(1:P,each=ncol(pred)/P)
+                  } else {
+                    folds_id_glmnet=sample(rep(1:K,length=ncol(pred)))
+                  }
+                  
+                  lasso_cv_glmnet_min_weighted_Patterns <- 
+                    function(X,Y,priors){
+                      requireNamespace("glmnet")
+                      if(is.null(priors)) priors<-rep(1,ncol(X))
+                      resultat<-glmnet::cv.glmnet(X,Y,foldid=folds_id_glmnet,penalty.factor=priors)
+                      coefvec<-try(as.vector(coef(resultat,s="lambda.min")[-1]))
+                      if(!is.vector(coefvec)){repu<-rep(0,ncol(X))}
+                      return(coefvec)
+                    }
+                  
+                  
+                  fun_selectboost_weighted<-function(g,mc.cores=mc.cores, steps.seq = steps.seq, limselect = limselect, use.parallel = use.parallel){
                     if(norm(pred,type="F")<=eps){     
                       return(rep(0,nrow(pred)))
                       cat(".")               
@@ -674,10 +553,10 @@ setMethod(f="inference"
                       LL=rep(0,nrow(pred));error.comp=TRUE;error.inf=TRUE
                       #cat(intercept.stabpath)
                       try({
-                      essai<-suppressMessages(SelectBoost::fastboost(t(pred),g[-1],SelectBoost::group_func_2,SelectBoost::lasso_cv_glmnet_min_weighted,corrfunc="crossprod",normalize=TRUE, B=100, use.parallel=use.parallel, ncores=mc.cores,c0lim=FALSE, steps.seq = steps.seq, priors=priors2[,g[1]]))
+                      essai<-suppressWarnings(SelectBoost::fastboost(t(pred),g[-1],SelectBoost::group_func_2,lasso_cv_glmnet_min_weighted_Patterns,corrfunc="crossprod",normalize=TRUE, B=100, use.parallel=use.parallel, ncores=mc.cores,c0lim=FALSE, steps.seq = steps.seq, priors=priors2[,g[1]]))
                       varii<-which(essai>=limselect)
-
-                      resultat<-suppressWarnings(glmnet::cv.glmnet(t(pred),g[-1],nfolds=10,penalty.factor=priors2[,g[1]]))
+                      
+                      resultat<-suppressWarnings(glmnet::cv.glmnet(t(pred),g[-1],foldid=folds_id_glmnet,penalty.factor=priors2[,g[1]]))
                       LL<-predict(resultat,s="lambda.min",type="coef")[-1,1]
                       error.comp=FALSE
                       })
@@ -688,22 +567,19 @@ setMethod(f="inference"
                       return(LL)
                     }
                   }
-                  Omega[IND, which(gr %in% grpjj)]<-apply(Y2,1,fun_robust_weighted,mc.cores=mc.cores,steps.seq=.95,limselect=.95,use.parallel=use.parallel)
+                  Omega[IND, which(gr %in% grpjj)]<-apply(Y2,1,fun_selectboost_weighted,mc.cores=mc.cores,steps.seq=.95,limselect=.95,use.parallel=use.parallel)
                   }  
                 
                 
                                 
               }
               cat("\n")
-              #fin de la boucle for avec peak ; 
-              #la matrice omega est inferee
-              
+
               co<-apply(Omega,2,sumabso)
               Omega<-t(t(Omega)/co)
               
               if(tour!=1 && type.inf=="iterative"){
                 Omega<-(g(tour)*Omega+OmegaS)/(1+g(tour)) 
-                #On prend seulement une partie de l'innovation
               }
               
               
@@ -718,23 +594,10 @@ setMethod(f="inference"
               
               if(tour==1 && type.inf=="noniterative"){
                 Omega<-Omega*0+1 
-                #Tous les pr?dicteurs sont mis egaux a 1
-                # dans le cadre de l'inf?rence non iterative
               }
               
-              #Maintenant, il s'agit d'estimer la matrice F ;
-              # on reprend la meme maniere de faire que pour Omega
-              #Nous annotons les differences
-              
               for(grpjj in 1:ngrp){
-                
-                
-                # En effet, le gene reponse etant de groupe grpjj, 
-                #un predicteur ne peut etre que de groupe different
-                #Important dans patterns : etant donne qu'il apparaisse dans 
-                # les memes equations Fij, i=1...T, i<>j doivent etre estimees
-                # en meme temps
-                
+
                 IND<-which(gr %in% (1:ngrp)[-(grpjj)])
                 grIND<-gr[IND]
                 sup_pred<-rep(1:sqF,P)+rep(seq(0,sqF*(P-1),sqF),each=sqF)
@@ -744,23 +607,13 @@ setMethod(f="inference"
                 charslist=vector("list",nF)
                 Xf<-NULL
                 for(i in (1:ngrp)[-grpjj]){ 
-                  #Cette  boucle permet de creer la matrice des 
-                  # predicteurs selon une forme pratique
                   X<-NULL
                   suma<-function(x){sum(abs(x))}
                   f<-Vectorize(function(x){
-                    #Multiplie la matrice des pr??dicteurs du groupe i
-                    # par les omega correspondants aux genes du groupe
-                    # dont les indices sont dans x et on somme les 
-                    # valeurs absolues
                     apply(pred[which(grIND==i),]*Omega[IND[which(grIND==i)],x],2,suma)})
                   Xa<-(f(IND2))
                   Xb<-NULL
                   FF=Fshape[,,(i-1)*ngrp+grpjj]
-                  #        cat((i-1)*sqF+grpjj)
-                  #        cat("\n")
-                  #        cat(FF)
-                  #        cat("\n")
                   chars=sort(setdiff(unique(as.vector(FF)),"0"))
                   if(length(chars)>0){
                     charslist[[(i-1)*ngrp+grpjj]]<-chars
@@ -774,10 +627,6 @@ setMethod(f="inference"
                       }
                       X<-rbind(X,Q)
                     }
-                    #        cat(Q)
-                    #        cat("\n")
-                    #        cat(X)
-                    #        cat("\n")
                     Xf<-cbind(Xf,X)
                   }
                 }
@@ -786,7 +635,6 @@ setMethod(f="inference"
                   Y<-c(t(mat[IND2,sup_pred]))
                   pond<-rep(0,P)
                   coeffi<-array(0,c(P,dim(Xf)[2]))
-                  #  rm(model)
                   for(pat in 1:P){
                     support<-1:length(Y)
                     enl<-(1:(length(Y)/(P))+(pat-1)*(length(Y)/(P)))
@@ -811,18 +659,12 @@ setMethod(f="inference"
                       TempFF=TempFF+inds*model[ncoeff]         
                     }
                     F[,,grpjj+(jj-1)*ngrp]<-TempFF
-                    #        cat(TempFF)
-                    #        cat("\n")
-                    #        rm(TempFF)
                   }
                 }
               } 
-              #fin de la boucle peak
-              
+
               if(tour==1 && type.inf=="noniterative"){
                 Omega<-Omega*0 
-                #Tous les pr?dicteurs sont remis egaux a 0
-                # dans le cadre de l'inf?rence non iterative
               }
               
               

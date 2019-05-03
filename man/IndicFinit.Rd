@@ -18,6 +18,10 @@ IndicFinit(sqF, ngrp, Indic, low.trig = TRUE)
 \value{
 An array of size (sqF, sqF, ngrp).
 }
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
+
 \examples{
 IndicFinit(3, 2, matrix(1,2,2)-diag(2))
 }

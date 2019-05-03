@@ -9,6 +9,10 @@ Selection of genes.
 }
 \usage{data(Selection)}
 
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
+
 \examples{
 data(Selection)
 head(Selection)

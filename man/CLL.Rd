@@ -24,13 +24,20 @@ https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE39411
 \references{
 Vallat, L., Kemper, C. A., Jung, N., Maumy-Bertrand, M., Bertrand, F., Meyer, N., … Bahram, S. (2013). Reverse-engineering the genetic circuitry of a cancer cell with predicted intervention in chronic lymphocytic leukemia. Proceedings of the National Academy of Sciences of the United States of America, 110(2), 459–464. 
 }
+
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
+
 \examples{
 data(CLL)
 str(CLL)
 
+\donttest{
 CLLfile <- "https://raw.githubusercontent.com/fbertran/Patterns/master/add_data/CLL.RData"
 load(CLLfile)
 
 str(CLL)
+}
 }
 \keyword{datasets}

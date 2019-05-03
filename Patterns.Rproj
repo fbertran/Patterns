@@ -15,6 +15,7 @@ LaTeX: pdfLaTeX
 BuildType: Package
 PackageUseDevtools: Yes
 PackageInstallArgs: --no-multiarch --with-keep.source
+PackageBuildBinaryArgs: --no-build-vignettes
 PackageCheckArgs: --as-cran
 
 QuitChildProcessesOnExit: Yes

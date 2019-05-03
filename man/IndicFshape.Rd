@@ -17,6 +17,10 @@ IndicFshape(sqF, ngrp, Indic)
 \value{
 An array of size (sqF, sqF, ngrp).
 }
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
+
 \examples{
 IndicFshape(3, 2, matrix(1,2,2)-diag(2))
 }

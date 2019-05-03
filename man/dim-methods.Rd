@@ -14,5 +14,9 @@ Dimension of the data
 Gives the dimension of the matrix of measurements.
 }
 }}
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
+
 \keyword{methods}
 

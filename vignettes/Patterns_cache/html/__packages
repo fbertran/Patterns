@@ -1,0 +1,17 @@
+base
+Patterns
+CascadeData
+cluster
+lattice
+igraph
+plotrix
+VGAM
+nnls
+c060
+lars
+limma
+biomaRt
+widgetTools
+DynDoc
+survival
+tnet

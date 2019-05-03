@@ -13,5 +13,9 @@ Returns the position of edges in the network
 Returns a matrix with the position of the node. This matrix can then be used as an argument in the plot function.
 }
 }}
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
+
 \keyword{methods}
 

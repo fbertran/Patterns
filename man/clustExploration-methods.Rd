@@ -23,6 +23,11 @@ clustExploration(microarray,...)
 \value{
 A data.frame of nrows(microarray) observations of 3 variables (name, cluster, maj.vote.index).
 }
+
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
+
 \examples{
 library(Patterns)
 if(require(CascadeData)){
