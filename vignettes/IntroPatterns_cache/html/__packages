@@ -9,9 +9,7 @@ VGAM
 nnls
 c060
 lars
-limma
-biomaRt
-widgetTools
-DynDoc
 survival
 tnet
+limma
+biomaRt

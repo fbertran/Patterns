@@ -1293,21 +1293,21 @@ Net_inf_P_SelectBoost <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.0018
+#> The convergence of the network is (L1 norm) : 0.00159
 #> We are at step :  3
 #> Computing Group (out of 4) : 
 #>  1
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.00132
+#> The convergence of the network is (L1 norm) : 0.00129
 #> We are at step :  4
 #> Computing Group (out of 4) : 
 #>  1
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.00092
+#> The convergence of the network is (L1 norm) : 0.00096
 ```
 
 <img src="man/figures/README-netinfSB-1.png" title="plot of chunk netinfSB" alt="plot of chunk netinfSB" width="100%" /><img src="man/figures/README-netinfSB-2.png" title="plot of chunk netinfSB" alt="plot of chunk netinfSB" width="100%" />
@@ -1344,8 +1344,6 @@ Net_inf_P_SelectBoostWeighted <- Patterns::inference(M, Finit=CascadeFinit(4,4),
 #> We are at step :  1
 #> Computing Group (out of 4) : 
 #>  1
-#> Loading required namespace: SelectBoost
-#> 
 #>  2.........................
 #>  3.........................
 #>  4.........................
@@ -1356,7 +1354,7 @@ Net_inf_P_SelectBoostWeighted <- Patterns::inference(M, Finit=CascadeFinit(4,4),
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.00048
+#> The convergence of the network is (L1 norm) : 0.00055
 ```
 
 <img src="man/figures/README-netinflibrary()-1.png" title="plot of chunk netinflibrary()" alt="plot of chunk netinflibrary()" width="100%" /><img src="man/figures/README-netinflibrary()-2.png" title="plot of chunk netinflibrary()" alt="plot of chunk netinflibrary()" width="100%" />
@@ -1445,15 +1443,123 @@ Analyze the network with a cutoff set to the previouly found 0.133 optimal value
 
 ```r
 analyze_network(networkCascade,nv=0.133)
-#> Error in analyze_network(networkCascade, nv = 0.133): objet 'networkCascade' introuvable
+#> Loading required package: tnet
+#> Loading required package: survival
+#> tnet: Analysis of Weighted, Two-mode, and Longitudinal networks.
+#> Type ?tnet for help.
+#>     node betweenness degree    output  closeness
+#> 1      1           0      3 0.6442821  2.5337730
+#> 2      2           8      4 1.3784717  5.4211261
+#> 3      3           0      6 1.3308218  6.1428682
+#> 4      4           0      9 1.7531528 19.4060065
+#> 5      5           0      2 0.6400128  2.5169831
+#> 6      6           0      1 0.2725100  3.4520368
+#> 7      7           0      0 0.0000000  0.0000000
+#> 8      8           0      1 0.1483077 10.4595738
+#> 9      9           4      4 0.7969945  3.4810740
+#> 10    10          20      7 1.3485173  6.0949803
+#> 11    11           0      4 0.8054122 16.2236448
+#> 12    12           0     11 2.4624877 10.7417814
+#> 13    13           0      0 0.0000000  0.0000000
+#> 14    14           0      1 0.1882265  3.8504312
+#> 15    15           0      5 1.5808956 13.7135886
+#> 16    16          81     24 6.7716649 29.1131750
+#> 17    17           0      9 2.0059124 11.2249512
+#> 18    18           0      9 1.6083138  6.6506106
+#> 19    19           0      0 0.0000000  0.0000000
+#> 20    20           0      0 0.0000000  0.0000000
+#> 21    21           0      0 0.0000000  0.0000000
+#> 22    22           0      0 0.0000000  0.0000000
+#> 23    23           0      0 0.0000000  0.0000000
+#> 24    24           0      1 0.1607163  0.6320503
+#> 25    25           0      0 0.0000000  0.0000000
+#> 26    26           0      0 0.0000000  0.0000000
+#> 27    27           0      8 3.2710799 13.9045595
+#> 28    28           0      2 0.3957891  2.1118782
+#> 29    29           0      0 0.0000000  0.0000000
+#> 30    30           0      1 0.2255093  0.8868623
+#> 31    31           0      0 0.0000000  0.0000000
+#> 32    32           0      0 0.0000000  0.0000000
+#> 33    33           0      0 0.0000000  0.0000000
+#> 34    34           0      0 0.0000000  0.0000000
+#> 35    35           0      6 1.4397935  5.6622868
+#> 36    36           0      0 0.0000000  0.0000000
+#> 37    37           0      0 0.0000000  0.0000000
+#> 38    38           0      0 0.0000000  0.0000000
+#> 39    39           0      0 0.0000000  0.0000000
+#> 40    40           0      0 0.0000000  0.0000000
+#> 41    41           0      0 0.0000000  0.0000000
+#> 42    42           2      1 0.5205955  2.0473501
+#> 43    43           0      0 0.0000000  0.0000000
+#> 44    44           0      0 0.0000000  0.0000000
+#> 45    45           0      0 0.0000000  0.0000000
+#> 46    46           0      0 0.0000000  0.0000000
+#> 47    47           0      0 0.0000000  0.0000000
+#> 48    48           0      1 0.5096457  2.0042877
+#> 49    49           1      1 0.1814386  0.7135450
+#> 50    50           0      0 0.0000000  0.0000000
+#> 51    51           0      0 0.0000000  0.0000000
+#> 52    52           0      0 0.0000000  0.0000000
+#> 53    53           0      0 0.0000000  0.0000000
+#> 54    54           0      0 0.0000000  0.0000000
+#> 55    55           0      0 0.0000000  0.0000000
+#> 56    56           0      0 0.0000000  0.0000000
+#> 57    57           5      1 0.7142387  2.8088919
+#> 58    58           0      0 0.0000000  0.0000000
+#> 59    59           0      0 0.0000000  0.0000000
+#> 60    60           0      0 0.0000000  0.0000000
+#> 61    61           0      0 0.0000000  0.0000000
+#> 62    62           0      0 0.0000000  0.0000000
+#> 63    63           0      1 0.1668072  0.6560038
+#> 64    64           0      0 0.0000000  0.0000000
+#> 65    65           0      0 0.0000000  0.0000000
+#> 66    66           0      0 0.0000000  0.0000000
+#> 67    67           0      0 0.0000000  0.0000000
+#> 68    68           0      0 0.0000000  0.0000000
+#> 69    69           0      0 0.0000000  0.0000000
+#> 70    70           0      0 0.0000000  0.0000000
+#> 71    71           0      0 0.0000000  0.0000000
+#> 72    72           0      0 0.0000000  0.0000000
+#> 73    73           4      1 0.1937648  0.7620205
+#> 74    74           0      0 0.0000000  0.0000000
+#> 75    75           0      0 0.0000000  0.0000000
+#> 76    76           0      0 0.0000000  0.0000000
+#> 77    77           0      0 0.0000000  0.0000000
+#> 78    78           0      0 0.0000000  0.0000000
+#> 79    79           0      0 0.0000000  0.0000000
+#> 80    80           0      0 0.0000000  0.0000000
+#> 81    81           0      0 0.0000000  0.0000000
+#> 82    82           4      2 0.4875471  1.9173803
+#> 83    83           4      1 0.2849991  1.1208180
+#> 84    84           5      1 0.4477398  1.7608296
+#> 85    85           4      1 0.2126269  0.8361995
+#> 86    86           0      0 0.0000000  0.0000000
+#> 87    87           0      0 0.0000000  0.0000000
+#> 88    88           0      0 0.0000000  0.0000000
+#> 89    89           0      0 0.0000000  0.0000000
+#> 90    90           5      1 0.1522237  0.5986513
+#> 91    91           3      1 0.2857613  1.1238157
+#> 92    92           0      0 0.0000000  0.0000000
+#> 93    93           0      1 0.1784006  0.7015976
+#> 94    94           0      0 0.0000000  0.0000000
+#> 95    95           0      0 0.0000000  0.0000000
+#> 96    96           0      0 0.0000000  0.0000000
+#> 97    97           0      0 0.0000000  0.0000000
+#> 98    98           0      0 0.0000000  0.0000000
+#> 99    99           0      0 0.0000000  0.0000000
+#> 100  100           0      0 0.0000000  0.0000000
+#> 101  101           0      0 0.0000000  0.0000000
+#> 102  102           0      0 0.0000000  0.0000000
 ```
 
 
 ```r
 data(Selection)
 plot(networkCascade,nv=0.133, gr=Selection@group)
-#> Error in plot(networkCascade, nv = 0.133, gr = Selection@group): objet 'networkCascade' introuvable
+#> TRUE
 ```
+
+<img src="man/figures/README-plotnet-1.png" title="plot of chunk plotnet" alt="plot of chunk plotnet" width="100%" />
 
 
 
@@ -1476,6 +1582,7 @@ Select early genes (t1 or t2):
 
 ```r
 Selection1<-geneSelection(x=micro_S,y=micro_US,20,wanted.patterns=rbind(c(0,1,0,0),c(1,0,0,0),c(1,1,0,0)))
+#> Loading required package: limma
 ```
 
 Section genes with first significant differential  expression at t1:

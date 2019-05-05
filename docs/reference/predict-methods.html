@@ -77,9 +77,6 @@ The plot of prediction of knock down experiments (i.e. targets&amp;lt;&amp;gt;NU
   </a>
 </li>
 <li>
-  <a href="../articles/Patterns.html">Get started</a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -91,6 +88,9 @@ The plot of prediction of knock down experiments (i.e. targets&amp;lt;&amp;gt;NU
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/ExampleCLL.html">Network inference and analysis of CLL data</a>
+    </li>
+    <li>
+      <a href="../articles/IntroPatterns.html">Introduction to Patterns: a modeling tool dedicated to biological network modeling</a>
     </li>
   </ul>
 </li>
@@ -169,12 +169,12 @@ The plot of prediction of knock down experiments (i.e. targets&amp;lt;&amp;gt;NU
 <span class='no'>prediction_ko5_NR4A1</span><span class='kw'>&lt;-</span><span class='fu'>predict</span>(<span class='no'>Selection</span>,<span class='no'>networkCascade</span>,<span class='kw'>nv</span><span class='kw'>=</span><span class='no'>nv</span>,<span class='kw'>targets</span><span class='kw'>=</span><span class='no'>NR4A1</span>,<span class='kw'>act_time_group</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>4</span>)
 
 <span class='co'>#Then we plot the results. Here for example we see changes at time points t2, t3 ans t4:</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>prediction_ko5_NR4A1</span>,<span class='kw'>time</span><span class='kw'>=</span><span class='fl'>2</span>:<span class='fl'>4</span>,<span class='kw'>ini</span><span class='kw'>=</span><span class='no'>P</span>,<span class='kw'>label_v</span><span class='kw'>=</span><span class='no'>gene_IDs</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mget(plabels[hasSubclass], env): premier argument incorrect</span></div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>prediction_ko5_NR4A1</span>,<span class='kw'>time</span><span class='kw'>=</span><span class='fl'>2</span>:<span class='fl'>4</span>,<span class='kw'>ini</span><span class='kw'>=</span><span class='no'>P</span>,<span class='kw'>label_v</span><span class='kw'>=</span><span class='no'>gene_IDs</span>)</div><div class='output co'>#&gt; <span class='error'>Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'</span></div><div class='input'>
 <span class='co'>#We predict gene expression modulations within the network if EGR1 is experimentaly knocked-out. </span>
 <span class='no'>prediction_ko5_EGR1</span><span class='kw'>&lt;-</span><span class='fu'>predict</span>(<span class='no'>Selection</span>,<span class='no'>networkCascade</span>,<span class='kw'>nv</span><span class='kw'>=</span><span class='no'>nv</span>,<span class='kw'>targets</span><span class='kw'>=</span><span class='no'>EGR1</span>,<span class='kw'>act_time_group</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>4</span>)
 
 <span class='co'>#Then we plot the results. Here for example we see changes at time point t2, t3 ans t4:</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>prediction_ko5_EGR1</span>,<span class='kw'>time</span><span class='kw'>=</span><span class='fl'>2</span>:<span class='fl'>4</span>,<span class='kw'>ini</span><span class='kw'>=</span><span class='no'>P</span>,<span class='kw'>label_v</span><span class='kw'>=</span><span class='no'>gene_IDs</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mget(plabels[hasSubclass], env): premier argument incorrect</span></div></pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>prediction_ko5_EGR1</span>,<span class='kw'>time</span><span class='kw'>=</span><span class='fl'>2</span>:<span class='fl'>4</span>,<span class='kw'>ini</span><span class='kw'>=</span><span class='no'>P</span>,<span class='kw'>label_v</span><span class='kw'>=</span><span class='no'>gene_IDs</span>)</div><div class='output co'>#&gt; <span class='error'>Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -1,0 +1,21 @@
+citHeader("To cite the Patterns package in publications use:")
+
+titl <- meta$Title
+titl <- "Patterns: reverse engineering of biological networks with patterned expressions"
+year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date, perl = TRUE)
+vers <- paste("R package version", meta$Version)
+auth <- personList(as.person("Frederic Bertrand"),
+                             as.person("Myriam Maumy-Bertrand"))
+
+citEntry(entry="Manual",
+         title = titl,
+         author = personList(as.person("F. Bertrand"), as.person("M. Maumy-Bertrand")),
+	 publisher = "manual",
+         year         = year,
+         note         = vers,
+         url          = "",
+         textVersion = 
+         paste("F. Bertrand and M. Maumy-Bertrand (",year ,"). ", 
+               titl, ", ", vers, ".", sep=""
+               )
+)

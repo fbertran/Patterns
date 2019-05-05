@@ -21,3 +21,4 @@
 ^add_data
 ^doc$
 ^Meta$
+^cran-comments[.].*$

@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Patterns</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99</span>
       </span>
     </div>
 
@@ -77,6 +77,21 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/ExampleCLL.html">Network inference and analysis of CLL data</a>
+    </li>
+    <li>
+      <a href="../articles/IntroPatterns.html">Introduction to Patterns: a modeling tool dedicated to biological network modeling</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -149,18 +164,10 @@
 <span class='co'>#A nv value can chosen using the cutoff function</span>
 <span class='no'>nv</span><span class='kw'>=</span><span class='fl'>.11</span>
 <span class='no'>EGR1</span><span class='kw'>&lt;-</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/which'>which</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sets'>is.element</a></span>(<span class='no'>Selection</span>@<span class='kw'>name</span>,<span class='no'>pbst_EGR1</span>))
-<span class='no'>P</span><span class='kw'>&lt;-</span><span class='fu'><a href='position.html'>position</a></span>(<span class='no'>network</span>,<span class='kw'>nv</span><span class='kw'>=</span><span class='no'>nv</span>)</div><div class='output co'>#&gt; <span class='message'>Le chargement a nécessité le package : igraph</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attachement du package : ‘igraph’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:Patterns’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    compare</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:DynDoc’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    path</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    decompose, spectrum</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:base’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    union</span></div><div class='input'>
+<span class='no'>P</span><span class='kw'>&lt;-</span><span class='fu'><a href='position.html'>position</a></span>(<span class='no'>network</span>,<span class='kw'>nv</span><span class='kw'>=</span><span class='no'>nv</span>)
+
 <span class='fu'>geneNeighborhood</span>(<span class='no'>network</span>,<span class='kw'>targets</span><span class='kw'>=</span><span class='no'>EGR1</span>,<span class='kw'>nv</span><span class='kw'>=</span><span class='no'>nv</span>,<span class='kw'>ini</span><span class='kw'>=</span><span class='no'>P</span>,
-<span class='kw'>label_v</span><span class='kw'>=</span><span class='no'>gene_IDs</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mget(plabels[hasSubclass], env): premier argument incorrect</span></div></pre>
+<span class='kw'>label_v</span><span class='kw'>=</span><span class='no'>gene_IDs</span>)</div><div class='output co'>#&gt; <span class='error'>Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

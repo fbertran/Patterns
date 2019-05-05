@@ -76,9 +76,6 @@
   </a>
 </li>
 <li>
-  <a href="../articles/Patterns.html">Get started</a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -90,6 +87,9 @@
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/ExampleCLL.html">Network inference and analysis of CLL data</a>
+    </li>
+    <li>
+      <a href="../articles/IntroPatterns.html">Introduction to Patterns: a modeling tool dedicated to biological network modeling</a>
     </li>
   </ul>
 </li>
@@ -253,7 +253,7 @@
 #&gt;   .. .. ..$ : NULL
 #&gt;   .. .. ..$ : chr [1:9] "convF" "cc" "cc" "cc" ...
 #&gt;   ..@ convO  : num [1:9] 5.36e+04 1.00e-02 4.75e-03 3.11e-03 2.17e-03 ...
-#&gt;   ..@ time_pt: int [1:4] 1 2 3 4</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>infM</span>, <span class='kw'>choice</span><span class='kw'>=</span><span class='st'>"F"</span>, <span class='kw'>nround</span><span class='kw'>=</span><span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mget(plabels[hasSubclass], env): premier argument incorrect</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>infM</span>, <span class='kw'>choice</span><span class='kw'>=</span><span class='st'>"F"</span>, <span class='kw'>nround</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mget(plabels[hasSubclass], env): premier argument incorrect</span></div><div class='input'>
+#&gt;   ..@ time_pt: int [1:4] 1 2 3 4</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>infM</span>, <span class='kw'>choice</span><span class='kw'>=</span><span class='st'>"F"</span>, <span class='kw'>nround</span><span class='kw'>=</span><span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='error'>Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>infM</span>, <span class='kw'>choice</span><span class='kw'>=</span><span class='st'>"F"</span>, <span class='kw'>nround</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'</span></div><div class='input'>
 <span class='co'>#With simulated data, cascade network shaped F matrix (1 group per time measurement case) </span>
 <span class='co'>#and default LASSO from the lars package as fitting function</span>
 <span class='no'>infMcasc</span> <span class='kw'>&lt;-</span> <span class='fu'>inference</span>(<span class='no'>M</span>, <span class='kw'>Finit</span><span class='kw'>=</span><span class='fu'><a href='CascadeFinit.html'>CascadeFinit</a></span>(<span class='fl'>4</span>,<span class='fl'>4</span>), <span class='kw'>Fshape</span><span class='kw'>=</span><span class='fu'><a href='CascadeFshape.html'>CascadeFshape</a></span>(<span class='fl'>4</span>,<span class='fl'>4</span>))</div><div class='output co'>#&gt; We are at step :  1
@@ -299,7 +299,7 @@
 #&gt;   .. .. ..$ : NULL
 #&gt;   .. .. ..$ : chr [1:6] "convF" "cc" "cc" "cc" ...
 #&gt;   ..@ convO  : num [1:6] 5.36e+04 7.50e-03 2.29e-03 1.58e-03 1.16e-03 ...
-#&gt;   ..@ time_pt: int [1:4] 1 2 3 4</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>infMcasc</span>, <span class='kw'>choice</span><span class='kw'>=</span><span class='st'>"F"</span>, <span class='kw'>nround</span><span class='kw'>=</span><span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mget(plabels[hasSubclass], env): premier argument incorrect</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>infMcasc</span>, <span class='kw'>choice</span><span class='kw'>=</span><span class='st'>"F"</span>, <span class='kw'>nround</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mget(plabels[hasSubclass], env): premier argument incorrect</span></div><div class='input'>
+#&gt;   ..@ time_pt: int [1:4] 1 2 3 4</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>infMcasc</span>, <span class='kw'>choice</span><span class='kw'>=</span><span class='st'>"F"</span>, <span class='kw'>nround</span><span class='kw'>=</span><span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='error'>Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>infMcasc</span>, <span class='kw'>choice</span><span class='kw'>=</span><span class='st'>"F"</span>, <span class='kw'>nround</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'</span></div><div class='input'>
 <span class='co'>#With selection of genes from GSE39411</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>Selection</span>)
 <span class='no'>infSel</span> <span class='kw'>&lt;-</span> <span class='fu'>inference</span>(<span class='no'>Selection</span>, <span class='kw'>Finit</span><span class='kw'>=</span><span class='fu'><a href='CascadeFinit.html'>CascadeFinit</a></span>(<span class='fl'>4</span>,<span class='fl'>4</span>), <span class='kw'>Fshape</span><span class='kw'>=</span><span class='fu'><a href='CascadeFshape.html'>CascadeFshape</a></span>(<span class='fl'>4</span>,<span class='fl'>4</span>))</div><div class='output co'>#&gt; We are at step :  1
@@ -347,7 +347,7 @@
 #&gt;   .. .. ..$ : NULL
 #&gt;   .. .. ..$ : chr [1:5] "convF" "cc" "cc" "cc" ...
 #&gt;   ..@ convO  : num [1:5] 0.942493 0.006344 0.001672 0.001207 0.000846
-#&gt;   ..@ time_pt: num [1:4] 60 90 210 390</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>infSel</span>, <span class='kw'>choice</span><span class='kw'>=</span><span class='st'>"F"</span>, <span class='kw'>nround</span><span class='kw'>=</span><span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mget(plabels[hasSubclass], env): premier argument incorrect</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>infSel</span>, <span class='kw'>choice</span><span class='kw'>=</span><span class='st'>"F"</span>, <span class='kw'>nround</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in mget(plabels[hasSubclass], env): premier argument incorrect</span></div></pre>
+#&gt;   ..@ time_pt: num [1:4] 60 90 210 390</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>infSel</span>, <span class='kw'>choice</span><span class='kw'>=</span><span class='st'>"F"</span>, <span class='kw'>nround</span><span class='kw'>=</span><span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='error'>Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>infSel</span>, <span class='kw'>choice</span><span class='kw'>=</span><span class='st'>"F"</span>, <span class='kw'>nround</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

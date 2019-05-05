@@ -23,7 +23,7 @@ clustInference(microarray, vote.index, ...)
 }
 \value{A list of two elements:
   \item{res.matrix}{A data.frame of nrows(microarray) observations of 3 variables (name, cluster, maj.vote.index).}
-  \item{prop.matrix}{Additionnal info}
+  \item{prop.matrix}{Additionnal info.}
 }
 
 \author{
@@ -34,8 +34,8 @@ Bertrand Frederic, Myriam Maumy-Bertrand.
 library(Patterns)
 if(require(CascadeData)){
 data(micro_S, package="CascadeData")
-D<-Patterns::as.micro_array(micro_S[1:100,],1:4,6)
-b<-clustInference(D,0.5)
+D<-Patterns::as.micro_array(micro_S[1:20,],1:4,6)
+b<-Patterns::clustInference(D,0.5)
 b
 }
 }

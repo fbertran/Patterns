@@ -76,9 +76,6 @@
   </a>
 </li>
 <li>
-  <a href="../articles/Patterns.html">Get started</a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -90,6 +87,9 @@
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/ExampleCLL.html">Network inference and analysis of CLL data</a>
+    </li>
+    <li>
+      <a href="../articles/IntroPatterns.html">Introduction to Patterns: a modeling tool dedicated to biological network modeling</a>
     </li>
   </ul>
 </li>
@@ -153,7 +153,7 @@
 
     <p>A list of two elements:</p>
 <dt>res.matrix</dt><dd><p>A data.frame of nrows(microarray) observations of 3 variables (name, cluster, maj.vote.index).</p></dd>
-  <dt>prop.matrix</dt><dd><p>Additionnal info</p></dd>
+  <dt>prop.matrix</dt><dd><p>Additionnal info.</p></dd>
 
     
 
@@ -161,8 +161,8 @@
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>Patterns</span>)
 <span class='kw'>if</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>require</a></span>(<span class='no'>CascadeData</span>)){
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>micro_S</span>, <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"CascadeData"</span>)
-<span class='no'>D</span><span class='kw'>&lt;-</span><span class='kw pkg'>Patterns</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/Patterns/topics/as.micro_array'>as.micro_array</a></span>(<span class='no'>micro_S</span>[<span class='fl'>1</span>:<span class='fl'>100</span>,],<span class='fl'>1</span>:<span class='fl'>4</span>,<span class='fl'>6</span>)
-<span class='no'>b</span><span class='kw'>&lt;-</span><span class='fu'>clustInference</span>(<span class='no'>D</span>,<span class='fl'>0.5</span>)
+<span class='no'>D</span><span class='kw'>&lt;-</span><span class='kw pkg'>Patterns</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/Patterns/topics/as.micro_array'>as.micro_array</a></span>(<span class='no'>micro_S</span>[<span class='fl'>1</span>:<span class='fl'>20</span>,],<span class='fl'>1</span>:<span class='fl'>4</span>,<span class='fl'>6</span>)
+<span class='no'>b</span><span class='kw'>&lt;-</span><span class='kw pkg'>Patterns</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/Patterns/topics/clustInference-methods'>clustInference</a></span>(<span class='no'>D</span>,<span class='fl'>0.5</span>)
 <span class='no'>b</span>
 }</div><div class='output co'>#&gt; <span class='error'>Error in (function (classes, fdef, mtable) {    methods &lt;- .findInheritedMethods(classes, fdef, mtable)    if (length(methods) == 1L)         return(methods[[1L]])    else if (length(methods) == 0L) {        cnames &lt;- paste0("\"", vapply(classes, as.character,             ""), "\"", collapse = ", ")        stop(gettextf("unable to find an inherited method for function %s for signature %s",             sQuote(fdef@generic), sQuote(cnames)), domain = NA)    }    else stop("Internal error in finding inherited methods; didn't return a unique method",         domain = NA)})(list(structure("micro_array", package = "Patterns"), "numeric"),     new("nonstandardGenericFunction", .Data = function (microarray,         vote.index, ...)     {        standardGeneric("clustInference")    }, generic = structure("clustInference", package = "Patterns"),         package = "Patterns", group = list(), valueClass = character(0),         signature = c("microarray", "vote.index"), default = NULL,         skeleton = (function (microarray, vote.index, ...)         stop("invalid call in method dispatch to 'clustInference' (no default method)",             domain = NA))(microarray, vote.index, ...)), &lt;environment&gt;): unable to find an inherited method for function ‘clustInference’ for signature ‘"micro_array", "numeric"’</span></div></pre>
   </div>

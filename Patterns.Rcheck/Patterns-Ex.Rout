@@ -1,0 +1,2464 @@
+
+R version 3.6.0 (2019-04-26) -- "Planting of a Tree"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "Patterns"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> base::assign(".ExTimings", "Patterns-Ex.timings", pos = 'CheckExEnv')
+> base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
+> base::assign(".format_ptime",
++ function(x) {
++   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
++   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
++   options(OutDec = '.')
++   format(x[1L:3L], digits = 7L)
++ },
++ pos = 'CheckExEnv')
+> 
+> ### * </HEADER>
+> library('Patterns')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("CLL")
+> ### * CLL
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: CLL
+> ### Title: Expression data from healthy and malignant (chronic lymphocytic
+> ###   leukemia, CLL) human B-lymphocytes after B-cell receptor stimulation
+> ###   (GSE 39411 dataset)
+> ### Aliases: CLL
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(CLL)
+> str(CLL)
+'data.frame':	6 obs. of  154 variables:
+ $ probeset                                                                             : chr  "1007_s_at" "1053_at" "117_at" "121_at" ...
+ $ nom                                                                                  : chr  "DDR1 or MIR4640" "RFC2" "HSPA6" "PAX8" ...
+ $ Healthy.B.cell..subject.N1_unstimulated.cells_at.60min                               : num  561 221 270 678 142 ...
+ $ Healthy.B.cell..subject.N1_unstimulated.cells_at.90min                               : num  557 216 263 598 136 ...
+ $ Healthy.B.cell..subject.N1_unstimulated.cells_at.210min                              : num  561 229 244 618 145 ...
+ $ Healthy.B.cell..subject.N1_unstimulated.cells_at.390min                              : num  647 224 252 716 135 ...
+ $ Healthy.B.cell..subject.N1_stimulated.cells_at.60min                                 : num  566 217 279 659 144 ...
+ $ Healthy.B.cell..subject.N1_stimulated.cells_at.90min                                 : num  584 203 246 625 126 ...
+ $ Healthy.B.cell..subject.N1_stimulated.cells_at.210min                                : num  522 210 241 590 140 ...
+ $ Healthy.B.cell..subject.N1_stimulated.cells_at.390min                                : num  561 210 241 676 138 ...
+ $ Healthy.B.cell..subject.N2_unstimulated.cells_at.60min                               : num  458 216 259 516 136 ...
+ $ Healthy.B.cell..subject.N2_unstimulated.cells_at.90min                               : num  570 224 264 636 137 ...
+ $ Healthy.B.cell..subject.N2_unstimulated.cells_at.210min                              : num  573 216 255 574 141 ...
+ $ Healthy.B.cell..subject.N2_unstimulated.cells_at.390min                              : num  583 224 253 612 122 ...
+ $ Healthy.B.cell..subject.N2_stimulated.cells_at.60min                                 : num  602 229 294 686 149 ...
+ $ Healthy.B.cell..subject.N2_stimulated.cells_at.90min                                 : num  539 224 290 670 139 ...
+ $ Healthy.B.cell..subject.N2_stimulated.cells_at.210min                                : num  531 220 261 585 140 ...
+ $ Healthy.B.cell..subject.N2_stimulated.cells_at.390min                                : num  570 219 250 568 128 ...
+ $ Healthy.B.cell..subject.N3_unstimulated.cells_at.60min                               : num  560 250 250 609 149 ...
+ $ Healthy.B.cell..subject.N3_unstimulated.cells_at.90min                               : num  632 240 245 657 146 ...
+ $ Healthy.B.cell..subject.N3_unstimulated.cells_at.210min                              : num  651 248 255 723 128 ...
+ $ Healthy.B.cell..subject.N3_unstimulated.cells_at.390min                              : num  626 235 240 677 140 ...
+ $ Healthy.B.cell..subject.N3_stimulated.cells_at.60min                                 : num  555 251 252 620 139 ...
+ $ Healthy.B.cell..subject.N3_stimulated.cells_at.90min                                 : num  605 247 242 715 127 ...
+ $ Healthy.B.cell..subject.N3_stimulated.cells_at.210min                                : num  449 227 236 479 124 ...
+ $ Healthy.B.cell..subject.N3_stimulated.cells_at.390min                                : num  543 229 242 683 134 ...
+ $ Healthy.B.cell..subject.N4_unstimulated.cells_at.60min                               : num  589 255 257 688 147 ...
+ $ Healthy.B.cell..subject.N4_unstimulated.cells_at.90min                               : num  614 244 243 607 137 ...
+ $ Healthy.B.cell..subject.N4_unstimulated.cells_at.210min                              : num  611 238 253 691 138 ...
+ $ Healthy.B.cell..subject.N4_unstimulated.cells_at.390min                              : num  601 252 270 711 133 ...
+ $ Healthy.B.cell..subject.N4_stimulated.cells_at.60min                                 : num  586 255 253 637 142 ...
+ $ Healthy.B.cell..subject.N4_stimulated.cells_at.90min                                 : num  582 230 240 672 137 ...
+ $ Healthy.B.cell..subject.N4_stimulated.cells_at.210min                                : num  537 236 255 675 140 ...
+ $ Healthy.B.cell..subject.N4_stimulated.cells_at.390min                                : num  574 240 257 656 141 ...
+ $ Healthy.B.cell..subject.N5_unstimulated.cells_at.60min                               : num  525 241 268 629 149 ...
+ $ Healthy.B.cell..subject.N5_unstimulated.cells_at.90min                               : num  560 240 284 710 154 ...
+ $ Healthy.B.cell..subject.N5_unstimulated.cells_at.210min                              : num  604 255 256 673 141 ...
+ $ Healthy.B.cell..subject.N5_unstimulated.cells_at.390min                              : num  568 235 258 642 131 ...
+ $ Healthy.B.cell..subject.N5_stimulated.cells_at.60min                                 : num  560 250 272 699 150 ...
+ $ Healthy.B.cell..subject.N5_stimulated.cells_at.90min                                 : num  549 226 259 687 140 ...
+ $ Healthy.B.cell..subject.N5_stimulated.cells_at.210min                                : num  563 231 280 683 146 ...
+ $ Healthy.B.cell..subject.N5_stimulated.cells_at.390min                                : num  592 248 264 741 157 ...
+ $ Healthy.B.cell..subject.N6_unstimulated.cells_at.60min                               : num  627 243 268 680 140 ...
+ $ Healthy.B.cell..subject.N6_unstimulated.cells_at.90min                               : num  620 237 278 729 139 ...
+ $ Healthy.B.cell..subject.N6_unstimulated.cells_at.210min                              : num  619 233 264 689 142 ...
+ $ Healthy.B.cell..subject.N6_unstimulated.cells_at.390min                              : num  553 240 265 749 144 ...
+ $ Healthy.B.cell..subject.N6_stimulated.cells_at.60min                                 : num  576 251 279 678 142 ...
+ $ Healthy.B.cell..subject.N6_stimulated.cells_at.90min                                 : num  584 227 287 691 154 ...
+ $ Healthy.B.cell..subject.N6_stimulated.cells_at.210min                                : num  593 225 268 719 148 ...
+ $ Healthy.B.cell..subject.N6_stimulated.cells_at.390min                                : num  567 230 243 644 139 ...
+ $ CLL.B.cell..patient.M1_unstimulated.cells_at.60min_.ind.                             : num  648 200 232 629 143 ...
+ $ CLL.B.cell..patient.M1_unstimulated.cells_at.90min_.ind.                             : num  674 217 256 767 154 ...
+ $ CLL.B.cell..patient.M1_unstimulated.cells_at.210min_.ind.                            : num  639 216 240 707 137 ...
+ $ CLL.B.cell..patient.M1_unstimulated.cells_at.390min_.ind.                            : num  598 215 235 661 148 ...
+ $ CLL.B.cell..patient.M1_stimulated.cells_at.60min_.ind.                               : num  609 201 234 724 138 ...
+ $ CLL.B.cell..patient.M1_stimulated.cells_at.90min_.ind.                               : num  622 208 236 750 144 ...
+ $ CLL.B.cell..patient.M1_stimulated.cells_at.210min_.ind.                              : num  598 193 231 721 145 ...
+ $ CLL.B.cell..patient.M1_stimulated.cells_at.390min_.ind.                              : num  674 203 228 696 144 ...
+ $ CLL.B.cell..patient.M4_unstimulated.cells_at.60min_.ind.                             : num  613 202 256 694 200 ...
+ $ CLL.B.cell..patient.M4_unstimulated.cells_at.90min_.ind.                             : num  533 204 275 641 152 ...
+ $ CLL.B.cell..patient.M4_unstimulated.cells_at.210min_.ind.                            : num  586 194 269 616 148 ...
+ $ CLL.B.cell..patient.M4_unstimulated.cells_at.390min_.ind.                            : num  668 229 322 841 155 ...
+ $ CLL.B.cell..patient.M4_stimulated.cells_at.60min_.ind.                               : num  560 201 225 676 153 ...
+ $ CLL.B.cell..patient.M4_stimulated.cells_at.90min_.ind.                               : num  624 200 262 661 142 ...
+ $ CLL.B.cell..patient.M4_stimulated.cells_at.210min_.ind.                              : num  542 229 318 703 153 ...
+ $ CLL.B.cell..patient.M4_stimulated.cells_at.390min_.ind.                              : num  645 210 291 812 152 ...
+ $ CLL.B.cell..patient.M5_unstimulated.cells_at.60min_.ind.                             : num  525 205 261 679 146 ...
+ $ CLL.B.cell..patient.M5_unstimulated.cells_at.90min_.ind.                             : num  619 207 279 791 142 ...
+ $ CLL.B.cell..patient.M5_unstimulated.cells_at.210min_.ind.                            : num  575 224 270 802 146 ...
+ $ CLL.B.cell..patient.M5_unstimulated.cells_at.390min_.ind.                            : num  536 201 272 625 140 ...
+ $ CLL.B.cell..patient.M5_stimulated.cells_at.60min_.ind.                               : num  605 206 292 829 148 ...
+ $ CLL.B.cell..patient.M5_stimulated.cells_at.90min_.ind.                               : num  542 191 255 698 143 ...
+ $ CLL.B.cell..patient.M5_stimulated.cells_at.210min_.ind.                              : num  510 200 267 692 145 ...
+ $ CLL.B.cell..patient.M5_stimulated.cells_at.390min_.ind.                              : num  584 234 263 689 143 ...
+ $ CLL.B.cell..patient.M6_unstimulated.cells_at.60min_.ind.                             : num  542 209 268 682 159 ...
+ $ CLL.B.cell..patient.M6_unstimulated.cells_at.90min_.ind.                             : num  552 208 246 618 139 ...
+ $ CLL.B.cell..patient.M6_unstimulated.cells_at.210min_.ind.                            : num  636 198 239 692 138 ...
+ $ CLL.B.cell..patient.M6_unstimulated.cells_at.390min_.ind.                            : num  604 204 231 603 144 ...
+ $ CLL.B.cell..patient.M6_stimulated.cells_at.60min_.ind.                               : num  567 199 277 686 139 ...
+ $ CLL.B.cell..patient.M6_stimulated.cells_at.90min_.ind.                               : num  573 205 234 593 141 ...
+ $ CLL.B.cell..patient.M6_stimulated.cells_at.210min_.ind.                              : num  652 203 234 577 147 ...
+ $ CLL.B.cell..patient.M6_stimulated.cells_at.390min_.ind.                              : num  506 197 252 598 141 ...
+ $ CLL.B.cell..patient.M7_unstimulated.cells_at.60min_.ind.                             : num  584 202 229 751 134 ...
+ $ CLL.B.cell..patient.M7_unstimulated.cells_at.90min_.ind.                             : num  561 197 230 778 128 ...
+ $ CLL.B.cell..patient.M7_unstimulated.cells_at.210min_.ind.                            : num  570 210 235 713 128 ...
+ $ CLL.B.cell..patient.M7_unstimulated.cells_at.390min_.ind.                            : num  595 210 228 647 126 ...
+ $ CLL.B.cell..patient.M7_stimulated.cells_at.60min_.ind.                               : num  528 187 218 591 134 ...
+ $ CLL.B.cell..patient.M7_stimulated.cells_at.90min_.ind.                               : num  527 195 217 614 126 ...
+ $ CLL.B.cell..patient.M7_stimulated.cells_at.210min_.ind.                              : num  653 216 220 737 130 ...
+ $ CLL.B.cell..patient.M7_stimulated.cells_at.390min_.ind.                              : num  459 211 206 606 140 ...
+ $ CLL.B.cell..patient.M8_unstimulated.cells_at.60min_.ind.                             : num  503 202 276 621 134 ...
+ $ CLL.B.cell..patient.M8_unstimulated.cells_at.90min_.ind.                             : num  595 207 303 803 141 ...
+ $ CLL.B.cell..patient.M8_unstimulated.cells_at.210min_.ind.                            : num  632 200 265 741 143 ...
+ $ CLL.B.cell..patient.M8_unstimulated.cells_at.390min_.ind.                            : num  740 201 269 813 141 ...
+ $ CLL.B.cell..patient.M8_stimulated.cells_at.60min_.ind.                               : num  493 192 301 677 132 ...
+ $ CLL.B.cell..patient.M8_stimulated.cells_at.90min_.ind.                               : num  671 209 269 708 137 ...
+ $ CLL.B.cell..patient.M8_stimulated.cells_at.210min_.ind.                              : num  721 213 259 848 143 ...
+ $ CLL.B.cell..patient.M8_stimulated.cells_at.390min_.ind.                              : num  658 206 293 725 134 ...
+ $ CLL.B.cell..patient.M2_unstimulated.cells_at.60min_.agg.                             : num  701 216 733 790 143 ...
+  [list output truncated]
+> 
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("CLL", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("CascadeFinit")
+> ### * CascadeFinit
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: CascadeFinit
+> ### Title: Create initial F matrices for cascade networks inference.
+> ### Aliases: CascadeFinit
+> ### Keywords: models
+> 
+> ### ** Examples
+> 
+> CascadeFinit(3,2)
+, , 1
+
+     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]    0    0    0
+[3,]    0    0    0
+
+, , 2
+
+     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]    1    0    0
+[3,]    1    1    0
+
+, , 3
+
+     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]    0    0    0
+[3,]    0    0    0
+
+, , 4
+
+     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]    0    0    0
+[3,]    0    0    0
+
+> CascadeFinit(4,3)
+, , 1
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+, , 2
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    1    0    0    0
+[3,]    1    1    0    0
+[4,]    1    1    1    0
+
+, , 3
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    1    0    0    0
+[3,]    1    1    0    0
+[4,]    1    1    1    0
+
+, , 4
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+, , 5
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+, , 6
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    1    0    0    0
+[3,]    1    1    0    0
+[4,]    1    1    1    0
+
+, , 7
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+, , 8
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+, , 9
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+> plotF(CascadeFinit(4,3),choice = "F")
+> CascadeFinit(3,2,low.trig=FALSE)
+, , 1
+
+     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]    0    0    0
+[3,]    0    0    0
+
+, , 2
+
+     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]    1    0    0
+[3,]    0    1    0
+
+, , 3
+
+     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]    0    0    0
+[3,]    0    0    0
+
+, , 4
+
+     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]    0    0    0
+[3,]    0    0    0
+
+> CascadeFinit(4,3,low.trig=FALSE)
+, , 1
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+, , 2
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    1    0    0    0
+[3,]    0    1    0    0
+[4,]    0    0    1    0
+
+, , 3
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    1    0    0    0
+[3,]    0    1    0    0
+[4,]    0    0    1    0
+
+, , 4
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+, , 5
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+, , 6
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    1    0    0    0
+[3,]    0    1    0    0
+[4,]    0    0    1    0
+
+, , 7
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+, , 8
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+, , 9
+
+     [,1] [,2] [,3] [,4]
+[1,]    0    0    0    0
+[2,]    0    0    0    0
+[3,]    0    0    0    0
+[4,]    0    0    0    0
+
+> plotF(CascadeFinit(4,3,low.trig=FALSE),choice = "F")
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("CascadeFinit", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("CascadeFshape")
+> ### * CascadeFshape
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: CascadeFshape
+> ### Title: Create F matrices shaped for cascade networks inference.
+> ### Aliases: CascadeFshape
+> ### Keywords: models
+> 
+> ### ** Examples
+> 
+> CascadeFshape(3,2)
+, , 1
+
+     [,1] [,2] [,3]
+[1,] "0"  "0"  "0" 
+[2,] "0"  "0"  "0" 
+[3,] "0"  "0"  "0" 
+
+, , 2
+
+     [,1] [,2] [,3]
+[1,] "0"  "0"  "0" 
+[2,] "a1" "0"  "0" 
+[3,] "a2" "a1" "0" 
+
+, , 3
+
+     [,1] [,2] [,3]
+[1,] "0"  "0"  "0" 
+[2,] "0"  "0"  "0" 
+[3,] "0"  "0"  "0" 
+
+, , 4
+
+     [,1] [,2] [,3]
+[1,] "0"  "0"  "0" 
+[2,] "0"  "0"  "0" 
+[3,] "0"  "0"  "0" 
+
+> plotF(CascadeFshape(3,2),choice = "Fshape")
+> CascadeFshape(4,3)
+, , 1
+
+     [,1] [,2] [,3] [,4]
+[1,] "0"  "0"  "0"  "0" 
+[2,] "0"  "0"  "0"  "0" 
+[3,] "0"  "0"  "0"  "0" 
+[4,] "0"  "0"  "0"  "0" 
+
+, , 2
+
+     [,1] [,2] [,3] [,4]
+[1,] "0"  "0"  "0"  "0" 
+[2,] "a1" "0"  "0"  "0" 
+[3,] "a2" "a1" "0"  "0" 
+[4,] "a3" "a2" "a1" "0" 
+
+, , 3
+
+     [,1] [,2] [,3] [,4]
+[1,] "0"  "0"  "0"  "0" 
+[2,] "a1" "0"  "0"  "0" 
+[3,] "a2" "a1" "0"  "0" 
+[4,] "a3" "a2" "a1" "0" 
+
+, , 4
+
+     [,1] [,2] [,3] [,4]
+[1,] "0"  "0"  "0"  "0" 
+[2,] "0"  "0"  "0"  "0" 
+[3,] "0"  "0"  "0"  "0" 
+[4,] "0"  "0"  "0"  "0" 
+
+, , 5
+
+     [,1] [,2] [,3] [,4]
+[1,] "0"  "0"  "0"  "0" 
+[2,] "0"  "0"  "0"  "0" 
+[3,] "0"  "0"  "0"  "0" 
+[4,] "0"  "0"  "0"  "0" 
+
+, , 6
+
+     [,1] [,2] [,3] [,4]
+[1,] "0"  "0"  "0"  "0" 
+[2,] "a1" "0"  "0"  "0" 
+[3,] "a2" "a1" "0"  "0" 
+[4,] "a3" "a2" "a1" "0" 
+
+, , 7
+
+     [,1] [,2] [,3] [,4]
+[1,] "0"  "0"  "0"  "0" 
+[2,] "0"  "0"  "0"  "0" 
+[3,] "0"  "0"  "0"  "0" 
+[4,] "0"  "0"  "0"  "0" 
+
+, , 8
+
+     [,1] [,2] [,3] [,4]
+[1,] "0"  "0"  "0"  "0" 
+[2,] "0"  "0"  "0"  "0" 
+[3,] "0"  "0"  "0"  "0" 
+[4,] "0"  "0"  "0"  "0" 
+
+, , 9
+
+     [,1] [,2] [,3] [,4]
+[1,] "0"  "0"  "0"  "0" 
+[2,] "0"  "0"  "0"  "0" 
+[3,] "0"  "0"  "0"  "0" 
+[4,] "0"  "0"  "0"  "0" 
+
+> plotF(CascadeFshape(4,3),choice = "Fshape")
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("CascadeFshape", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("IndicFinit")
+> ### * IndicFinit
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: IndicFinit
+> ### Title: Create initial F matrices using specific intergroup actions for
+> ###   network inference.
+> ### Aliases: IndicFinit
+> ### Keywords: models
+> 
+> ### ** Examples
+> 
+> IndicFinit(3, 2, matrix(1,2,2)-diag(2))
+, , 1
+
+     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]    0    0    0
+[3,]    0    0    0
+
+, , 2
+
+     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]    1    0    0
+[3,]    1    1    0
+
+, , 3
+
+     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]    1    0    0
+[3,]    1    1    0
+
+, , 4
+
+     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]    0    0    0
+[3,]    0    0    0
+
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("IndicFinit", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("IndicFshape")
+> ### * IndicFshape
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: IndicFshape
+> ### Title: Create F matrices using specific intergroup actions for network
+> ###   inference.
+> ### Aliases: IndicFshape
+> ### Keywords: models
+> 
+> ### ** Examples
+> 
+> IndicFshape(3, 2, matrix(1,2,2)-diag(2))
+, , 1
+
+     [,1] [,2] [,3]
+[1,] "0"  "0"  "0" 
+[2,] "0"  "0"  "0" 
+[3,] "0"  "0"  "0" 
+
+, , 2
+
+     [,1] [,2] [,3]
+[1,] "0"  "0"  "0" 
+[2,] "a1" "0"  "0" 
+[3,] "a2" "a1" "0" 
+
+, , 3
+
+     [,1] [,2] [,3]
+[1,] "0"  "0"  "0" 
+[2,] "a1" "0"  "0" 
+[3,] "a2" "a1" "0" 
+
+, , 4
+
+     [,1] [,2] [,3]
+[1,] "0"  "0"  "0" 
+[2,] "0"  "0"  "0" 
+[3,] "0"  "0"  "0" 
+
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("IndicFshape", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("Selection")
+> ### * Selection
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: Selection
+> ### Title: Selection of genes.
+> ### Aliases: Selection
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(Selection)
+> head(Selection)
+The matrix :
+
+                   US60       US90      US210
+210226_at    0.82417544  0.9166931  0.7310784
+233516_s_at -0.27395188 -2.3695246  0.6511830
+202081_at    0.60477249  0.6599672 -0.1884742
+236719_at   -2.07284086 -0.3123747  0.1792494
+236019_at   -0.08175065 -0.3699708 -0.4315901
+1563563_at  -1.44513486  1.6869516 -0.4297297
+...
+
+Vector of names :
+[1] "210226_at"   "233516_s_at" "202081_at"   "236719_at"   "236019_at"  
+[6] "1563563_at" 
+...Vector of geneID :
+[1] "210226_at"   "233516_s_at" "202081_at"   "236719_at"   "236019_at"  
+[6] "1563563_at" 
+...
+Vector of group :
+[1] 1 2 1 1 1 1
+...
+Vector of starting time :
+[1] 1 2 1 1 1 1
+...
+Vector of time :
+[1]  60  90 210 390
+
+Number of subject :
+[1] 6
+> summary(Selection,3)
+Loading required package: cluster
+      US60               US90               US210             US390         
+ Min.   :-2.76841   Min.   :-2.369525   Min.   :-1.6147   Min.   :-2.60480  
+ 1st Qu.:-0.18028   1st Qu.:-0.181425   1st Qu.: 0.1985   1st Qu.:-0.03884  
+ Median : 0.05675   Median :-0.001924   Median : 0.9886   Median : 0.31766  
+ Mean   : 0.05764   Mean   : 0.278275   Mean   : 0.9611   Mean   : 0.26428  
+ 3rd Qu.: 0.22438   3rd Qu.: 0.664063   3rd Qu.: 1.6918   3rd Qu.: 0.57117  
+ Max.   : 2.86440   Max.   : 4.284675   Max.   : 3.6727   Max.   : 2.54704  
+      US60              US90              US210              US390         
+ Min.   :-2.7932   Min.   :-2.49245   Min.   :-1.21606   Min.   :-1.74407  
+ 1st Qu.:-0.5547   1st Qu.:-0.01944   1st Qu.: 0.07966   1st Qu.:-0.26548  
+ Median :-0.3089   Median : 0.14977   Median : 0.72019   Median : 0.03616  
+ Mean   :-0.2917   Mean   : 0.33720   Mean   : 0.73063   Mean   : 0.06753  
+ 3rd Qu.:-0.1725   3rd Qu.: 0.48744   3rd Qu.: 1.26164   3rd Qu.: 0.32496  
+ Max.   : 2.0267   Max.   : 3.37588   Max.   : 3.87950   Max.   : 2.83321  
+      US60               US90             US210             US390        
+ Min.   :-2.94444   Min.   :-0.9721   Min.   :-1.9349   Min.   :-3.8418  
+ 1st Qu.:-0.23136   1st Qu.:-0.1027   1st Qu.: 0.3254   1st Qu.:-0.1592  
+ Median :-0.04761   Median : 0.2548   Median : 1.2512   Median : 0.1538  
+ Mean   : 0.22115   Mean   : 0.6479   Mean   : 1.0485   Mean   : 0.1219  
+ 3rd Qu.: 0.33157   3rd Qu.: 1.0737   3rd Qu.: 1.8513   3rd Qu.: 0.6268  
+ Max.   : 3.31723   Max.   : 4.3604   Max.   : 4.4860   Max.   : 1.9886  
+      US60               US90              US210              US390         
+ Min.   :-2.85438   Min.   :-0.90355   Min.   :-0.83324   Min.   :-0.96834  
+ 1st Qu.:-0.06031   1st Qu.:-0.08464   1st Qu.: 0.07605   1st Qu.: 0.01569  
+ Median : 0.03601   Median : 0.17135   Median : 0.52176   Median : 0.17370  
+ Mean   : 0.14593   Mean   : 0.41929   Mean   : 0.62446   Mean   : 0.23854  
+ 3rd Qu.: 0.24568   3rd Qu.: 0.75565   3rd Qu.: 1.07821   3rd Qu.: 0.45189  
+ Max.   : 1.82903   Max.   : 3.60640   Max.   : 2.27744   Max.   : 1.90880  
+      US60               US90              US210             US390        
+ Min.   :-1.38002   Min.   :-2.94444   Min.   :-1.0271   Min.   :-1.3636  
+ 1st Qu.:-0.19910   1st Qu.:-0.01758   1st Qu.: 0.1459   1st Qu.:-0.1386  
+ Median :-0.07962   Median : 0.16080   Median : 0.7430   Median : 0.1492  
+ Mean   : 0.12972   Mean   : 0.37123   Mean   : 0.7972   Mean   : 0.1271  
+ 3rd Qu.: 0.26113   3rd Qu.: 0.61933   3rd Qu.: 1.3922   3rd Qu.: 0.4825  
+ Max.   : 2.31074   Max.   : 3.24454   Max.   : 3.6213   Max.   : 1.5979  
+      US60               US90              US210             US390         
+ Min.   :-1.79176   Min.   :-3.20791   Min.   :-1.4716   Min.   :-1.95883  
+ 1st Qu.:-0.09822   1st Qu.:-0.03963   1st Qu.: 0.1292   1st Qu.:-0.04786  
+ Median : 0.03378   Median : 0.28261   Median : 0.8392   Median : 0.22472  
+ Mean   : 0.27978   Mean   : 0.52529   Mean   : 0.7903   Mean   : 0.21171  
+ 3rd Qu.: 0.33548   3rd Qu.: 1.03256   3rd Qu.: 1.4416   3rd Qu.: 0.42511  
+ Max.   : 3.16035   Max.   : 3.19975   Max.   : 2.8027   Max.   : 2.14903  
+Loading required package: lattice
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("Selection", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+
+detaching ‘package:lattice’, ‘package:cluster’
+
+> nameEx("analyze_network-methods")
+> ### * analyze_network-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: analyze_network
+> ### Title: Analysing the network
+> ### Aliases: analyze_network analyze_network-methods
+> ###   analyze_network,network-method
+> ### Keywords: methods
+> 
+> ### ** Examples
+> 
+> data(network)
+> analyze_network(network,nv=0)
+Loading required package: tnet
+Loading required package: igraph
+
+Attaching package: ‘igraph’
+
+The following object is masked from ‘package:Patterns’:
+
+    compare
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Loading required package: survival
+tnet: Analysis of Weighted, Two-mode, and Longitudinal networks.
+Type ?tnet for help.
+    node betweenness degree      output  closeness
+1      1         198     45 0.469801103 115.903327
+2      2          25     72 0.638928759  83.063082
+3      3           4     45 0.650350027  87.061645
+4      4         246     56 1.568438860 163.897602
+5      5         296     29 0.800405535 147.300670
+6      6          22     50 0.631385634  84.830824
+7      7         105     40 0.510093629  79.058898
+8      8           0     60 0.831951787 101.310557
+9      9         773     71 2.467857820 167.135446
+10    10         888     73 3.752542041 237.684494
+11    11          21     57 1.216543820 181.215213
+12    12         112     56 1.204054063 125.028827
+13    13         407     58 1.036650559 152.029315
+14    14           3     62 0.692952694  85.174289
+15    15        1039     56 3.065983757 304.121187
+16    16         742     74 3.235406870 236.643385
+17    17         418     50 2.008931860 164.416975
+18    18         809     43 2.206203179 179.319850
+19    19           0     51 0.356455321  59.224482
+20    20           0     63 0.549960963  75.273850
+21    21           0      1 0.004475704  11.784278
+22    22          20     12 0.326518633  98.918177
+23    23           0      4 0.006311850  13.858663
+24    24           0      0 0.000000000   0.000000
+25    25           0      2 0.003019120   7.967493
+26    26         186     17 0.095327608  58.848089
+27    27           0     33 0.103882029  67.490555
+28    28           0      0 0.000000000   0.000000
+29    29           0      4 0.056228783  44.016148
+30    30           5     10 0.080530134  52.944496
+31    31           0      1 0.001812159   6.022486
+32    32           0     14 0.074665588  44.828983
+33    33           5      8 0.062549930  62.001987
+34    34           0      8 0.059090818  56.083944
+35    35           1     12 0.142198183  57.742597
+36    36           0      0 0.000000000   0.000000
+37    37           8     22 0.147872753  57.477842
+38    38          21     14 0.223497302  79.456869
+39    39          34     26 0.235247646  79.539121
+40    40         163     17 0.218449765  95.667232
+41    41          11     31 0.211050541  47.312104
+42    42           0     22 0.147475862  54.350118
+43    43         157     25 0.444488091 139.014044
+44    44         176     54 1.026959490 113.149468
+45    45           0      8 0.067746335  19.094448
+46    46          88     31 1.090647718  94.468427
+47    47          52     28 0.636401761  90.551082
+48    48         213     35 1.215864042 157.955686
+49    49        2253     28 2.158005039 381.339329
+50    50         207     30 0.593429905 124.064291
+51    51          95     17 0.270615619  95.422431
+52    52          28     14 0.188128159  76.876138
+53    53         193     38 0.582344605 159.650711
+54    54         235     39 1.300831276 198.432375
+55    55           0     14 0.178093932  56.611717
+56    56           0      2 0.003466005   9.857721
+57    57         209     44 1.137639574 158.013782
+58    58          10     10 0.252058512  71.745032
+59    59           0     11 0.099769365  71.996771
+60    60         131     26 0.570673015  87.123197
+61    61         157     13 0.389970191 145.794189
+62    62           8     13 0.115549109  83.426632
+63    63         237     22 0.602373931 180.845454
+64    64        1148     56 1.772280889 216.238265
+65    65         137     18 0.332703885 123.852149
+66    66         100     15 0.105998249  50.620088
+67    67        1543     79 6.239688253 304.769647
+68    68          56     24 0.659225438  94.288606
+69    69        1158     72 7.977272772 392.362109
+70    70         666     70 4.786608465 261.311430
+71    71         386     36 1.107687884 140.438332
+72    72           0     22 0.206933486  84.004642
+73    73           0     14 0.154691176  63.244716
+74    74         211     15 0.374471030 135.022274
+75    75           0      9 0.048956963  57.009683
+76    76         478     47 1.518954643 155.919879
+77    77          16     30 0.190685214  85.305500
+78    78           9     32 0.496323653  79.570820
+79    79         226     33 0.777078748 138.700507
+80    80          26      6 0.159098923  93.626341
+81    81         294     80 4.015011946 203.802868
+82    82         323     25 0.653477617 155.237365
+83    83         133     14 0.411038467 151.457804
+84    84           2     43 0.497062676 107.920114
+85    85           0      8 0.102135477  67.458958
+86    86         111     37 0.669546198 109.378041
+87    87           4     12 0.106633622  64.731765
+88    88         234     61 1.366375255 135.747187
+89    89          27     26 0.496320464 131.725455
+90    90          83     34 0.945657952 106.538998
+91    91           0      5 0.014670192  12.148342
+92    92         191     22 0.219192961  93.349440
+93    93         208     24 0.278074176 158.180808
+94    94         163     32 0.736480926 147.682661
+95    95          13     10 0.206570745 115.393984
+96    96        1204     80 7.977096594 378.317855
+97    97           1     20 0.221063915 100.834754
+98    98         185     52 0.848957484 102.243228
+99    99           0     32 0.168140838  65.515421
+100  100         486     63 2.619433306 157.529780
+101  101         114     31 0.703401123 236.998887
+102  102         434     58 1.549953727 173.419637
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("analyze_network-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+
+detaching ‘package:tnet’, ‘package:survival’, ‘package:igraph’
+
+> nameEx("as.micro_array")
+> ### * as.micro_array
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: as.micro_array
+> ### Title: Coerce a matrix into a micro_array object.
+> ### Aliases: as.micro_array
+> 
+> ### ** Examples
+> 
+> if(require(CascadeData)){
++ 	data(micro_US, package="CascadeData")
++ 	micro_US<-as.micro_array(micro_US[1:100,],time=c(60,90,210,390),subject=6)
++ 	plot(micro_US)
++ 	}
+Loading required package: CascadeData
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("as.micro_array", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+
+detaching ‘package:CascadeData’
+
+> nameEx("clustExploration-methods")
+> ### * clustExploration-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: clustExploration
+> ### Title: A function to explore a dataset and cluster its rows.
+> ### Aliases: clustExploration clustExploration-methods
+> ###   clustExploration,micro_array-method
+> ### Keywords: cluster
+> 
+> ### ** Examples
+> 
+> library(Patterns)
+> if(require(CascadeData)){
++ data(micro_S, package="CascadeData")
++ D<-Patterns::as.micro_array(micro_S[1:100,],1:4,6)
++ a<-clustExploration(D)
++ a
++ }
+Loading required package: CascadeData
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colnames, dirname, do.call,
+    duplicated, eval, evalq, get, grep, grepl, intersect, is.unsorted,
+    lapply, mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+    pmin.int, rank, rbind, rownames, sapply, setdiff, sort, table,
+    tapply, union, unique, unsplit, which, which.max, which.min
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘DynDoc’
+
+The following object is masked from ‘package:BiocGenerics’:
+
+    path
+
+           name cluster maj.vote.index
+1     1007_s_at       8              3
+2       1053_at       5              2
+3        117_at       8              2
+4        121_at       2              2
+5     1255_g_at       8              2
+6       1294_at       3              3
+7       1316_at       4              2
+8       1320_at       3              2
+9     1405_i_at       1              2
+10      1431_at       9              2
+11      1438_at       4              2
+12      1487_at       4              3
+13    1494_f_at       8              3
+14    1598_g_at       9              3
+15    160020_at       8              2
+16      1729_at       1              1
+17      1773_at       1              1
+18       177_at       8              2
+19       179_at       9              2
+20      1861_at       6              3
+21  200000_s_at       1              2
+22    200001_at       2              2
+23    200002_at       8              2
+24  200003_s_at       6              2
+25    200004_at       5              2
+26    200005_at       1              3
+27    200006_at       4              4
+28    200007_at       2              2
+29  200008_s_at       1              3
+30    200009_at       1              3
+31    200010_at       3              3
+32  200011_s_at       4              3
+33  200012_x_at       8              3
+34    200013_at       2              2
+35  200014_s_at       4              2
+36  200015_s_at       5              3
+37  200016_x_at       4              3
+38    200017_at       8              3
+39    200018_at       2              2
+40  200019_s_at       5              2
+41    200020_at       1              2
+42    200021_at       5              2
+43    200022_at       8              2
+44  200023_s_at       5              3
+45    200024_at       5              2
+46  200025_s_at       8              2
+47    200026_at       8              2
+48    200027_at       1              3
+49  200028_s_at       4              5
+50    200029_at       6              2
+51  200030_s_at       9              2
+52  200031_s_at       3              3
+53  200032_s_at       2              2
+54    200033_at       3              3
+55  200034_s_at       8              3
+56    200035_at       4              3
+57  200036_s_at       2              1
+58  200037_s_at       4              4
+59  200038_s_at       8              2
+60  200039_s_at       1              2
+61    200040_at       7              2
+62  200041_s_at       1              3
+63    200042_at       4              4
+64    200043_at       4              2
+65    200044_at       6              2
+66    200045_at       7              3
+67    200046_at       1              2
+68  200047_s_at       6              3
+69  200048_s_at       4              2
+70    200049_at       2              2
+71    200050_at       1              2
+72    200051_at       2              2
+73  200052_s_at       1              3
+74    200053_at       6              2
+75    200054_at       7              4
+76    200055_at       1              3
+77  200056_s_at       7              2
+78  200057_s_at       7              2
+79  200058_s_at       7              2
+80  200059_s_at       1              1
+81  200060_s_at       1              2
+82  200061_s_at       8              4
+83  200062_s_at       5              3
+84  200063_s_at       1              3
+85    200064_at       1              4
+86  200065_s_at       3              2
+87    200066_at       7              2
+88  200067_x_at       5              4
+89  200068_s_at       4              3
+90    200069_at       5              2
+91    200070_at       3              3
+92    200071_at       7              2
+93  200072_s_at       1              3
+94  200073_s_at       7              2
+95  200074_s_at       4              2
+96  200075_s_at       7              4
+97  200076_s_at       1              2
+98  200077_s_at       5              4
+99  200078_s_at       7              3
+100 200079_s_at       1              3
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("clustExploration-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+
+detaching ‘package:Mfuzz’, ‘package:DynDoc’, ‘package:widgetTools’,
+  ‘package:tcltk’, ‘package:e1071’, ‘package:Biobase’,
+  ‘package:BiocGenerics’, ‘package:parallel’, ‘package:CascadeData’
+
+> nameEx("clustInference-methods")
+> ### * clustInference-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: clustInference
+> ### Title: A function to explore a dataset and cluster its rows.
+> ### Aliases: clustInference clustInference-methods
+> ###   clustInference,micro_array,numeric-method
+> ### Keywords: cluster
+> 
+> ### ** Examples
+> 
+> library(Patterns)
+> if(require(CascadeData)){
++ data(micro_S, package="CascadeData")
++ D<-Patterns::as.micro_array(micro_S[1:100,],1:4,6)
++ b<-clustInference(D,0.5)
++ b
++ }
+Loading required package: CascadeData
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colnames, dirname, do.call,
+    duplicated, eval, evalq, get, grep, grepl, intersect, is.unsorted,
+    lapply, mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+    pmin.int, rank, rbind, rownames, sapply, setdiff, sort, table,
+    tapply, union, unique, unsplit, which, which.max, which.min
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+[[1]]
+           name cluster maj.vote.index
+1     1007_s_at       5              4
+2       1053_at       5              3
+3        117_at       4              2
+4        121_at       4              3
+5     1255_g_at       5              3
+6       1294_at       3              4
+7       1316_at       1              2
+8       1320_at       2              2
+9     1405_i_at       1              4
+10      1431_at       5              2
+11      1438_at       3              2
+12      1487_at       1              4
+13    1494_f_at       5              3
+14    1598_g_at       4              3
+15    160020_at       4              2
+16      1729_at       3              2
+17      1773_at       2              2
+18       177_at       5              2
+19       179_at       4              2
+20      1861_at       2              2
+21  200000_s_at       1              3
+22    200001_at       1              3
+23    200002_at       4              2
+24  200003_s_at       1              2
+25    200004_at       3              3
+26    200005_at       1              2
+27    200006_at       1              6
+28    200007_at       3              2
+29  200008_s_at       2              4
+30    200009_at       2              5
+31    200010_at       3              3
+32  200011_s_at       1              3
+33  200012_x_at       5              4
+34    200013_at       1              2
+35  200014_s_at       1              2
+36  200015_s_at       3              4
+37  200016_x_at       1              3
+38    200017_at       5              3
+39    200018_at       4              4
+40  200019_s_at       3              4
+41    200020_at       2              4
+42    200021_at       3              3
+43    200022_at       5              2
+44  200023_s_at       3              3
+45    200024_at       3              2
+46  200025_s_at       3              2
+47    200026_at       5              2
+48    200027_at       2              5
+49  200028_s_at       1              5
+50    200029_at       4              2
+51  200030_s_at       1              2
+52  200031_s_at       3              3
+53  200032_s_at       2              3
+54    200033_at       3              3
+55  200034_s_at       5              3
+56    200035_at       1              4
+57  200036_s_at       3              3
+58  200037_s_at       1              5
+59  200038_s_at       5              3
+60  200039_s_at       1              3
+61    200040_at       2              2
+62  200041_s_at       1              5
+63    200042_at       1              4
+64    200043_at       1              2
+65    200044_at       1              2
+66    200045_at       2              5
+67    200046_at       1              3
+68  200047_s_at       1              3
+69  200048_s_at       1              3
+70    200049_at       4              3
+71    200050_at       1              3
+72    200051_at       3              2
+73  200052_s_at       2              3
+74    200053_at       2              2
+75    200054_at       2              4
+76    200055_at       1              2
+77  200056_s_at       3              2
+78  200057_s_at       1              2
+79  200058_s_at       2              2
+80  200059_s_at       1              2
+81  200060_s_at       2              3
+82  200061_s_at       5              4
+83  200062_s_at       3              3
+84  200063_s_at       1              6
+85    200064_at       1              6
+86  200065_s_at       3              3
+87    200066_at       2              2
+88  200067_x_at       3              3
+89  200068_s_at       1              4
+90    200069_at       3              3
+91    200070_at       2              3
+92    200071_at       2              3
+93  200072_s_at       1              3
+94  200073_s_at       2              3
+95  200074_s_at       4              3
+96  200075_s_at       2              4
+97  200076_s_at       1              2
+98  200077_s_at       3              4
+99  200078_s_at       2              4
+100 200079_s_at       1              5
+
+$prop.matrix
+             [,1]       [,2]       [,3]       [,4]       [,5]       [,6]
+  [1,] 0.31402243 0.40518195 0.32382411 0.35807456 0.15364922 0.08164456
+  [2,] 0.18056958 0.17423078 0.19681887 0.53601426 0.35995313 0.51153313
+  [3,] 0.09739798 0.49329374 0.26114610 0.10798411 0.11624365 0.13795959
+  [4,] 0.23374627 0.41314832 0.34677398 0.15472940 0.37132168 0.20970192
+  [5,] 0.25008874 0.37770224 0.32518846 0.52426947 0.10767954 0.12926029
+  [6,] 0.64310620 0.31222531 0.08198909 0.11091062 0.64277625 0.52440713
+  [7,] 0.30380428 0.18190888 0.15752345 0.12694900 0.35829642 0.22326269
+  [8,] 0.15886786 0.11106288 0.10537862 0.36917267 0.39426940 0.13406895
+  [9,] 0.35955063 0.70764305 0.14443092 0.41437924 0.39386333 0.10858044
+ [10,] 0.32179818 0.26641208 0.26788449 0.15594456 0.13107566 0.09347095
+ [11,] 0.31957186 0.29833321 0.14227993 0.68287013 0.11876568 0.03511428
+ [12,] 0.58747329 0.55480556 0.75144172 0.10927550 0.25891054 0.47790850
+ [13,] 0.18076379 0.08018609 0.30845727 0.13936513 0.52772627 0.37234788
+ [14,] 0.58339415 0.55237634 0.20190573 0.11585212 0.25823060 0.27085879
+ [15,] 0.32188046 0.27176042 0.19507257 0.11287876 0.11624297 0.17979403
+ [16,] 0.32976187 0.05339067 0.15803592 0.06999504 0.35091146 0.13051033
+ [17,] 0.19552326 0.11597971 0.11258551 0.11148152 0.29304108 0.32879534
+ [18,] 0.13854439 0.48380708 0.20744037 0.48204686 0.10455427 0.10521382
+ [19,] 0.13706988 0.40656156 0.20059530 0.08452181 0.35590181 0.11216414
+ [20,] 0.37229988 0.10794381 0.26745806 0.26184324 0.20529963 0.07994536
+ [21,] 0.43867007 0.17216238 0.55137213 0.40596765 0.12803761 0.12653421
+ [22,] 0.13263930 0.09325291 0.36495797 0.38305579 0.12826186 0.44804721
+ [23,] 0.11754408 0.61903373 0.11386781 0.13099205 0.19545650 0.65839138
+ [24,] 0.10173446 0.12753336 0.12283445 0.26213019 0.35838103 0.12090345
+ [25,] 0.08454761 0.12646352 0.70799017 0.58923945 0.24070586 0.49347036
+ [26,] 0.12393211 0.13125314 0.54489374 0.47261217 0.31199348 0.13291329
+ [27,] 0.56751861 0.60088136 0.44434917 0.74525153 0.64969542 0.51316595
+ [28,] 0.12898480 0.05952364 0.67637473 0.51292662 0.13143088 0.08308800
+ [29,] 0.22186672 0.18554749 0.66096576 0.53319695 0.75455938 0.48889431
+ [30,] 0.33949629 0.37309075 0.68118586 0.43832554 0.69882167 0.41197977
+ [31,] 0.34679084 0.05983995 0.68248109 0.22858327 0.25039296 0.31227800
+ [32,] 0.35928125 0.63968734 0.09044125 0.15966226 0.12869538 0.47183442
+ [33,] 0.49844005 0.12168572 0.27110195 0.42507099 0.34717847 0.32370304
+ [34,] 0.32182719 0.10287343 0.15541308 0.32502126 0.08716266 0.13623943
+ [35,] 0.69829040 0.21095849 0.30657707 0.11379063 0.15030191 0.18816492
+ [36,] 0.28485797 0.13316138 0.63106221 0.52683665 0.55604527 0.63885451
+ [37,] 0.38197576 0.21068627 0.23105750 0.76735110 0.42820337 0.16418201
+ [38,] 0.23912067 0.09770550 0.09097330 0.52020526 0.51212193 0.50719577
+ [39,] 0.29504370 0.60263170 0.11523753 0.11139769 0.44761483 0.51364870
+ [40,] 0.71600394 0.17394149 0.43911478 0.37308432 0.10696133 0.33367791
+ [41,] 0.35239133 0.22878512 0.52353566 0.37700662 0.56980302 0.17511561
+ [42,] 0.16706985 0.46106249 0.12819387 0.38183755 0.07955123 0.31173882
+ [43,] 0.44482370 0.07708004 0.16659753 0.30644521 0.10737993 0.13545638
+ [44,] 0.36010370 0.15421631 0.20234892 0.09010020 0.52556975 0.69453778
+ [45,] 0.10529033 0.07290304 0.32684428 0.12039274 0.04622946 0.69485141
+ [46,] 0.19608734 0.10346230 0.68376148 0.21247436 0.09027503 0.53259098
+ [47,] 0.17231430 0.11481463 0.35016127 0.36645754 0.11270675 0.31404516
+ [48,] 0.28704683 0.41883123 0.72644947 0.76420447 0.70916061 0.35819585
+ [49,] 0.47334015 0.36403040 0.26539713 0.50101823 0.50294244 0.33622511
+ [50,] 0.11185759 0.73765745 0.10819967 0.11516516 0.11644358 0.38448022
+ [51,] 0.13852461 0.11035506 0.39391940 0.34967541 0.15265161 0.12865485
+ [52,] 0.29914557 0.11128839 0.29955295 0.25972403 0.50921388 0.69727821
+ [53,] 0.27562206 0.10484924 0.38889815 0.11631803 0.33610707 0.09271119
+ [54,] 0.37554300 0.07383176 0.45995354 0.27543451 0.19551810 0.48686188
+ [55,] 0.36498820 0.11605295 0.55526167 0.49678644 0.21385950 0.17401052
+ [56,] 0.67052641 0.25952925 0.25006340 0.40556101 0.58212865 0.49896547
+ [57,] 0.40805802 0.05770574 0.27050525 0.05549782 0.11897648 0.28581725
+ [58,] 0.39749448 0.33583834 0.31281520 0.33127057 0.16772264 0.55437135
+ [59,] 0.32519369 0.08756366 0.26803043 0.46425647 0.14461256 0.15634128
+ [60,] 0.69026292 0.53746159 0.22212934 0.08672599 0.19114406 0.36606557
+ [61,] 0.11745315 0.08945292 0.10100480 0.23065431 0.59175403 0.57530899
+ [62,] 0.49364617 0.40550680 0.36143465 0.38506950 0.49757901 0.22722611
+ [63,] 0.63301180 0.28192732 0.24125415 0.75035491 0.71389205 0.53639846
+ [64,] 0.60254201 0.36834244 0.15030195 0.11339072 0.16554076 0.25417615
+ [65,] 0.48801754 0.23465446 0.13228908 0.11719968 0.13379988 0.35537440
+ [66,] 0.47744838 0.47223993 0.32771744 0.24287238 0.46989689 0.42230913
+ [67,] 0.51047092 0.52523499 0.09523980 0.26860365 0.14941861 0.53998910
+ [68,] 0.50559569 0.42823562 0.18534838 0.19839475 0.21865793 0.38675970
+ [69,] 0.65392138 0.37793891 0.25353589 0.28634895 0.15594582 0.54877208
+ [70,] 0.11965526 0.52067234 0.26404696 0.44005738 0.16261573 0.53880412
+ [71,] 0.13282804 0.34912832 0.15757452 0.36266504 0.26234364 0.38917475
+ [72,] 0.07878037 0.05929403 0.06196261 0.14192118 0.34495370 0.42711793
+ [73,] 0.14465407 0.14361988 0.36530007 0.63751611 0.43594351 0.14684082
+ [74,] 0.10756360 0.10128152 0.52423066 0.31763715 0.11385723 0.11169438
+ [75,] 0.73571801 0.11295616 0.74496916 0.49523314 0.58566998 0.21558156
+ [76,] 0.55149615 0.25542917 0.50332569 0.29299383 0.12211011 0.12128180
+ [77,] 0.58179661 0.05214498 0.15293771 0.24986483 0.33554752 0.11050993
+ [78,] 0.39827116 0.12200798 0.16350944 0.16508916 0.31235806 0.13339897
+ [79,] 0.13398034 0.12488424 0.59625736 0.20725182 0.45258004 0.09299592
+ [80,] 0.61603977 0.12173316 0.18629437 0.20697483 0.31529412 0.13755966
+ [81,] 0.20132807 0.07813517 0.10601451 0.54463834 0.36976800 0.71345825
+ [82,] 0.41179213 0.06205872 0.22771086 0.39064560 0.56445705 0.51820443
+ [83,] 0.50564677 0.06926954 0.63848611 0.20837465 0.28031141 0.32532450
+ [84,] 0.75117716 0.49756314 0.77071520 0.65095476 0.65825581 0.59733681
+ [85,] 0.68691081 0.50332972 0.70136398 0.42137581 0.65592091 0.33917582
+ [86,] 0.08456129 0.16371082 0.24012794 0.59668907 0.51119885 0.43191853
+ [87,] 0.45972214 0.07059724 0.14061047 0.30612158 0.25720309 0.11758589
+ [88,] 0.51979839 0.21935563 0.40013912 0.27973079 0.59203945 0.30398874
+ [89,] 0.66380463 0.39179383 0.37793353 0.18356214 0.52320263 0.28701831
+ [90,] 0.19638660 0.08147676 0.55551913 0.08530106 0.26636834 0.46119937
+ [91,] 0.10648594 0.15465335 0.43594043 0.25193461 0.14209197 0.26752910
+ [92,] 0.25215063 0.24242579 0.53250348 0.15575299 0.13822136 0.69218481
+ [93,] 0.54907886 0.34360858 0.12432447 0.11867793 0.13231949 0.32992657
+ [94,] 0.24013672 0.16086176 0.13541393 0.43604826 0.52571106 0.38543936
+ [95,] 0.16534410 0.59864388 0.13899203 0.15438048 0.31038203 0.65305657
+ [96,] 0.71003871 0.38890354 0.71331595 0.62310484 0.18810927 0.22269296
+ [97,] 0.42558576 0.42997120 0.25752214 0.28188575 0.18581360 0.28931772
+ [98,] 0.14727176 0.05304915 0.39684453 0.44501980 0.67389715 0.71041934
+ [99,] 0.45808278 0.69066430 0.74647536 0.10398623 0.49516914 0.20695902
+[100,] 0.64339642 0.33163300 0.56270889 0.37025876 0.32023972 0.46506667
+
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("clustInference-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+
+detaching ‘package:Mfuzz’, ‘package:e1071’, ‘package:Biobase’,
+  ‘package:BiocGenerics’, ‘package:parallel’, ‘package:CascadeData’
+
+> nameEx("compare-methods")
+> ### * compare-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: compare-methods
+> ### Title: Some basic criteria of comparison between actual and inferred
+> ###   network.
+> ### Aliases: compare-methods compare compare,network,network,numeric-method
+> 
+> ### ** Examples
+> 
+> data(simul)
+> 
+> #Comparing true and inferred networks
+> Crit_values=NULL
+> 
+> #Here are the cutoff level tested
+> test.seq<-seq(0,max(abs(Net_inf_PL@network*0.9)),length.out=200)
+> for(u in test.seq){
++ 	Crit_values<-rbind(Crit_values,Patterns::compare(Net,Net_inf_PL,u))
++ }
+> matplot(test.seq,Crit_values,type="l",ylab="Criterion value",xlab="Cutoff level",lwd=2)
+> legend(x="topleft", legend=colnames(Crit_values), lty=1:5,col=1:5,ncol=2,cex=.9)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("compare-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("cutoff-methods")
+> ### * cutoff-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: cutoff
+> ### Title: Choose the best cutoff
+> ### Aliases: cutoff cutoff-methods cutoff,network-method
+> ### Keywords: methods
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("cutoff-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("evolution-methods")
+> ### * evolution-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: evolution
+> ### Title: See the evolution of the network with change of cutoff
+> ### Aliases: evolution evolution-methods evolution,network-method
+> ### Keywords: methods
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("evolution-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("geneNeighborhood-methods")
+> ### * geneNeighborhood-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: geneNeighborhood
+> ### Title: Find the neighborhood of a set of nodes.
+> ### Aliases: geneNeighborhood geneNeighborhood-methods
+> ###   geneNeighborhood,network-method
+> ### Keywords: methods
+> 
+> ### ** Examples
+> 
+> data(Selection)
+> data(infos)
+> #Find probesets for EGR1
+> pbst_EGR1 = infos[infos$hgnc_symbol=="EGR1", "affy_hg_u133_plus_2"]
+> 
+> gene_IDs = infos[match(Selection@name, infos$affy_hg_u133_plus_), "hgnc_symbol"]
+> 
+> data(network)
+> #A nv value can chosen using the cutoff function
+> nv=.11 
+> EGR1<-which(is.element(Selection@name,pbst_EGR1))
+> P<-position(network,nv=nv)
+> 
+> geneNeighborhood(network,targets=EGR1,nv=nv,ini=P,
++ label_v=gene_IDs)
+FALSE[[1]]
+[[1]][[1]]
++ 1/102 vertex, from caf65ef:
+[1] 25
+
+[[1]][[2]]
++ 1/102 vertex, from caf65ef:
+[1] 26
+
+
+[[2]]
+[[2]][[1]]
++ 1/102 vertex, from caf65ef:
+[1] 25
+
+[[2]][[2]]
++ 1/102 vertex, from caf65ef:
+[1] 26
+
+
+[[3]]
+[[3]][[1]]
++ 1/102 vertex, from caf65ef:
+[1] 25
+
+[[3]][[2]]
++ 1/102 vertex, from caf65ef:
+[1] 26
+
+
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("geneNeighborhood-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+
+detaching ‘package:igraph’
+
+> nameEx("genePeakSelection-methods")
+> ### * genePeakSelection-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: genePeakSelection
+> ### Title: Methods for selecting genes
+> ### Aliases: genePeakSelection geneSelection genePeakSelection-methods
+> ###   geneSelection-methods geneSelection,micro_array,numeric-method
+> ###   geneSelection,micro_array,micro_array,numeric-method
+> ###   geneSelection,list,list,numeric-method
+> ###   genePeakSelection,micro_array,numeric-method
+> ### Keywords: methods
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("genePeakSelection-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("gene_expr_simulation")
+> ### * gene_expr_simulation
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: gene_expr_simulation
+> ### Title: Simulates microarray data based on a given network.
+> ### Aliases: gene_expr_simulation gene_expr_simulation-methods
+> ###   gene_expr_simulation,network-method
+> 
+> ### ** Examples
+> 
+> data(simul)
+> set.seed(1)
+> 
+> #We simulate gene expressions according to the network Net
+> Msim<-Patterns::gene_expr_simulation(
++ 	network=Net,
++ 	time_label=rep(1:4,each=25),
++ 	subject=5,
++ 	peak_level=200)
+Loading required package: VGAM
+Loading required package: stats4
+Loading required package: splines
+> head(Msim)
+The matrix :
+
+       log(S/US) : P1T1 log(S/US) : P1T2 log(S/US) : P1T3
+gene 1         86.06709        44.533656       -57.361320
+gene 2       -146.83138       120.514233       -39.892240
+gene 3        228.34653        -3.625970       -60.889866
+gene 4        505.11452        13.929252        -2.786049
+gene 5        -36.57508        -1.828829        46.784308
+gene 6       -486.82335       -91.502323      -173.402124
+...
+
+Vector of names :
+[1] "gene 1" "gene 2" "gene 3" "gene 4" "gene 5" "gene 6"
+...Vector of geneID :
+[1] 0
+...
+Vector of group :
+[1] 1 1 1 1 1 1
+...
+Vector of starting time :
+[1] 0
+...
+Vector of time :
+[1] 1 2 3 4
+
+Number of subject :
+[1] 5
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("gene_expr_simulation", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+
+detaching ‘package:VGAM’, ‘package:splines’, ‘package:stats4’
+
+> nameEx("head-methods")
+> ### * head-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: head
+> ### Title: Overview of a micro_array object
+> ### Aliases: methods head-methods head,ANY-method head,micro_array-method
+> ### Keywords: methods
+> 
+> ### ** Examples
+> 
+>   if(require(CascadeData)){
++ 	data(micro_US)
++ 	micro_US<-as.micro_array(micro_US,time=c(60,90,210,390),subject=6)
++ 	head(micro_US)
++ 	}
+Loading required package: CascadeData
+The matrix :
+
+          N1_US_T60 N1_US_T90 N1_US_T210
+1007_s_at     103.2     133.7      157.3
+1053_at        26.0      34.9       44.2
+117_at         70.7      71.2       59.4
+121_at        213.7     168.9      175.1
+1255_g_at      13.7      17.2       27.8
+1294_at       176.6     198.9      180.2
+...
+
+Vector of names :
+[1] "1007_s_at" "1053_at"   "117_at"    "121_at"    "1255_g_at" "1294_at"  
+...Vector of geneID :
+[1] 0
+...
+Vector of group :
+[1] 0
+...
+Vector of starting time :
+[1] 0
+...
+Vector of time :
+[1]  60  90 210 390
+
+Number of subject :
+[1] 6
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("head-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+
+detaching ‘package:CascadeData’
+
+> nameEx("inference-methods")
+> ### * inference-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: inference
+> ### Title: Reverse-engineer the network
+> ### Aliases: inference inference-methods inference,micro_array-method
+> ### Keywords: methods
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("inference-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("infos")
+> ### * infos
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: infos
+> ### Title: Details on some probesets of the affy_hg_u133_plus_2 platform.
+> ### Aliases: infos
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(infos)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("infos", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("micro_array-class")
+> ### * micro_array-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: micro_array-class
+> ### Title: Class '"micro_array"'
+> ### Aliases: micro_array-class
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> showClass("micro_array")
+Class "micro_array" [package "Patterns"]
+
+Slots:
+                                                                        
+Name:  microarray       name    gene_ID      group start_time       time
+Class:     matrix     vector     vector     vector     vector     vector
+                 
+Name:     subject
+Class:    numeric
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("micro_array-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("micropred-class")
+> ### * micropred-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: micropredict-class
+> ### Title: Class '"micropred"'
+> ### Aliases: micropredict-class
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> showClass("network")
+Class "network" [package "Patterns"]
+
+Slots:
+                                                      
+Name:  network    name       F   convF   convO time_pt
+Class:  matrix  vector   array  matrix  vector  vector
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("micropred-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("network-class")
+> ### * network-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: network-class
+> ### Title: Class '"network"'
+> ### Aliases: network-class
+> ### Keywords: classes
+> 
+> ### ** Examples
+> 
+> showClass("network")
+Class "network" [package "Patterns"]
+
+Slots:
+                                                      
+Name:  network    name       F   convF   convO time_pt
+Class:  matrix  vector   array  matrix  vector  vector
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("network-class", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("network")
+> ### * network
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: network
+> ### Title: A example of an inferred network (4 groups case).
+> ### Aliases: network
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(network)
+> str(network)
+Formal class 'network' [package "Patterns"] with 6 slots
+  ..@ network: num [1:102, 1:102] 0 0 0 0 0 ...
+  ..@ name   : chr [1:102] "210226_at" "233516_s_at" "202081_at" "236719_at" ...
+  ..@ F      : num [1:4, 1:4, 1:16] 0 0 0 0 0 0 0 0 0 0 ...
+  ..@ convF  : num [1:16, 1:9] 0.281 0.281 0.281 0.281 0.281 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : NULL
+  .. .. ..$ : chr [1:9] "convF" "cc" "cc" "cc" ...
+  ..@ convO  : num [1:9] 0.94249 0.00961 0.00386 0.00267 0.00202 ...
+  ..@ time_pt: num [1:4] 60 90 210 390
+> plot(network)
+FALSE> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("network", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+
+detaching ‘package:igraph’
+
+> nameEx("network2gp")
+> ### * network2gp
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: network2gp
+> ### Title: A example of an inferred cascade network (2 groups case).
+> ### Aliases: network2gp
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(network2gp)
+> str(network2gp)
+Formal class 'network' [package "Patterns"] with 6 slots
+  ..@ network: num [1:53, 1:53] 0 -0.0169 0 0 0 ...
+  ..@ name   : chr [1:53] "210226_at" "233516_s_at" "202081_at" "236719_at" ...
+  ..@ F      : num [1:4, 1:4, 1:4] 0 0 0 0 0 0 0 0 0 0 ...
+  ..@ convF  : num [1:4, 1:12] 0.188 0.188 0.188 0.188 NaN ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : NULL
+  .. .. ..$ : chr [1:12] "convF" "cc" "cc" "cc" ...
+  ..@ convO  : num [1:12] 1.38461 0.01744 0.00556 0.00402 0.00274 ...
+  ..@ time_pt: num [1:4] 60 90 210 390
+> plot(network2gp)
+FALSE> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("network2gp", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+
+detaching ‘package:igraph’
+
+> nameEx("networkCascade")
+> ### * networkCascade
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: networkCascade
+> ### Title: A example of an inferred cascade network (4 groups case).
+> ### Aliases: networkCascade
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(networkCascade)
+> str(networkCascade)
+Formal class 'network' [package "Patterns"] with 6 slots
+  ..@ network: num [1:102, 1:102] 0 0 0 0 0 0 0 0 0 0 ...
+  ..@ name   : chr [1:102] "210226_at" "233516_s_at" "202081_at" "236719_at" ...
+  ..@ F      : num [1:4, 1:4, 1:16] 0 0 0 0 0 0 0 0 0 0 ...
+  ..@ convF  : num [1:16, 1:5] 0.0703 0.0703 0.0703 0.0703 0.0703 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : NULL
+  .. .. ..$ : chr [1:5] "convF" "cc" "cc" "cc" ...
+  ..@ convO  : num [1:5] 0.94249 0.00625 0.00157 0.00101 0.0008
+  ..@ time_pt: num [1:4] 60 90 210 390
+> plot(networkCascade)
+FALSE> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("networkCascade", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+
+detaching ‘package:igraph’
+
+> nameEx("network_random")
+> ### * network_random
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: network_random
+> ### Title: Generates a network.
+> ### Aliases: network_random
+> 
+> ### ** Examples
+> 
+> set.seed(1)
+> Net<-network_random(
++ 	nb=100,
++ 	time_label=rep(1:4,each=25),
++ 	exp=1,
++ 	init=1,
++ 	regul=round(rexp(100,1))+1,
++ 	min_expr=0.1,
++ 	max_expr=2,
++ 	casc.level=0.4
++ 	)
+> plot(Net)
+FALSE> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("network_random", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+
+detaching ‘package:igraph’
+
+> nameEx("plot-methods")
+> ### * plot-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: plot-methods
+> ### Title: Plot
+> ### Aliases: plot-methods plot,micro_array,ANY-method
+> ###   plot,micropredict,ANY-method plot,network,ANY-method
+> ### Keywords: methods
+> 
+> ### ** Examples
+> 
+> if(require(CascadeData)){
++ data(micro_US, package="CascadeData")
++ micro_US<-as.micro_array(micro_US[1:100,],time=c(60,90,210,390),subject=6)
++ plot(micro_US)
++ }
+Loading required package: CascadeData
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("plot-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+
+detaching ‘package:CascadeData’
+
+> nameEx("plotF")
+> ### * plotF
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: plotF
+> ### Title: Plot functions for the F matrices.
+> ### Aliases: plotF
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+> #For numerical/inferred F matrices
+> plotF(CascadeFinit(4,4),choice="F", nround=1)
+> plotF(CascadeFinit(4,4),choice="Fpixmap")
+> 
+> #For theoritical F matrices
+> plotF(CascadeFshape(4,4),choice="Fshape")
+> plotF(CascadeFshape(4,4),choice="Fshapepixmap")
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("plotF", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("position")
+> ### * position
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: position
+> ### Title: Retrieve network position for consistent plotting.
+> ### Aliases: position
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+> data(network)
+> position(network)
+       nom                  
+  [1,]   1 67.79035 164.3961
+  [2,]   2 68.51140 164.4008
+  [3,]   3 67.67356 164.8637
+  [4,]   4 68.51631 164.8698
+  [5,]   5 68.70284 164.9143
+  [6,]   6 68.28684 164.7412
+  [7,]   7 68.37436 164.0144
+  [8,]   8 68.07540 164.3432
+  [9,]   9 68.73878 164.6452
+ [10,]  10 67.97255 164.3544
+ [11,]  11 67.98141 164.7613
+ [12,]  12 67.88751 164.9248
+ [13,]  13 68.47802 165.0216
+ [14,]  14 68.15455 165.0864
+ [15,]  15 68.00503 164.9734
+ [16,]  16 68.52940 164.5591
+ [17,]  17 68.31631 165.3189
+ [18,]  18 68.45761 165.4988
+ [19,]  19 68.35687 165.0738
+ [20,]  20 68.22954 164.9402
+ [21,]  21 69.60152 164.5702
+ [22,]  22 67.37256 164.3814
+ [23,]  23 68.57835 163.1597
+ [24,]  24 67.67267 163.2696
+ [25,]  25 69.80562 163.6433
+ [26,]  26 68.09486 164.8836
+ [27,]  27 68.96337 165.2296
+ [28,]  28 69.48661 163.0797
+ [29,]  29 68.22478 163.2514
+ [30,]  30 69.44756 164.3085
+ [31,]  31 69.14169 162.8985
+ [32,]  32 68.43604 163.5054
+ [33,]  33 69.06423 163.6814
+ [34,]  34 66.98913 163.3657
+ [35,]  35 67.47325 163.8616
+ [36,]  36 68.36451 162.7432
+ [37,]  37 68.01399 165.2347
+ [38,]  38 68.17397 163.4685
+ [39,]  39 69.01957 163.9191
+ [40,]  40 69.02533 164.7397
+ [41,]  41 67.28082 163.9982
+ [42,]  42 67.49005 164.2460
+ [43,]  43 68.21121 165.5679
+ [44,]  44 68.25912 164.0941
+ [45,]  45 69.64885 164.9602
+ [46,]  46 67.83756 163.5758
+ [47,]  47 67.39875 165.0396
+ [48,]  48 68.06911 165.4001
+ [49,]  49 67.65279 164.4967
+ [50,]  50 68.50472 163.8642
+ [51,]  51 68.01809 163.6457
+ [52,]  52 68.18518 165.8576
+ [53,]  53 68.92028 164.9228
+ [54,]  54 67.81502 165.3889
+ [55,]  55 66.92502 164.3597
+ [56,]  56 69.22488 165.1321
+ [57,]  57 68.95163 164.4805
+ [58,]  58 68.90529 165.5835
+ [59,]  59 67.11982 165.6121
+ [60,]  60 68.93732 164.0723
+ [61,]  61 69.12768 165.3297
+ [62,]  62 67.79237 165.5724
+ [63,]  63 69.23580 164.6820
+ [64,]  64 67.92012 164.6051
+ [65,]  65 67.26715 164.4877
+ [66,]  66 68.82222 163.7018
+ [67,]  67 68.24389 164.4526
+ [68,]  68 67.81519 163.7557
+ [69,]  69 68.34779 164.4147
+ [70,]  70 68.38540 164.2537
+ [71,]  71 68.11104 163.8471
+ [72,]  72 67.66378 165.1233
+ [73,]  73 69.39578 164.9983
+ [74,]  74 68.75519 165.3617
+ [75,]  75 67.01137 164.8655
+ [76,]  76 68.91756 164.3182
+ [77,]  77 67.59707 164.7277
+ [78,]  78 69.08613 164.1353
+ [79,]  79 67.26994 164.9304
+ [80,]  80 69.11059 165.5792
+ [81,]  81 68.20188 164.6120
+ [82,]  82 67.44131 164.6533
+ [83,]  83 67.94305 165.9510
+ [84,]  84 68.26393 163.8660
+ [85,]  85 68.64016 165.8473
+ [86,]  86 67.76695 164.0941
+ [87,]  87 69.57168 164.1544
+ [88,]  88 68.47972 164.7363
+ [89,]  89 68.65465 165.5491
+ [90,]  90 68.73006 163.9700
+ [91,]  91 67.52376 165.4742
+ [92,]  92 67.24131 164.6827
+ [93,]  93 67.61795 163.9114
+ [94,]  94 68.64610 163.7317
+ [95,]  95 67.22872 165.2915
+ [96,]  96 68.13105 164.5410
+ [97,]  97 67.27981 164.1827
+ [98,]  98 68.55066 164.1747
+ [99,]  99 67.30820 163.6157
+[100,] 100 68.65570 164.3987
+[101,] 101 69.20121 164.3591
+[102,] 102 68.15054 164.1456
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("position", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+
+detaching ‘package:igraph’
+
+> nameEx("predict-methods")
+> ### * predict-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: predict
+> ### Title: Methods for Function 'predict'
+> ### Aliases: predict predict-methods predict,ANY-method
+> ###   predict,micro_array-method
+> ### Keywords: methods
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("predict-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("probeMerge")
+> ### * probeMerge
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: probeMerge
+> ### Title: Function to merge probesets
+> ### Aliases: probeMerge probeMerge,micro_array-method
+> ### Keywords: manip
+> 
+> ### ** Examples
+> 
+> if(require(CascadeData)){
++ data(micro_S)
++ D<-as.micro_array(micro_S[1:2000,],1:4,6)
++ D@gene_ID<-jetset::scores.hgu133plus2[D@name,"EntrezID"]
++ PM <- probeMerge(D)
++ }
+Loading required package: CascadeData
+
+
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("probeMerge", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+
+detaching ‘package:CascadeData’
+
+> nameEx("replaceBand")
+> ### * replaceBand
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: replaceBand
+> ### Title: Replace matrix values by band.
+> ### Aliases: replaceBand
+> ### Keywords: manip
+> 
+> ### ** Examples
+> 
+> a=matrix(1:9,3,3)
+> b=matrix(0,3,3)
+> replaceBand(a,b,0)
+     [,1] [,2] [,3]
+[1,]    0    4    7
+[2,]    2    0    8
+[3,]    3    6    0
+> replaceBand(a,b,1)
+     [,1] [,2] [,3]
+[1,]    0    0    7
+[2,]    0    0    0
+[3,]    3    0    0
+> replaceBand(a,b,2)
+     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]    0    0    0
+[3,]    0    0    0
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("replaceBand", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("replaceDown")
+> ### * replaceDown
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: replaceDown
+> ### Title: Replace matrix values triangular lower part and by band for the
+> ###   upper part.
+> ### Aliases: replaceDown
+> ### Keywords: manip
+> 
+> ### ** Examples
+> 
+> a=matrix(1:9,3,3)
+> b=matrix(1,3,3)
+> replaceDown(a,b,0)
+     [,1] [,2] [,3]
+[1,]    1    4    7
+[2,]    1    1    8
+[3,]    1    1    1
+> replaceDown(a,b,1)
+     [,1] [,2] [,3]
+[1,]    1    1    7
+[2,]    1    1    1
+[3,]    1    1    1
+> replaceDown(a,b,2)
+     [,1] [,2] [,3]
+[1,]    1    1    1
+[2,]    1    1    1
+[3,]    1    1    1
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("replaceDown", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("replaceUp")
+> ### * replaceUp
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: replaceUp
+> ### Title: Replace matrix values triangular upper part and by band for the
+> ###   lower part.
+> ### Aliases: replaceUp
+> ### Keywords: manip
+> 
+> ### ** Examples
+> 
+> a=matrix(1:9,3,3)
+> b=matrix(1,3,3)
+> replaceUp(a,b,0)
+     [,1] [,2] [,3]
+[1,]    1    1    1
+[2,]    2    1    1
+[3,]    3    6    1
+> replaceUp(a,b,1)
+     [,1] [,2] [,3]
+[1,]    1    1    1
+[2,]    1    1    1
+[3,]    3    1    1
+> replaceUp(a,b,2)
+     [,1] [,2] [,3]
+[1,]    1    1    1
+[2,]    1    1    1
+[3,]    1    1    1
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("replaceUp", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("simul")
+> ### * simul
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: simul
+> ### Title: Simulated data for examples.
+> ### Aliases: simul M Net Net_inf_PL
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(simul)
+> head(M)
+The matrix :
+
+       log(S/US) : P1T1 log(S/US) : P1T2 log(S/US) : P1T3
+gene 1         41.37771         42.22949       -31.925168
+gene 2        478.62824        -23.91318         8.973348
+gene 3       -655.65836        112.79919       182.380283
+gene 4       -759.88206        -20.11196       -39.990416
+gene 5       -159.70735        -20.89569      -105.649285
+gene 6        295.70161        -11.37047       187.563254
+...
+
+Vector of names :
+[1] "gene 1" "gene 2" "gene 3" "gene 4" "gene 5" "gene 6"
+...Vector of geneID :
+[1] "gene 1" "gene 2" "gene 3" "gene 4" "gene 5" "gene 6"
+...
+Vector of group :
+[1] 1 1 1 1 1 1
+...
+Vector of starting time :
+[1] 0
+...
+Vector of time :
+[1] 1 2 3 4
+
+Number of subject :
+[1] 5
+> str(M)
+Formal class 'micro_array' [package "Patterns"] with 7 slots
+  ..@ microarray: num [1:100, 1:20] 41.4 478.6 -655.7 -759.9 -159.7 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:100] "gene 1" "gene 2" "gene 3" "gene 4" ...
+  .. .. ..$ : chr [1:20] "log(S/US) : P1T1" "log(S/US) : P1T2" "log(S/US) : P1T3" "log(S/US) : P1T4" ...
+  ..@ name      : chr [1:100] "gene 1" "gene 2" "gene 3" "gene 4" ...
+  ..@ gene_ID   : chr [1:100] "gene 1" "gene 2" "gene 3" "gene 4" ...
+  ..@ group     : int [1:100] 1 1 1 1 1 1 1 1 1 1 ...
+  ..@ start_time: num 0
+  ..@ time      : int [1:4] 1 2 3 4
+  ..@ subject   : num 5
+> str(Net)
+Formal class 'network' [package "Patterns"] with 6 slots
+  ..@ network: num [1:100, 1:100] 0 0 0 0 0 0 0 0 0 0 ...
+  ..@ name   : chr [1:100] "gene 1" "gene 2" "gene 3" "gene 4" ...
+  ..@ F      : num [1:4, 1:4, 1:16] 0 0 0 0 0 0 0 0 0 0 ...
+  ..@ convF  : num [1, 1] 0
+  ..@ convO  : num 0
+  ..@ time_pt: int [1:4] 1 2 3 4
+> str(Net_inf_PL)
+Formal class 'network' [package "Patterns"] with 6 slots
+  ..@ network: num [1:100, 1:100] 0 0 0 0 0 0 0 0 0 0 ...
+  ..@ name   : chr [1:100] "gene 1" "gene 2" "gene 3" "gene 4" ...
+  ..@ F      : num [1:4, 1:4, 1:16] 0 0 0 0 0 0 0 0 0 0 ...
+  ..@ convF  : num [1:16, 1:6] 0.0564 0.0564 0.0564 0.0564 0.0564 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : NULL
+  .. .. ..$ : chr [1:6] "convF" "cc" "cc" "cc" ...
+  ..@ convO  : num [1:6] 5.36e+04 7.40e-03 2.29e-03 1.59e-03 1.16e-03 ...
+  ..@ time_pt: int [1:4] 1 2 3 4
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("simul", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("unionMicro-methods")
+> ### * unionMicro-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: unionMicro-methods
+> ### Title: Makes the union between two micro_array objects.
+> ### Aliases: unionMicro unionMicro-methods
+> ###   unionMicro,micro_array,micro_array-method unionMicro,list,ANY-method
+> ### Keywords: methods
+> 
+> ### ** Examples
+> 
+> if(require(CascadeData)){
++ data(micro_S, package="CascadeData")
++ #Create another microarray object with 100 genes
++ Mbis<-M<-as.micro_array(micro_S[1:100,],1:4,6)
++ #Rename the 100 genes
++ Mbis@name<-paste(M@name,"bis")
++ rownames(Mbis@microarray) <- Mbis@name
++ #Union (merge without duplicated names) of the two microarrays. 
++ str(unionMicro(M,Mbis))
++ }
+Loading required package: CascadeData
+Formal class 'micro_array' [package "Patterns"] with 7 slots
+  ..@ microarray: num [1:200, 1:24] 136.1 32 78 201.8 16.3 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:200] "1007_s_at" "1053_at" "117_at" "121_at" ...
+  .. .. ..$ : chr [1:24] "N1_S_T60" "N1_S_T90" "N1_S_T210" "N1_S_T390" ...
+  ..@ name      : chr [1:200] "1007_s_at" "1053_at" "117_at" "121_at" ...
+  ..@ gene_ID   : chr [1:200] "0" "0" "0" "0" ...
+  ..@ group     : num [1:200] 0 NA NA NA NA NA NA NA NA NA ...
+  ..@ start_time: num [1:200] 0 NA NA NA NA NA NA NA NA NA ...
+  ..@ time      : int [1:4] 1 2 3 4
+  ..@ subject   : num 6
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("unionMicro-methods", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+
+detaching ‘package:CascadeData’
+
+> nameEx("unsupervised_clustering")
+> ### * unsupervised_clustering
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: unsupervised_clustering
+> ### Title: Cluster a micro_array object: performs the clustering.
+> ### Aliases: unsupervised_clustering
+> ###   unsupervised_clustering,micro_array,numeric,numeric-method
+> ### Keywords: cluster
+> 
+> ### ** Examples
+> 
+> if(require(CascadeData)){
++ data(micro_S, package="CascadeData")
++ M<-as.micro_array(micro_S[1:100,],1:4,6)
++ mc<-unsupervised_clustering_auto_m_c(M)
++ MwithGrp=unsupervised_clustering(M, 8, mc$m, screen=NULL, heatmap=FALSE, new.window = FALSE)
++ # Other options
++ unsupervised_clustering(M, 8, mc$m, screen=c(3,3), heatmap=TRUE, new.window = FALSE)
++ # Plot the clusters
++ plot(MwithGrp)
++ }
+Loading required package: CascadeData
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colnames, dirname, do.call,
+    duplicated, eval, evalq, get, grep, grepl, intersect, is.unsorted,
+    lapply, mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+    pmin.int, rank, rbind, rownames, sapply, setdiff, sort, table,
+    tapply, union, unique, unsplit, which, which.max, which.min
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘gplots’
+
+The following object is masked from ‘package:stats’:
+
+    lowess
+
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("unsupervised_clustering", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+
+detaching ‘package:gplots’, ‘package:Mfuzz’, ‘package:e1071’,
+  ‘package:Biobase’, ‘package:BiocGenerics’, ‘package:parallel’,
+  ‘package:CascadeData’
+
+> nameEx("unsupervised_clustering_auto_m_c")
+> ### * unsupervised_clustering_auto_m_c
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: unsupervised_clustering_auto_m_c
+> ### Title: Cluster a micro_array object: determine optimal fuzzification
+> ###   parameter and number of clusters.
+> ### Aliases: unsupervised_clustering_auto_m_c
+> ###   unsupervised_clustering_auto_m_c,micro_array-method
+> ### Keywords: cluster
+> 
+> ### ** Examples
+> 
+> if(require(CascadeData)){
++ data(micro_S, package="CascadeData")
++ M<-as.micro_array(micro_S[1:100,],1:4,6)
++ mc<-unsupervised_clustering_auto_m_c(M)
++ }
+Loading required package: CascadeData
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colnames, dirname, do.call,
+    duplicated, eval, evalq, get, grep, grepl, intersect, is.unsorted,
+    lapply, mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+    pmin.int, rank, rbind, rownames, sapply, setdiff, sort, table,
+    tapply, union, unique, unsplit, which, which.max, which.min
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("unsupervised_clustering_auto_m_c", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> ### * <FOOTER>
+> ###
+> cleanEx()
+
+detaching ‘package:Mfuzz’, ‘package:e1071’, ‘package:Biobase’,
+  ‘package:BiocGenerics’, ‘package:parallel’, ‘package:CascadeData’
+
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  19.722 1.326 21.158 0.005 0.007 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

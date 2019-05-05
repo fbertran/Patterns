@@ -1,0 +1,97 @@
+\name{inference}
+\alias{inference}
+\alias{inference-methods}
+\alias{inference,micro_array-method}
+\title{ Reverse-engineer the network}
+\description{
+Reverse-engineer the network.
+}
+\usage{
+	inference(M,\dots)
+}
+
+\arguments{
+ \item{M}{a micro_array object.}
+  \item{\dots}{Optional arguments: 	 
+  \describe{
+\item{M}{Data}
+\item{tour.max=30}{tour.max + 1 = maximal number of steps.}
+\item{g=function(x){1/x}}{After each step, the new solution is choosen as (the old solution + g(x) * the new solution)/(1+g(x)) where x is the number of steps.}
+\item{conv=0.001}{Convergence criterion.}
+\item{cv.subjects=TRUE}{Subjectwise cross validation: should the cross validation be done by removing the subject one by one?}
+\item{nb.folds=NULL}{Relevant only if no subjectwise cross validation (i.e. cv.subjects=FALSE). The number of folds in cross validation.}
+\item{eps=10^-5}{Threshold for rounding coefficients to 0 (i.e. machine zero).}
+\item{type.inf="iterative"}{"iterative" or "noniterative" : should the algorithm be computed iteratively or only for one step? For highly homogeneous clusters, the "noniterative" option is suffisant.}
+\item{Fshape=NULL}{Shape of the F matrix.}
+\item{Finit=NULL}{Init values of the F matrix.}
+\item{Omega=NULL}{Init values for the Omega matrix.}
+\item{fitfun="LASSO"}{Function to infer the Omega matrix at each step.}
+\item{use.Gram=TRUE}{Optional parameter for the lasso in the `lars` package.}
+\item{error.stabsel=0.05}{Optional parameter for the stability selection algorithm in the `c060` package.}
+\item{pi_thr.stabsel=0.6}{Optional parameter for the stability selection algorithm in the `c060` package.}
+\item{priors=NULL}{A priori weights for the links between the actors. 0 means that an actor is always included in the predictive model, 1 is a neutral weighting and +infinity that the actor is never used in the model. For a given predictive model, the weighting vector is normalized so that its sum is equal to the number of predictors in the model.}
+\item{mc.cores=getOption("mc.cores", 2L)}{Number of cores.}
+\item{intercept.stabpath=TRUE}{Use intercept in stability selection models?}
+\item{steps.seq=.95}{Optional parameter for the SelectBoost algorithm in the `SelectBoost` package.}
+\item{limselect=.95}{Optional parameter for the SelectBoost algorithm in the `SelectBoost` package.}
+\item{use.parallel=TRUE}{Use parallel computing?}
+}
+}
+}
+
+\details{
+The fitting built-in fitting functions (`fitfun`) provided with the `Patterns` package are :
+\describe{
+\item{LASSO}{from the `lars` package (default value)}
+\item{LASSO2}{from the `glmnet` package}
+\item{SPLS}{from the `spls` package}
+\item{ELASTICNET}{from the `elasticnet` package}
+\item{stability.c060}{from the `c060` package implementation of stability selection}
+\item{stability.c060.weighted}{a new weighted version of the `c060` package implementation of stability selection}
+\item{robust}{lasso from the `lars` package with light random Gaussian noise added to the explanatory variables}
+\item{selectboost.weighted}{a new weighted version of the `selectboost` package implementation of the selectboost algorithm to look for the more stable links against resampling that takes into account the correlated structure of the predictors. If no weights are provided, equal weigths are for all the variables (=non weighted case).}
+}
+
+The weights are viewed as a penalty factors in the penalized regression model: it is a number that multiplies the lambda value in the minimization problem to allow differential shrinkage, [Friedman et al. 2010](https://web.stanford.edu/~hastie/Papers/glmnet.pdf), equation 1 page 3. If equal to 0, it implies no shrinkage, and that variable is always included in the model. Default is 1 for all variables. Infinity means that the variable is excluded from the model. Note that the weights are rescaled to sum to the number of variables.
+}
+
+
+\value{
+A network object.  
+}
+
+
+\author{
+Bertrand Frederic, Myriam Maumy-Bertrand.
+}
+
+
+\examples{
+\donttest{
+#With simulated data, default shaped F matrix and default LASSO from the lars package
+#as fitting function
+data(simul)
+infM <- inference(M)
+str(infM)
+plot(infM, choice="F", nround=0)
+plot(infM, choice="F", nround=1)
+
+#With simulated data, cascade network shaped F matrix (1 group per time measurement case) 
+#and default LASSO from the lars package as fitting function
+infMcasc <- inference(M, Finit=CascadeFinit(4,4), Fshape=CascadeFshape(4,4))
+str(infMcasc)
+plot(infMcasc, choice="F", nround=0)
+plot(infMcasc, choice="F", nround=1)
+
+#With selection of genes from GSE39411
+data(Selection)
+infSel <- inference(Selection, Finit=CascadeFinit(4,4), Fshape=CascadeFshape(4,4))
+str(infSel)
+str(infSel)
+plot(infSel, choice="F", nround=0)
+plot(infSel, choice="F", nround=1)
+}
+}
+
+\keyword{methods}
+

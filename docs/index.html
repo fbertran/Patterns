@@ -56,7 +56,7 @@
       <a href="articles/ExampleCLL.html">Network inference and analysis of CLL data</a>
     </li>
     <li>
-      <a href="articles/IntroPatterns.html">Patterns: a modeling tool dedicated to biological network modeling</a>
+      <a href="articles/IntroPatterns.html">Introduction to Patterns: a modeling tool dedicated to biological network modeling</a>
     </li>
   </ul>
 </li>
@@ -393,63 +393,62 @@
 <a href="#network-inferrence" class="anchor"></a>Network inferrence</h3>
 <p>We infer the new network using subjectwise leave one out cross-validation (default setting): all measurements from the same subject are removed from the dataset). The inference is carried out with a general Fshape.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">Net_inf_P &lt;-<span class="st"> </span>Patterns<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/Patterns/topics/inference-methods">inference</a></span>(M, <span class="dt">cv.subjects=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb19-2" title="2"><span class="co">#&gt; Le chargement a nécessité le package : nnls</span></a>
-<a class="sourceLine" id="cb19-3" title="3"><span class="co">#&gt; We are at step :  1</span></a>
-<a class="sourceLine" id="cb19-4" title="4"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
-<a class="sourceLine" id="cb19-5" title="5"><span class="co">#&gt;  1.........................</span></a>
-<a class="sourceLine" id="cb19-6" title="6"><span class="co">#&gt;  2.........................</span></a>
-<a class="sourceLine" id="cb19-7" title="7"><span class="co">#&gt;  3.........................</span></a>
-<a class="sourceLine" id="cb19-8" title="8"><span class="co">#&gt;  4.........................</span></a>
-<a class="sourceLine" id="cb19-9" title="9"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.01</span></a>
-<a class="sourceLine" id="cb19-10" title="10"><span class="co">#&gt; We are at step :  2</span></a>
-<a class="sourceLine" id="cb19-11" title="11"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
-<a class="sourceLine" id="cb19-12" title="12"><span class="co">#&gt;  1.........................</span></a>
-<a class="sourceLine" id="cb19-13" title="13"><span class="co">#&gt;  2.........................</span></a>
-<a class="sourceLine" id="cb19-14" title="14"><span class="co">#&gt;  3.........................</span></a>
-<a class="sourceLine" id="cb19-15" title="15"><span class="co">#&gt;  4.........................</span></a>
-<a class="sourceLine" id="cb19-16" title="16"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00522</span></a>
-<a class="sourceLine" id="cb19-17" title="17"><span class="co">#&gt; We are at step :  3</span></a>
-<a class="sourceLine" id="cb19-18" title="18"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
-<a class="sourceLine" id="cb19-19" title="19"><span class="co">#&gt;  1.........................</span></a>
-<a class="sourceLine" id="cb19-20" title="20"><span class="co">#&gt;  2.........................</span></a>
-<a class="sourceLine" id="cb19-21" title="21"><span class="co">#&gt;  3.........................</span></a>
-<a class="sourceLine" id="cb19-22" title="22"><span class="co">#&gt;  4.........................</span></a>
-<a class="sourceLine" id="cb19-23" title="23"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.0034</span></a>
-<a class="sourceLine" id="cb19-24" title="24"><span class="co">#&gt; We are at step :  4</span></a>
-<a class="sourceLine" id="cb19-25" title="25"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
-<a class="sourceLine" id="cb19-26" title="26"><span class="co">#&gt;  1.........................</span></a>
-<a class="sourceLine" id="cb19-27" title="27"><span class="co">#&gt;  2.........................</span></a>
-<a class="sourceLine" id="cb19-28" title="28"><span class="co">#&gt;  3.........................</span></a>
-<a class="sourceLine" id="cb19-29" title="29"><span class="co">#&gt;  4.........................</span></a>
-<a class="sourceLine" id="cb19-30" title="30"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00235</span></a>
-<a class="sourceLine" id="cb19-31" title="31"><span class="co">#&gt; We are at step :  5</span></a>
-<a class="sourceLine" id="cb19-32" title="32"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
-<a class="sourceLine" id="cb19-33" title="33"><span class="co">#&gt;  1.........................</span></a>
-<a class="sourceLine" id="cb19-34" title="34"><span class="co">#&gt;  2.........................</span></a>
-<a class="sourceLine" id="cb19-35" title="35"><span class="co">#&gt;  3.........................</span></a>
-<a class="sourceLine" id="cb19-36" title="36"><span class="co">#&gt;  4.........................</span></a>
-<a class="sourceLine" id="cb19-37" title="37"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00181</span></a>
-<a class="sourceLine" id="cb19-38" title="38"><span class="co">#&gt; We are at step :  6</span></a>
-<a class="sourceLine" id="cb19-39" title="39"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
-<a class="sourceLine" id="cb19-40" title="40"><span class="co">#&gt;  1.........................</span></a>
-<a class="sourceLine" id="cb19-41" title="41"><span class="co">#&gt;  2.........................</span></a>
-<a class="sourceLine" id="cb19-42" title="42"><span class="co">#&gt;  3.........................</span></a>
-<a class="sourceLine" id="cb19-43" title="43"><span class="co">#&gt;  4.........................</span></a>
-<a class="sourceLine" id="cb19-44" title="44"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00142</span></a>
-<a class="sourceLine" id="cb19-45" title="45"><span class="co">#&gt; We are at step :  7</span></a>
-<a class="sourceLine" id="cb19-46" title="46"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
-<a class="sourceLine" id="cb19-47" title="47"><span class="co">#&gt;  1.........................</span></a>
-<a class="sourceLine" id="cb19-48" title="48"><span class="co">#&gt;  2.........................</span></a>
-<a class="sourceLine" id="cb19-49" title="49"><span class="co">#&gt;  3.........................</span></a>
-<a class="sourceLine" id="cb19-50" title="50"><span class="co">#&gt;  4.........................</span></a>
-<a class="sourceLine" id="cb19-51" title="51"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00117</span></a>
-<a class="sourceLine" id="cb19-52" title="52"><span class="co">#&gt; We are at step :  8</span></a>
-<a class="sourceLine" id="cb19-53" title="53"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
-<a class="sourceLine" id="cb19-54" title="54"><span class="co">#&gt;  1.........................</span></a>
-<a class="sourceLine" id="cb19-55" title="55"><span class="co">#&gt;  2.........................</span></a>
-<a class="sourceLine" id="cb19-56" title="56"><span class="co">#&gt;  3.........................</span></a>
-<a class="sourceLine" id="cb19-57" title="57"><span class="co">#&gt;  4.........................</span></a>
-<a class="sourceLine" id="cb19-58" title="58"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00098</span></a></code></pre></div>
+<a class="sourceLine" id="cb19-2" title="2"><span class="co">#&gt; We are at step :  1</span></a>
+<a class="sourceLine" id="cb19-3" title="3"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
+<a class="sourceLine" id="cb19-4" title="4"><span class="co">#&gt;  1.........................</span></a>
+<a class="sourceLine" id="cb19-5" title="5"><span class="co">#&gt;  2.........................</span></a>
+<a class="sourceLine" id="cb19-6" title="6"><span class="co">#&gt;  3.........................</span></a>
+<a class="sourceLine" id="cb19-7" title="7"><span class="co">#&gt;  4.........................</span></a>
+<a class="sourceLine" id="cb19-8" title="8"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.01</span></a>
+<a class="sourceLine" id="cb19-9" title="9"><span class="co">#&gt; We are at step :  2</span></a>
+<a class="sourceLine" id="cb19-10" title="10"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
+<a class="sourceLine" id="cb19-11" title="11"><span class="co">#&gt;  1.........................</span></a>
+<a class="sourceLine" id="cb19-12" title="12"><span class="co">#&gt;  2.........................</span></a>
+<a class="sourceLine" id="cb19-13" title="13"><span class="co">#&gt;  3.........................</span></a>
+<a class="sourceLine" id="cb19-14" title="14"><span class="co">#&gt;  4.........................</span></a>
+<a class="sourceLine" id="cb19-15" title="15"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00522</span></a>
+<a class="sourceLine" id="cb19-16" title="16"><span class="co">#&gt; We are at step :  3</span></a>
+<a class="sourceLine" id="cb19-17" title="17"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
+<a class="sourceLine" id="cb19-18" title="18"><span class="co">#&gt;  1.........................</span></a>
+<a class="sourceLine" id="cb19-19" title="19"><span class="co">#&gt;  2.........................</span></a>
+<a class="sourceLine" id="cb19-20" title="20"><span class="co">#&gt;  3.........................</span></a>
+<a class="sourceLine" id="cb19-21" title="21"><span class="co">#&gt;  4.........................</span></a>
+<a class="sourceLine" id="cb19-22" title="22"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.0034</span></a>
+<a class="sourceLine" id="cb19-23" title="23"><span class="co">#&gt; We are at step :  4</span></a>
+<a class="sourceLine" id="cb19-24" title="24"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
+<a class="sourceLine" id="cb19-25" title="25"><span class="co">#&gt;  1.........................</span></a>
+<a class="sourceLine" id="cb19-26" title="26"><span class="co">#&gt;  2.........................</span></a>
+<a class="sourceLine" id="cb19-27" title="27"><span class="co">#&gt;  3.........................</span></a>
+<a class="sourceLine" id="cb19-28" title="28"><span class="co">#&gt;  4.........................</span></a>
+<a class="sourceLine" id="cb19-29" title="29"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00235</span></a>
+<a class="sourceLine" id="cb19-30" title="30"><span class="co">#&gt; We are at step :  5</span></a>
+<a class="sourceLine" id="cb19-31" title="31"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
+<a class="sourceLine" id="cb19-32" title="32"><span class="co">#&gt;  1.........................</span></a>
+<a class="sourceLine" id="cb19-33" title="33"><span class="co">#&gt;  2.........................</span></a>
+<a class="sourceLine" id="cb19-34" title="34"><span class="co">#&gt;  3.........................</span></a>
+<a class="sourceLine" id="cb19-35" title="35"><span class="co">#&gt;  4.........................</span></a>
+<a class="sourceLine" id="cb19-36" title="36"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00181</span></a>
+<a class="sourceLine" id="cb19-37" title="37"><span class="co">#&gt; We are at step :  6</span></a>
+<a class="sourceLine" id="cb19-38" title="38"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
+<a class="sourceLine" id="cb19-39" title="39"><span class="co">#&gt;  1.........................</span></a>
+<a class="sourceLine" id="cb19-40" title="40"><span class="co">#&gt;  2.........................</span></a>
+<a class="sourceLine" id="cb19-41" title="41"><span class="co">#&gt;  3.........................</span></a>
+<a class="sourceLine" id="cb19-42" title="42"><span class="co">#&gt;  4.........................</span></a>
+<a class="sourceLine" id="cb19-43" title="43"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00142</span></a>
+<a class="sourceLine" id="cb19-44" title="44"><span class="co">#&gt; We are at step :  7</span></a>
+<a class="sourceLine" id="cb19-45" title="45"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
+<a class="sourceLine" id="cb19-46" title="46"><span class="co">#&gt;  1.........................</span></a>
+<a class="sourceLine" id="cb19-47" title="47"><span class="co">#&gt;  2.........................</span></a>
+<a class="sourceLine" id="cb19-48" title="48"><span class="co">#&gt;  3.........................</span></a>
+<a class="sourceLine" id="cb19-49" title="49"><span class="co">#&gt;  4.........................</span></a>
+<a class="sourceLine" id="cb19-50" title="50"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00117</span></a>
+<a class="sourceLine" id="cb19-51" title="51"><span class="co">#&gt; We are at step :  8</span></a>
+<a class="sourceLine" id="cb19-52" title="52"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
+<a class="sourceLine" id="cb19-53" title="53"><span class="co">#&gt;  1.........................</span></a>
+<a class="sourceLine" id="cb19-54" title="54"><span class="co">#&gt;  2.........................</span></a>
+<a class="sourceLine" id="cb19-55" title="55"><span class="co">#&gt;  3.........................</span></a>
+<a class="sourceLine" id="cb19-56" title="56"><span class="co">#&gt;  4.........................</span></a>
+<a class="sourceLine" id="cb19-57" title="57"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00098</span></a></code></pre></div>
 <p><img src="reference/figures/README-netinfdefault-1.png" width="100%"><img src="reference/figures/README-netinfdefault-2.png" width="100%"></p>
 <p>Plot of the inferred F matrix</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(Net_inf_P, <span class="dt">choice=</span><span class="st">"F"</span>)</a></code></pre></div>
@@ -1028,14 +1027,14 @@
 <a class="sourceLine" id="cb45-7" title="7"><span class="co">#&gt;  2mc.cores=2.........................</span></a>
 <a class="sourceLine" id="cb45-8" title="8"><span class="co">#&gt;  3mc.cores=2.........................</span></a>
 <a class="sourceLine" id="cb45-9" title="9"><span class="co">#&gt;  4mc.cores=2.........................</span></a>
-<a class="sourceLine" id="cb45-10" title="10"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.0046</span></a>
+<a class="sourceLine" id="cb45-10" title="10"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.0042</span></a>
 <a class="sourceLine" id="cb45-11" title="11"><span class="co">#&gt; We are at step :  2</span></a>
 <a class="sourceLine" id="cb45-12" title="12"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
 <a class="sourceLine" id="cb45-13" title="13"><span class="co">#&gt;  1mc.cores=2</span></a>
 <a class="sourceLine" id="cb45-14" title="14"><span class="co">#&gt;  2mc.cores=2.........................</span></a>
 <a class="sourceLine" id="cb45-15" title="15"><span class="co">#&gt;  3mc.cores=2.........................</span></a>
 <a class="sourceLine" id="cb45-16" title="16"><span class="co">#&gt;  4mc.cores=2.........................</span></a>
-<a class="sourceLine" id="cb45-17" title="17"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00069</span></a></code></pre></div>
+<a class="sourceLine" id="cb45-17" title="17"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00095</span></a></code></pre></div>
 <p><img src="reference/figures/README-netinfStab-1.png" width="100%"><img src="reference/figures/README-netinfStab-2.png" width="100%"></p>
 <p>Plot of the inferred F matrix</p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(Net_inf_P_stability, <span class="dt">choice=</span><span class="st">"F"</span>)</a></code></pre></div>
@@ -1075,42 +1074,42 @@
 <a class="sourceLine" id="cb51-8" title="8"><span class="co">#&gt;  2.........................</span></a>
 <a class="sourceLine" id="cb51-9" title="9"><span class="co">#&gt;  3.........................</span></a>
 <a class="sourceLine" id="cb51-10" title="10"><span class="co">#&gt;  4.........................</span></a>
-<a class="sourceLine" id="cb51-11" title="11"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.0067</span></a>
+<a class="sourceLine" id="cb51-11" title="11"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.0069</span></a>
 <a class="sourceLine" id="cb51-12" title="12"><span class="co">#&gt; We are at step :  2</span></a>
 <a class="sourceLine" id="cb51-13" title="13"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
 <a class="sourceLine" id="cb51-14" title="14"><span class="co">#&gt;  1</span></a>
 <a class="sourceLine" id="cb51-15" title="15"><span class="co">#&gt;  2.........................</span></a>
 <a class="sourceLine" id="cb51-16" title="16"><span class="co">#&gt;  3.........................</span></a>
 <a class="sourceLine" id="cb51-17" title="17"><span class="co">#&gt;  4.........................</span></a>
-<a class="sourceLine" id="cb51-18" title="18"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00332</span></a>
+<a class="sourceLine" id="cb51-18" title="18"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00366</span></a>
 <a class="sourceLine" id="cb51-19" title="19"><span class="co">#&gt; We are at step :  3</span></a>
 <a class="sourceLine" id="cb51-20" title="20"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
 <a class="sourceLine" id="cb51-21" title="21"><span class="co">#&gt;  1</span></a>
 <a class="sourceLine" id="cb51-22" title="22"><span class="co">#&gt;  2.........................</span></a>
 <a class="sourceLine" id="cb51-23" title="23"><span class="co">#&gt;  3.........................</span></a>
 <a class="sourceLine" id="cb51-24" title="24"><span class="co">#&gt;  4.........................</span></a>
-<a class="sourceLine" id="cb51-25" title="25"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00199</span></a>
+<a class="sourceLine" id="cb51-25" title="25"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00203</span></a>
 <a class="sourceLine" id="cb51-26" title="26"><span class="co">#&gt; We are at step :  4</span></a>
 <a class="sourceLine" id="cb51-27" title="27"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
 <a class="sourceLine" id="cb51-28" title="28"><span class="co">#&gt;  1</span></a>
 <a class="sourceLine" id="cb51-29" title="29"><span class="co">#&gt;  2.........................</span></a>
 <a class="sourceLine" id="cb51-30" title="30"><span class="co">#&gt;  3.........................</span></a>
 <a class="sourceLine" id="cb51-31" title="31"><span class="co">#&gt;  4.........................</span></a>
-<a class="sourceLine" id="cb51-32" title="32"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00138</span></a>
+<a class="sourceLine" id="cb51-32" title="32"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00142</span></a>
 <a class="sourceLine" id="cb51-33" title="33"><span class="co">#&gt; We are at step :  5</span></a>
 <a class="sourceLine" id="cb51-34" title="34"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
 <a class="sourceLine" id="cb51-35" title="35"><span class="co">#&gt;  1</span></a>
 <a class="sourceLine" id="cb51-36" title="36"><span class="co">#&gt;  2.........................</span></a>
 <a class="sourceLine" id="cb51-37" title="37"><span class="co">#&gt;  3.........................</span></a>
 <a class="sourceLine" id="cb51-38" title="38"><span class="co">#&gt;  4.........................</span></a>
-<a class="sourceLine" id="cb51-39" title="39"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00103</span></a>
+<a class="sourceLine" id="cb51-39" title="39"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00117</span></a>
 <a class="sourceLine" id="cb51-40" title="40"><span class="co">#&gt; We are at step :  6</span></a>
 <a class="sourceLine" id="cb51-41" title="41"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
 <a class="sourceLine" id="cb51-42" title="42"><span class="co">#&gt;  1</span></a>
 <a class="sourceLine" id="cb51-43" title="43"><span class="co">#&gt;  2.........................</span></a>
 <a class="sourceLine" id="cb51-44" title="44"><span class="co">#&gt;  3.........................</span></a>
 <a class="sourceLine" id="cb51-45" title="45"><span class="co">#&gt;  4.........................</span></a>
-<a class="sourceLine" id="cb51-46" title="46"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00075</span></a></code></pre></div>
+<a class="sourceLine" id="cb51-46" title="46"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00086</span></a></code></pre></div>
 <p><img src="reference/figures/README-netinfRobust-1.png" width="100%"><img src="reference/figures/README-netinfRobust-2.png" width="100%"></p>
 <p>Plot of the inferred F matrix</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(Net_inf_P_Robust, <span class="dt">choice=</span><span class="st">"F"</span>)</a></code></pre></div>
@@ -1136,21 +1135,21 @@
 <a class="sourceLine" id="cb54-16" title="16"><span class="co">#&gt;  2.........................</span></a>
 <a class="sourceLine" id="cb54-17" title="17"><span class="co">#&gt;  3.........................</span></a>
 <a class="sourceLine" id="cb54-18" title="18"><span class="co">#&gt;  4.........................</span></a>
-<a class="sourceLine" id="cb54-19" title="19"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00179</span></a>
+<a class="sourceLine" id="cb54-19" title="19"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00174</span></a>
 <a class="sourceLine" id="cb54-20" title="20"><span class="co">#&gt; We are at step :  3</span></a>
 <a class="sourceLine" id="cb54-21" title="21"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
 <a class="sourceLine" id="cb54-22" title="22"><span class="co">#&gt;  1</span></a>
 <a class="sourceLine" id="cb54-23" title="23"><span class="co">#&gt;  2.........................</span></a>
 <a class="sourceLine" id="cb54-24" title="24"><span class="co">#&gt;  3.........................</span></a>
 <a class="sourceLine" id="cb54-25" title="25"><span class="co">#&gt;  4.........................</span></a>
-<a class="sourceLine" id="cb54-26" title="26"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00132</span></a>
+<a class="sourceLine" id="cb54-26" title="26"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00124</span></a>
 <a class="sourceLine" id="cb54-27" title="27"><span class="co">#&gt; We are at step :  4</span></a>
 <a class="sourceLine" id="cb54-28" title="28"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
 <a class="sourceLine" id="cb54-29" title="29"><span class="co">#&gt;  1</span></a>
 <a class="sourceLine" id="cb54-30" title="30"><span class="co">#&gt;  2.........................</span></a>
 <a class="sourceLine" id="cb54-31" title="31"><span class="co">#&gt;  3.........................</span></a>
 <a class="sourceLine" id="cb54-32" title="32"><span class="co">#&gt;  4.........................</span></a>
-<a class="sourceLine" id="cb54-33" title="33"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00093</span></a></code></pre></div>
+<a class="sourceLine" id="cb54-33" title="33"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00094</span></a></code></pre></div>
 <p><img src="reference/figures/README-netinfSB-1.png" width="100%"><img src="reference/figures/README-netinfSB-2.png" width="100%"></p>
 <pre><code>#&gt; 
 #&gt; Attachement du package : 'Patterns'
@@ -1167,19 +1166,23 @@
 <a class="sourceLine" id="cb58-2" title="2"><span class="co">#&gt; We are at step :  1</span></a>
 <a class="sourceLine" id="cb58-3" title="3"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
 <a class="sourceLine" id="cb58-4" title="4"><span class="co">#&gt;  1</span></a>
-<a class="sourceLine" id="cb58-5" title="5"><span class="co">#&gt; Le chargement a nécessité le package : SelectBoost</span></a>
-<a class="sourceLine" id="cb58-6" title="6"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb58-7" title="7"><span class="co">#&gt;  2.........................</span></a>
-<a class="sourceLine" id="cb58-8" title="8"><span class="co">#&gt;  3.........................</span></a>
-<a class="sourceLine" id="cb58-9" title="9"><span class="co">#&gt;  4.........................</span></a>
-<a class="sourceLine" id="cb58-10" title="10"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.007</span></a>
-<a class="sourceLine" id="cb58-11" title="11"><span class="co">#&gt; We are at step :  2</span></a>
-<a class="sourceLine" id="cb58-12" title="12"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
-<a class="sourceLine" id="cb58-13" title="13"><span class="co">#&gt;  1</span></a>
-<a class="sourceLine" id="cb58-14" title="14"><span class="co">#&gt;  2.........................</span></a>
-<a class="sourceLine" id="cb58-15" title="15"><span class="co">#&gt;  3.........................</span></a>
-<a class="sourceLine" id="cb58-16" title="16"><span class="co">#&gt;  4.........................</span></a>
-<a class="sourceLine" id="cb58-17" title="17"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00057</span></a></code></pre></div>
+<a class="sourceLine" id="cb58-5" title="5"><span class="co">#&gt;  2.........................</span></a>
+<a class="sourceLine" id="cb58-6" title="6"><span class="co">#&gt;  3.........................</span></a>
+<a class="sourceLine" id="cb58-7" title="7"><span class="co">#&gt;  4.........................</span></a>
+<a class="sourceLine" id="cb58-8" title="8"><span class="co">#&gt; The convergence of the network is (L1 norm) : 0.007</span></a>
+<a class="sourceLine" id="cb58-9" title="9"><span class="co">#&gt; We are at step :  2</span></a>
+<a class="sourceLine" id="cb58-10" title="10"><span class="co">#&gt; Computing Group (out of 4) : </span></a>
+<a class="sourceLine" id="cb58-11" title="11"><span class="co">#&gt;  1</span></a>
+<a class="sourceLine" id="cb58-12" title="12"><span class="co">#&gt;  2.........................</span></a>
+<a class="sourceLine" id="cb58-13" title="13"><span class="co">#&gt;  3.........................</span></a>
+<a class="sourceLine" id="cb58-14" title="14"><span class="co">#&gt;  4.Error in predmat[which, seq(nlami)] &lt;- preds : </span></a>
+<a class="sourceLine" id="cb58-15" title="15"><span class="co">#&gt;   l'argument de remplacement est de longueur nulle</span></a>
+<a class="sourceLine" id="cb58-16" title="16"><span class="co">#&gt; ! Error in predmat[which, seq(nlami)] &lt;- preds : </span></a>
+<a class="sourceLine" id="cb58-17" title="17"><span class="co">#&gt;   l'argument de remplacement est de longueur nulle</span></a>
+<a class="sourceLine" id="cb58-18" title="18"><span class="co">#&gt;  </span></a>
+<a class="sourceLine" id="cb58-19" title="19"><span class="co">#&gt; Error in LL[-varii] &lt;- 0 : objet 'varii' introuvable</span></a>
+<a class="sourceLine" id="cb58-20" title="20"><span class="co">#&gt; ........................</span></a>
+<a class="sourceLine" id="cb58-21" title="21"><span class="co">#&gt; The convergence of the network is (L1 norm) : 5e-04</span></a></code></pre></div>
 <p><img src="reference/figures/README-netinflibrary()-1.png" width="100%"><img src="reference/figures/README-netinflibrary()-2.png" width="100%"></p>
 <pre><code>#&gt; 
 #&gt; Attachement du package : 'Patterns'
@@ -1400,64 +1403,62 @@
 <a class="sourceLine" id="cb72-33" title="33"><span class="co">#&gt; [1] 6</span></a></code></pre></div>
 <p>Summarize the final selection:</p>
 <div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(Selection)</a>
-<a class="sourceLine" id="cb73-2" title="2"><span class="co">#&gt; Le chargement a nécessité le package : cluster</span></a>
-<a class="sourceLine" id="cb73-3" title="3"><span class="co">#&gt;       US60               US90               US210        </span></a>
-<a class="sourceLine" id="cb73-4" title="4"><span class="co">#&gt;  Min.   :-2.76841   Min.   :-2.369525   Min.   :-1.6147  </span></a>
-<a class="sourceLine" id="cb73-5" title="5"><span class="co">#&gt;  1st Qu.:-0.18028   1st Qu.:-0.181425   1st Qu.: 0.1985  </span></a>
-<a class="sourceLine" id="cb73-6" title="6"><span class="co">#&gt;  Median : 0.05675   Median :-0.001924   Median : 0.9886  </span></a>
-<a class="sourceLine" id="cb73-7" title="7"><span class="co">#&gt;  Mean   : 0.05764   Mean   : 0.278275   Mean   : 0.9611  </span></a>
-<a class="sourceLine" id="cb73-8" title="8"><span class="co">#&gt;  3rd Qu.: 0.22438   3rd Qu.: 0.664063   3rd Qu.: 1.6918  </span></a>
-<a class="sourceLine" id="cb73-9" title="9"><span class="co">#&gt;  Max.   : 2.86440   Max.   : 4.284675   Max.   : 3.6727  </span></a>
-<a class="sourceLine" id="cb73-10" title="10"><span class="co">#&gt;      US390               US60              US90         </span></a>
-<a class="sourceLine" id="cb73-11" title="11"><span class="co">#&gt;  Min.   :-2.60480   Min.   :-2.7932   Min.   :-2.49245  </span></a>
-<a class="sourceLine" id="cb73-12" title="12"><span class="co">#&gt;  1st Qu.:-0.03884   1st Qu.:-0.5547   1st Qu.:-0.01944  </span></a>
-<a class="sourceLine" id="cb73-13" title="13"><span class="co">#&gt;  Median : 0.31766   Median :-0.3089   Median : 0.14977  </span></a>
-<a class="sourceLine" id="cb73-14" title="14"><span class="co">#&gt;  Mean   : 0.26428   Mean   :-0.2917   Mean   : 0.33720  </span></a>
-<a class="sourceLine" id="cb73-15" title="15"><span class="co">#&gt;  3rd Qu.: 0.57117   3rd Qu.:-0.1725   3rd Qu.: 0.48744  </span></a>
-<a class="sourceLine" id="cb73-16" title="16"><span class="co">#&gt;  Max.   : 2.54704   Max.   : 2.0267   Max.   : 3.37588  </span></a>
-<a class="sourceLine" id="cb73-17" title="17"><span class="co">#&gt;      US210              US390               US60         </span></a>
-<a class="sourceLine" id="cb73-18" title="18"><span class="co">#&gt;  Min.   :-1.21606   Min.   :-1.74407   Min.   :-2.94444  </span></a>
-<a class="sourceLine" id="cb73-19" title="19"><span class="co">#&gt;  1st Qu.: 0.07966   1st Qu.:-0.26548   1st Qu.:-0.23136  </span></a>
-<a class="sourceLine" id="cb73-20" title="20"><span class="co">#&gt;  Median : 0.72019   Median : 0.03616   Median :-0.04761  </span></a>
-<a class="sourceLine" id="cb73-21" title="21"><span class="co">#&gt;  Mean   : 0.73063   Mean   : 0.06753   Mean   : 0.22115  </span></a>
-<a class="sourceLine" id="cb73-22" title="22"><span class="co">#&gt;  3rd Qu.: 1.26164   3rd Qu.: 0.32496   3rd Qu.: 0.33157  </span></a>
-<a class="sourceLine" id="cb73-23" title="23"><span class="co">#&gt;  Max.   : 3.87950   Max.   : 2.83321   Max.   : 3.31723  </span></a>
-<a class="sourceLine" id="cb73-24" title="24"><span class="co">#&gt;       US90             US210             US390              US60         </span></a>
-<a class="sourceLine" id="cb73-25" title="25"><span class="co">#&gt;  Min.   :-0.9721   Min.   :-1.9349   Min.   :-3.8418   Min.   :-2.85438  </span></a>
-<a class="sourceLine" id="cb73-26" title="26"><span class="co">#&gt;  1st Qu.:-0.1027   1st Qu.: 0.3254   1st Qu.:-0.1592   1st Qu.:-0.06031  </span></a>
-<a class="sourceLine" id="cb73-27" title="27"><span class="co">#&gt;  Median : 0.2548   Median : 1.2512   Median : 0.1538   Median : 0.03601  </span></a>
-<a class="sourceLine" id="cb73-28" title="28"><span class="co">#&gt;  Mean   : 0.6479   Mean   : 1.0485   Mean   : 0.1219   Mean   : 0.14593  </span></a>
-<a class="sourceLine" id="cb73-29" title="29"><span class="co">#&gt;  3rd Qu.: 1.0737   3rd Qu.: 1.8513   3rd Qu.: 0.6268   3rd Qu.: 0.24568  </span></a>
-<a class="sourceLine" id="cb73-30" title="30"><span class="co">#&gt;  Max.   : 4.3604   Max.   : 4.4860   Max.   : 1.9886   Max.   : 1.82903  </span></a>
-<a class="sourceLine" id="cb73-31" title="31"><span class="co">#&gt;       US90              US210              US390         </span></a>
-<a class="sourceLine" id="cb73-32" title="32"><span class="co">#&gt;  Min.   :-0.90355   Min.   :-0.83324   Min.   :-0.96834  </span></a>
-<a class="sourceLine" id="cb73-33" title="33"><span class="co">#&gt;  1st Qu.:-0.08464   1st Qu.: 0.07605   1st Qu.: 0.01569  </span></a>
-<a class="sourceLine" id="cb73-34" title="34"><span class="co">#&gt;  Median : 0.17135   Median : 0.52176   Median : 0.17370  </span></a>
-<a class="sourceLine" id="cb73-35" title="35"><span class="co">#&gt;  Mean   : 0.41929   Mean   : 0.62446   Mean   : 0.23854  </span></a>
-<a class="sourceLine" id="cb73-36" title="36"><span class="co">#&gt;  3rd Qu.: 0.75565   3rd Qu.: 1.07821   3rd Qu.: 0.45189  </span></a>
-<a class="sourceLine" id="cb73-37" title="37"><span class="co">#&gt;  Max.   : 3.60640   Max.   : 2.27744   Max.   : 1.90880  </span></a>
-<a class="sourceLine" id="cb73-38" title="38"><span class="co">#&gt;       US60               US90              US210             US390        </span></a>
-<a class="sourceLine" id="cb73-39" title="39"><span class="co">#&gt;  Min.   :-1.38002   Min.   :-2.94444   Min.   :-1.0271   Min.   :-1.3636  </span></a>
-<a class="sourceLine" id="cb73-40" title="40"><span class="co">#&gt;  1st Qu.:-0.19910   1st Qu.:-0.01758   1st Qu.: 0.1459   1st Qu.:-0.1386  </span></a>
-<a class="sourceLine" id="cb73-41" title="41"><span class="co">#&gt;  Median :-0.07962   Median : 0.16080   Median : 0.7430   Median : 0.1492  </span></a>
-<a class="sourceLine" id="cb73-42" title="42"><span class="co">#&gt;  Mean   : 0.12972   Mean   : 0.37123   Mean   : 0.7972   Mean   : 0.1271  </span></a>
-<a class="sourceLine" id="cb73-43" title="43"><span class="co">#&gt;  3rd Qu.: 0.26113   3rd Qu.: 0.61933   3rd Qu.: 1.3922   3rd Qu.: 0.4825  </span></a>
-<a class="sourceLine" id="cb73-44" title="44"><span class="co">#&gt;  Max.   : 2.31074   Max.   : 3.24454   Max.   : 3.6213   Max.   : 1.5979  </span></a>
-<a class="sourceLine" id="cb73-45" title="45"><span class="co">#&gt;       US60               US90              US210        </span></a>
-<a class="sourceLine" id="cb73-46" title="46"><span class="co">#&gt;  Min.   :-1.79176   Min.   :-3.20791   Min.   :-1.4716  </span></a>
-<a class="sourceLine" id="cb73-47" title="47"><span class="co">#&gt;  1st Qu.:-0.09822   1st Qu.:-0.03963   1st Qu.: 0.1292  </span></a>
-<a class="sourceLine" id="cb73-48" title="48"><span class="co">#&gt;  Median : 0.03378   Median : 0.28261   Median : 0.8392  </span></a>
-<a class="sourceLine" id="cb73-49" title="49"><span class="co">#&gt;  Mean   : 0.27978   Mean   : 0.52529   Mean   : 0.7903  </span></a>
-<a class="sourceLine" id="cb73-50" title="50"><span class="co">#&gt;  3rd Qu.: 0.33548   3rd Qu.: 1.03256   3rd Qu.: 1.4416  </span></a>
-<a class="sourceLine" id="cb73-51" title="51"><span class="co">#&gt;  Max.   : 3.16035   Max.   : 3.19975   Max.   : 2.8027  </span></a>
-<a class="sourceLine" id="cb73-52" title="52"><span class="co">#&gt;      US390         </span></a>
-<a class="sourceLine" id="cb73-53" title="53"><span class="co">#&gt;  Min.   :-1.95883  </span></a>
-<a class="sourceLine" id="cb73-54" title="54"><span class="co">#&gt;  1st Qu.:-0.04786  </span></a>
-<a class="sourceLine" id="cb73-55" title="55"><span class="co">#&gt;  Median : 0.22472  </span></a>
-<a class="sourceLine" id="cb73-56" title="56"><span class="co">#&gt;  Mean   : 0.21171  </span></a>
-<a class="sourceLine" id="cb73-57" title="57"><span class="co">#&gt;  3rd Qu.: 0.42511  </span></a>
-<a class="sourceLine" id="cb73-58" title="58"><span class="co">#&gt;  Max.   : 2.14903</span></a>
-<a class="sourceLine" id="cb73-59" title="59"><span class="co">#&gt; Le chargement a nécessité le package : lattice</span></a></code></pre></div>
+<a class="sourceLine" id="cb73-2" title="2"><span class="co">#&gt;       US60               US90               US210        </span></a>
+<a class="sourceLine" id="cb73-3" title="3"><span class="co">#&gt;  Min.   :-2.76841   Min.   :-2.369525   Min.   :-1.6147  </span></a>
+<a class="sourceLine" id="cb73-4" title="4"><span class="co">#&gt;  1st Qu.:-0.18028   1st Qu.:-0.181425   1st Qu.: 0.1985  </span></a>
+<a class="sourceLine" id="cb73-5" title="5"><span class="co">#&gt;  Median : 0.05675   Median :-0.001924   Median : 0.9886  </span></a>
+<a class="sourceLine" id="cb73-6" title="6"><span class="co">#&gt;  Mean   : 0.05764   Mean   : 0.278275   Mean   : 0.9611  </span></a>
+<a class="sourceLine" id="cb73-7" title="7"><span class="co">#&gt;  3rd Qu.: 0.22438   3rd Qu.: 0.664063   3rd Qu.: 1.6918  </span></a>
+<a class="sourceLine" id="cb73-8" title="8"><span class="co">#&gt;  Max.   : 2.86440   Max.   : 4.284675   Max.   : 3.6727  </span></a>
+<a class="sourceLine" id="cb73-9" title="9"><span class="co">#&gt;      US390               US60              US90         </span></a>
+<a class="sourceLine" id="cb73-10" title="10"><span class="co">#&gt;  Min.   :-2.60480   Min.   :-2.7932   Min.   :-2.49245  </span></a>
+<a class="sourceLine" id="cb73-11" title="11"><span class="co">#&gt;  1st Qu.:-0.03884   1st Qu.:-0.5547   1st Qu.:-0.01944  </span></a>
+<a class="sourceLine" id="cb73-12" title="12"><span class="co">#&gt;  Median : 0.31766   Median :-0.3089   Median : 0.14977  </span></a>
+<a class="sourceLine" id="cb73-13" title="13"><span class="co">#&gt;  Mean   : 0.26428   Mean   :-0.2917   Mean   : 0.33720  </span></a>
+<a class="sourceLine" id="cb73-14" title="14"><span class="co">#&gt;  3rd Qu.: 0.57117   3rd Qu.:-0.1725   3rd Qu.: 0.48744  </span></a>
+<a class="sourceLine" id="cb73-15" title="15"><span class="co">#&gt;  Max.   : 2.54704   Max.   : 2.0267   Max.   : 3.37588  </span></a>
+<a class="sourceLine" id="cb73-16" title="16"><span class="co">#&gt;      US210              US390               US60         </span></a>
+<a class="sourceLine" id="cb73-17" title="17"><span class="co">#&gt;  Min.   :-1.21606   Min.   :-1.74407   Min.   :-2.94444  </span></a>
+<a class="sourceLine" id="cb73-18" title="18"><span class="co">#&gt;  1st Qu.: 0.07966   1st Qu.:-0.26548   1st Qu.:-0.23136  </span></a>
+<a class="sourceLine" id="cb73-19" title="19"><span class="co">#&gt;  Median : 0.72019   Median : 0.03616   Median :-0.04761  </span></a>
+<a class="sourceLine" id="cb73-20" title="20"><span class="co">#&gt;  Mean   : 0.73063   Mean   : 0.06753   Mean   : 0.22115  </span></a>
+<a class="sourceLine" id="cb73-21" title="21"><span class="co">#&gt;  3rd Qu.: 1.26164   3rd Qu.: 0.32496   3rd Qu.: 0.33157  </span></a>
+<a class="sourceLine" id="cb73-22" title="22"><span class="co">#&gt;  Max.   : 3.87950   Max.   : 2.83321   Max.   : 3.31723  </span></a>
+<a class="sourceLine" id="cb73-23" title="23"><span class="co">#&gt;       US90             US210             US390              US60         </span></a>
+<a class="sourceLine" id="cb73-24" title="24"><span class="co">#&gt;  Min.   :-0.9721   Min.   :-1.9349   Min.   :-3.8418   Min.   :-2.85438  </span></a>
+<a class="sourceLine" id="cb73-25" title="25"><span class="co">#&gt;  1st Qu.:-0.1027   1st Qu.: 0.3254   1st Qu.:-0.1592   1st Qu.:-0.06031  </span></a>
+<a class="sourceLine" id="cb73-26" title="26"><span class="co">#&gt;  Median : 0.2548   Median : 1.2512   Median : 0.1538   Median : 0.03601  </span></a>
+<a class="sourceLine" id="cb73-27" title="27"><span class="co">#&gt;  Mean   : 0.6479   Mean   : 1.0485   Mean   : 0.1219   Mean   : 0.14593  </span></a>
+<a class="sourceLine" id="cb73-28" title="28"><span class="co">#&gt;  3rd Qu.: 1.0737   3rd Qu.: 1.8513   3rd Qu.: 0.6268   3rd Qu.: 0.24568  </span></a>
+<a class="sourceLine" id="cb73-29" title="29"><span class="co">#&gt;  Max.   : 4.3604   Max.   : 4.4860   Max.   : 1.9886   Max.   : 1.82903  </span></a>
+<a class="sourceLine" id="cb73-30" title="30"><span class="co">#&gt;       US90              US210              US390         </span></a>
+<a class="sourceLine" id="cb73-31" title="31"><span class="co">#&gt;  Min.   :-0.90355   Min.   :-0.83324   Min.   :-0.96834  </span></a>
+<a class="sourceLine" id="cb73-32" title="32"><span class="co">#&gt;  1st Qu.:-0.08464   1st Qu.: 0.07605   1st Qu.: 0.01569  </span></a>
+<a class="sourceLine" id="cb73-33" title="33"><span class="co">#&gt;  Median : 0.17135   Median : 0.52176   Median : 0.17370  </span></a>
+<a class="sourceLine" id="cb73-34" title="34"><span class="co">#&gt;  Mean   : 0.41929   Mean   : 0.62446   Mean   : 0.23854  </span></a>
+<a class="sourceLine" id="cb73-35" title="35"><span class="co">#&gt;  3rd Qu.: 0.75565   3rd Qu.: 1.07821   3rd Qu.: 0.45189  </span></a>
+<a class="sourceLine" id="cb73-36" title="36"><span class="co">#&gt;  Max.   : 3.60640   Max.   : 2.27744   Max.   : 1.90880  </span></a>
+<a class="sourceLine" id="cb73-37" title="37"><span class="co">#&gt;       US60               US90              US210             US390        </span></a>
+<a class="sourceLine" id="cb73-38" title="38"><span class="co">#&gt;  Min.   :-1.38002   Min.   :-2.94444   Min.   :-1.0271   Min.   :-1.3636  </span></a>
+<a class="sourceLine" id="cb73-39" title="39"><span class="co">#&gt;  1st Qu.:-0.19910   1st Qu.:-0.01758   1st Qu.: 0.1459   1st Qu.:-0.1386  </span></a>
+<a class="sourceLine" id="cb73-40" title="40"><span class="co">#&gt;  Median :-0.07962   Median : 0.16080   Median : 0.7430   Median : 0.1492  </span></a>
+<a class="sourceLine" id="cb73-41" title="41"><span class="co">#&gt;  Mean   : 0.12972   Mean   : 0.37123   Mean   : 0.7972   Mean   : 0.1271  </span></a>
+<a class="sourceLine" id="cb73-42" title="42"><span class="co">#&gt;  3rd Qu.: 0.26113   3rd Qu.: 0.61933   3rd Qu.: 1.3922   3rd Qu.: 0.4825  </span></a>
+<a class="sourceLine" id="cb73-43" title="43"><span class="co">#&gt;  Max.   : 2.31074   Max.   : 3.24454   Max.   : 3.6213   Max.   : 1.5979  </span></a>
+<a class="sourceLine" id="cb73-44" title="44"><span class="co">#&gt;       US60               US90              US210        </span></a>
+<a class="sourceLine" id="cb73-45" title="45"><span class="co">#&gt;  Min.   :-1.79176   Min.   :-3.20791   Min.   :-1.4716  </span></a>
+<a class="sourceLine" id="cb73-46" title="46"><span class="co">#&gt;  1st Qu.:-0.09822   1st Qu.:-0.03963   1st Qu.: 0.1292  </span></a>
+<a class="sourceLine" id="cb73-47" title="47"><span class="co">#&gt;  Median : 0.03378   Median : 0.28261   Median : 0.8392  </span></a>
+<a class="sourceLine" id="cb73-48" title="48"><span class="co">#&gt;  Mean   : 0.27978   Mean   : 0.52529   Mean   : 0.7903  </span></a>
+<a class="sourceLine" id="cb73-49" title="49"><span class="co">#&gt;  3rd Qu.: 0.33548   3rd Qu.: 1.03256   3rd Qu.: 1.4416  </span></a>
+<a class="sourceLine" id="cb73-50" title="50"><span class="co">#&gt;  Max.   : 3.16035   Max.   : 3.19975   Max.   : 2.8027  </span></a>
+<a class="sourceLine" id="cb73-51" title="51"><span class="co">#&gt;      US390         </span></a>
+<a class="sourceLine" id="cb73-52" title="52"><span class="co">#&gt;  Min.   :-1.95883  </span></a>
+<a class="sourceLine" id="cb73-53" title="53"><span class="co">#&gt;  1st Qu.:-0.04786  </span></a>
+<a class="sourceLine" id="cb73-54" title="54"><span class="co">#&gt;  Median : 0.22472  </span></a>
+<a class="sourceLine" id="cb73-55" title="55"><span class="co">#&gt;  Mean   : 0.21171  </span></a>
+<a class="sourceLine" id="cb73-56" title="56"><span class="co">#&gt;  3rd Qu.: 0.42511  </span></a>
+<a class="sourceLine" id="cb73-57" title="57"><span class="co">#&gt;  Max.   : 2.14903</span></a></code></pre></div>
 <p><img src="reference/figures/README-microselection6-1.png" width="100%"><img src="reference/figures/README-microselection6-2.png" width="100%"><img src="reference/figures/README-microselection6-3.png" width="100%"></p>
 <p>Plot the final selection:</p>
 <div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(Selection)</a></code></pre></div>

@@ -1,0 +1,2027 @@
+\nonstopmode{}
+\documentclass[a4paper]{book}
+\usepackage[times,inconsolata,hyper]{Rd}
+\usepackage{makeidx}
+\usepackage[utf8]{inputenc} % @SET ENCODING@
+% \usepackage{graphicx} % @USE GRAPHICX@
+\makeindex{}
+\begin{document}
+\chapter*{}
+\begin{center}
+{\textbf{\huge Package `Patterns'}}
+\par\bigskip{\large \today}
+\end{center}
+\begin{description}
+\raggedright{}
+\inputencoding{utf8}
+\item[Type]\AsIs{Package}
+\item[Title]\AsIs{Deciphering Biological Networks with Patterned Heterogeneous
+Measurements}
+\item[Version]\AsIs{0.99}
+\item[Date]\AsIs{2019-05-03}
+\item[Depends]\AsIs{R (>= 2.10)}
+\item[biocViews]\AsIs{}
+\item[Imports]\AsIs{abind, animation, Biobase, c060, cluster, elasticnet, glmnet,
+gplots, graphics, grDevices, grid, igraph, jetset, KernSmooth,
+lars, lattice, limma, magic, methods, Mfuzz, movMF, msgps,
+nnls, pixmap, plotrix, SelectBoost, splines, spls, stats4,
+survival, tnet, VGAM, WGCNA}
+\item[Suggests]\AsIs{repmis, biomaRt, R.rsp, CascadeData, knitr, rmarkdown}
+\item[Author]\AsIs{Frederic Bertrand [cre, aut] (<https://orcid.org/0000-0002-0837-8281>), Myriam Maumy-Bertrand [aut] (<https://orcid.org/0000-0002-4615-1512>)}
+\item[Maintainer]\AsIs{Frederic Bertrand }\email{frederic.bertrand@math.unistra.fr}\AsIs{}
+\item[Description]\AsIs{A modeling tool dedicated to biological network modeling. It allows for single or joint modeling of, for instance, genes and proteins. It starts with the selection of the actors that will be the used in the reverse engineering upcoming step. An actor can be included in that selection based on its differential measurement (for instance gene expression or protein abundance) or on its time course profile. Wrappers for actors clustering functions and cluster analysis are provided. It also allows reverse engineering of biological networks taking into account the observed time course patterns of the actors. Many inference functions are provided and dedicated to get specific features for the inferred network such as sparsity, robust links, high confidence links or stable through resampling links. Some simulation and prediction tools are also available for cascade networks. Example of use with microarray or RNA-Seq data are provided.}
+\item[License]\AsIs{GPL (>= 2)}
+\item[Encoding]\AsIs{UTF-8}
+\item[Collate]\AsIs{global.R micro\_array.R network.R micro\_array-network.R
+micropredict.R}
+\item[Classification/MSC]\AsIs{62J05, 62J07, 62J99, 92C42}
+\item[VignetteBuilder]\AsIs{knitr}
+\item[RoxygenNote]\AsIs{6.1.1}
+\item[URL]\AsIs{}\url{http://www-irma.u-strasbg.fr/~fbertran/}\AsIs{,
+}\url{https://github.com/fbertran/Patterns}\AsIs{}
+\item[BugReports]\AsIs{}\url{https://github.com/fbertran/Patterns/issues}\AsIs{}
+\item[NeedsCompilation]\AsIs{no}
+\end{description}
+\Rdcontents{\R{} topics documented:}
+\inputencoding{utf8}
+\HeaderA{Patterns-package}{The Patterns Package}{Patterns.Rdash.package}
+\aliasA{Patterns}{Patterns-package}{Patterns}
+\keyword{package}{Patterns-package}
+%
+\begin{Description}\relax
+A modeling tool dedicated to biological network modeling. It allows for single or joint modeling of, for instance, genes and proteins. It starts with the selection of the actors that will be the used in the reverse engineering upcoming step. An actor can be included in that selection based on its differential measurement (for instance gene expression or protein abundance) or on its time course profile. Wrappers for actors clustering functions and cluster analysis are provided. It also allows reverse engineering of biological networks taking into account the observed time course patterns of the actors. Many inference functions are provided and dedicated to get specific features for the inferred network such as sparsity, robust links, high confidence links or stable through resampling links. Some simulation and prediction tools are also available for cascade networks. Example of use with microarray or RNA-Seq data are provided.
+\end{Description}
+%
+\begin{Details}\relax
+
+\Tabular{ll}{
+Package: & Patterns\\{}
+Type: & Package\\{}
+Version: & 0.9\\{}
+Date: & 2019-05-01\\{}
+License: & GNU 2.0\\{}
+}
+
+\end{Details}
+%
+\begin{Author}\relax
+This package has been written by Frederic Bertrand in collaboration with Myriam Maumy-Bertrand.
+Maintainer:  <fbertran@math.unistra.fr>
+\end{Author}
+\inputencoding{utf8}
+\HeaderA{analyze\_network}{Analysing the network}{analyze.Rul.network}
+\aliasA{analyze\_network,network-method}{analyze\_network}{analyze.Rul.network,network.Rdash.method}
+\aliasA{analyze\_network-methods}{analyze\_network}{analyze.Rul.network.Rdash.methods}
+\keyword{methods}{analyze\_network}
+%
+\begin{Description}\relax
+Calculates some indicators for each node in the network.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+	analyze_network(Omega,nv,...)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{Omega}] a network object
+\item[\code{nv}] the level of cutoff at which the analysis should be done	
+\item[\code{...}] Optional arguments
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+A matrix containing, for each node, its betweenness,its degree, its output, its closeness.
+\end{Value}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+data(network)
+analyze_network(network,nv=0)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{as.micro\_array}{Coerce a matrix into a micro\_array object.}{as.micro.Rul.array}
+%
+\begin{Description}\relax
+Coerce a matrix into a micro\_array object.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+as.micro_array(M, time, subject, name_probe = NULL, gene_ID = NULL, 
+group = 0, start_time = 0)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{M}] 
+A matrix. Contains the microarray measurements. Should be of size N * K, with N the number of genes and K=T*P with T the number of time points, and P the number of subjects. This matrix should be created using cbind(M1,M2,...) with M1 a N*T matrix with the measurements for patient 1, M2 a N*T matrix with the measurements for patient 2.
+
+\item[\code{time}] A vector. The time points measurements
+\item[\code{subject}] The number of subjects.
+\item[\code{name\_probe}] Vector with the row names of the micro array. 
+\item[\code{gene\_ID}] Vector with the actors' IDs of the row names of the micro array.
+\item[\code{group}] Vector with the actors' groups of the row names of the micro array.
+\item[\code{start\_time}] Vector with the actors' starting time (i.e. the time it is thought to begin to have an effect on another actor in the network).
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+A micro\_array object.
+\end{Value}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+if(require(CascadeData)){
+	data(micro_US, package="CascadeData")
+	micro_US<-as.micro_array(micro_US[1:100,],time=c(60,90,210,390),subject=6)
+	plot(micro_US)
+	}
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{CascadeFinit}{Create initial F matrices for cascade networks inference.}{CascadeFinit}
+\keyword{models}{CascadeFinit}
+%
+\begin{Description}\relax
+This is an helper function to create initial values F matrices for cascade networks.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+CascadeFinit(sqF, ngrp, low.trig = TRUE)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{sqF}] Size of an F cell
+\item[\code{ngrp}] Number of groups
+\item[\code{low.trig}] Fill the lower trigonal matrices with ones
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+An array of sizes c(sqF, sqF, ngrp).
+\end{Value}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+CascadeFinit(3,2)
+CascadeFinit(4,3)
+plotF(CascadeFinit(4,3),choice = "F")
+CascadeFinit(3,2,low.trig=FALSE)
+CascadeFinit(4,3,low.trig=FALSE)
+plotF(CascadeFinit(4,3,low.trig=FALSE),choice = "F")
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{CascadeFshape}{Create F matrices shaped for cascade networks inference.}{CascadeFshape}
+\keyword{models}{CascadeFshape}
+%
+\begin{Description}\relax
+This is an helper function to create F matrices with special shape used for cascade networks.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+CascadeFshape(sqF, ngrp)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{sqF}] Size of an F cell
+\item[\code{ngrp}] Number of groups
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+An array of sizes c(sqF, sqF, ngrp).
+\end{Value}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+CascadeFshape(3,2)
+plotF(CascadeFshape(3,2),choice = "Fshape")
+CascadeFshape(4,3)
+plotF(CascadeFshape(4,3),choice = "Fshape")
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{CLL}{Expression data from healthy and malignant (chronic lymphocytic leukemia, CLL) human B-lymphocytes after B-cell receptor stimulation (GSE 39411 dataset)}{CLL}
+\keyword{datasets}{CLL}
+%
+\begin{Description}\relax
+B-cells were negatively selected from healthy donors and previously untreated CLL patients. BCR stimulated and unstimulated control B-cells were treated at four time points after stimulation for total RNA extraction and hybridization on Affymetrix microarrays.
+
+The dataset provided with package is the first five lines of the full dataset. The full dataset can be downloaded from the github repository of the package (https://raw.githubusercontent.com/fbertran/Patterns/master/add\_data/CLL.RData).
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+data("CLL")
+\end{verbatim}
+\end{Usage}
+%
+\begin{Format}
+The format is:
+chr "CLL"
+\end{Format}
+%
+\begin{Details}\relax
+Three different cell populations (6 healthy B-lymphocytes, 6 leukemic CLL B-lymphocyte of indolent form and 5 leukemic CLL B-lymphocyte of aggressive form) were stimulated in vitro with an anti-IgM antibody, activating the B-cell receptor (BCR). We analyzed the gene expression at 4 time points (60, 90, 210 and 390 minutes). Each gene expression measurement is performed both in stimulated cells and in control unstimulated cells.
+For one aggressive CLL case, we silenced expression of DUSP1 by transfecting DUSP1-specific RNAi and, as a control, transfected cells with a non-targeting RNAi. We then stimulated the BCR of these cells and analyzed the gene expression at the same time points in stimulated cells and in control unstimulated cells.
+\end{Details}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Source}\relax
+https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE39411
+\end{Source}
+%
+\begin{References}\relax
+Vallat, L., Kemper, C. A., Jung, N., Maumy-Bertrand, M., Bertrand, F., Meyer, N., … Bahram, S. (2013). Reverse-engineering the genetic circuitry of a cancer cell with predicted intervention in chronic lymphocytic leukemia. Proceedings of the National Academy of Sciences of the United States of America, 110(2), 459–464. 
+\end{References}
+%
+\begin{Examples}
+\begin{ExampleCode}
+data(CLL)
+str(CLL)
+
+
+CLLfile <- "https://raw.githubusercontent.com/fbertran/Patterns/master/add_data/CLL.RData"
+load(CLLfile)
+
+str(CLL)
+
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{clustExploration}{A function to explore a dataset and cluster its rows.}{clustExploration}
+\aliasA{clustExploration,micro\_array-method}{clustExploration}{clustExploration,micro.Rul.array.Rdash.method}
+\aliasA{clustExploration-methods}{clustExploration}{clustExploration.Rdash.methods}
+\keyword{cluster}{clustExploration}
+%
+\begin{Description}\relax
+Based on soft clustering performed by the Mfuzz package.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+clustExploration(microarray,...)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{microarray}] A microarray to cluster
+\item[\code{...}] 
+Optional arguments: 	  	
+\begin{description}
+ 
+\item[new.window] Boolean. New X11 window for plots. Defaults to FALSE.
+
+\end{description}
+
+
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+A data.frame of nrows(microarray) observations of 3 variables (name, cluster, maj.vote.index).
+\end{Value}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+library(Patterns)
+if(require(CascadeData)){
+data(micro_S, package="CascadeData")
+D<-Patterns::as.micro_array(micro_S[1:100,],1:4,6)
+a<-clustExploration(D)
+a
+}
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{clustInference}{A function to explore a dataset and cluster its rows.}{clustInference}
+\aliasA{clustInference,micro\_array,numeric-method}{clustInference}{clustInference,micro.Rul.array,numeric.Rdash.method}
+\aliasA{clustInference-methods}{clustInference}{clustInference.Rdash.methods}
+\keyword{cluster}{clustInference}
+%
+\begin{Description}\relax
+Based on soft clustering performed by the Mfuzz package.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+clustInference(microarray, vote.index, ...)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{microarray}] A microarray to cluster
+\item[\code{vote.index}] Option for cluster attribution
+\item[\code{...}] 
+Optional arguments: 	  	
+\begin{description}
+ 
+\item[new.window] Boolean. New X11 window for plots. Defaults to FALSE.
+
+\end{description}
+
+
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+A list of two elements:
+\begin{ldescription}
+\item[\code{res.matrix}] A data.frame of nrows(microarray) observations of 3 variables (name, cluster, maj.vote.index).
+\item[\code{prop.matrix}] Additionnal info
+\end{ldescription}
+\end{Value}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+library(Patterns)
+if(require(CascadeData)){
+data(micro_S, package="CascadeData")
+D<-Patterns::as.micro_array(micro_S[1:100,],1:4,6)
+b<-clustInference(D,0.5)
+b
+}
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{compare-methods}{Some basic criteria of comparison between actual and inferred network.}{compare.Rdash.methods}
+\aliasA{compare}{compare-methods}{compare}
+\aliasA{compare,network,network,numeric-method}{compare-methods}{compare,network,network,numeric.Rdash.method}
+%
+\begin{Description}\relax
+Allows comparison between actual and inferred network.
+\end{Description}
+%
+\begin{Value}
+A vector containing : sensitivity, predictive positive value, the usual F-score (2*ppv*sens/(sppvpe+sens)), the 1/2 ponderated Fscore ((1+0.5\textasciicircum{}2)*ppv*sens/(ppv/4+sens)) and the 2 ponderated Fscore ((1+2\textasciicircum{}2)*ppv*sens/(ppv*4+sens)).
+\end{Value}
+%
+\begin{Section}{Methods}
+\begin{description}
+
+
+\item[\code{signature(Net = "network", Net\_inf = "network", nv = "numeric")}] 
+\begin{description}
+
+\item[Net] 
+A network object containing the actual network.
+
+\item[Net\_inf] 
+A network object containing the inferred network.
+
+\item[nv] 
+A number that indicates at which level of cutoff the comparison should be done.
+
+
+\end{description}
+
+                       
+
+
+\end{description}
+
+\end{Section}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+data(simul)
+
+#Comparing true and inferred networks
+Crit_values=NULL
+
+#Here are the cutoff level tested
+test.seq<-seq(0,max(abs(Net_inf_PL@network*0.9)),length.out=200)
+for(u in test.seq){
+	Crit_values<-rbind(Crit_values,Patterns::compare(Net,Net_inf_PL,u))
+}
+matplot(test.seq,Crit_values,type="l",ylab="Criterion value",xlab="Cutoff level",lwd=2)
+legend(x="topleft", legend=colnames(Crit_values), lty=1:5,col=1:5,ncol=2,cex=.9)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{cutoff}{Choose the best cutoff}{cutoff}
+\aliasA{cutoff,network-method}{cutoff}{cutoff,network.Rdash.method}
+\aliasA{cutoff-methods}{cutoff}{cutoff.Rdash.methods}
+\keyword{methods}{cutoff}
+%
+\begin{Description}\relax
+Allows estimating the best cutoff. For a sequence of cutoff, the p value corresponding to each cutoff value of the sequence. Mainly recommended for single time cascade networks. To achieve more sparsity in other settings, please use a fiiting function based on the stability selection or selectboost algorithms.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+	cutoff(Omega,...)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{Omega}] a network object
+\item[\code{...}] Optional arguments: 
+\begin{description}
+
+\item[sequence] a vector corresponding to the sequence of cutoffs that will be tested.
+\item[x\_min] an integer ; only values over x\_min are further retained for performing the test.	
+
+\end{description}
+
+
+
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+A list containing two objects :
+\begin{ldescription}
+\item[\code{p.value}] the p values corresponding to the sequence of cutoff
+\item[\code{p.value.inter}] the smoothed p value vector, using the loess function
+\end{ldescription}
+\end{Value}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+
+		data(network)
+		cutoff(network)
+		#See vignette for more details
+
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{dim}{Dimension of the data}{dim}
+\aliasA{dim,micro\_array-method}{dim}{dim,micro.Rul.array.Rdash.method}
+\aliasA{dim-methods}{dim}{dim.Rdash.methods}
+\keyword{methods}{dim}
+%
+\begin{Description}\relax
+Dimension of the data
+\end{Description}
+%
+\begin{Section}{Methods}
+\begin{description}
+
+
+\item[\code{signature(x = "micro\_array")}] 
+Gives the dimension of the matrix of measurements.
+
+
+\end{description}
+\end{Section}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+\inputencoding{utf8}
+\HeaderA{evolution}{See the evolution of the network with change of cutoff}{evolution}
+\aliasA{evolution,network-method}{evolution}{evolution,network.Rdash.method}
+\aliasA{evolution-methods}{evolution}{evolution.Rdash.methods}
+\keyword{methods}{evolution}
+%
+\begin{Description}\relax
+See the evolution of the network with change of cutoff
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+	evolution(net,list_nv,...)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{net}] a network object
+\item[\code{list\_nv}] a vector of cutoff at which the network should be shown
+\item[\code{...}] Optionnal arguments:
+\begin{description}
+ \item[gr] a vector giving the group of each genee. Defaults to NULL
+\item[color.vertex] a vector giving the color of each nodee. Defaults to NULL
+\item[color.edge] a vector giving the color of each edge. Defaults to NULL
+\item[fix] logical, should the position of the node in the network be calculated once at the beginning ? Defaults to TRUE.
+\item[size] vector giving the size of the plot. Defaults to c(2000,1000)
+\item[label\_v] vector giving the labels of each vertex. Defaults to 1:dim(net@network)[1]
+\item[legend] string giving the position of the legend. Defaults to "topleft"
+\item[frame.color] string giving the color of the frame of the plot. Defaults to "black"
+\item[label.hub] label hubs. Defaults to FALSE
+\item[outdir] Directory to save the animation. Defaults to getwd()
+\item[type.ani] Type of animation. Defaults to "html"
+
+\end{description}
+
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}\relax
+Several types of outputs are available using the type.ani option.
+\begin{itemize}
+ 
+\item html
+\item latex (requires latex)
+\item swf (requires swftools)
+\item video (requires ffmpeg)
+\item gif
+\item manual\_gif
+
+\end{itemize}
+
+\end{Details}
+%
+\begin{Value}
+ A HTML page with the evolution of the network.
+\end{Value}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+
+	data(network)
+	sequence<-seq(0,0.2,length.out=20)
+	if(in_pkgdown()){setwd("~/Github/Patterns/docs/reference/evolution/")}
+	evolution(network,sequence,type.ani = "html")
+	evolution(network,sequence,type.ani = "gif", outdir=destdir)
+
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{geneNeighborhood}{Find the neighborhood of a set of nodes.}{geneNeighborhood}
+\aliasA{geneNeighborhood,network-method}{geneNeighborhood}{geneNeighborhood,network.Rdash.method}
+\aliasA{geneNeighborhood-methods}{geneNeighborhood}{geneNeighborhood.Rdash.methods}
+\keyword{methods}{geneNeighborhood}
+%
+\begin{Description}\relax
+Find the neighborhood of a set of nodes.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+	geneNeighborhood(net,targets,...)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{net}] a network object
+\item[\code{targets}] a vector containing the set of nodes
+\item[\code{...}] Optional arguments. See plot options. 
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+The neighborhood of the targeted genes. 
+\end{Value}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+data(Selection)
+data(infos)
+#Find probesets for EGR1
+pbst_EGR1 = infos[infos$hgnc_symbol=="EGR1", "affy_hg_u133_plus_2"]
+
+gene_IDs = infos[match(Selection@name, infos$affy_hg_u133_plus_), "hgnc_symbol"]
+
+data(network)
+#A nv value can chosen using the cutoff function
+nv=.11 
+EGR1<-which(is.element(Selection@name,pbst_EGR1))
+P<-position(network,nv=nv)
+
+geneNeighborhood(network,targets=EGR1,nv=nv,ini=P,
+label_v=gene_IDs)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{genePeakSelection}{Methods for selecting genes }{genePeakSelection}
+\aliasA{genePeakSelection,micro\_array,numeric-method}{genePeakSelection}{genePeakSelection,micro.Rul.array,numeric.Rdash.method}
+\aliasA{genePeakSelection-methods}{genePeakSelection}{genePeakSelection.Rdash.methods}
+\aliasA{geneSelection}{genePeakSelection}{geneSelection}
+\aliasA{geneSelection,list,list,numeric-method}{genePeakSelection}{geneSelection,list,list,numeric.Rdash.method}
+\aliasA{geneSelection,micro\_array,micro\_array,numeric-method}{genePeakSelection}{geneSelection,micro.Rul.array,micro.Rul.array,numeric.Rdash.method}
+\aliasA{geneSelection,micro\_array,numeric-method}{genePeakSelection}{geneSelection,micro.Rul.array,numeric.Rdash.method}
+\aliasA{geneSelection-methods}{genePeakSelection}{geneSelection.Rdash.methods}
+\keyword{methods}{genePeakSelection}
+%
+\begin{Description}\relax
+Selection of differentially expressed genes.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+	geneSelection(x,y,tot.number,...)
+	genePeakSelection(x,peak,...)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{x}] either a micro\_array object or a list of micro\_array objects. In the first case, the micro\_array object represents the stimulated measurements. In the second case, the control unstimulated data (if present) should be the first element of the list.    
+\item[\code{y}] either a micro\_array object or a list of strings. In the first case, the micro\_array object represents the stimulated measurements. In the second case, the list is the way to specify the contrast: \begin{description}
+
+\item[First element:]  condition, condition\&time or pattern. The condition specification is used when the overall is to compare two conditions. 
+The condition\&time specification is used when comparing two conditions at two precise time points.
+The pattern specification allows to decide which time point should be differentially expressed.
+\item[Second element:] a vector of length 2. The two conditions which should be compared. If a condition is used as control, it should be the first element of the vector. However, if this control is not measured throught time, 
+the option cont=TRUE should be used.
+\item[Third element:] depends on the first element. 
+It is no needed if condition has been specified. 
+If condition\&time has been specified, then this is a vector containing the time point at which the comparison should be done.
+If pattern has been specified, then this is a vector of 0 and 1 of length T, where T is the number of time points. The time points with desired differential expression are provided with 1. 
+
+\end{description}
+     
+\item[\code{tot.number}] an integer. The number of selected genes. If tot.number <0 all differentially genes are selected. If tot.number > 1, tot.number is the maximum of diffenrtially genes that will be selected. 
+If 0<tot.number<1, tot.number represents the proportion of diffenrentially genes that are selected.
+\item[\code{peak}] interger. At which time points measurements should the genes be selected [optionnal for geneSelection].
+\item[\code{...}] Optional arguments: \begin{description}
+
+\item[M2] a micro\_array object. The unstimulated measurements.
+\item[data\_log] logical (default to TRUE) ; should data be logged ?
+\item[wanted.patterns] a matrix with wanted patterns [only for geneSelection].
+\item[forbidden.patterns] a matrix with forbidden patterns [only for geneSelection].
+\item[durPeak] vector of size 2 (default to c(1,1)) ; the first elements gives the length of the peak at the left, the second at the right. [only for genePeakSelection]
+\item[abs\_val]  logical (default to TRUE) ; should genes be selected on the basis of their absolute value expression ? [only for genePeakSelection]
+\item[alpha\_diff] float ; the risk level 
+
+\end{description}
+
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+A micro\_array object.  
+\end{Value}
+%
+\begin{Author}\relax
+Frédéric Bertrand , Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+
+  if(require(CascadeData)){
+	data(micro_US)
+	micro_US<-as.micro_array(micro_US,time=c(60,90,210,390),subject=6)
+	data(micro_S)
+	micro_S<-as.micro_array(micro_S,time=c(60,90,210,390),subject=6)
+
+  #Basically, to find the 50 more significant expressed genes you will use:
+  Selection_1<-geneSelection(x=micro_S,y=micro_US,
+  tot.number=50,data_log=TRUE)
+  summary(Selection_1)
+  
+  #If we want to select genes that are differentially 
+  #at time t60 or t90 :
+  Selection_2<-geneSelection(x=micro_S,y=micro_US,tot.number=30,
+  wanted.patterns=
+  rbind(c(0,1,0,0),c(1,0,0,0),c(1,1,0,0)))
+  summary(Selection_2)
+
+  #To select genes that have a differential maximum of expression at a specific time point.
+  
+  Selection_3<-genePeakSelection(x=micro_S,y=micro_US,peak=1,
+  abs_val=FALSE,alpha_diff=0.01)
+  summary(Selection_3)
+  }
+
+  if(require(CascadeData)){
+data(micro_US)
+micro_US<-as.micro_array(micro_US,time=c(60,90,210,390),subject=6)
+data(micro_S)
+micro_S<-as.micro_array(micro_S,time=c(60,90,210,390),subject=6)
+#Genes with differential expression at t1
+Selection1<-geneSelection(x=micro_S,y=micro_US,20,wanted.patterns= rbind(c(1,0,0,0)))
+#Genes with differential expression at t2
+Selection2<-geneSelection(x=micro_S,y=micro_US,20,wanted.patterns= rbind(c(0,1,0,0)))
+#Genes with differential expression at t3
+Selection3<-geneSelection(x=micro_S,y=micro_US,20,wanted.patterns= rbind(c(0,0,1,0)))
+#Genes with differential expression at t4
+Selection4<-geneSelection(x=micro_S,y=micro_US,20,wanted.patterns= rbind(c(0,0,0,1)))
+#Genes with global differential expression 
+Selection5<-geneSelection(x=micro_S,y=micro_US,20)
+
+#We then merge these selections:
+Selection<-unionMicro(list(Selection1,Selection2,Selection3,Selection4,Selection5))
+print(Selection)
+
+#Prints the correlation graphics Figure 4:
+summary(Selection,3)
+
+##Uncomment this code to retrieve geneids.
+#library(org.Hs.eg.db)
+#
+#ff<-function(x){substr(x, 1, nchar(x)-3)}
+#ff<-Vectorize(ff)
+#
+##Here is the function to transform the probeset names to gene ID.
+#
+#library("hgu133plus2.db")
+#
+#probe_to_id<-function(n){  
+#x <- hgu133plus2SYMBOL
+#mp<-mappedkeys(x)
+#xx <- unlist(as.list(x[mp]))
+#genes_all = xx[(n)]
+#genes_all[is.na(genes_all)]<-"unknown"
+#return(genes_all)
+#}
+#Selection@name<-probe_to_id(Selection@name)
+  }
+	
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{gene\_expr\_simulation}{Simulates microarray data based on a given network. }{gene.Rul.expr.Rul.simulation}
+\aliasA{gene\_expr\_simulation,network-method}{gene\_expr\_simulation}{gene.Rul.expr.Rul.simulation,network.Rdash.method}
+\aliasA{gene\_expr\_simulation-methods}{gene\_expr\_simulation}{gene.Rul.expr.Rul.simulation.Rdash.methods}
+%
+\begin{Description}\relax
+Simulates microarray data based on a given network. 
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+gene_expr_simulation(network,...)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{network}] A network object.
+\item[\code{...}] \begin{description}
+
+\item[time\_label] a vector containing the time labels.
+\item[subject] the number of subjects
+\item[peak\_level] the mean level of peaks. 
+\item[act\_time\_group]  [NULL] vector ; at which time the groups (defined by sort(unique(group))) are activated ?
+
+\end{description}
+
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+A micro\_array object.
+\end{Value}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+data(simul)
+set.seed(1)
+
+#We simulate gene expressions according to the network Net
+Msim<-Patterns::gene_expr_simulation(
+	network=Net,
+	time_label=rep(1:4,each=25),
+	subject=5,
+	peak_level=200)
+head(Msim)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{head}{Overview of a micro\_array object}{head}
+\aliasA{head,ANY-method}{head}{head,ANY.Rdash.method}
+\aliasA{head,micro\_array-method}{head}{head,micro.Rul.array.Rdash.method}
+\aliasA{head-methods}{head}{head.Rdash.methods}
+\aliasA{methods}{head}{methods}
+\keyword{methods}{head}
+%
+\begin{Description}\relax
+Overview of a micro\_array object.
+\end{Description}
+%
+\begin{Section}{Methods}
+\begin{description}
+
+
+\item[\code{signature(x = "ANY")}] 
+Gives an overview.
+
+
+\item[\code{signature(x = "micro\_array")}] 
+Gives an overview.
+
+
+\end{description}
+\end{Section}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+  if(require(CascadeData)){
+	data(micro_US)
+	micro_US<-as.micro_array(micro_US,time=c(60,90,210,390),subject=6)
+	head(micro_US)
+	}
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{IndicFinit}{Create initial F matrices using specific intergroup actions for network inference.}{IndicFinit}
+\keyword{models}{IndicFinit}
+%
+\begin{Description}\relax
+This is an helper function to create initial values F matrices for networks.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+IndicFinit(sqF, ngrp, Indic, low.trig = TRUE)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{sqF}] Size of an F cell
+\item[\code{ngrp}] Number of groups
+\item[\code{Indic}] Matrix to specify where there is an interaction from one group to another
+\item[\code{low.trig}] Fill the lower trigonal matrices with ones
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+An array of size (sqF, sqF, ngrp).
+\end{Value}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+IndicFinit(3, 2, matrix(1,2,2)-diag(2))
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{IndicFshape}{Create F matrices using specific intergroup actions for network inference.}{IndicFshape}
+\keyword{models}{IndicFshape}
+%
+\begin{Description}\relax
+This is an helper function to create values F matrices using specific intergroup actions for network inference.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+IndicFshape(sqF, ngrp, Indic)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{sqF}] Size of an F cell
+\item[\code{ngrp}] Number of groups
+\item[\code{Indic}] Matrix to specify where there is an interaction from one group to another
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+An array of size (sqF, sqF, ngrp).
+\end{Value}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+IndicFshape(3, 2, matrix(1,2,2)-diag(2))
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{inference}{ Reverse-engineer the network}{inference}
+\aliasA{inference,micro\_array-method}{inference}{inference,micro.Rul.array.Rdash.method}
+\aliasA{inference-methods}{inference}{inference.Rdash.methods}
+\keyword{methods}{inference}
+%
+\begin{Description}\relax
+Reverse-engineer the network.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+	inference(M,...)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{M}] a micro\_array object.
+\item[\code{...}] Optional arguments: 	 
+\begin{description}
+
+\item[M] Data
+\item[tour.max=30] tour.max + 1 = maximal number of steps.
+\item[g=function(x)1/x] After each step, the new solution is choosen as (the old solution + g(x) * the new solution)/(1+g(x)) where x is the number of steps.
+\item[conv=0.001] Convergence criterion.
+\item[cv.subjects=TRUE] Subjectwise cross validation: should the cross validation be done by removing the subject one by one?
+\item[nb.folds=NULL] Relevant only if no subjectwise cross validation (i.e. cv.subjects=FALSE). The number of folds in cross validation.
+\item[eps=10\textasciicircum{}-5] Threshold for rounding coefficients to 0 (i.e. machine zero).
+\item[type.inf="iterative"] "iterative" or "noniterative" : should the algorithm be computed iteratively or only for one step? For highly homogeneous clusters, the "noniterative" option is suffisant.
+\item[Fshape=NULL] Shape of the F matrix.
+\item[Finit=NULL] Init values of the F matrix.
+\item[Omega=NULL] Init values for the Omega matrix.
+\item[fitfun="LASSO"] Function to infer the Omega matrix at each step.
+\item[use.Gram=TRUE] Optional parameter for the lasso in the `lars` package.
+\item[error.stabsel=0.05] Optional parameter for the stability selection algorithm in the `c060` package.
+\item[pi\_thr.stabsel=0.6] Optional parameter for the stability selection algorithm in the `c060` package.
+\item[priors=NULL] A priori weights for the links between the actors. 0 means that an actor is always included in the predictive model, 1 is a neutral weighting and +infinity that the actor is never used in the model. For a given predictive model, the weighting vector is normalized so that its sum is equal to the number of predictors in the model.
+\item[mc.cores=getOption("mc.cores", 2L)] Number of cores.
+\item[intercept.stabpath=TRUE] Use intercept in stability selection models?
+\item[steps.seq=.95] Optional parameter for the SelectBoost algorithm in the `SelectBoost` package.
+\item[limselect=.95] Optional parameter for the SelectBoost algorithm in the `SelectBoost` package.
+\item[use.parallel=TRUE] Use parallel computing?
+
+\end{description}
+
+
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}\relax
+The fitting built-in fitting functions (`fitfun`) provided with the `Patterns` package are :
+\begin{description}
+
+\item[LASSO] from the `lars` package (default value)
+\item[LASSO2] from the `glmnet` package
+\item[SPLS] from the `spls` package
+\item[ELASTICNET] from the `elasticnet` package
+\item[stability.c060] from the `c060` package implementation of stability selection
+\item[stability.c060.weighted] a new weighted version of the `c060` package implementation of stability selection
+\item[robust] lasso from the `lars` package with light random Gaussian noise added to the explanatory variables
+\item[selectboost.weighted] a new weighted version of the `selectboost` package implementation of the selectboost algorithm to look for the more stable links against resampling that takes into account the correlated structure of the predictors. If no weights are provided, equal weigths are for all the variables (=non weighted case).
+
+\end{description}
+
+
+The weights are viewed as a penalty factors in the penalized regression model: it is a number that multiplies the lambda value in the minimization problem to allow differential shrinkage, [Friedman et al. 2010](https://web.stanford.edu/\textasciitilde{}hastie/Papers/glmnet.pdf), equation 1 page 3. If equal to 0, it implies no shrinkage, and that variable is always included in the model. Default is 1 for all variables. Infinity means that the variable is excluded from the model. Note that the weights are rescaled to sum to the number of variables.
+\end{Details}
+%
+\begin{Value}
+A network object.  
+\end{Value}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+
+#With simulated data, default shaped F matrix and default LASSO from the lars package
+#as fitting function
+data(simul)
+infM <- inference(M)
+str(infM)
+plot(infM, choice="F", nround=0)
+plot(infM, choice="F", nround=1)
+
+#With simulated data, cascade network shaped F matrix (1 group per time measurement case) 
+#and default LASSO from the lars package as fitting function
+infMcasc <- inference(M, Finit=CascadeFinit(4,4), Fshape=CascadeFshape(4,4))
+str(infMcasc)
+plot(infMcasc, choice="F", nround=0)
+plot(infMcasc, choice="F", nround=1)
+
+#With selection of genes from GSE39411
+data(Selection)
+infSel <- inference(Selection, Finit=CascadeFinit(4,4), Fshape=CascadeFshape(4,4))
+str(infSel)
+str(infSel)
+plot(infSel, choice="F", nround=0)
+plot(infSel, choice="F", nround=1)
+
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{infos}{Details on some probesets of the affy\_hg\_u133\_plus\_2 platform.}{infos}
+\keyword{datasets}{infos}
+%
+\begin{Description}\relax
+Dataset with information on the affy\_hg\_u133\_plus\_2 platform such as probeset name (affy\_hg\_u133\_plus\_2), ensembl\_gene\_id, entrezgene, hgnc\_symbol, chromosome\_name, start\_position, end\_position and band.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+data("infos")
+\end{verbatim}
+\end{Usage}
+%
+\begin{Format}
+The format is:
+chr "infos"
+\end{Format}
+%
+\begin{Details}\relax
+Data.frame with 8859 rows and 8 variables.
+\end{Details}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+data(infos)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{micropredict-class}{Class \code{"micropred"}}{micropredict.Rdash.class}
+\keyword{classes}{micropredict-class}
+%
+\begin{Description}\relax
+2254
+\end{Description}
+%
+\begin{Section}{Objects from the Class}
+Objects can be created by calls of the form \code{new("micropred", ...)}.
+\end{Section}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+showClass("network")
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{micro\_array-class}{Class \code{"micro\_array"}}{micro.Rul.array.Rdash.class}
+\keyword{classes}{micro\_array-class}
+%
+\begin{Description}\relax
+The Class
+\end{Description}
+%
+\begin{Section}{Objects from the Class}
+Objects can be created by calls of the form \code{new("micro\_array", ...)}.
+
+\end{Section}
+%
+\begin{Section}{Slots}
+\begin{description}
+
+\item[\code{microarray}:] Object of class \code{"matrix"} \textasciitilde{}\textasciitilde{} 
+\item[\code{name}:] Object of class \code{"vector"} \textasciitilde{}\textasciitilde{} 
+\item[\code{gene\_ID}:] Object of class \code{"vector"} \textasciitilde{}\textasciitilde{} 
+\item[\code{group}:] Object of class \code{"vector"} \textasciitilde{}\textasciitilde{} 
+\item[\code{start\_time}:] Object of class \code{"vector"} \textasciitilde{}\textasciitilde{} 
+\item[\code{time}:] Object of class \code{"vector"} \textasciitilde{}\textasciitilde{} 
+\item[\code{subject}:] Object of class \code{"numeric"} \textasciitilde{}\textasciitilde{} 
+
+\end{description}
+
+\end{Section}
+%
+\begin{Section}{Methods}
+\begin{description}
+
+\item[dim] \code{signature(x = "micro\_array")}: ... 
+\item[genePeakSelection] \code{signature(M1 = "micro\_array", M2 = "micro\_array", peak = "numeric")}: ... 
+\item[geneSelection] \code{signature(M1 = "micro\_array", M2 = "micro\_array", tot.number = "numeric")}: ... 
+\item[head] \code{signature(x = "micro\_array")}: ... 
+\item[inference] \code{signature(M = "micro\_array")}: ... 
+\item[plot] \code{signature(x = "micro\_array", y = "ANY")}: ... 
+\item[plot] \code{signature(x = "network", y = "micro\_array")}: ... 
+\item[predict] \code{signature(object = "micro\_array")}: ... 
+\item[print] \code{signature(x = "micro\_array")}: ... 
+\item[summary] \code{signature(object = "micro\_array")}: ... 
+\item[unionMicro] \code{signature(M1 = "micro\_array", M2 = "micro\_array")}: ... 
+
+\end{description}
+
+\end{Section}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+showClass("micro_array")
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{network}{A example of an inferred network (4 groups case).}{network}
+\keyword{datasets}{network}
+%
+\begin{Description}\relax
+This dataset is a network example with 102 nodes, 4 times and 4 groups.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+data("network")
+\end{verbatim}
+\end{Usage}
+%
+\begin{Format}
+The format is:
+chr "network"
+\end{Format}
+%
+\begin{Details}\relax
+A network class object [package "Patterns"] with 6 slots.
+\end{Details}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+data(network)
+str(network)
+plot(network)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{network-class}{Class \code{"network"}}{network.Rdash.class}
+\keyword{classes}{network-class}
+%
+\begin{Description}\relax
+2254
+\end{Description}
+%
+\begin{Section}{Objects from the Class}
+Objects can be created by calls of the form \code{new("network", ...)}.
+\end{Section}
+%
+\begin{Section}{Slots}
+\begin{description}
+
+\item[\code{network}:] Object of class \code{"matrix"} \textasciitilde{}\textasciitilde{} 
+\item[\code{name}:] Object of class \code{"vector"} \textasciitilde{}\textasciitilde{} 
+\item[\code{F}:] Object of class \code{"array"} \textasciitilde{}\textasciitilde{} 
+\item[\code{convF}:] Object of class \code{"matrix"} \textasciitilde{}\textasciitilde{} 
+\item[\code{convO}:] Object of class \code{"vector"} \textasciitilde{}\textasciitilde{} 
+\item[\code{time\_pt}:] Object of class \code{"vector"} \textasciitilde{}\textasciitilde{} 
+
+\end{description}
+
+\end{Section}
+%
+\begin{Section}{Methods}
+\begin{description}
+
+\item[analyze\_network] \code{signature(Omega = "network")}: ... 
+\item[cutoff] \code{signature(Omega = "network")}: ... 
+\item[evolution] \code{signature(net = "network")}: ... 
+\item[geneNeighborhood] \code{signature(net = "network")}: ... 
+\item[plot] \code{signature(x = "network", y = "ANY")}: ... 
+\item[plot] \code{signature(x = "network", y = "micro\_array")}: ... 
+\item[position] \code{signature(net = "network")}: ... 
+\item[print] \code{signature(x = "network")}: ... 
+
+\end{description}
+
+\end{Section}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+showClass("network")
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{network2gp}{A example of an inferred cascade network (2 groups case).}{network2gp}
+\keyword{datasets}{network2gp}
+%
+\begin{Description}\relax
+This dataset is a cascade network example with 53 nodes, 4 times and 2 groups.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+data("network2gp")
+\end{verbatim}
+\end{Usage}
+%
+\begin{Format}
+The format is:
+chr "network2gp"
+\end{Format}
+%
+\begin{Details}\relax
+A network class object [package "Patterns"] with 6 slots.
+\end{Details}
+%
+\begin{Examples}
+\begin{ExampleCode}
+data(network2gp)
+str(network2gp)
+plot(network2gp)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{networkCascade}{A example of an inferred cascade network (4 groups case).}{networkCascade}
+\keyword{datasets}{networkCascade}
+%
+\begin{Description}\relax
+This dataset is a cascade network example with 102 nodes, 4 times and 4 groups.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+data("networkCascade")
+\end{verbatim}
+\end{Usage}
+%
+\begin{Format}
+The format is:
+chr "networkCascade"
+\end{Format}
+%
+\begin{Details}\relax
+A network class object [package "Patterns"] with 6 slots.
+\end{Details}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+data(networkCascade)
+str(networkCascade)
+plot(networkCascade)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{network\_random}{Generates a network.}{network.Rul.random}
+%
+\begin{Description}\relax
+Generates a network.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+network_random(nb, time_label, exp, init, regul, min_expr, max_expr, casc.level)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{nb}] 
+Integer. The number of genes.
+
+\item[\code{time\_label}] 
+Vector. The time points measurements.
+
+\item[\code{exp}] 
+The exponential parameter, as in the barabasi.game function in igraph package.
+
+\item[\code{init}] 
+The attractiveness of the vertices with no adjacent edges. See barabasi.game function.
+
+\item[\code{regul}] 
+A vector mapping each gene with its number of regulators.
+
+\item[\code{min\_expr}] 
+Minimum of strength of a non-zero link
+
+\item[\code{max\_expr}] 
+Maximum of strength of a non-zero link
+
+\item[\code{casc.level}] 
+...
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+A network object. 
+\end{Value}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+set.seed(1)
+Net<-network_random(
+	nb=100,
+	time_label=rep(1:4,each=25),
+	exp=1,
+	init=1,
+	regul=round(rexp(100,1))+1,
+	min_expr=0.1,
+	max_expr=2,
+	casc.level=0.4
+	)
+plot(Net)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{plot-methods}{Plot}{plot.Rdash.methods}
+\aliasA{plot,micropredict,ANY-method}{plot-methods}{plot,micropredict,ANY.Rdash.method}
+\aliasA{plot,micro\_array,ANY-method}{plot-methods}{plot,micro.Rul.array,ANY.Rdash.method}
+\aliasA{plot,network,ANY-method}{plot-methods}{plot,network,ANY.Rdash.method}
+\keyword{methods}{plot-methods}
+%
+\begin{Description}\relax
+Considering the class of the argument which is passed to plot, the graphical output differs. 
+\end{Description}
+%
+\begin{Section}{Methods}
+\begin{description}
+
+
+\item[\code{signature(x = "micro\_array", y = "ANY",...)}] 
+\begin{description}
+
+\item[x] a micro\bsl{}\_array object
+\item[list\_nv] a vector of cutoff at which the network should be shown
+
+\end{description}
+
+                       
+\item[\code{signature(x = "network", y = "ANY",...)}] 
+\begin{description}
+
+\item[x] a network object
+\item[\dots] Optionnal arguments:
+\begin{description}
+ \item[gr] a vector giving the group of each gene
+\item[choice] what graphic should be plotted: either "F" (for a representation of the matrices F) or "network".
+\item[nv] the level of cutoff. Defaut to 0.
+\item[ini] using the ``position'' function, you can fix the position of the nodes
+\item[color.vertex] a vector defining the color of the vertex
+\item[ani] vector giving the size of the plot. Default to c(2000,1000)
+\item[video] if ani is TRUE and video is TRUE, the animation result is a GIF video
+\item[label\_v] vector defining the vertex labels
+\item[legend.position] position of the legend
+\item[frame.color] color of the frames
+\item[label.hub] logical ; if TRUE only the hubs are labeled                                    
+\item[edge.arrow.size] size of the arrows ; default to 0.7
+\item[edge.thickness] edge thickness ; default to 1.  
+
+\end{description}
+
+
+\end{description}
+
+
+\item[\code{signature(x = "micropredict", y = "ANY",...)}] 
+\begin{description}
+
+\item[x] a micropredict object
+\item[\dots] Optionnal arguments: see plot for network
+
+\end{description}
+
+
+\end{description}
+
+\end{Section}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+if(require(CascadeData)){
+data(micro_US, package="CascadeData")
+micro_US<-as.micro_array(micro_US[1:100,],time=c(60,90,210,390),subject=6)
+plot(micro_US)
+}
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{plotF}{Plot functions for the F matrices.}{plotF}
+\keyword{dplot}{plotF}
+%
+\begin{Description}\relax
+The graphical output will differ according to the option used.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+plotF(x, choice = "Fshape", nround = 2, pixmap.color = terrain.colors(20))
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{x}] The F matrix.
+\item[\code{choice}] A string: either "F", "Fpixmap", "Fshape", or "Fshapepixmap"
+\item[\code{nround}] An integer. For numerical F matrices only. The number of decimal numbers to display.
+\item[\code{pixmap.color}] For pixmap plots.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Nothing.
+\end{Value}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+#For numerical/inferred F matrices
+plotF(CascadeFinit(4,4),choice="F", nround=1)
+plotF(CascadeFinit(4,4),choice="Fpixmap")
+
+#For theoritical F matrices
+plotF(CascadeFshape(4,4),choice="Fshape")
+plotF(CascadeFshape(4,4),choice="Fshapepixmap")
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{position}{Retrieve network position for consistent plotting.}{position}
+\keyword{dplot}{position}
+%
+\begin{Description}\relax
+Utility function to plot networks.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+position(net, ...)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{net}] Network
+\item[\code{...}] Additionnal parameters
+
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Matrix with as many rows as the number of edges of network and three columns (name, xcoord, ycoord).
+\end{Value}
+%
+\begin{Examples}
+\begin{ExampleCode}
+data(network)
+position(network)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{position-methods}{Returns the position of edges in the network}{position.Rdash.methods}
+\aliasA{position,network-method}{position-methods}{position,network.Rdash.method}
+\keyword{methods}{position-methods}
+%
+\begin{Description}\relax
+Returns the position of edges in the network
+\end{Description}
+%
+\begin{Section}{Methods}
+\begin{description}
+
+
+\item[\code{signature(net = "network")}] 
+Returns a matrix with the position of the node. This matrix can then be used as an argument in the plot function.
+
+
+\end{description}
+\end{Section}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+\inputencoding{utf8}
+\HeaderA{predict}{  Methods for Function \code{predict}  }{predict}
+\aliasA{predict,ANY-method}{predict}{predict,ANY.Rdash.method}
+\aliasA{predict,micro\_array-method}{predict}{predict,micro.Rul.array.Rdash.method}
+\aliasA{predict-methods}{predict}{predict.Rdash.methods}
+\keyword{methods}{predict}
+%
+\begin{Description}\relax
+Prediction of the gene expressions after a knock-out experience for cascade networks.
+
+The plot of prediction of knock down experiments (i.e. targets<>NULL) is still in beta testing for the moment.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+	predict(object,...)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{object}] a micro\_array object
+\item[\code{...}] Other arguments: 
+\begin{description}
+
+\item[Omega] a netowork object.
+\item[nv]  [=0] numeric ; the level of the cutoff	
+\item[targets]  [NULL] vector ; which genes are knocked out ?
+\item[act\_time\_group]  [NULL] vector ; at which time the groups (defined by sort(unique(group))) are activated ?
+
+\end{description}
+
+
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+
+data(Selection)
+data(infos)
+pbst_NR4A1 = infos[infos$hgnc_symbol=="NR4A1", "affy_hg_u133_plus_2"]
+pbst_EGR1 = infos[infos$hgnc_symbol=="EGR1", "affy_hg_u133_plus_2"]
+gene_IDs = infos[match(Selection@name, infos$affy_hg_u133_plus_), "hgnc_symbol"]
+
+data(networkCascade)
+#A nv value can chosen using the cutoff function
+nv = .02
+NR4A1<-which(is.element(Selection@name,pbst_NR4A1))
+EGR1<-which(is.element(Selection@name,pbst_EGR1))
+P<-position(networkCascade,nv=nv)
+
+#We predict gene expression modulations within the network if NR4A1 is experimentaly knocked-out. 
+prediction_ko5_NR4A1<-predict(Selection,networkCascade,nv=nv,targets=NR4A1,act_time_group=1:4)
+
+#Then we plot the results. Here for example we see changes at time points t2, t3 ans t4:
+plot(prediction_ko5_NR4A1,time=2:4,ini=P,label_v=gene_IDs)
+
+#We predict gene expression modulations within the network if EGR1 is experimentaly knocked-out. 
+prediction_ko5_EGR1<-predict(Selection,networkCascade,nv=nv,targets=EGR1,act_time_group=1:4)
+
+#Then we plot the results. Here for example we see changes at time point t2, t3 ans t4:
+plot(prediction_ko5_EGR1,time=2:4,ini=P,label_v=gene_IDs)
+
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{print-methods}{ \textasciitilde{}\textasciitilde{} Methods for Function \code{print}  \textasciitilde{}\textasciitilde{}}{print.Rdash.methods}
+\aliasA{print,ANY-method}{print-methods}{print,ANY.Rdash.method}
+\aliasA{print,micro\_array-method}{print-methods}{print,micro.Rul.array.Rdash.method}
+\aliasA{print,network-method}{print-methods}{print,network.Rdash.method}
+\keyword{methods}{print-methods}
+%
+\begin{Description}\relax
+\textasciitilde{}\textasciitilde{} Methods for function \code{print}  \textasciitilde{}\textasciitilde{}
+\end{Description}
+%
+\begin{Section}{Methods}
+\begin{description}
+
+
+\item[\code{signature(x = "ANY")}] 
+
+
+
+\item[\code{signature(x = "micro\_array")}] 
+
+
+
+\item[\code{signature(x = "network")}] 
+
+
+
+\end{description}
+\end{Section}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+\inputencoding{utf8}
+\HeaderA{probeMerge}{Function to merge probesets}{probeMerge}
+\aliasA{probeMerge,micro\_array-method}{probeMerge}{probeMerge,micro.Rul.array.Rdash.method}
+\keyword{manip}{probeMerge}
+%
+\begin{Description}\relax
+Used to collapse probesets using the collapseRows function of the WGCNA package
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+probeMerge(x, ...)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{x}] Microarray
+\item[\code{...}] Additionnal parameters to the collapseRows function of the WGCNA package
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Formal class 'micro\_array' [package "Patterns"] with 7 slots
+\end{Value}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+if(require(CascadeData)){
+data(micro_S)
+D<-as.micro_array(micro_S[1:2000,],1:4,6)
+D@gene_ID<-jetset::scores.hgu133plus2[D@name,"EntrezID"]
+PM <- probeMerge(D)
+}
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{replaceBand}{Replace matrix values by band.}{replaceBand}
+\keyword{manip}{replaceBand}
+%
+\begin{Description}\relax
+F matrices utility function.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+replaceBand(a, b, k)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{a}] The matrix to be replaced
+\item[\code{b}] The matrix with the replacement values
+\item[\code{k}] The extend of the replacement: 0 (diagonal only), 1 (diagonal and first extra diagonal), in general an entry is replaced if abs(row(a) - col(a)) <= k
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+A matrix (same size as a) 
+\end{Value}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+a=matrix(1:9,3,3)
+b=matrix(0,3,3)
+replaceBand(a,b,0)
+replaceBand(a,b,1)
+replaceBand(a,b,2)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{replaceDown}{Replace matrix values triangular lower part and by band for the upper part.}{replaceDown}
+\keyword{manip}{replaceDown}
+%
+\begin{Description}\relax
+F matrices utility function.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+replaceDown(a, b, k)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{a}] The matrix to be replaced
+\item[\code{b}] The matrix with the replacement values
+\item[\code{k}] The extend of the replacement: 0 (lower part and diagonal only), 1 (lower part and first extra diagonal), in general an entry is replaced if -(row(a) - col(a)) <= k
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+A matrix (same size as a) 
+\end{Value}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+a=matrix(1:9,3,3)
+b=matrix(1,3,3)
+replaceDown(a,b,0)
+replaceDown(a,b,1)
+replaceDown(a,b,2)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{replaceUp}{Replace matrix values triangular upper part and by band for the lower part.}{replaceUp}
+\keyword{manip}{replaceUp}
+%
+\begin{Description}\relax
+F matrices utility function.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+replaceUp(a, b, k)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{a}] The matrix to be replaced
+\item[\code{b}] The matrix with the replacement values
+\item[\code{k}] The extend of the replacement: 0 (upper part only), 1 (upper part and first extra diagonal), in general an entry is replaced if (row(a) - col(a)) <= k
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+A matrix (same size as a) 
+\end{Value}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+a=matrix(1:9,3,3)
+b=matrix(1,3,3)
+replaceUp(a,b,0)
+replaceUp(a,b,1)
+replaceUp(a,b,2)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{Selection}{Selection of genes.}{Selection}
+\keyword{datasets}{Selection}
+%
+\begin{Description}\relax
+20 (at most) genes with differential expression at t1, 20 (at most) genes with differential expression at t2, 20 (at most) genes with differential expression at t3, 20 (at most) genes with differential expression at t4 et 20 (at most) genes with global differential expression were selected.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+data(Selection)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+data(Selection)
+head(Selection)
+summary(Selection,3)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{simul}{Simulated data for examples.}{simul}
+\aliasA{M}{simul}{M}
+\aliasA{Net}{simul}{Net}
+\aliasA{Net\_inf\_PL}{simul}{Net.Rul.inf.Rul.PL}
+\keyword{datasets}{simul}
+%
+\begin{Description}\relax
+Three objects: M, microarray, Net, network, and Net\_inf\_PL, the reverse-engineered network with the `Patterns` package using the fitfun="LASSO" default function and a cascade network setting.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+data("simul")
+\end{verbatim}
+\end{Usage}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+data(simul)
+head(M)
+str(M)
+str(Net)
+str(Net_inf_PL)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{summary-methods}{ \textasciitilde{}\textasciitilde{} Methods for Function \code{summary}  \textasciitilde{}\textasciitilde{}}{summary.Rdash.methods}
+\aliasA{summary,ANY-method}{summary-methods}{summary,ANY.Rdash.method}
+\aliasA{summary,micro\_array-method}{summary-methods}{summary,micro.Rul.array.Rdash.method}
+\keyword{methods}{summary-methods}
+%
+\begin{Description}\relax
+\textasciitilde{}\textasciitilde{} Methods for function \code{summary}  \textasciitilde{}\textasciitilde{}
+\end{Description}
+%
+\begin{Section}{Methods}
+\begin{description}
+
+
+\item[\code{signature(object = "ANY")}] 
+
+
+
+\item[\code{signature(object = "micro\_array")}] 
+
+
+
+\end{description}
+\end{Section}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+\inputencoding{utf8}
+\HeaderA{unionMicro-methods}{Makes the union between two micro\_array objects.}{unionMicro.Rdash.methods}
+\aliasA{unionMicro}{unionMicro-methods}{unionMicro}
+\aliasA{unionMicro,list,ANY-method}{unionMicro-methods}{unionMicro,list,ANY.Rdash.method}
+\aliasA{unionMicro,micro\_array,micro\_array-method}{unionMicro-methods}{unionMicro,micro.Rul.array,micro.Rul.array.Rdash.method}
+\keyword{methods}{unionMicro-methods}
+%
+\begin{Description}\relax
+Makes the union between two micro\_array objects.
+\end{Description}
+%
+\begin{Section}{Methods}
+\begin{description}
+
+
+\item[\code{signature(M1 = "micro\_array", M2 = "micro\_array")}] 
+Returns a micro\_array object which is the union of M1 and M2. 
+
+
+\item[\code{signature(M1 = "list", M2 = "ANY")}] 
+Returns a micro\_array object which is the union of the elements of M1. 
+
+
+\end{description}
+\end{Section}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+if(require(CascadeData)){
+data(micro_S, package="CascadeData")
+#Create another microarray object with 100 genes
+Mbis<-M<-as.micro_array(micro_S[1:100,],1:4,6)
+#Rename the 100 genes
+Mbis@name<-paste(M@name,"bis")
+rownames(Mbis@microarray) <- Mbis@name
+#Union (merge without duplicated names) of the two microarrays. 
+str(unionMicro(M,Mbis))
+}
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{unsupervised\_clustering}{Cluster a micro\_array object: performs the clustering.}{unsupervised.Rul.clustering}
+\aliasA{unsupervised\_clustering,micro\_array,numeric,numeric-method}{unsupervised\_clustering}{unsupervised.Rul.clustering,micro.Rul.array,numeric,numeric.Rdash.method}
+\keyword{cluster}{unsupervised\_clustering}
+%
+\begin{Description}\relax
+Based on soft clustering performed by the Mfuzz package.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+unsupervised_clustering(M1, clust, mestim, ...)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{M1}] Object of micro\_array class.
+\item[\code{clust}] Number of clusters.
+\item[\code{mestim}] Fuzzification parameter.
+\item[\code{...}] Additional parameters.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+An object of class micro\_array with the group slot updated by groups deduced from the soft clustering result.
+\end{Value}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+if(require(CascadeData)){
+data(micro_S, package="CascadeData")
+M<-as.micro_array(micro_S[1:100,],1:4,6)
+mc<-unsupervised_clustering_auto_m_c(M)
+MwithGrp=unsupervised_clustering(M, 8, mc$m, screen=NULL, heatmap=FALSE, new.window = FALSE)
+# Other options
+unsupervised_clustering(M, 8, mc$m, screen=c(3,3), heatmap=TRUE, new.window = FALSE)
+# Plot the clusters
+plot(MwithGrp)
+}
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{unsupervised\_clustering\_auto\_m\_c}{Cluster a micro\_array object: determine optimal fuzzification parameter and number of clusters.}{unsupervised.Rul.clustering.Rul.auto.Rul.m.Rul.c}
+\aliasA{unsupervised\_clustering\_auto\_m\_c,micro\_array-method}{unsupervised\_clustering\_auto\_m\_c}{unsupervised.Rul.clustering.Rul.auto.Rul.m.Rul.c,micro.Rul.array.Rdash.method}
+\keyword{cluster}{unsupervised\_clustering\_auto\_m\_c}
+%
+\begin{Description}\relax
+Based on soft clustering performed by the Mfuzz package.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+unsupervised_clustering_auto_m_c(M1, ...)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{M1}] Object of micro\_array class.
+\item[\code{...}] Additional parameters.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+\begin{ldescription}
+\item[\code{m}] Estimate of the optimal fuzzification parameter.
+\item[\code{c}] Estimate of the optimal number of clusters.
+\item[\code{csearch}] More result from the cselection function of the Mfuzz package
+\end{ldescription}
+\end{Value}
+%
+\begin{Author}\relax
+Bertrand Frederic, Myriam Maumy-Bertrand.
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+if(require(CascadeData)){
+data(micro_S, package="CascadeData")
+M<-as.micro_array(micro_S[1:100,],1:4,6)
+mc<-unsupervised_clustering_auto_m_c(M)
+}
+\end{ExampleCode}
+\end{Examples}
+\printindex{}
+\end{document}

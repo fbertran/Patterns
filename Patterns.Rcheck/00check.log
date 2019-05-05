@@ -1,0 +1,156 @@
+* using log directory ‘/Users/fbertran/Github/Patterns/Patterns.Rcheck’
+* using R version 3.6.0 (2019-04-26)
+* using platform: x86_64-apple-darwin15.6.0 (64-bit)
+* using session charset: UTF-8
+* using option ‘--as-cran’
+* checking for file ‘Patterns/DESCRIPTION’ ... OK
+* checking extension type ... Package
+* this is package ‘Patterns’ version ‘0.99’
+* package encoding: UTF-8
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: ‘Frederic Bertrand <frederic.bertrand@math.unistra.fr>’
+
+Found the following (possibly) invalid URLs:
+  URL: http://www-irma.u-strasbg.fr/~fbertran/
+    From: DESCRIPTION
+    Status: Error
+    Message: libcurl error code 56:
+      	Recv failure: Connection reset by peer
+  URL: https://CRAN.R-project.org
+    From: inst/doc/IntroPatterns.html
+    Status: Error
+    Message: libcurl error code 35:
+      	LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to CRAN.R-project.org:443
+  URL: https://cran.r-project.org/package=Cascade
+    From: inst/doc/IntroPatterns.html
+    Status: Error
+    Message: libcurl error code 35:
+      	LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to cran.r-project.org:443
+  URL: https://doi.org/10.1093/bioinformatics/btt705
+    From: inst/doc/IntroPatterns.html
+    Status: Error
+    Message: libcurl error code 35:
+      	LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to doi.org:443
+  URL: https://fbertran.github.io/Cascade/
+    From: inst/doc/IntroPatterns.html
+    Status: Error
+    Message: libcurl error code 35:
+      	LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to fbertran.github.io:443
+  URL: https://github.com
+    From: inst/doc/IntroPatterns.html
+    Status: Error
+    Message: libcurl error code 35:
+      	LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to github.com:443
+  URL: https://github.com/fbertran/Cascade
+    From: inst/doc/IntroPatterns.html
+    Status: Error
+    Message: libcurl error code 35:
+      	LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to github.com:443
+  URL: https://github.com/fbertran/Patterns
+    From: DESCRIPTION
+          inst/doc/IntroPatterns.html
+    Status: Error
+    Message: libcurl error code 35:
+      	LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to github.com:443
+  URL: https://github.com/fbertran/Patterns/issues
+    From: DESCRIPTION
+    Status: Error
+    Message: libcurl error code 35:
+      	LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to github.com:443
+  URL: https://web.stanford.edu/~hastie/Papers/glmnet.pdf
+    From: inst/doc/IntroPatterns.html
+    Status: Error
+    Message: libcurl error code 35:
+      	LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to web.stanford.edu:443
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking serialization versions ... OK
+* checking whether package ‘Patterns’ can be installed ... OK
+* checking installed package size ... OK
+* checking package directory ... OK
+* checking for future file timestamps ... NOTE
+unable to verify current time
+* checking ‘build’ directory ... OK
+* checking DESCRIPTION meta-information ... OK
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking use of S3 registration ... OK
+* checking dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... OK
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd line widths ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking contents of ‘data’ directory ... OK
+* checking data for non-ASCII characters ... OK
+* checking data for ASCII and uncompressed saves ... OK
+* checking installed files from ‘inst/doc’ ... OK
+* checking files in ‘vignettes’ ... OK
+* checking examples ... OK
+** found \donttest examples: check also with --run-donttest
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in ‘inst/doc’ ... OK
+* checking re-building of vignette outputs ... WARNING
+Error(s) in re-building vignettes:
+  ...
+--- re-building ‘ExampleCLL.Rmd’ using rmarkdown
+Quitting from lines 35-40 (ExampleCLL.Rmd) 
+Error: processing vignette 'ExampleCLL.Rmd' failed with diagnostics:
+LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to github.com:443 
+--- failed re-building ‘ExampleCLL.Rmd’
+
+--- re-building ‘IntroPatterns.Rmd’ using rmarkdown
+Loading required package: CascadeData
+Loading required package: VGAM
+Loading required package: stats4
+Loading required package: splines
+
+Exécution arrêtée
+SUMMARY: processing the following files failed:
+  ‘ExampleCLL.Rmd’ ‘IntroPatterns.Rmd’
+
+Erreur : Vignette re-building failed.
+Exécution arrêtée
+
+* checking PDF version of manual ... WARNING
+LaTeX errors when creating PDF version.
+This typically indicates Rd problems.
+LaTeX errors found:
+! Interruption.
+<to be read again> \AtBegShi@Output 
+                                    \endgroup \set@typeset@protect 
+l.43 \item[NeedsCompilation]
+                            \AsIs{no}
+! Emergency stop.
+<to be read again> \AtBegShi@Output 
+                                    \endgroup \set@typeset@protect 
+l.43 \item[NeedsCompilation]
+                            \AsIs{no}
+!  ==> Fatal error occurred, no output PDF file produced!
+* checking PDF version of manual without hyperrefs or index ... ERROR
+Re-running with no redirection of stdout/stderr.
+* DONE
+Status: 1 ERROR, 2 WARNINGs, 2 NOTEs

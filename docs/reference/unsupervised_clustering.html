@@ -76,9 +76,6 @@
   </a>
 </li>
 <li>
-  <a href="../articles/Patterns.html">Get started</a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -90,6 +87,9 @@
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/ExampleCLL.html">Network inference and analysis of CLL data</a>
+    </li>
+    <li>
+      <a href="../articles/IntroPatterns.html">Introduction to Patterns: a modeling tool dedicated to biological network modeling</a>
     </li>
   </ul>
 </li>
@@ -159,11 +159,11 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>require</a></span>(<span class='no'>CascadeData</span>)){
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>micro_S</span>, <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"CascadeData"</span>)
-<span class='no'>M</span><span class='kw'>&lt;-</span><span class='fu'><a href='as.micro_array.html'>as.micro_array</a></span>(<span class='no'>micro_S</span>[<span class='fl'>1</span>:<span class='fl'>100</span>,],<span class='fl'>1</span>:<span class='fl'>4</span>,<span class='fl'>6</span>)
+<span class='no'>M</span><span class='kw'>&lt;-</span><span class='fu'><a href='as.micro_array.html'>as.micro_array</a></span>(<span class='no'>micro_S</span>[<span class='fl'>51</span>:<span class='fl'>100</span>,],<span class='fl'>1</span>:<span class='fl'>4</span>,<span class='fl'>6</span>)
 <span class='no'>mc</span><span class='kw'>&lt;-</span><span class='fu'><a href='unsupervised_clustering_auto_m_c.html'>unsupervised_clustering_auto_m_c</a></span>(<span class='no'>M</span>)
-<span class='no'>MwithGrp</span><span class='kw'>=</span><span class='fu'>unsupervised_clustering</span>(<span class='no'>M</span>, <span class='fl'>8</span>, <span class='no'>mc</span>$<span class='no'>m</span>, <span class='kw'>screen</span><span class='kw'>=</span><span class='kw'>NULL</span>, <span class='kw'>heatmap</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>new.window</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>MwithGrp</span><span class='kw'>=</span><span class='fu'>unsupervised_clustering</span>(<span class='no'>M</span>, <span class='fl'>4</span>, <span class='no'>mc</span>$<span class='no'>m</span>, <span class='kw'>screen</span><span class='kw'>=</span><span class='kw'>NULL</span>, <span class='kw'>heatmap</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>new.window</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='co'># Other options</span>
-<span class='fu'>unsupervised_clustering</span>(<span class='no'>M</span>, <span class='fl'>8</span>, <span class='no'>mc</span>$<span class='no'>m</span>, <span class='kw'>screen</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>3</span>,<span class='fl'>3</span>), <span class='kw'>heatmap</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>new.window</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>unsupervised_clustering</span>(<span class='no'>M</span>, <span class='fl'>4</span>, <span class='no'>mc</span>$<span class='no'>m</span>, <span class='kw'>screen</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>2</span>), <span class='kw'>heatmap</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>new.window</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='co'># Plot the clusters</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>MwithGrp</span>)
 }</div><div class='output co'>#&gt; <span class='error'>Error in (function (classes, fdef, mtable) {    methods &lt;- .findInheritedMethods(classes, fdef, mtable)    if (length(methods) == 1L)         return(methods[[1L]])    else if (length(methods) == 0L) {        cnames &lt;- paste0("\"", vapply(classes, as.character,             ""), "\"", collapse = ", ")        stop(gettextf("unable to find an inherited method for function %s for signature %s",             sQuote(fdef@generic), sQuote(cnames)), domain = NA)    }    else stop("Internal error in finding inherited methods; didn't return a unique method",         domain = NA)})(list(structure("micro_array", package = "Patterns"), "numeric",     "numeric"), new("nonstandardGenericFunction", .Data = function (M1,     clust, mestim, ...) {    standardGeneric("unsupervised_clustering")}, generic = structure("unsupervised_clustering", package = "Patterns"),     package = "Patterns", group = list(), valueClass = character(0),     signature = c("M1", "clust", "mestim"), default = NULL, skeleton = (function (M1,         clust, mestim, ...)     stop("invalid call in method dispatch to 'unsupervised_clustering' (no default method)",         domain = NA))(M1, clust, mestim, ...)), &lt;environment&gt;): unable to find an inherited method for function ‘unsupervised_clustering’ for signature ‘"micro_array", "numeric", "numeric"’</span></div><div class='img'><img src='unsupervised_clustering-1.png' alt='' width='700' height='433' /></div></pre>
