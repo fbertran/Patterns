@@ -1,3 +1,7 @@
+# Patterns 1.0
+
+* CRAN release of the package.
+
 # Patterns 0.99
 
 * First vignette completion and second vignette creation.

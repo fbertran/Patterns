@@ -11,11 +11,12 @@ output: github_document
 
 # Patterns: a modeling tool dedicated to biological network modeling
 
-It allows for **single** or **joint modeling** of, for instance, genes and proteins. It is design to work with **patterned data**. Famous examples of problems related to patterned data are:
+It is designed to work with **patterned data**. Famous examples of problems related to patterned data are:
+
 * recovering **signals** in networks after a **stimulation** (cascade network reverse engineering),
 * analysing **periodic signals**.
 
-
+It allows for **single** or **joint modeling** of, for instance, genes and proteins. 
 
 * It starts with the **selection of the actors** that will be the used in the reverse engineering upcoming step. An actor can be included in that selection based on its **differential effects** (for instance gene expression or protein abundance) or on its **time course profile**. 
 * Wrappers for **actors clustering** functions and cluster analysis are provided. 
@@ -1315,6 +1316,8 @@ Net_inf_P_SelectBoost <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=
 
 
 ```
+#> Warning: 'Patterns' namespace cannot be unloaded:
+#>   tentative d'obtenir le slot "defined" d'un objet d'une classe élémentaire ("environment") sans slots
 #> 
 #> Attaching package: 'Patterns'
 #> The following object is masked from 'package:igraph':
