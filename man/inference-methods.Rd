@@ -35,6 +35,7 @@ Reverse-engineer the network.
 \item{steps.seq=.95}{Optional parameter for the SelectBoost algorithm in the `SelectBoost` package.}
 \item{limselect=.95}{Optional parameter for the SelectBoost algorithm in the `SelectBoost` package.}
 \item{use.parallel=TRUE}{Use parallel computing?}
+\item{verbose=TRUE}{Info on the completion of the fitting process}
 }
 }
 }

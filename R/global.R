@@ -77,7 +77,7 @@ cv.lars1 <- function (x, y, K = 10, index, trace = FALSE, plot.it = TRUE,
                       , ...) 
 {
   #  requireNamespace("lars")
-  #  cat(cv.fun.name)
+  #  if(trace){cat(cv.fun.name)}
   type = match.arg(type)
   if (missing(mode)) {
     mode = switch(type, lasso = "fraction", lar = "step", 
@@ -85,7 +85,7 @@ cv.lars1 <- function (x, y, K = 10, index, trace = FALSE, plot.it = TRUE,
   }
   else mode = match.arg(mode)
   all.folds <- cv.fun(length(y), K)
-  #  cat(all.folds[[1]],"\n")
+  #  if(trace){cat(all.folds[[1]],"\n")}
   if (missing(index)) {
     index = seq(from = 0, to = 1, length = 100)
     if (mode == "step") {
@@ -106,8 +106,7 @@ cv.lars1 <- function (x, y, K = 10, index, trace = FALSE, plot.it = TRUE,
     if (length(omit) == 1) 
       fit <- matrix(fit, nrow = 1)
     residmat[, i] <- apply((y[omit] - fit)^2, 2, mean)
-    if (trace) 
-      cat("\n CV Fold", i, "\n\n")
+    if(trace){cat("\n CV Fold", i, "\n\n")}
   }
   cv <- apply(residmat, 1, mean)
   cv.error <- sqrt(apply(residmat, 1, var)/K)
@@ -200,18 +199,16 @@ cv.spls1 <- function (x, y, fold = 10, K, eta, kappa = 0.5, select = "pls2",
       }
     }
     if (kappa > 0.5 | kappa < 0) {
-      cat("kappa should be between 0 and 0.5! kappa=0.5 is used. \n\n")
+      warning("kappa should be between 0 and 0.5! kappa=0.5 is used.")
       kappa <- 0.5
     }
     if (select != "pls2" & select != "simpls") {
-      cat("Invalid PLS algorithm for variable selection.\n")
-      cat("pls2 algorithm is used. \n\n")
+      warning("Invalid PLS algorithm for variable selection: pls2 algorithm is used.")
       select <- "pls2"
     }
     fits <- c("simpls", "kernelpls", "widekernelpls", "oscorespls")
     if (!any(fit == fits)) {
-      cat("Invalid PLS algorithm for model fitting\n")
-      cat("simpls algorithm is used. \n\n")
+      warning("Invalid PLS algorithm for model fitting: simpls algorithm is used.")
       fit <- "simpls"
     }
     list(K = K, eta = eta, kappa = kappa, select = select, fit = fit)
@@ -225,9 +222,7 @@ cv.spls1 <- function (x, y, fold = 10, K, eta, kappa = 0.5, select = "pls2",
   foldi <- cv.fun(n=n, folds=fold)
   mspemat <- matrix(0, length(eta), length(K))
   for (i in 1:length(eta)) {
-    if(verbose){
-      cat(paste("eta =", eta[i], "\n"))
-    }
+    if(verbose){cat(paste("eta =", eta[i], "\n"))}
     mspemati <- matrix(0, fold, length(K))
     for (j in 1:fold) {
       omit <- foldi[[j]]
@@ -254,9 +249,7 @@ cv.spls1 <- function (x, y, fold = 10, K, eta, kappa = 0.5, select = "pls2",
   msperow <- apply(mspemat, 1, min)
   K.opt <- min(K[mspecol == minpmse])
   eta.opt <- max(eta[msperow == minpmse])
-  if(verbose){
-    cat(paste("\nOptimal parameters: eta = ", eta.opt, ", ", 
-            sep = ""))
+  if(verbose){cat(paste("\nOptimal parameters: eta = ", eta.opt, ", ", sep = ""))
     cat(paste("K = ", K.opt, "\n", sep = ""))
   }
   if (plot.it) {
@@ -315,8 +308,7 @@ cv.enet1 <- function (x, y, K = 10, lambda, s, mode, trace = FALSE, plot.it = TR
       fit <- matrix(fit, nrow = 1)
     }
     residmat[, i] <- apply((y[omit] - fit)^2, 2, mean)
-    if (trace) 
-      cat("\n CV Fold", i, "\n\n")
+    if(trace){cat("\n CV Fold", i, "\n\n")}
   }
   cv <- apply(residmat, 1, mean)
   cv.error <- sqrt(apply(residmat, 1, var)/K)

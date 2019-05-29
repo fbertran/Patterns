@@ -41,6 +41,7 @@ setMethod("print", "network", function(x, ...) {
       "  .... [time points]"
     )
   )
+  invisible(x)
 })
 
 setMethod("analyze_network", "network", function(Omega, nv, label_v = NULL) {
@@ -881,11 +882,10 @@ setMethod("plot"
                       is.null(color.edge)) {
                     trr <-
                       color.vertex[gr[Q[, 2]]]
-                    cat(length(unique(gr[nom])) > 1 &
-                          is.null(color.edge))
+                    #cat(length(unique(gr[nom])) > 1 & is.null(color.edge))
                   } else {
                     trr <- "grey"
-                    cat(length(unique(gr[nom])) > 1 & is.null(color.edge))
+                    #cat(length(unique(gr[nom])) > 1 & is.null(color.edge))
                   }
                 }
                 

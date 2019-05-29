@@ -194,6 +194,7 @@ setMethod(f="inference"
                                ,steps.seq=.95
                                ,limselect=.95
                                ,use.parallel=TRUE
+                               ,verbose=TRUE
                                ){
 
             require(nnls, quietly = TRUE, warn.conflicts = FALSE);on.exit(unloadNamespace("package:nnls"))
@@ -274,14 +275,20 @@ setMethod(f="inference"
             
             while((tour<= tour.max && convO[length(convO)]>conv) || tour<=2){ 
 
+              if(verbose){
               cat(paste("We are at step : ",tour))
               cat("\n") 
+              }
               OmegaS<-Omega 
 
               u<-0 
-              cat("Computing Group (out of ",ngrp,") : ",sep="")
+              if(verbose){
+                cat("Computing Group (out of ",ngrp,") : ",sep="")
+              }
               for(grpjj in 1:ngrp){ 
-                cat("\n",grpjj);#if(grpjj < ngrp){cat(" ... ")}
+                if(verbose){
+                  cat("\n",grpjj)
+                }
 
                 IND<-which(gr %in% (1:ngrp)[-(grpjj)])
 
@@ -316,10 +323,10 @@ setMethod(f="inference"
                   if(norm(pred,type="F")>eps){
                     options(show.error.messages = FALSE)
                     if(cv.subjects==TRUE){
-                      fun_lasso2<-function(x){cat(".");
+                      fun_lasso2<-function(x){if(verbose){cat(".")};
                         lasso_reg2(pred,x[-1],foldid=rep(1:P,each=ncol(pred)/P),priors=priors2[,x[1]])}
                     } else {
-                      fun_lasso2<-function(x){cat(".");
+                      fun_lasso2<-function(x){if(verbose){cat(".")};
                         lasso_reg2(pred,x[-1],foldid=sample(rep(1:K,length=ncol(pred))),priors=priors2[,x[1]])}
                     }
                     Omega[IND, which(gr %in% grpjj)]<-apply(Y2,1,fun_lasso2)
@@ -337,7 +344,7 @@ setMethod(f="inference"
                     } else {
                       cv.folds1=lars::cv.folds
                     }
-                  fun_lasso<-function(x){cat(".");lasso_reg(pred,x,K=K,eps,cv.fun=cv.folds1
+                  fun_lasso<-function(x){if(verbose){cat(".")};lasso_reg(pred,x,K=K,eps,cv.fun=cv.folds1
                                                  #,cv.fun.name=cv.fun.name
                   )} 
                   Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_lasso)
@@ -352,7 +359,7 @@ setMethod(f="inference"
                     } else {
                       cv.folds1=function(n, folds){return(split(sample(1:n), rep(1:folds, length = n)))}
                       }
-                      fun_spls<-function(x){cat(".");spls_reg(pred,x,K=K,eps,cv.fun=cv.folds1)} 
+                      fun_spls<-function(x){if(verbose){cat(".")};spls_reg(pred,x,K=K,eps,cv.fun=cv.folds1)} 
                       Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_spls)
                   }
                 }
@@ -365,19 +372,19 @@ setMethod(f="inference"
                     }else{
                       cv.folds1=lars::cv.folds
                       }
-                      fun_enet<-function(x){cat(".");enet_reg(pred,x,K=K,eps,cv.fun=cv.folds1)} 
+                      fun_enet<-function(x){if(verbose){cat(".")};enet_reg(pred,x,K=K,eps,cv.fun=cv.folds1)} 
                       Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_enet)
                   }
                 }
                 if(fitfun=="stability.c060"){
                   require(c060);
-                  cat("mc.cores=",mc.cores,sep="")
+                  if(verbose){cat("mc.cores=",mc.cores,sep="")}
                   
                   fun_stab<-function(g,mc.cores=mc.cores,intercept.stabpath=intercept.stabpath){
                     
                     if(sum(pred)==0){
                       return(rep(0,nrow(pred)))
-                      cat(".")               
+                      if(verbose){cat(".")}               
                     }else{
                   LL=rep(0,nrow(pred));error.inf=TRUE
                   try({essai<-c060::stabpath(g,t(pred),mc.cores=mc.cores,intercept=intercept.stabpath);
@@ -388,7 +395,7 @@ setMethod(f="inference"
                   LL<-as.matrix(predict(L,s=lambda,type="coef"))[-1,1]})
                   try({LL[-varii]<-0;
                   error.inf=FALSE})
-                  if(error.inf){cat("!")} else {cat(".")}
+                  if(verbose){if(error.inf){cat("!")} else {cat(".")}}
                   if(!is.vector(LL)){LL<-rep(0,nrow(pred))}
                   return(LL)
                   }
@@ -405,7 +412,7 @@ setMethod(f="inference"
                 
                 if(fitfun=="stability.c060.weighted"){
                   require(c060);
-                  cat("mc.cores=",mc.cores," ",sep="")
+                  if(verbose){cat("mc.cores=",mc.cores," ",sep="")}
                   priors2<-priors[IND,which(gr %in% grpjj)]
                   Y2<-cbind(1:nrow(Y),Y)
                   
@@ -413,7 +420,7 @@ setMethod(f="inference"
 
                       if(sum(pred)==0){
                       return(rep(0,nrow(pred)))
-                        cat(".")               
+                        if(verbose){cat(".")}               
                     }else{
                       stabpath <- function (y, x, size = 0.632, steps = 100, penalty.factor = rep(1,ncol(x)), weakness=1, mc.cores = getOption("mc.cores", 
                                                                                                                                                2L), ...) 
@@ -484,9 +491,9 @@ setMethod(f="inference"
                       LL<-as.matrix(predict(L,s=lambda,type="coef"))[-1,1];
                       error.comp=FALSE
                       })
-                      if(error.comp){cat("!",geterrmessage(),"\n")} else {cat("")}
+                      if(verbose){if(error.comp){cat("!",geterrmessage(),"\n")} else {cat("")}}
                       try({LL[-varii]<-0;error.inf=FALSE})
-                      if(!error.comp&error.inf){cat("!",geterrmessage(),"\n")} else {cat(".")}
+                      if(verbose){if(!error.comp&error.inf){cat("!",geterrmessage(),"\n")} else {cat(".")}}
                       if(!is.vector(LL)){LL<-rep(0,nrow(pred))}
                       return(LL)
                     }
@@ -504,7 +511,7 @@ setMethod(f="inference"
                   fun_robust<-function(g){
                     if(sum(pred)==0){
                       return(rep(0,nrow(pred)))
-                      cat(".")               
+                      if(verbose){cat(".")}               
                     }else{
                       essai<-robustboost(t(pred)+rnorm(prod(dim(pred)),0,0.001),g)  
                       varii<-which(essai==1)
@@ -513,7 +520,7 @@ setMethod(f="inference"
                       
                       LL<-predict(L,s=lambda,mode="lambda",type="coef")$coefficients
                       LL[-varii]<-0
-                      cat(".")               
+                      if(verbose){cat(".")}               
                       return(LL)
                     }
                   }
@@ -547,11 +554,11 @@ setMethod(f="inference"
                   fun_selectboost_weighted<-function(g,mc.cores=mc.cores, steps.seq = steps.seq, limselect = limselect, use.parallel = use.parallel){
                     if(norm(pred,type="F")<=eps){     
                       return(rep(0,nrow(pred)))
-                      cat(".")               
+                      if(verbose){cat(".")}               
                     }else{
                       if(exists("varii")){rm(varii)}
                       LL=rep(0,nrow(pred));error.comp=TRUE;error.inf=TRUE
-                      #cat(intercept.stabpath)
+                      #if(verbose){cat(intercept.stabpath)}
                       try({
                       essai<-suppressWarnings(SelectBoost::fastboost(t(pred),g[-1],SelectBoost::group_func_2,lasso_cv_glmnet_min_weighted_Patterns,corrfunc="crossprod",normalize=TRUE, B=100, use.parallel=use.parallel, ncores=mc.cores,c0lim=FALSE, steps.seq = steps.seq, priors=priors2[,g[1]]))
                       varii<-which(essai>=limselect)
@@ -560,9 +567,9 @@ setMethod(f="inference"
                       LL<-predict(resultat,s="lambda.min",type="coef")[-1,1]
                       error.comp=FALSE
                       })
-                      if(error.comp){cat("!",geterrmessage(),"\n")} else {cat("")}
+                      if(verbose){if(error.comp){cat("!",geterrmessage(),"\n")} else {cat("")}}
                       try({LL[-varii]<-0;error.inf=FALSE})
-                      if(!error.comp&error.inf){cat("!",geterrmessage(),"\n")} else {cat(".")}
+                      if(verbose){if(!error.comp&error.inf){cat("!",geterrmessage(),"\n")} else {cat(".")}}
                       if(!is.vector(LL)){LL<-rep(0,nrow(pred))}
                       return(LL)
                     }
@@ -573,7 +580,7 @@ setMethod(f="inference"
                 
                                 
               }
-              cat("\n")
+              if(verbose){cat("\n")}
 
               co<-apply(Omega,2,sumabso)
               Omega<-t(t(Omega)/co)
@@ -585,9 +592,11 @@ setMethod(f="inference"
               
               convO<-c(convO,mean(abs(Omega-OmegaS)))
               
-              if( type.inf=="iterative"){
-                cat(paste("The convergence of the network is (L1 norm) :", round(convO[length(convO)],5)))	
-                cat("\n")	
+              if(verbose){
+                if( type.inf=="iterative"){
+                  cat(paste("The convergence of the network is (L1 norm) :", round(convO[length(convO)],5)))	
+                  cat("\n")	
+                }
               }
               uuu<-0
               sauvF<-F
