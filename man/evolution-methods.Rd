@@ -24,7 +24,7 @@ See the evolution of the network with change of cutoff
   \item{legend}{string giving the position of the legend. Defaults to "topleft"}
   \item{frame.color}{string giving the color of the frame of the plot. Defaults to "black"}
   \item{label.hub}{label hubs. Defaults to FALSE}
-  \item{outdir}{Directory to save the animation. Defaults to getwd()}
+  \item{outdir}{Directory to save the animation. No default value since it must be specified by the user.}
   \item{type.ani}{Type of animation. Defaults to "html"}
 }
 }}
@@ -52,11 +52,27 @@ Bertrand Frederic, Myriam Maumy-Bertrand.
 
 \examples{
 \donttest{
-	data(network)
-	sequence<-seq(0,0.2,length.out=20)
-	if(in_pkgdown()){setwd("~/Github/Patterns/docs/reference/evolution/")}
-	evolution(network,sequence,type.ani = "html")
-	evolution(network,sequence,type.ani = "gif", outdir=destdir)
+data(network)
+sequence<-seq(0,0.2,length.out=20)
+
+destdir = tempdir()
+
+#We set the working directory to a special directory only in the 
+# case of online documentation creation. This should not be run 
+# by a package user.
+try(if(in_pkgdown()){destdir = 
+  "~/Github/Patterns/docs/reference/evolution/"})
+	
+#Example of use of the evolution method with an html output.
+evolution(network,sequence,type.ani = "html",outdir=destdir)
+
+#Example of use of the evolution method with an animated gif output.
+try(if(in_pkgdown()){evolution(network,sequence,type.ani = "gif",outdir=destdir)})
+  
+#The .gif creation is only working in the user working directory and not in temp directory.
+\dontrun{
+evolution(network,sequence,type.ani = "gif",outdir=getwd())
+}
 }
 }
 

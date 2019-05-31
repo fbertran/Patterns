@@ -93,14 +93,24 @@ setMethod("evolution", "network",
                    ,
                    label.hub = FALSE
                    ,
-                   outdir = getwd()
+                   outdir
                    ,
                    type.ani = "html"
                    #,edge.arrow.size=0.6*(1+size.ed)
                    #,edge.thickness=1
                    )
                    {
-                     Omega <- net
+                    if(missing(outdir)){stop("An output directory is required")}
+                    #We save the user working directory.
+                    orig_working_directory <- getwd()
+                    
+                    #We restore the user working directory on function exit.
+                    on.exit(setwd(orig_working_directory))
+                    
+                    #Set the working directory to the outdir directory
+                    setwd(outdir)
+            
+                      Omega <- net
                      
                      if (length(list_nv) == 1) {
                        list_nv = seq(0, max(net@network) - 0.05, length.out = list_nv)
@@ -109,8 +119,7 @@ setMethod("evolution", "network",
                      if (type.ani == "html") {
                        require(animation)
                        animation::ani.options(ani.height = size[2],
-                                              ani.width = size[1],
-                                              outdir = outdir)
+                                              ani.width = size[1])
                        animation::saveHTML({
                          POS <- position(net, nv = list_nv[1])
                          
@@ -171,8 +180,7 @@ setMethod("evolution", "network",
                      if (type.ani == "latex") {
                        require(animation)
                        animation::ani.options(ani.height = size[2],
-                                              ani.width = size[1],
-                                              outdir = outdir)#, qpdf = '/opt/local/bin/qpdf'
+                                              ani.width = size[1])#, qpdf = '/opt/local/bin/qpdf'
                        animation::saveLatex({
                          POS <- position(net, nv = list_nv[1])
                          
@@ -233,8 +241,7 @@ setMethod("evolution", "network",
                      if (type.ani == "swf") {
                        require(animation)
                        animation::ani.options(ani.height = size[2],
-                                              ani.width = size[1],
-                                              outdir = outdir)#, qpdf = '/opt/local/bin/qpdf'
+                                              ani.width = size[1])#, qpdf = '/opt/local/bin/qpdf'
                        animation::saveSWF({
                          POS <- position(net, nv = list_nv[1])
                          
@@ -295,8 +302,7 @@ setMethod("evolution", "network",
                      if (type.ani == "video") {
                        require(animation)
                        animation::ani.options(ani.height = size[2],
-                                              ani.width = size[1],
-                                              outdir = outdir)#, qpdf = '/opt/local/bin/qpdf'
+                                              ani.width = size[1])#, qpdf = '/opt/local/bin/qpdf'
                        animation::saveVideo({
                          POS <- position(net, nv = list_nv[1])
                          
@@ -357,8 +363,7 @@ setMethod("evolution", "network",
                      if (type.ani == "gif") {
                        require(animation)
                        animation::ani.options(ani.height = size[2],
-                                              ani.width = size[1],
-                                              outdir = outdir)#, qpdf = '/opt/local/bin/qpdf'
+                                              ani.width = size[1])#, qpdf = '/opt/local/bin/qpdf'
                        animation::saveGIF({
                          POS <- position(net, nv = list_nv[1])
                          
@@ -538,7 +543,7 @@ setMethod("plot"
                      ,
                      ani.htmlfile = "index.html"
                      ,
-                     outdir = getwd()
+                     outdir
                      ,
                      ani.group.legend = "Cluster"
                      ,
@@ -691,19 +696,24 @@ setMethod("plot"
               size.ed <- size.ed / max(size.ed)
               #size.ed<-fpl(size.ed)
               #size.ed<-size.ed
-              
-              
-              
-              
+
               if (ani == TRUE) {
-                if (is.null(gr)) {
-                  stop("Need of groups")
+                if(missing(outdir)){stop("An output directory is required")}
+                #We save the user working directory.
+                orig_working_directory <- getwd()
+                
+                #We restore the user working directory on function exit.
+                on.exit(setwd(orig_working_directory))
+                
+                #Set the working directory to the outdir directory
+                setwd(outdir)
+                
+                if (is.null(gr)) {stop("Need of groups")
                 }
                 T <- length(unique(gr))#length(x@time_pt)
                 require(animation)
                 animation::ani.options(ani.height = size[2],
-                                       ani.width = size[1],
-                                       outdir = outdir)
+                                       ani.width = size[1])
                 
                 if (is.null(ini)) {
                   ini <- position(x, nv)[]

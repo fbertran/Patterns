@@ -26,7 +26,7 @@ Considering the class of the argument which is passed to plot, the graphical out
   \item{nv}{the level of cutoff. Defaut to 0.}
   \item{ini}{using the ``position'' function, you can fix the position of the nodes}
   \item{color.vertex}{a vector defining the color of the vertex}
- \item{ani}{vector giving the size of the plot. Default to c(2000,1000)}
+ \item{ani}{vector giving the size of the plot. Default to c(2000,1000). The animation can only be created in the working directory. See the help page of the animation method.}
  \item{video}{if ani is TRUE and video is TRUE, the animation result is a GIF video}
  \item{label_v}{vector defining the vertex labels}
 \item{legend.position}{position of the legend}

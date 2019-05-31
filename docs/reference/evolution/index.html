@@ -18,28 +18,19 @@
 <body>
 
 	<div class="scianimator"><div id="Rplot" style="display: inline-block;"></div></div>
-	<div class="scianimator" style="width: 2000px; text-align: left"><pre><code class="r">## Animations generated in R version 3.5.3 (2019-03-11) using the package animation
+	<div class="scianimator" style="width: 2000px; text-align: left"><pre><code class="r">## Animations generated in R version 3.6.0 (2019-04-26) using the package animation
 library(Patterns)
-library(animation)
-library(pkgdown)
-library(lars)
-library(c060)
-library(nnls)
-library(gplots)
-library(Mfuzz)
 library(DynDoc)
 library(widgetTools)
-library(e1071)
-library(Biobase)
-library(BiocGenerics)
-library(VGAM)
-library(plotrix)
-library(igraph)
-library(knitr)
+library(pkgdown)
 library(lattice)
 library(cluster)
-library(limma)
+library(VGAM)
+library(plotrix)
 library(CascadeData)
+library(knitr)
+library(igraph)
+library(animation)
 POS <- position(net, nv = list_nv[1])
 for (i in list_nv) {
     if (fix == TRUE) {
@@ -54,13 +45,11 @@ for (i in list_nv) {
     }
     text(-1, 1, round(i, 3))
 }
-## R version 3.5.3 (2019-03-11)
+## R version 3.6.0 (2019-04-26)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Other packages: Patterns 0.7, animation 2.6, pkgdown 1.3.0, lars 1.2,
-## c060 0.2-4, nnls 1.4, gplots 3.0.1.1, Mfuzz 2.42.0, DynDoc 1.60.0,
-## widgetTools 1.60.0, e1071 1.7-1, Biobase 2.42.0, BiocGenerics 0.28.0,
-## VGAM 1.1-1, plotrix 3.7-5, igraph 1.2.4, knitr 1.22, lattice 0.20-38,
-## cluster 2.0.8, limma 3.38.3, CascadeData 1.2</code></pre></div>
+## Other packages: Patterns 1.0, DynDoc 1.62.0, widgetTools 1.62.0,
+## pkgdown 1.3.0, lattice 0.20-38, cluster 2.0.9, VGAM 1.1-1, plotrix
+## 3.7-5, CascadeData 1.2, knitr 1.22, igraph 1.2.4.1, animation 2.6</code></pre></div>
 	<script src="js/Rplot.js"></script>
 <!-- highlight R code -->
 

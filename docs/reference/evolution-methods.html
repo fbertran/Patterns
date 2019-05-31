@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Patterns</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0</span>
       </span>
     </div>
 
@@ -153,7 +153,7 @@
   <dt>legend</dt><dd><p>string giving the position of the legend. Defaults to "topleft"</p></dd>
   <dt>frame.color</dt><dd><p>string giving the color of the frame of the plot. Defaults to "black"</p></dd>
   <dt>label.hub</dt><dd><p>label hubs. Defaults to FALSE</p></dd>
-  <dt>outdir</dt><dd><p>Directory to save the animation. Defaults to getwd()</p></dd>
+  <dt>outdir</dt><dd><p>Directory to save the animation. No default value since it must be specified by the user.</p></dd>
   <dt>type.ani</dt><dd><p>Type of animation. Defaults to "html"</p></dd>
 </dl>
 </td>
@@ -177,9 +177,24 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>        <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>network</span>)
-        <span class='no'>sequence</span><span class='kw'>&lt;-</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>0</span>,<span class='fl'>0.2</span>,<span class='kw'>length.out</span><span class='kw'>=</span><span class='fl'>20</span>)
-        <span class='kw'>if</span>(<span class='fu'>in_pkgdown</span>()){<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>setwd</a></span>(<span class='st'>"~/Github/Patterns/docs/reference/evolution/"</span>)}</div><div class='output co'>#&gt; <span class='error'>Error in in_pkgdown(): impossible de trouver la fonction "in_pkgdown"</span></div><div class='input'>        <span class='fu'>evolution</span>(<span class='no'>network</span>,<span class='no'>sequence</span>,<span class='kw'>type.ani</span> <span class='kw'>=</span> <span class='st'>"html"</span>)</div><div class='output co'>#&gt; <span class='message'>Le chargement a nécessité le package : animation</span></div><div class='output co'>#&gt; <span class='error'>Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'</span></div><div class='input'>        <span class='fu'>evolution</span>(<span class='no'>network</span>,<span class='no'>sequence</span>,<span class='kw'>type.ani</span> <span class='kw'>=</span> <span class='st'>"gif"</span>, <span class='kw'>outdir</span><span class='kw'>=</span><span class='no'>destdir</span>)</div><div class='output co'>#&gt; <span class='error'>Error in animation::ani.options(ani.height = size[2], ani.width = size[1],     outdir = outdir): objet 'destdir' introuvable</span></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>network</span>)
+<span class='no'>sequence</span><span class='kw'>&lt;-</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>0</span>,<span class='fl'>0.2</span>,<span class='kw'>length.out</span><span class='kw'>=</span><span class='fl'>20</span>)
+
+<span class='no'>destdir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>()
+
+<span class='co'>#We set the working directory to a special directory only in the </span>
+<span class='co'># case of online documentation creation. This should not be run </span>
+<span class='co'># by a package user.</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/try'>try</a></span>(<span class='kw'>if</span>(<span class='fu'>in_pkgdown</span>()){<span class='no'>destdir</span> <span class='kw'>=</span>
+  <span class='st'>"~/Github/Patterns/docs/reference/evolution/"</span>})
+
+<span class='co'>#Example of use of the evolution method with an html output.</span>
+<span class='fu'>evolution</span>(<span class='no'>network</span>,<span class='no'>sequence</span>,<span class='kw'>type.ani</span> <span class='kw'>=</span> <span class='st'>"html"</span>,<span class='kw'>outdir</span><span class='kw'>=</span><span class='no'>destdir</span>)</div><div class='output co'>#&gt; <span class='message'>animation option 'nmax' changed: 50 --&gt; 20</span></div><div class='output co'>#&gt; <span class='message'>animation option 'nmax' changed: 20 --&gt; 50</span></div><div class='output co'>#&gt; <span class='message'>HTML file created at: index.html</span></div><div class='input'>
+<span class='co'>#Example of use of the evolution method with an animated gif output.</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/try'>try</a></span>(<span class='kw'>if</span>(<span class='fu'>in_pkgdown</span>()){<span class='fu'>evolution</span>(<span class='no'>network</span>,<span class='no'>sequence</span>,<span class='kw'>type.ani</span> <span class='kw'>=</span> <span class='st'>"gif"</span>,<span class='kw'>outdir</span><span class='kw'>=</span><span class='no'>destdir</span>)})</div><div class='output co'>#&gt; <span class='message'>Output at: animation.gif</span></div><div class='input'>
+<span class='co'>#The .gif creation is only working in the user working directory and not in temp directory.</span>
+<span class='fu'>evolution</span>(<span class='no'>network</span>,<span class='no'>sequence</span>,<span class='kw'>type.ani</span> <span class='kw'>=</span> <span class='st'>"gif"</span>,<span class='kw'>outdir</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>getwd</a></span>())</div><div class='output co'>#&gt; <span class='message'>Output at: animation.gif</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

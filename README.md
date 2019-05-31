@@ -1314,6 +1314,8 @@ Net_inf_P_SelectBoost <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=
 
 
 ```
+#> Warning: 'Patterns' namespace cannot be unloaded:
+#>   tentative d'obtenir le slot "defined" d'un objet d'une classe élémentaire ("environment") sans slots
 #> 
 #> Attaching package: 'Patterns'
 #> The following object is masked from 'package:igraph':
@@ -1358,7 +1360,7 @@ Net_inf_P_SelectBoostWeighted <- Patterns::inference(M, Finit=CascadeFinit(4,4),
 #> The convergence of the network is (L1 norm) : 0.00055
 ```
 
-<img src="man/figures/README-netinflibrary()-1.png" title="plot of chunk netinflibrary()" alt="plot of chunk netinflibrary()" width="100%" /><img src="man/figures/README-netinflibrary()-2.png" title="plot of chunk netinflibrary()" alt="plot of chunk netinflibrary()" width="100%" />
+<img src="man/figures/README-netinfSBW-1.png" title="plot of chunk netinfSBW" alt="plot of chunk netinfSBW" width="100%" /><img src="man/figures/README-netinfSBW-2.png" title="plot of chunk netinfSBW" alt="plot of chunk netinfSBW" width="100%" />
 
 
 
@@ -1661,41 +1663,41 @@ summary(Selection)
 #>  Mean   : 0.73063   Mean   : 0.06753   Mean   : 0.22115  
 #>  3rd Qu.: 1.26164   3rd Qu.: 0.32496   3rd Qu.: 0.33157  
 #>  Max.   : 3.87950   Max.   : 2.83321   Max.   : 3.31723  
-#>       US90             US210             US390        
-#>  Min.   :-0.9721   Min.   :-1.9349   Min.   :-3.8418  
-#>  1st Qu.:-0.1027   1st Qu.: 0.3254   1st Qu.:-0.1592  
-#>  Median : 0.2548   Median : 1.2512   Median : 0.1538  
-#>  Mean   : 0.6479   Mean   : 1.0485   Mean   : 0.1219  
-#>  3rd Qu.: 1.0737   3rd Qu.: 1.8513   3rd Qu.: 0.6268  
-#>  Max.   : 4.3604   Max.   : 4.4860   Max.   : 1.9886  
-#>       US60               US90              US210         
-#>  Min.   :-2.85438   Min.   :-0.90355   Min.   :-0.83324  
-#>  1st Qu.:-0.06031   1st Qu.:-0.08464   1st Qu.: 0.07605  
-#>  Median : 0.03601   Median : 0.17135   Median : 0.52176  
-#>  Mean   : 0.14593   Mean   : 0.41929   Mean   : 0.62446  
-#>  3rd Qu.: 0.24568   3rd Qu.: 0.75565   3rd Qu.: 1.07821  
-#>  Max.   : 1.82903   Max.   : 3.60640   Max.   : 2.27744  
-#>      US390               US60               US90         
-#>  Min.   :-0.96834   Min.   :-1.38002   Min.   :-2.94444  
-#>  1st Qu.: 0.01569   1st Qu.:-0.19910   1st Qu.:-0.01758  
-#>  Median : 0.17370   Median :-0.07962   Median : 0.16080  
-#>  Mean   : 0.23854   Mean   : 0.12972   Mean   : 0.37123  
-#>  3rd Qu.: 0.45189   3rd Qu.: 0.26113   3rd Qu.: 0.61933  
-#>  Max.   : 1.90880   Max.   : 2.31074   Max.   : 3.24454  
-#>      US210             US390              US60         
-#>  Min.   :-1.0271   Min.   :-1.3636   Min.   :-1.79176  
-#>  1st Qu.: 0.1459   1st Qu.:-0.1386   1st Qu.:-0.09822  
-#>  Median : 0.7430   Median : 0.1492   Median : 0.03378  
-#>  Mean   : 0.7972   Mean   : 0.1271   Mean   : 0.27978  
-#>  3rd Qu.: 1.3922   3rd Qu.: 0.4825   3rd Qu.: 0.33548  
-#>  Max.   : 3.6213   Max.   : 1.5979   Max.   : 3.16035  
-#>       US90              US210             US390         
-#>  Min.   :-3.20791   Min.   :-1.4716   Min.   :-1.95883  
-#>  1st Qu.:-0.03963   1st Qu.: 0.1292   1st Qu.:-0.04786  
-#>  Median : 0.28261   Median : 0.8392   Median : 0.22472  
-#>  Mean   : 0.52529   Mean   : 0.7903   Mean   : 0.21171  
-#>  3rd Qu.: 1.03256   3rd Qu.: 1.4416   3rd Qu.: 0.42511  
-#>  Max.   : 3.19975   Max.   : 2.8027   Max.   : 2.14903
+#>       US90             US210             US390              US60         
+#>  Min.   :-0.9721   Min.   :-1.9349   Min.   :-3.8418   Min.   :-2.85438  
+#>  1st Qu.:-0.1027   1st Qu.: 0.3254   1st Qu.:-0.1592   1st Qu.:-0.06031  
+#>  Median : 0.2548   Median : 1.2512   Median : 0.1538   Median : 0.03601  
+#>  Mean   : 0.6479   Mean   : 1.0485   Mean   : 0.1219   Mean   : 0.14593  
+#>  3rd Qu.: 1.0737   3rd Qu.: 1.8513   3rd Qu.: 0.6268   3rd Qu.: 0.24568  
+#>  Max.   : 4.3604   Max.   : 4.4860   Max.   : 1.9886   Max.   : 1.82903  
+#>       US90              US210              US390         
+#>  Min.   :-0.90355   Min.   :-0.83324   Min.   :-0.96834  
+#>  1st Qu.:-0.08464   1st Qu.: 0.07605   1st Qu.: 0.01569  
+#>  Median : 0.17135   Median : 0.52176   Median : 0.17370  
+#>  Mean   : 0.41929   Mean   : 0.62446   Mean   : 0.23854  
+#>  3rd Qu.: 0.75565   3rd Qu.: 1.07821   3rd Qu.: 0.45189  
+#>  Max.   : 3.60640   Max.   : 2.27744   Max.   : 1.90880  
+#>       US60               US90              US210             US390        
+#>  Min.   :-1.38002   Min.   :-2.94444   Min.   :-1.0271   Min.   :-1.3636  
+#>  1st Qu.:-0.19910   1st Qu.:-0.01758   1st Qu.: 0.1459   1st Qu.:-0.1386  
+#>  Median :-0.07962   Median : 0.16080   Median : 0.7430   Median : 0.1492  
+#>  Mean   : 0.12972   Mean   : 0.37123   Mean   : 0.7972   Mean   : 0.1271  
+#>  3rd Qu.: 0.26113   3rd Qu.: 0.61933   3rd Qu.: 1.3922   3rd Qu.: 0.4825  
+#>  Max.   : 2.31074   Max.   : 3.24454   Max.   : 3.6213   Max.   : 1.5979  
+#>       US60               US90              US210        
+#>  Min.   :-1.79176   Min.   :-3.20791   Min.   :-1.4716  
+#>  1st Qu.:-0.09822   1st Qu.:-0.03963   1st Qu.: 0.1292  
+#>  Median : 0.03378   Median : 0.28261   Median : 0.8392  
+#>  Mean   : 0.27978   Mean   : 0.52529   Mean   : 0.7903  
+#>  3rd Qu.: 0.33548   3rd Qu.: 1.03256   3rd Qu.: 1.4416  
+#>  Max.   : 3.16035   Max.   : 3.19975   Max.   : 2.8027  
+#>      US390         
+#>  Min.   :-1.95883  
+#>  1st Qu.:-0.04786  
+#>  Median : 0.22472  
+#>  Mean   : 0.21171  
+#>  3rd Qu.: 0.42511  
+#>  Max.   : 2.14903
 ```
 
 <img src="man/figures/README-microselection6-1.png" title="plot of chunk microselection6" alt="plot of chunk microselection6" width="100%" /><img src="man/figures/README-microselection6-2.png" title="plot of chunk microselection6" alt="plot of chunk microselection6" width="100%" /><img src="man/figures/README-microselection6-3.png" title="plot of chunk microselection6" alt="plot of chunk microselection6" width="100%" />

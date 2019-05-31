@@ -466,7 +466,7 @@ Heatmap of the coefficients of the Omega matrix of the network
 stats::heatmap(Net_inf_P_SelectBoost@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
 ```
 
-```{r netinflibrary(), cache=TRUE}
+```{r netinfSBW, cache=TRUE}
 Net_inf_P_SelectBoostWeighted <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=CascadeFshape(4,4), fitfun="selectboost.weighted",priors=Weights_Net)
 ```
 
