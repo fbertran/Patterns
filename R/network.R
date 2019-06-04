@@ -361,6 +361,7 @@ setMethod("evolution", "network",
                        })
                      }
                      if (type.ani == "gif") {
+                       setwd(orig_working_directory)
                        require(animation)
                        animation::ani.options(ani.height = size[2],
                                               ani.width = size[1])#, qpdf = '/opt/local/bin/qpdf'
@@ -388,7 +389,8 @@ setMethod("evolution", "network",
                                ,
                                frame.color = frame.color
                                ,
-                               label.hub = label.hub
+                               label.hub = label.hub,
+                               movie.name=paste(outdir,'animation.gif',sep='/')
                                #,edge.arrow.size=edge.arrow.size
                                #,edge.thickness=edge.thickness
                              )

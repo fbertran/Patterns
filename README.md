@@ -263,33 +263,29 @@ Plot the simulated network.
 
 ```r
 Patterns::plot(Net, choice="network")
+#> Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'
 ```
-
-<img src="man/figures/README-plotnet1-1.png" title="plot of chunk plotnet1" alt="plot of chunk plotnet1" width="100%" />
 
 If a gene clustering is known, it can be used as a coloring scheme.
 
 ```r
 plot(Net, choice="network", gr=rep(1:4,each=25))
+#> Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'
 ```
-
-<img src="man/figures/README-plotnet2-1.png" title="plot of chunk plotnet2" alt="plot of chunk plotnet2" width="100%" />
 
 Plot the F matrix, for low dimensional F matrices.
 
 ```r
 plot(Net, choice="F")
+#> Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'
 ```
-
-<img src="man/figures/README-plotF-1.png" title="plot of chunk plotF" alt="plot of chunk plotF" width="100%" />
 
 Plot the F matrix using the `pixmap` package, for high dimensional F matrices.
 
 ```r
 plot(Net, choice="Fpixmap")
+#> Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'
 ```
-
-<img src="man/figures/README-plotFpixmap-1.png" title="plot of chunk plotFpixmap" alt="plot of chunk plotFpixmap" width="100%" />
 
 We simulate gene expression according to the network that was previously drawn
 
@@ -448,9 +444,8 @@ Plot of the inferred F matrix
 
 ```r
 plot(Net_inf_P, choice="F")
+#> Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'
 ```
-
-<img src="man/figures/README-Fresults-1.png" title="plot of chunk Fresults" alt="plot of chunk Fresults" width="100%" />
 
 Heatmap of the inferred coefficients of the Omega matrix
 
@@ -851,9 +846,8 @@ Plot of the inferred F matrix
 
 ```r
 plot(Net_inf_P_S, choice="F")
+#> Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'
 ```
-
-<img src="man/figures/README-FresultsLC-1.png" title="plot of chunk FresultsLC" alt="plot of chunk FresultsLC" width="100%" />
 
 Heatmap of the coefficients of the Omega matrix of the network. They reflect the use of a special $F$ matrix. It is an example of an F matrix specifically designed to deal with cascade networks.
 
@@ -921,9 +915,8 @@ Plot of the inferred F matrix
 
 ```r
 plot(Net_inf_P_Lasso2, choice="F")
+#> Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'
 ```
-
-<img src="man/figures/README-Fresultslasso2-1.png" title="plot of chunk Fresultslasso2" alt="plot of chunk Fresultslasso2" width="100%" />
 
 Heatmap of the coefficients of the Omega matrix of the network
 
@@ -966,9 +959,8 @@ Plot of the inferred F matrix
 
 ```r
 plot(Net_inf_P_Lasso2_Weighted, choice="F")
+#> Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'
 ```
-
-<img src="man/figures/README-Fresultslasso2Weighted-1.png" title="plot of chunk Fresultslasso2Weighted" alt="plot of chunk Fresultslasso2Weighted" width="100%" />
 
 Heatmap of the coefficients of the Omega matrix of the network
 
@@ -1032,9 +1024,8 @@ Plot of the inferred F matrix
 
 ```r
 plot(Net_inf_P_SPLS, choice="F")
+#> Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'
 ```
-
-<img src="man/figures/README-FresultsSPLS-1.png" title="plot of chunk FresultsSPLS" alt="plot of chunk FresultsSPLS" width="100%" />
 
 Heatmap of the coefficients of the Omega matrix of the network
 
@@ -1118,9 +1109,8 @@ Plot of the inferred F matrix
 
 ```r
 plot(Net_inf_P_ELASTICNET, choice="F")
+#> Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'
 ```
-
-<img src="man/figures/README-FresultsEN-1.png" title="plot of chunk FresultsEN" alt="plot of chunk FresultsEN" width="100%" />
 
 Heatmap of the coefficients of the Omega matrix of the network
 
@@ -1155,9 +1145,8 @@ Plot of the inferred F matrix
 
 ```r
 plot(Net_inf_P_stability, choice="F")
+#> Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'
 ```
-
-<img src="man/figures/README-FresultsStab-1.png" title="plot of chunk FresultsStab" alt="plot of chunk FresultsStab" width="100%" />
 
 Heatmap of the coefficients of the Omega matrix of the network
 
@@ -1192,9 +1181,8 @@ Plot of the inferred F matrix
 
 ```r
 plot(Net_inf_P_StabWeight, choice="F")
+#> Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'
 ```
-
-<img src="man/figures/README-FresultsStabWeight-1.png" title="plot of chunk FresultsStabWeight" alt="plot of chunk FresultsStabWeight" width="100%" />
 
 Heatmap of the coefficients of the Omega matrix of the network
 
@@ -1260,9 +1248,8 @@ Plot of the inferred F matrix
 
 ```r
 plot(Net_inf_P_Robust, choice="F")
+#> Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'
 ```
-
-<img src="man/figures/README-FresultsRobust-1.png" title="plot of chunk FresultsRobust" alt="plot of chunk FresultsRobust" width="100%" />
 
 Heatmap of the coefficients of the Omega matrix of the network
 
@@ -1327,9 +1314,8 @@ Plot of the inferred F matrix
 
 ```r
 plot(Net_inf_P_SelectBoost, choice="F")
+#> Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'
 ```
-
-<img src="man/figures/README-FresultsSB-1.png" title="plot of chunk FresultsSB" alt="plot of chunk FresultsSB" width="100%" />
 
 Heatmap of the coefficients of the Omega matrix of the network
 
@@ -1391,17 +1377,24 @@ stats::heatmap(Net_inf_P_SelectBoostWeighted@network, Rowv = NA, Colv = NA, scal
 ###Post inference network analysis
 Such an analysis is only required if the model was not fitted using the stability selection or the selectboost algorithm.
 
-Create an animation of the network with increasing cutoffs with an animated .gif format or a  html webpage.
+Create an animation of the network with increasing cutoffs with an animated .gif format or a  html webpage in the working directory.
 
 ```r
 data(network)
 sequence<-seq(0,0.2,length.out=20)
-evolution(network,sequence,type.ani = "gif")
-evolution(network,sequence,type.ani = "html")
+evolution(network,sequence,type.ani = "gif", outdir=getwd())
+evolution(network,sequence,type.ani = "html", outdir=getwd())
+```
+
+```
+#> Output at: animation.gif
+#> animation option 'nmax' changed: 50 --> 20
+#> animation option 'nmax' changed: 20 --> 50
+#> HTML file created at: index.html
 ```
 ![Evolution as .gif.](docs/reference/evolution/animation.gif)
 
-[Evolution as .html.](docs/reference/evolution/index.html)
+[Evolution as .html.](reference/evolution/index.html)
 
 Evolution of some properties of a reverse-engineered network with increasing cut-off values.
 ![Evolution of some properties of a reverse-engineered network with increasing cut-off values.](docs/reference/compare-methods-1.png)

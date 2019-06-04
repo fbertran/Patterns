@@ -19,18 +19,12 @@
 
 	<div class="scianimator"><div id="Rplot" style="display: inline-block;"></div></div>
 	<div class="scianimator" style="width: 2000px; text-align: left"><pre><code class="r">## Animations generated in R version 3.6.0 (2019-04-26) using the package animation
+library(animation)
 library(Patterns)
-library(DynDoc)
-library(widgetTools)
-library(pkgdown)
-library(lattice)
-library(cluster)
 library(VGAM)
 library(plotrix)
-library(CascadeData)
-library(knitr)
 library(igraph)
-library(animation)
+library(CascadeData)
 POS <- position(net, nv = list_nv[1])
 for (i in list_nv) {
     if (fix == TRUE) {
@@ -47,9 +41,8 @@ for (i in list_nv) {
 }
 ## R version 3.6.0 (2019-04-26)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Other packages: Patterns 1.0, DynDoc 1.62.0, widgetTools 1.62.0,
-## pkgdown 1.3.0, lattice 0.20-38, cluster 2.0.9, VGAM 1.1-1, plotrix
-## 3.7-5, CascadeData 1.2, knitr 1.22, igraph 1.2.4.1, animation 2.6</code></pre></div>
+## Other packages: animation 2.6, Patterns 1.0, VGAM 1.1-1, plotrix
+## 3.7-5, igraph 1.2.4.1, CascadeData 1.2</code></pre></div>
 	<script src="js/Rplot.js"></script>
 <!-- highlight R code -->
 

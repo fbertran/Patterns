@@ -489,16 +489,24 @@ stats::heatmap(Net_inf_P_SelectBoostWeighted@network, Rowv = NA, Colv = NA, scal
 ###Post inference network analysis
 Such an analysis is only required if the model was not fitted using the stability selection or the selectboost algorithm.
 
-Create an animation of the network with increasing cutoffs with an animated .gif format or a  html webpage.
+Create an animation of the network with increasing cutoffs with an animated .gif format or a  html webpage in the working directory.
 ```{r evolutation, warning=FALSE, eval=FALSE}
 data(network)
 sequence<-seq(0,0.2,length.out=20)
-evolution(network,sequence,type.ani = "gif")
-evolution(network,sequence,type.ani = "html")
+evolution(network,sequence,type.ani = "gif", outdir=getwd())
+evolution(network,sequence,type.ani = "html", outdir=getwd())
+```
+```{r evolutationpkgdown, echo=FALSE, warning=FALSE, eval=TRUE, echo=FALSE}
+data(network)
+sequence<-seq(0,0.2,length.out=20)
+#try(if(pkgdown::in_pkgdown()){destdir = "~/Github/Patterns/docs/reference/evolution/"})
+destdir = "~/Github/Patterns/docs/reference/evolution/"
+evolution(network,sequence,type.ani = "gif",outdir=destdir)
+evolution(network,sequence,type.ani = "html",outdir=destdir)
 ```
 ![Evolution as .gif.](docs/reference/evolution/animation.gif)
 
-[Evolution as .html.](docs/reference/evolution/index.html)
+[Evolution as .html.](reference/evolution/index.html)
 
 Evolution of some properties of a reverse-engineered network with increasing cut-off values.
 ![Evolution of some properties of a reverse-engineered network with increasing cut-off values.](docs/reference/compare-methods-1.png)

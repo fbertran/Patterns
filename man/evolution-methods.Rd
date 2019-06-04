@@ -55,24 +55,14 @@ Bertrand Frederic, Myriam Maumy-Bertrand.
 data(network)
 sequence<-seq(0,0.2,length.out=20)
 
+#Change the destdir to have the animation created where you want. 
 destdir = tempdir()
 
-#We set the working directory to a special directory only in the 
-# case of online documentation creation. This should not be run 
-# by a package user.
-try(if(in_pkgdown()){destdir = 
-  "~/Github/Patterns/docs/reference/evolution/"})
-	
 #Example of use of the evolution method with an html output.
 evolution(network,sequence,type.ani = "html",outdir=destdir)
 
 #Example of use of the evolution method with an animated gif output.
-try(if(in_pkgdown()){evolution(network,sequence,type.ani = "gif",outdir=destdir)})
-  
-#The .gif creation is only working in the user working directory and not in temp directory.
-\dontrun{
-evolution(network,sequence,type.ani = "gif",outdir=getwd())
-}
+evolution(network,sequence,type.ani = "gif",outdir=destdir)
 }
 }
 
