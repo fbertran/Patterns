@@ -84,12 +84,12 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Network inference and analysis of CLL data</h1>
-                        <h4 class="author">Frédéric Bertrand</h4>
+                        <h4 class="author">Frédéric Bertrand and Myriam Maumy-Bertrand</h4>
             <address class="author_afil">
       Université de Strasbourg et CNRS<br><a class="author_email" href="mailto:#"></a><a href="mailto:frederic.bertrand@math.unistra.fr" class="email">frederic.bertrand@math.unistra.fr</a>
       </address>
                   
-            <h4 class="date">2019-05-27</h4>
+            <h4 class="date">2019-06-07</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/fbertran/Patterns/blob/master/vignettes/ExampleCLL.Rmd"><code>vignettes/ExampleCLL.Rmd</code></a></small>
       <div class="hidden name"><code>ExampleCLL.Rmd</code></div>
@@ -179,184 +179,16 @@
 <a href="#selection-genes-according-to-their-profiles-" class="anchor"></a>Selection genes according to their profiles.</h1>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">selection1&lt;-<span class="kw"><a href="../reference/genePeakSelection-methods.html">geneSelection</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(m_agg_US,m_agg_S),<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="st">"condition&amp;time"</span>,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">1</span>)),<span class="op">-</span><span class="dv">1</span>,<span class="dt">alpha=</span><span class="fl">0.1</span>)</a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="co">#&gt; [1] "The selection is not empty"</span></a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="co">#&gt; [1] "This function returns the stimulated expression"</span></a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="co">#&gt; The matrix :</span></a>
-<a class="sourceLine" id="cb5-5" title="5"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb5-6" title="6"><span class="co">#&gt;           CLL.B.cell..patient.M2_unstimulated.cells_at.60min_.agg.</span></a>
-<a class="sourceLine" id="cb5-7" title="7"><span class="co">#&gt; 1007_s_at                                                   701.41</span></a>
-<a class="sourceLine" id="cb5-8" title="8"><span class="co">#&gt; 1053_at                                                     215.92</span></a>
-<a class="sourceLine" id="cb5-9" title="9"><span class="co">#&gt; 117_at                                                      732.81</span></a>
-<a class="sourceLine" id="cb5-10" title="10"><span class="co">#&gt; 121_at                                                      790.27</span></a>
-<a class="sourceLine" id="cb5-11" title="11"><span class="co">#&gt; 1255_g_at                                                   143.26</span></a>
-<a class="sourceLine" id="cb5-12" title="12"><span class="co">#&gt; 1294_at                                                     379.79</span></a>
-<a class="sourceLine" id="cb5-13" title="13"><span class="co">#&gt;           CLL.B.cell..patient.M2_unstimulated.cells_at.90min_.agg.</span></a>
-<a class="sourceLine" id="cb5-14" title="14"><span class="co">#&gt; 1007_s_at                                                   698.96</span></a>
-<a class="sourceLine" id="cb5-15" title="15"><span class="co">#&gt; 1053_at                                                     230.12</span></a>
-<a class="sourceLine" id="cb5-16" title="16"><span class="co">#&gt; 117_at                                                      954.94</span></a>
-<a class="sourceLine" id="cb5-17" title="17"><span class="co">#&gt; 121_at                                                      888.51</span></a>
-<a class="sourceLine" id="cb5-18" title="18"><span class="co">#&gt; 1255_g_at                                                   140.70</span></a>
-<a class="sourceLine" id="cb5-19" title="19"><span class="co">#&gt; 1294_at                                                     369.64</span></a>
-<a class="sourceLine" id="cb5-20" title="20"><span class="co">#&gt;           CLL.B.cell..patient.M2_unstimulated.cells_at.210min_.agg.</span></a>
-<a class="sourceLine" id="cb5-21" title="21"><span class="co">#&gt; 1007_s_at                                                    704.67</span></a>
-<a class="sourceLine" id="cb5-22" title="22"><span class="co">#&gt; 1053_at                                                      220.87</span></a>
-<a class="sourceLine" id="cb5-23" title="23"><span class="co">#&gt; 117_at                                                       240.87</span></a>
-<a class="sourceLine" id="cb5-24" title="24"><span class="co">#&gt; 121_at                                                       772.01</span></a>
-<a class="sourceLine" id="cb5-25" title="25"><span class="co">#&gt; 1255_g_at                                                    139.09</span></a>
-<a class="sourceLine" id="cb5-26" title="26"><span class="co">#&gt; 1294_at                                                      357.12</span></a>
-<a class="sourceLine" id="cb5-27" title="27"><span class="co">#&gt; ...</span></a>
-<a class="sourceLine" id="cb5-28" title="28"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb5-29" title="29"><span class="co">#&gt; Vector of names :</span></a>
-<a class="sourceLine" id="cb5-30" title="30"><span class="co">#&gt; [1] "1007_s_at" "1053_at"   "117_at"    "121_at"    "1255_g_at" "1294_at"  </span></a>
-<a class="sourceLine" id="cb5-31" title="31"><span class="co">#&gt; ...Vector of geneID :</span></a>
-<a class="sourceLine" id="cb5-32" title="32"><span class="co">#&gt; [1] "DDR1 or MIR4640" "RFC2"            "HSPA6"           "PAX8"           </span></a>
-<a class="sourceLine" id="cb5-33" title="33"><span class="co">#&gt; [5] "GUCA1A"          "UBA7 or MIR5193"</span></a>
-<a class="sourceLine" id="cb5-34" title="34"><span class="co">#&gt; ...</span></a>
-<a class="sourceLine" id="cb5-35" title="35"><span class="co">#&gt; Vector of group :</span></a>
-<a class="sourceLine" id="cb5-36" title="36"><span class="co">#&gt; [1] 0</span></a>
-<a class="sourceLine" id="cb5-37" title="37"><span class="co">#&gt; ...</span></a>
-<a class="sourceLine" id="cb5-38" title="38"><span class="co">#&gt; Vector of starting time :</span></a>
-<a class="sourceLine" id="cb5-39" title="39"><span class="co">#&gt; [1] 0</span></a>
-<a class="sourceLine" id="cb5-40" title="40"><span class="co">#&gt; ...</span></a>
-<a class="sourceLine" id="cb5-41" title="41"><span class="co">#&gt; Vector of time :</span></a>
-<a class="sourceLine" id="cb5-42" title="42"><span class="co">#&gt; [1]  60  90 210 390</span></a>
-<a class="sourceLine" id="cb5-43" title="43"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb5-44" title="44"><span class="co">#&gt; Number of subject :</span></a>
-<a class="sourceLine" id="cb5-45" title="45"><span class="co">#&gt; [1] 5</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-3" title="3"><span class="co">#&gt; [1] "This function returns the stimulated expression"</span></a></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">selection2&lt;-<span class="kw"><a href="../reference/genePeakSelection-methods.html">geneSelection</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(m_agg_US,m_agg_S),<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="st">"condition&amp;time"</span>,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">1</span>)<span class="op">+</span><span class="dv">1</span>),<span class="op">-</span><span class="dv">1</span>,<span class="dt">alpha=</span><span class="fl">0.1</span>)</a>
 <a class="sourceLine" id="cb6-2" title="2"><span class="co">#&gt; [1] "The selection is not empty"</span></a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="co">#&gt; [1] "This function returns the stimulated expression"</span></a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="co">#&gt; The matrix :</span></a>
-<a class="sourceLine" id="cb6-5" title="5"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-6" title="6"><span class="co">#&gt;           CLL.B.cell..patient.M2_unstimulated.cells_at.60min_.agg.</span></a>
-<a class="sourceLine" id="cb6-7" title="7"><span class="co">#&gt; 1007_s_at                                                   701.41</span></a>
-<a class="sourceLine" id="cb6-8" title="8"><span class="co">#&gt; 1053_at                                                     215.92</span></a>
-<a class="sourceLine" id="cb6-9" title="9"><span class="co">#&gt; 117_at                                                      732.81</span></a>
-<a class="sourceLine" id="cb6-10" title="10"><span class="co">#&gt; 121_at                                                      790.27</span></a>
-<a class="sourceLine" id="cb6-11" title="11"><span class="co">#&gt; 1255_g_at                                                   143.26</span></a>
-<a class="sourceLine" id="cb6-12" title="12"><span class="co">#&gt; 1294_at                                                     379.79</span></a>
-<a class="sourceLine" id="cb6-13" title="13"><span class="co">#&gt;           CLL.B.cell..patient.M2_unstimulated.cells_at.90min_.agg.</span></a>
-<a class="sourceLine" id="cb6-14" title="14"><span class="co">#&gt; 1007_s_at                                                   698.96</span></a>
-<a class="sourceLine" id="cb6-15" title="15"><span class="co">#&gt; 1053_at                                                     230.12</span></a>
-<a class="sourceLine" id="cb6-16" title="16"><span class="co">#&gt; 117_at                                                      954.94</span></a>
-<a class="sourceLine" id="cb6-17" title="17"><span class="co">#&gt; 121_at                                                      888.51</span></a>
-<a class="sourceLine" id="cb6-18" title="18"><span class="co">#&gt; 1255_g_at                                                   140.70</span></a>
-<a class="sourceLine" id="cb6-19" title="19"><span class="co">#&gt; 1294_at                                                     369.64</span></a>
-<a class="sourceLine" id="cb6-20" title="20"><span class="co">#&gt;           CLL.B.cell..patient.M2_unstimulated.cells_at.210min_.agg.</span></a>
-<a class="sourceLine" id="cb6-21" title="21"><span class="co">#&gt; 1007_s_at                                                    704.67</span></a>
-<a class="sourceLine" id="cb6-22" title="22"><span class="co">#&gt; 1053_at                                                      220.87</span></a>
-<a class="sourceLine" id="cb6-23" title="23"><span class="co">#&gt; 117_at                                                       240.87</span></a>
-<a class="sourceLine" id="cb6-24" title="24"><span class="co">#&gt; 121_at                                                       772.01</span></a>
-<a class="sourceLine" id="cb6-25" title="25"><span class="co">#&gt; 1255_g_at                                                    139.09</span></a>
-<a class="sourceLine" id="cb6-26" title="26"><span class="co">#&gt; 1294_at                                                      357.12</span></a>
-<a class="sourceLine" id="cb6-27" title="27"><span class="co">#&gt; ...</span></a>
-<a class="sourceLine" id="cb6-28" title="28"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-29" title="29"><span class="co">#&gt; Vector of names :</span></a>
-<a class="sourceLine" id="cb6-30" title="30"><span class="co">#&gt; [1] "1007_s_at" "1053_at"   "117_at"    "121_at"    "1255_g_at" "1294_at"  </span></a>
-<a class="sourceLine" id="cb6-31" title="31"><span class="co">#&gt; ...Vector of geneID :</span></a>
-<a class="sourceLine" id="cb6-32" title="32"><span class="co">#&gt; [1] "DDR1 or MIR4640" "RFC2"            "HSPA6"           "PAX8"           </span></a>
-<a class="sourceLine" id="cb6-33" title="33"><span class="co">#&gt; [5] "GUCA1A"          "UBA7 or MIR5193"</span></a>
-<a class="sourceLine" id="cb6-34" title="34"><span class="co">#&gt; ...</span></a>
-<a class="sourceLine" id="cb6-35" title="35"><span class="co">#&gt; Vector of group :</span></a>
-<a class="sourceLine" id="cb6-36" title="36"><span class="co">#&gt; [1] 0</span></a>
-<a class="sourceLine" id="cb6-37" title="37"><span class="co">#&gt; ...</span></a>
-<a class="sourceLine" id="cb6-38" title="38"><span class="co">#&gt; Vector of starting time :</span></a>
-<a class="sourceLine" id="cb6-39" title="39"><span class="co">#&gt; [1] 0</span></a>
-<a class="sourceLine" id="cb6-40" title="40"><span class="co">#&gt; ...</span></a>
-<a class="sourceLine" id="cb6-41" title="41"><span class="co">#&gt; Vector of time :</span></a>
-<a class="sourceLine" id="cb6-42" title="42"><span class="co">#&gt; [1]  60  90 210 390</span></a>
-<a class="sourceLine" id="cb6-43" title="43"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-44" title="44"><span class="co">#&gt; Number of subject :</span></a>
-<a class="sourceLine" id="cb6-45" title="45"><span class="co">#&gt; [1] 5</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-3" title="3"><span class="co">#&gt; [1] "This function returns the stimulated expression"</span></a></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">selection3&lt;-<span class="kw"><a href="../reference/genePeakSelection-methods.html">geneSelection</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(m_agg_US,m_agg_S),<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="st">"condition&amp;time"</span>,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">1</span>)<span class="op">+</span><span class="dv">2</span>),<span class="dv">50</span>,<span class="dt">alpha=</span><span class="fl">0.005</span>)</a>
 <a class="sourceLine" id="cb7-2" title="2"><span class="co">#&gt; [1] "The selection is not empty"</span></a>
-<a class="sourceLine" id="cb7-3" title="3"><span class="co">#&gt; [1] "This function returns the stimulated expression"</span></a>
-<a class="sourceLine" id="cb7-4" title="4"><span class="co">#&gt; The matrix :</span></a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-6" title="6"><span class="co">#&gt;           CLL.B.cell..patient.M2_unstimulated.cells_at.60min_.agg.</span></a>
-<a class="sourceLine" id="cb7-7" title="7"><span class="co">#&gt; 1007_s_at                                                   701.41</span></a>
-<a class="sourceLine" id="cb7-8" title="8"><span class="co">#&gt; 1053_at                                                     215.92</span></a>
-<a class="sourceLine" id="cb7-9" title="9"><span class="co">#&gt; 117_at                                                      732.81</span></a>
-<a class="sourceLine" id="cb7-10" title="10"><span class="co">#&gt; 121_at                                                      790.27</span></a>
-<a class="sourceLine" id="cb7-11" title="11"><span class="co">#&gt; 1255_g_at                                                   143.26</span></a>
-<a class="sourceLine" id="cb7-12" title="12"><span class="co">#&gt; 1294_at                                                     379.79</span></a>
-<a class="sourceLine" id="cb7-13" title="13"><span class="co">#&gt;           CLL.B.cell..patient.M2_unstimulated.cells_at.90min_.agg.</span></a>
-<a class="sourceLine" id="cb7-14" title="14"><span class="co">#&gt; 1007_s_at                                                   698.96</span></a>
-<a class="sourceLine" id="cb7-15" title="15"><span class="co">#&gt; 1053_at                                                     230.12</span></a>
-<a class="sourceLine" id="cb7-16" title="16"><span class="co">#&gt; 117_at                                                      954.94</span></a>
-<a class="sourceLine" id="cb7-17" title="17"><span class="co">#&gt; 121_at                                                      888.51</span></a>
-<a class="sourceLine" id="cb7-18" title="18"><span class="co">#&gt; 1255_g_at                                                   140.70</span></a>
-<a class="sourceLine" id="cb7-19" title="19"><span class="co">#&gt; 1294_at                                                     369.64</span></a>
-<a class="sourceLine" id="cb7-20" title="20"><span class="co">#&gt;           CLL.B.cell..patient.M2_unstimulated.cells_at.210min_.agg.</span></a>
-<a class="sourceLine" id="cb7-21" title="21"><span class="co">#&gt; 1007_s_at                                                    704.67</span></a>
-<a class="sourceLine" id="cb7-22" title="22"><span class="co">#&gt; 1053_at                                                      220.87</span></a>
-<a class="sourceLine" id="cb7-23" title="23"><span class="co">#&gt; 117_at                                                       240.87</span></a>
-<a class="sourceLine" id="cb7-24" title="24"><span class="co">#&gt; 121_at                                                       772.01</span></a>
-<a class="sourceLine" id="cb7-25" title="25"><span class="co">#&gt; 1255_g_at                                                    139.09</span></a>
-<a class="sourceLine" id="cb7-26" title="26"><span class="co">#&gt; 1294_at                                                      357.12</span></a>
-<a class="sourceLine" id="cb7-27" title="27"><span class="co">#&gt; ...</span></a>
-<a class="sourceLine" id="cb7-28" title="28"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-29" title="29"><span class="co">#&gt; Vector of names :</span></a>
-<a class="sourceLine" id="cb7-30" title="30"><span class="co">#&gt; [1] "1007_s_at" "1053_at"   "117_at"    "121_at"    "1255_g_at" "1294_at"  </span></a>
-<a class="sourceLine" id="cb7-31" title="31"><span class="co">#&gt; ...Vector of geneID :</span></a>
-<a class="sourceLine" id="cb7-32" title="32"><span class="co">#&gt; [1] "DDR1 or MIR4640" "RFC2"            "HSPA6"           "PAX8"           </span></a>
-<a class="sourceLine" id="cb7-33" title="33"><span class="co">#&gt; [5] "GUCA1A"          "UBA7 or MIR5193"</span></a>
-<a class="sourceLine" id="cb7-34" title="34"><span class="co">#&gt; ...</span></a>
-<a class="sourceLine" id="cb7-35" title="35"><span class="co">#&gt; Vector of group :</span></a>
-<a class="sourceLine" id="cb7-36" title="36"><span class="co">#&gt; [1] 0</span></a>
-<a class="sourceLine" id="cb7-37" title="37"><span class="co">#&gt; ...</span></a>
-<a class="sourceLine" id="cb7-38" title="38"><span class="co">#&gt; Vector of starting time :</span></a>
-<a class="sourceLine" id="cb7-39" title="39"><span class="co">#&gt; [1] 0</span></a>
-<a class="sourceLine" id="cb7-40" title="40"><span class="co">#&gt; ...</span></a>
-<a class="sourceLine" id="cb7-41" title="41"><span class="co">#&gt; Vector of time :</span></a>
-<a class="sourceLine" id="cb7-42" title="42"><span class="co">#&gt; [1]  60  90 210 390</span></a>
-<a class="sourceLine" id="cb7-43" title="43"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-44" title="44"><span class="co">#&gt; Number of subject :</span></a>
-<a class="sourceLine" id="cb7-45" title="45"><span class="co">#&gt; [1] 5</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-3" title="3"><span class="co">#&gt; [1] "This function returns the stimulated expression"</span></a></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">selection4&lt;-<span class="kw"><a href="../reference/genePeakSelection-methods.html">geneSelection</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(m_agg_US,m_agg_S),<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="st">"condition&amp;time"</span>,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">1</span>)<span class="op">+</span><span class="dv">3</span>),<span class="dv">50</span>,<span class="dt">alpha=</span><span class="fl">0.005</span>)</a>
 <a class="sourceLine" id="cb8-2" title="2"><span class="co">#&gt; [1] "The selection is not empty"</span></a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="co">#&gt; [1] "This function returns the stimulated expression"</span></a>
-<a class="sourceLine" id="cb8-4" title="4"><span class="co">#&gt; The matrix :</span></a>
-<a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="co">#&gt;           CLL.B.cell..patient.M2_unstimulated.cells_at.60min_.agg.</span></a>
-<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt; 1007_s_at                                                   701.41</span></a>
-<a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt; 1053_at                                                     215.92</span></a>
-<a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt; 117_at                                                      732.81</span></a>
-<a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt; 121_at                                                      790.27</span></a>
-<a class="sourceLine" id="cb8-11" title="11"><span class="co">#&gt; 1255_g_at                                                   143.26</span></a>
-<a class="sourceLine" id="cb8-12" title="12"><span class="co">#&gt; 1294_at                                                     379.79</span></a>
-<a class="sourceLine" id="cb8-13" title="13"><span class="co">#&gt;           CLL.B.cell..patient.M2_unstimulated.cells_at.90min_.agg.</span></a>
-<a class="sourceLine" id="cb8-14" title="14"><span class="co">#&gt; 1007_s_at                                                   698.96</span></a>
-<a class="sourceLine" id="cb8-15" title="15"><span class="co">#&gt; 1053_at                                                     230.12</span></a>
-<a class="sourceLine" id="cb8-16" title="16"><span class="co">#&gt; 117_at                                                      954.94</span></a>
-<a class="sourceLine" id="cb8-17" title="17"><span class="co">#&gt; 121_at                                                      888.51</span></a>
-<a class="sourceLine" id="cb8-18" title="18"><span class="co">#&gt; 1255_g_at                                                   140.70</span></a>
-<a class="sourceLine" id="cb8-19" title="19"><span class="co">#&gt; 1294_at                                                     369.64</span></a>
-<a class="sourceLine" id="cb8-20" title="20"><span class="co">#&gt;           CLL.B.cell..patient.M2_unstimulated.cells_at.210min_.agg.</span></a>
-<a class="sourceLine" id="cb8-21" title="21"><span class="co">#&gt; 1007_s_at                                                    704.67</span></a>
-<a class="sourceLine" id="cb8-22" title="22"><span class="co">#&gt; 1053_at                                                      220.87</span></a>
-<a class="sourceLine" id="cb8-23" title="23"><span class="co">#&gt; 117_at                                                       240.87</span></a>
-<a class="sourceLine" id="cb8-24" title="24"><span class="co">#&gt; 121_at                                                       772.01</span></a>
-<a class="sourceLine" id="cb8-25" title="25"><span class="co">#&gt; 1255_g_at                                                    139.09</span></a>
-<a class="sourceLine" id="cb8-26" title="26"><span class="co">#&gt; 1294_at                                                      357.12</span></a>
-<a class="sourceLine" id="cb8-27" title="27"><span class="co">#&gt; ...</span></a>
-<a class="sourceLine" id="cb8-28" title="28"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-29" title="29"><span class="co">#&gt; Vector of names :</span></a>
-<a class="sourceLine" id="cb8-30" title="30"><span class="co">#&gt; [1] "1007_s_at" "1053_at"   "117_at"    "121_at"    "1255_g_at" "1294_at"  </span></a>
-<a class="sourceLine" id="cb8-31" title="31"><span class="co">#&gt; ...Vector of geneID :</span></a>
-<a class="sourceLine" id="cb8-32" title="32"><span class="co">#&gt; [1] "DDR1 or MIR4640" "RFC2"            "HSPA6"           "PAX8"           </span></a>
-<a class="sourceLine" id="cb8-33" title="33"><span class="co">#&gt; [5] "GUCA1A"          "UBA7 or MIR5193"</span></a>
-<a class="sourceLine" id="cb8-34" title="34"><span class="co">#&gt; ...</span></a>
-<a class="sourceLine" id="cb8-35" title="35"><span class="co">#&gt; Vector of group :</span></a>
-<a class="sourceLine" id="cb8-36" title="36"><span class="co">#&gt; [1] 0</span></a>
-<a class="sourceLine" id="cb8-37" title="37"><span class="co">#&gt; ...</span></a>
-<a class="sourceLine" id="cb8-38" title="38"><span class="co">#&gt; Vector of starting time :</span></a>
-<a class="sourceLine" id="cb8-39" title="39"><span class="co">#&gt; [1] 0</span></a>
-<a class="sourceLine" id="cb8-40" title="40"><span class="co">#&gt; ...</span></a>
-<a class="sourceLine" id="cb8-41" title="41"><span class="co">#&gt; Vector of time :</span></a>
-<a class="sourceLine" id="cb8-42" title="42"><span class="co">#&gt; [1]  60  90 210 390</span></a>
-<a class="sourceLine" id="cb8-43" title="43"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-44" title="44"><span class="co">#&gt; Number of subject :</span></a>
-<a class="sourceLine" id="cb8-45" title="45"><span class="co">#&gt; [1] 5</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-3" title="3"><span class="co">#&gt; [1] "This function returns the stimulated expression"</span></a></code></pre></div>
 <p>Merge the four selections into a single one.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">selection&lt;-Patterns<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/Patterns/topics/unionMicro-methods">unionMicro</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(selection1,selection2,selection3,selection4))</a>
 <a class="sourceLine" id="cb9-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(selection)</a>

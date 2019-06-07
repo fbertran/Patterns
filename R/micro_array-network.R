@@ -195,6 +195,7 @@ setMethod(f="inference"
                                ,limselect=.95
                                ,use.parallel=TRUE
                                ,verbose=TRUE
+                               ,show.error.messages = FALSE
                                ){
 
             require(nnls, quietly = TRUE, warn.conflicts = FALSE);on.exit(unloadNamespace("package:nnls"))
@@ -321,7 +322,9 @@ setMethod(f="inference"
                  priors2<-priors[IND,which(gr %in% grpjj)]
                  Y2<-cbind(1:nrow(Y),Y)
                   if(norm(pred,type="F")>eps){
-                    options(show.error.messages = FALSE)
+                    save_show.error.messages = options()$show.error.messages
+                    options(show.error.messages = show.error.messages)
+                    on.exit(options(show.error.messages = save_show.error.messages))
                     if(cv.subjects==TRUE){
                       fun_lasso2<-function(x){if(verbose){cat(".")};
                         lasso_reg2(pred,x[-1],foldid=rep(1:P,each=ncol(pred)/P),priors=priors2[,x[1]])}
@@ -330,13 +333,16 @@ setMethod(f="inference"
                         lasso_reg2(pred,x[-1],foldid=sample(rep(1:K,length=ncol(pred))),priors=priors2[,x[1]])}
                     }
                     Omega[IND, which(gr %in% grpjj)]<-apply(Y2,1,fun_lasso2)
-                    options(show.error.messages = TRUE)
+                    options(show.error.messages = save_show.error.messages)
                   }
                 }
                 
                 
                 if(fitfun=="LASSO"){
                   if(norm(pred,type="F")>eps){     
+                    save_show.error.messages = options()$show.error.messages
+                    options(show.error.messages = show.error.messages)
+                    on.exit(options(show.error.messages = save_show.error.messages))
                     if(cv.subjects==TRUE){
                       cv.folds1=function(n,folds){
                       split(1:dim(pred)[2]
@@ -348,10 +354,14 @@ setMethod(f="inference"
                                                  #,cv.fun.name=cv.fun.name
                   )} 
                   Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_lasso)
+                  options(show.error.messages = save_show.error.messages)
                   }
                 }
                 if(fitfun=="SPLS"){
                   if(norm(pred,type="F")>eps){     
+                    save_show.error.messages = options()$show.error.messages
+                    options(show.error.messages = show.error.messages)
+                    on.exit(options(show.error.messages = save_show.error.messages))
                     if(cv.subjects==TRUE){
                       cv.folds1=function(n,folds){
                         split(1:dim(pred)[2],rep(1:P,each=dim(pred)[2]/P))
@@ -361,10 +371,14 @@ setMethod(f="inference"
                       }
                       fun_spls<-function(x){if(verbose){cat(".")};spls_reg(pred,x,K=K,eps,cv.fun=cv.folds1)} 
                       Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_spls)
+                      options(show.error.messages = save_show.error.messages)
                   }
                 }
                 if(fitfun=="ELASTICNET"){
                   if(norm(pred,type="F")>eps){     
+                    save_show.error.messages = options()$show.error.messages
+                    options(show.error.messages = show.error.messages)
+                    on.exit(options(show.error.messages = save_show.error.messages))
                     if(cv.subjects==TRUE){
                       cv.folds1=function(n,folds){
                         split(1:dim(pred)[2],rep(1:P,each=dim(pred)[2]/P))
@@ -374,6 +388,7 @@ setMethod(f="inference"
                       }
                       fun_enet<-function(x){if(verbose){cat(".")};enet_reg(pred,x,K=K,eps,cv.fun=cv.folds1)} 
                       Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_enet)
+                      options(show.error.messages = save_show.error.messages)
                   }
                 }
                 if(fitfun=="stability.c060"){
@@ -395,15 +410,17 @@ setMethod(f="inference"
                   LL<-as.matrix(predict(L,s=lambda,type="coef"))[-1,1]})
                   try({LL[-varii]<-0;
                   error.inf=FALSE})
-                  if(verbose){if(error.inf){cat("!")} else {cat(".")}}
+                  if(verbose){if(error.inf&options()$show.error.messages){cat("!")} else {cat(".")}}
                   if(!is.vector(LL)){LL<-rep(0,nrow(pred))}
                   return(LL)
                   }
                   }
                 
-                  options(show.error.messages = FALSE)
+                  save_show.error.messages = options()$show.error.messages
+                  options(show.error.messages = show.error.messages)
+                  on.exit(options(show.error.messages = save_show.error.messages))
                   Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_stab,mc.cores=mc.cores,intercept.stabpath=intercept.stabpath)
-                  options(show.error.messages = TRUE)
+                  options(show.error.messages = save_show.error.messages)
                 }
                 
                 
@@ -491,17 +508,19 @@ setMethod(f="inference"
                       LL<-as.matrix(predict(L,s=lambda,type="coef"))[-1,1];
                       error.comp=FALSE
                       })
-                      if(verbose){if(error.comp){cat("!",geterrmessage(),"\n")} else {cat("")}}
+                      if(verbose){if(error.comp&options()$show.error.messages){cat("!",geterrmessage(),"\n")} else {cat("")}}
                       try({LL[-varii]<-0;error.inf=FALSE})
-                      if(verbose){if(!error.comp&error.inf){cat("!",geterrmessage(),"\n")} else {cat(".")}}
+                      if(verbose){if(!error.comp&error.inf&options()$show.error.messages){cat("!",geterrmessage(),"\n")} else {cat(".")}}
                       if(!is.vector(LL)){LL<-rep(0,nrow(pred))}
                       return(LL)
                     }
                   }
                   
-                  options(show.error.messages = FALSE)
+                  save_show.error.messages = options()$show.error.messages
+                  options(show.error.messages = show.error.messages)
+                  on.exit(options(show.error.messages = save_show.error.messages))
                   Omega[IND, which(gr %in% grpjj)]<-apply(Y2,1,fun_stab_weighted,mc.cores=mc.cores,intercept.stabpath=intercept.stabpath)
-                  options(show.error.messages = TRUE)
+                  options(show.error.messages = save_show.error.messages)
                 }
                 
                 
@@ -525,8 +544,11 @@ setMethod(f="inference"
                     }
                   }
                   
+                  save_show.error.messages = options()$show.error.messages
+                  options(show.error.messages = show.error.messages)
+                  on.exit(options(show.error.messages = save_show.error.messages))
                   Omega[IND, which(gr %in% grpjj)]<-apply(Y,1,fun_robust)
-                  
+                  options(show.error.messages = save_show.error.messages)
                 }  
                 
                 if(fitfun=="selectboost.weighted"){
@@ -567,15 +589,19 @@ setMethod(f="inference"
                       LL<-predict(resultat,s="lambda.min",type="coef")[-1,1]
                       error.comp=FALSE
                       })
-                      if(verbose){if(error.comp){cat("!",geterrmessage(),"\n")} else {cat("")}}
+                      if(verbose){if(error.comp&options()$show.error.messages){cat("!",geterrmessage(),"\n")}}
                       try({LL[-varii]<-0;error.inf=FALSE})
-                      if(verbose){if(!error.comp&error.inf){cat("!",geterrmessage(),"\n")} else {cat(".")}}
+                      if(verbose){if(!error.comp&error.inf&options()$show.error.messages){cat("!",geterrmessage(),"\n")} else {cat(".")}}
                       if(!is.vector(LL)){LL<-rep(0,nrow(pred))}
                       return(LL)
                     }
                   }
+                  save_show.error.messages = options()$show.error.messages
+                  options(show.error.messages = show.error.messages)
+                  on.exit(options(show.error.messages = save_show.error.messages))
                   Omega[IND, which(gr %in% grpjj)]<-apply(Y2,1,fun_selectboost_weighted,mc.cores=mc.cores,steps.seq=.95,limselect=.95,use.parallel=use.parallel)
-                  }  
+                  options(show.error.messages = save_show.error.messages)
+                }  
                 
                 
                                 

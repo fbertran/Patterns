@@ -17,6 +17,7 @@
 ^README\.Rmd$
 ^README\.md$
 #Specific
+^animation.gif$
 ^evolution_example*$
 ^add_data
 ^doc$

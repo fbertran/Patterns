@@ -2,7 +2,7 @@
 title: "Network inference and analysis of CLL data"
 shorttitle: "Network inference and analysis of CLL data"
 author: 
-- name: "Frédéric Bertrand"
+- name: "Frédéric Bertrand and Myriam Maumy-Bertrand"
   affiliation: 
   - Université de Strasbourg et CNRS
   - IRMA, labex IRMIA

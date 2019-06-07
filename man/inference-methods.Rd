@@ -36,6 +36,7 @@ Reverse-engineer the network.
 \item{limselect=.95}{Optional parameter for the SelectBoost algorithm in the `SelectBoost` package.}
 \item{use.parallel=TRUE}{Use parallel computing?}
 \item{verbose=TRUE}{Info on the completion of the fitting process}
+\item{show.error.messages=FALSE}{Should the error messages of the Omega estimating function be returned?}
 }
 }
 }

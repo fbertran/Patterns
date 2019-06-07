@@ -2,7 +2,7 @@
 title: "Introduction to Patterns: a modeling tool dedicated to biological network modeling"
 shorttitle: "Patterns: biological network modeling"
 author: 
-- name: "Frédéric Bertrand"
+- name: "Frédéric Bertrand and Myriam Maumy-Bertrand"
   affiliation: 
   - Université de Strasbourg et CNRS
   - IRMA, labex IRMIA
