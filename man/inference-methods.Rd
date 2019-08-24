@@ -72,7 +72,7 @@ Bertrand Frederic, Myriam Maumy-Bertrand.
 \donttest{
 #With simulated data, default shaped F matrix and default LASSO from the lars package
 #as fitting function
-data(simul)
+data(M)
 infM <- inference(M)
 str(infM)
 plot(infM, choice="F", nround=0)

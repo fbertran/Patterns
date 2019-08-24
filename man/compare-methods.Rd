@@ -38,7 +38,8 @@ Bertrand Frederic, Myriam Maumy-Bertrand.
 }
 
 \examples{
-data(simul)
+data(Net)
+data(Net_inf_PL)
 
 #Comparing true and inferred networks
 Crit_values=NULL

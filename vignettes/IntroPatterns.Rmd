@@ -502,7 +502,8 @@ evolution(network,sequence,type.ani = "html")
 
 Evolution of some properties of a reverse-engineered network with increasing cut-off values.
 ```{r compare, warning=FALSE, eval = LOCAL}
-data(simul)
+data(Net)
+data(Net_inf_PL)
 
 #Comparing true and inferred networks
 Crit_values=NULL

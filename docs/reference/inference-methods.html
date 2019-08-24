@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Patterns</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1</span>
       </span>
     </div>
 
@@ -190,7 +190,7 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>#With simulated data, default shaped F matrix and default LASSO from the lars package</span>
 <span class='co'>#as fitting function</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>simul</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>M</span>)
 <span class='no'>infM</span> <span class='kw'>&lt;-</span> <span class='fu'>inference</span>(<span class='no'>M</span>)</div><div class='output co'>#&gt; We are at step :  1
 #&gt; Computing Group (out of 4) : 
 #&gt;  1.........................
@@ -255,7 +255,7 @@
 #&gt;   .. .. ..$ : NULL
 #&gt;   .. .. ..$ : chr [1:9] "convF" "cc" "cc" "cc" ...
 #&gt;   ..@ convO  : num [1:9] 5.36e+04 1.00e-02 4.75e-03 3.11e-03 2.17e-03 ...
-#&gt;   ..@ time_pt: int [1:4] 1 2 3 4</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>infM</span>, <span class='kw'>choice</span><span class='kw'>=</span><span class='st'>"F"</span>, <span class='kw'>nround</span><span class='kw'>=</span><span class='fl'>0</span>)</div><div class='img'><img src='inference-methods-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>infM</span>, <span class='kw'>choice</span><span class='kw'>=</span><span class='st'>"F"</span>, <span class='kw'>nround</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='img'><img src='inference-methods-4.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt;   ..@ time_pt: int [1:4] 1 2 3 4</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>infM</span>, <span class='kw'>choice</span><span class='kw'>=</span><span class='st'>"F"</span>, <span class='kw'>nround</span><span class='kw'>=</span><span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='error'>Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>infM</span>, <span class='kw'>choice</span><span class='kw'>=</span><span class='st'>"F"</span>, <span class='kw'>nround</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'</span></div><div class='input'>
 <span class='co'>#With simulated data, cascade network shaped F matrix (1 group per time measurement case) </span>
 <span class='co'>#and default LASSO from the lars package as fitting function</span>
 <span class='no'>infMcasc</span> <span class='kw'>&lt;-</span> <span class='fu'>inference</span>(<span class='no'>M</span>, <span class='kw'>Finit</span><span class='kw'>=</span><span class='fu'><a href='CascadeFinit.html'>CascadeFinit</a></span>(<span class='fl'>4</span>,<span class='fl'>4</span>), <span class='kw'>Fshape</span><span class='kw'>=</span><span class='fu'><a href='CascadeFshape.html'>CascadeFshape</a></span>(<span class='fl'>4</span>,<span class='fl'>4</span>))</div><div class='output co'>#&gt; We are at step :  1
@@ -292,7 +292,7 @@
 #&gt;  2.........................
 #&gt;  3.........................
 #&gt;  4.........................
-#&gt; The convergence of the network is (L1 norm) : 9e-04</div><div class='img'><img src='inference-methods-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='inference-methods-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/str'>str</a></span>(<span class='no'>infMcasc</span>)</div><div class='output co'>#&gt; Formal class 'network' [package "Patterns"] with 6 slots
+#&gt; The convergence of the network is (L1 norm) : 9e-04</div><div class='img'><img src='inference-methods-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='inference-methods-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/str'>str</a></span>(<span class='no'>infMcasc</span>)</div><div class='output co'>#&gt; Formal class 'network' [package "Patterns"] with 6 slots
 #&gt;   ..@ network: num [1:100, 1:100] 0 0 0 0 0 0 0 0 0 0 ...
 #&gt;   ..@ name   : chr [1:100] "gene 1" "gene 2" "gene 3" "gene 4" ...
 #&gt;   ..@ F      : num [1:4, 1:4, 1:16] 0 0 0 0 0 0 0 0 0 0 ...
@@ -301,7 +301,7 @@
 #&gt;   .. .. ..$ : NULL
 #&gt;   .. .. ..$ : chr [1:6] "convF" "cc" "cc" "cc" ...
 #&gt;   ..@ convO  : num [1:6] 5.36e+04 7.50e-03 2.29e-03 1.58e-03 1.16e-03 ...
-#&gt;   ..@ time_pt: int [1:4] 1 2 3 4</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>infMcasc</span>, <span class='kw'>choice</span><span class='kw'>=</span><span class='st'>"F"</span>, <span class='kw'>nround</span><span class='kw'>=</span><span class='fl'>0</span>)</div><div class='img'><img src='inference-methods-7.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>infMcasc</span>, <span class='kw'>choice</span><span class='kw'>=</span><span class='st'>"F"</span>, <span class='kw'>nround</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='img'><img src='inference-methods-8.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt;   ..@ time_pt: int [1:4] 1 2 3 4</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>infMcasc</span>, <span class='kw'>choice</span><span class='kw'>=</span><span class='st'>"F"</span>, <span class='kw'>nround</span><span class='kw'>=</span><span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='error'>Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>infMcasc</span>, <span class='kw'>choice</span><span class='kw'>=</span><span class='st'>"F"</span>, <span class='kw'>nround</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'</span></div><div class='input'>
 <span class='co'>#With selection of genes from GSE39411</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>Selection</span>)
 <span class='no'>infSel</span> <span class='kw'>&lt;-</span> <span class='fu'>inference</span>(<span class='no'>Selection</span>, <span class='kw'>Finit</span><span class='kw'>=</span><span class='fu'><a href='CascadeFinit.html'>CascadeFinit</a></span>(<span class='fl'>4</span>,<span class='fl'>4</span>), <span class='kw'>Fshape</span><span class='kw'>=</span><span class='fu'><a href='CascadeFshape.html'>CascadeFshape</a></span>(<span class='fl'>4</span>,<span class='fl'>4</span>))</div><div class='output co'>#&gt; We are at step :  1
@@ -331,7 +331,7 @@
 #&gt;  2.................
 #&gt;  3........................................
 #&gt;  4.........
-#&gt; The convergence of the network is (L1 norm) : 0.00085</div><div class='img'><img src='inference-methods-9.png' alt='' width='700' height='433' /></div><div class='img'><img src='inference-methods-10.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/str'>str</a></span>(<span class='no'>infSel</span>)</div><div class='output co'>#&gt; Formal class 'network' [package "Patterns"] with 6 slots
+#&gt; The convergence of the network is (L1 norm) : 0.00085</div><div class='img'><img src='inference-methods-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='inference-methods-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/str'>str</a></span>(<span class='no'>infSel</span>)</div><div class='output co'>#&gt; Formal class 'network' [package "Patterns"] with 6 slots
 #&gt;   ..@ network: num [1:102, 1:102] 0 0 0 0 0 0 0 0 0 0 ...
 #&gt;   ..@ name   : chr [1:102] "210226_at" "233516_s_at" "202081_at" "236719_at" ...
 #&gt;   ..@ F      : num [1:4, 1:4, 1:16] 0 0 0 0 0 0 0 0 0 0 ...
@@ -349,7 +349,7 @@
 #&gt;   .. .. ..$ : NULL
 #&gt;   .. .. ..$ : chr [1:5] "convF" "cc" "cc" "cc" ...
 #&gt;   ..@ convO  : num [1:5] 0.942493 0.006344 0.001672 0.001207 0.000846
-#&gt;   ..@ time_pt: num [1:4] 60 90 210 390</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>infSel</span>, <span class='kw'>choice</span><span class='kw'>=</span><span class='st'>"F"</span>, <span class='kw'>nround</span><span class='kw'>=</span><span class='fl'>0</span>)</div><div class='img'><img src='inference-methods-11.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>infSel</span>, <span class='kw'>choice</span><span class='kw'>=</span><span class='st'>"F"</span>, <span class='kw'>nround</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='img'><img src='inference-methods-12.png' alt='' width='700' height='433' /></div></pre>
+#&gt;   ..@ time_pt: num [1:4] 60 90 210 390</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>infSel</span>, <span class='kw'>choice</span><span class='kw'>=</span><span class='st'>"F"</span>, <span class='kw'>nround</span><span class='kw'>=</span><span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='error'>Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>infSel</span>, <span class='kw'>choice</span><span class='kw'>=</span><span class='st'>"F"</span>, <span class='kw'>nround</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

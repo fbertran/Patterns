@@ -34,7 +34,7 @@ Bertrand Frederic, Myriam Maumy-Bertrand.
 
 
 \examples{
-data(simul)
+data(Net)
 set.seed(1)
 
 #We simulate gene expressions according to the network Net

@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Patterns</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1</span>
       </span>
     </div>
 
@@ -154,7 +154,7 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>simul</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>Net</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>1</span>)
 
 <span class='co'>#We simulate gene expressions according to the network Net</span>
@@ -162,8 +162,7 @@
         <span class='kw'>network</span><span class='kw'>=</span><span class='no'>Net</span>,
         <span class='kw'>time_label</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>:<span class='fl'>4</span>,<span class='kw'>each</span><span class='kw'>=</span><span class='fl'>25</span>),
         <span class='kw'>subject</span><span class='kw'>=</span><span class='fl'>5</span>,
-        <span class='kw'>peak_level</span><span class='kw'>=</span><span class='fl'>200</span>)</div><div class='output co'>#&gt; <span class='message'>Le chargement a nécessité le package : VGAM</span></div><div class='output co'>#&gt; <span class='message'>Le chargement a nécessité le package : stats4</span></div><div class='output co'>#&gt; <span class='message'>Le chargement a nécessité le package : splines</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>Msim</span>)</div><div class='output co'>#&gt; The matrix :
-#&gt; 
+        <span class='kw'>peak_level</span><span class='kw'>=</span><span class='fl'>200</span>)</div><div class='output co'>#&gt; <span class='message'>Le chargement a nécessité le package : VGAM</span></div><div class='output co'>#&gt; <span class='message'>Le chargement a nécessité le package : stats4</span></div><div class='output co'>#&gt; <span class='message'>Le chargement a nécessité le package : splines</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>Msim</span>)</div><div class='output co'>#&gt; $microarray
 #&gt;        log(S/US) : P1T1 log(S/US) : P1T2 log(S/US) : P1T3
 #&gt; gene 1         86.06709        44.533656       -57.361320
 #&gt; gene 2       -146.83138       120.514233       -39.892240
@@ -171,24 +170,25 @@
 #&gt; gene 4        505.11452        13.929252        -2.786049
 #&gt; gene 5        -36.57508        -1.828829        46.784308
 #&gt; gene 6       -486.82335       -91.502323      -173.402124
-#&gt; ...
 #&gt; 
-#&gt; Vector of names :
+#&gt; $name
 #&gt; [1] "gene 1" "gene 2" "gene 3" "gene 4" "gene 5" "gene 6"
-#&gt; ...Vector of geneID :
+#&gt; 
+#&gt; $gene_ID
 #&gt; [1] 0
-#&gt; ...
-#&gt; Vector of group :
+#&gt; 
+#&gt; $group
 #&gt; [1] 1 1 1 1 1 1
-#&gt; ...
-#&gt; Vector of starting time :
+#&gt; 
+#&gt; $start_time
 #&gt; [1] 0
-#&gt; ...
-#&gt; Vector of time :
+#&gt; 
+#&gt; $time
 #&gt; [1] 1 2 3 4
 #&gt; 
-#&gt; Number of subject :
-#&gt; [1] 5</div></pre>
+#&gt; $subject
+#&gt; [1] 5
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

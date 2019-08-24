@@ -1,5 +1,9 @@
 # Patterns 1.0
 
+* Fix discrepancy between datalist and datasets as requested by CRAN.
+
+# Patterns 1.0
+
 * CRAN release of the package.
 
 # Patterns 0.99
