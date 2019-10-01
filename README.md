@@ -5,6 +5,7 @@ output: github_document
 ---
 
 [![CRAN status](https://www.r-pkg.org/badges/version/Patterns)](https://cran.r-project.org/package=Patterns)
+[![DOI](https://zenodo.org/badge/18441799.svg)](https://zenodo.org/badge/latestdoi/18441799)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
