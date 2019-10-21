@@ -568,7 +568,8 @@ setMethod(f="inference"
                       if(is.null(priors)) priors<-rep(1,ncol(X))
                       resultat<-glmnet::cv.glmnet(X,Y,foldid=folds_id_glmnet,penalty.factor=priors)
                       coefvec<-try(as.vector(coef(resultat,s="lambda.min")[-1]))
-                      if(!is.vector(coefvec)){repu<-rep(0,ncol(X))}
+                      # if(!is.vector(coefvec)){repu<-rep(0,ncol(X))}
+                      if(!is.vector(coefvec)){coefvec<-rep(0,ncol(X))}
                       return(coefvec)
                     }
                   
