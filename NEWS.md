@@ -1,4 +1,8 @@
-# Patterns 1.0
+# Patterns 1.2
+
+* Fix a lasso based function due to glmnet 3.0 release.
+
+# Patterns 1.1
 
 * Fix discrepancy between datalist and datasets as requested by CRAN.
 

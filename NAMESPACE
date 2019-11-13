@@ -2,7 +2,7 @@ importFrom("grDevices", "col2rgb", "colorRamp", "dev.cur", # "dev.new",
            "grey", "rainbow", "rgb", "terrain.colors")
 importFrom("graphics", "abline", "hist", "legend", "lines", "matplot",
            "par", "rect", "text", "grid")
-importFrom("stats", "aggregate", "cor", "hclust", "lm", "loess",
+importFrom("stats", "aggregate", "coef", "cor", "hclust", "lm", "loess",
            "model.matrix", "na.omit", "quantile", "rbinom", "reshape",
            "rmultinom", "rnorm", "runif", "var", "wilcox.test")
 importFrom("methods", "new")

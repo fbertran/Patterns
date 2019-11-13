@@ -1,16 +1,23 @@
----
-title: "Deciphering Biological Networks with Patterned Heterogeneous (e.g. multiOmics) Measurements"
-author: "Frédéric Bertrand and Myriam Maumy-Bertrand"
-output: github_document
----
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+
+
+# Deciphering Biological Networks with Patterned Heterogeneous (e.g. multiOmics) Measurements
+
+
+### *Frédéric Bertrand and Myriam Maumy-Bertrand*
+
 
 [![CRAN status](https://www.r-pkg.org/badges/version/Patterns)](https://cran.r-project.org/package=Patterns)
 [![DOI](https://zenodo.org/badge/18441799.svg)](https://zenodo.org/badge/latestdoi/18441799)
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+----------------
 
 
 # Patterns: a modeling tool dedicated to biological network modeling
+
+
 
 It is designed to work with **patterned data**. Famous examples of problems related to patterned data are:
 
@@ -136,48 +143,62 @@ Get a summay and plots of the data:
 
 ```r
 summary(micro_US)
-#>    N1_US_T60        N1_US_T90        N1_US_T210       N1_US_T390    
-#>  Min.   :  12.2   Min.   :  12.9   Min.   :   1.5   Min.   :  10.1  
-#>  1st Qu.: 177.7   1st Qu.: 198.7   1st Qu.: 189.0   1st Qu.: 196.7  
-#>  Median : 513.0   Median : 499.4   Median : 608.5   Median : 541.2  
-#>  Mean   :1386.6   Mean   :1357.7   Mean   :1450.4   Mean   :1331.2  
-#>  3rd Qu.:1912.3   3rd Qu.:1883.4   3rd Qu.:2050.2   3rd Qu.:1646.2  
-#>  Max.   :6348.4   Max.   :6507.3   Max.   :6438.5   Max.   :6351.4  
-#>    N2_US_T60        N2_US_T90        N2_US_T210       N2_US_T390    
-#>  Min.   :  16.7   Min.   :   3.4   Min.   :   5.5   Min.   :   6.1  
-#>  1st Qu.: 212.4   1st Qu.: 185.7   1st Qu.: 214.7   1st Qu.: 230.1  
-#>  Median : 584.1   Median : 501.5   Median : 596.0   Median : 601.8  
-#>  Mean   :1381.9   Mean   :1345.4   Mean   :1410.5   Mean   :1403.7  
-#>  3rd Qu.:1616.2   3rd Qu.:1830.5   3rd Qu.:2005.8   3rd Qu.:1901.7  
-#>  Max.   :6149.3   Max.   :6090.8   Max.   :6160.6   Max.   :6143.1  
-#>    N3_US_T60        N3_US_T90        N3_US_T210       N3_US_T390    
-#>  Min.   :   1.9   Min.   :  10.3   Min.   :   3.3   Min.   :   6.6  
-#>  1st Qu.: 187.4   1st Qu.: 194.6   1st Qu.: 177.8   1st Qu.: 222.6  
-#>  Median : 611.4   Median : 576.2   Median : 552.2   Median : 593.7  
-#>  Mean   :1365.4   Mean   :1381.2   Mean   :1310.1   Mean   :1427.1  
-#>  3rd Qu.:1855.2   3rd Qu.:2040.2   3rd Qu.:1784.5   3rd Qu.:2131.7  
-#>  Max.   :6636.6   Max.   :6515.5   Max.   :6530.4   Max.   :6177.2  
-#>    N4_US_T60        N4_US_T90        N4_US_T210       N4_US_T390    
-#>  Min.   :  20.2   Min.   :  15.6   Min.   :  19.8   Min.   :   9.3  
-#>  1st Qu.: 199.3   1st Qu.: 215.4   1st Qu.: 207.0   1st Qu.: 197.8  
-#>  Median : 610.8   Median : 614.0   Median : 544.9   Median : 590.7  
-#>  Mean   :1505.1   Mean   :1526.7   Mean   :1401.6   Mean   :1458.8  
-#>  3rd Qu.:2198.1   3rd Qu.:2168.9   3rd Qu.:1831.2   3rd Qu.:1984.8  
-#>  Max.   :6986.2   Max.   :7148.0   Max.   :6820.0   Max.   :6762.3  
-#>    N5_US_T60        N5_US_T90        N5_US_T210       N5_US_T390    
-#>  Min.   :   3.4   Min.   :  10.0   Min.   :  10.7   Min.   :  16.5  
-#>  1st Qu.: 213.2   1st Qu.: 209.8   1st Qu.: 202.0   1st Qu.: 208.2  
-#>  Median : 609.4   Median : 561.3   Median : 555.6   Median : 570.5  
-#>  Mean   :1498.2   Mean   :1424.8   Mean   :1394.1   Mean   :1435.3  
-#>  3rd Qu.:2008.7   3rd Qu.:1906.5   3rd Qu.:1923.9   3rd Qu.:1867.8  
-#>  Max.   :7268.2   Max.   :6857.8   Max.   :6574.0   Max.   :6896.6  
-#>    N6_US_T60        N6_US_T90        N6_US_T210       N6_US_T390    
-#>  Min.   :  13.0   Min.   :   6.6   Min.   :   3.8   Min.   :  14.4  
-#>  1st Qu.: 207.5   1st Qu.: 198.6   1st Qu.: 203.9   1st Qu.: 195.8  
-#>  Median : 516.2   Median : 530.6   Median : 578.0   Median : 580.0  
-#>  Mean   :1412.9   Mean   :1388.3   Mean   :1416.5   Mean   :1360.8  
-#>  3rd Qu.:2037.4   3rd Qu.:1889.8   3rd Qu.:2030.8   3rd Qu.:1872.6  
-#>  Max.   :6898.1   Max.   :6749.4   Max.   :6490.0   Max.   :6780.2
+#>    N1_US_T60        N1_US_T90        N1_US_T210    
+#>  Min.   :  12.2   Min.   :  12.9   Min.   :   1.5  
+#>  1st Qu.: 177.7   1st Qu.: 198.7   1st Qu.: 189.0  
+#>  Median : 513.0   Median : 499.4   Median : 608.5  
+#>  Mean   :1386.6   Mean   :1357.7   Mean   :1450.4  
+#>  3rd Qu.:1912.3   3rd Qu.:1883.4   3rd Qu.:2050.2  
+#>  Max.   :6348.4   Max.   :6507.3   Max.   :6438.5  
+#>    N1_US_T390       N2_US_T60        N2_US_T90     
+#>  Min.   :  10.1   Min.   :  16.7   Min.   :   3.4  
+#>  1st Qu.: 196.7   1st Qu.: 212.4   1st Qu.: 185.7  
+#>  Median : 541.2   Median : 584.1   Median : 501.5  
+#>  Mean   :1331.2   Mean   :1381.9   Mean   :1345.4  
+#>  3rd Qu.:1646.2   3rd Qu.:1616.2   3rd Qu.:1830.5  
+#>  Max.   :6351.4   Max.   :6149.3   Max.   :6090.8  
+#>    N2_US_T210       N2_US_T390       N3_US_T60     
+#>  Min.   :   5.5   Min.   :   6.1   Min.   :   1.9  
+#>  1st Qu.: 214.7   1st Qu.: 230.1   1st Qu.: 187.4  
+#>  Median : 596.0   Median : 601.8   Median : 611.4  
+#>  Mean   :1410.5   Mean   :1403.7   Mean   :1365.4  
+#>  3rd Qu.:2005.8   3rd Qu.:1901.7   3rd Qu.:1855.2  
+#>  Max.   :6160.6   Max.   :6143.1   Max.   :6636.6  
+#>    N3_US_T90        N3_US_T210       N3_US_T390    
+#>  Min.   :  10.3   Min.   :   3.3   Min.   :   6.6  
+#>  1st Qu.: 194.6   1st Qu.: 177.8   1st Qu.: 222.6  
+#>  Median : 576.2   Median : 552.2   Median : 593.7  
+#>  Mean   :1381.2   Mean   :1310.1   Mean   :1427.1  
+#>  3rd Qu.:2040.2   3rd Qu.:1784.5   3rd Qu.:2131.7  
+#>  Max.   :6515.5   Max.   :6530.4   Max.   :6177.2  
+#>    N4_US_T60        N4_US_T90        N4_US_T210    
+#>  Min.   :  20.2   Min.   :  15.6   Min.   :  19.8  
+#>  1st Qu.: 199.3   1st Qu.: 215.4   1st Qu.: 207.0  
+#>  Median : 610.8   Median : 614.0   Median : 544.9  
+#>  Mean   :1505.1   Mean   :1526.7   Mean   :1401.6  
+#>  3rd Qu.:2198.1   3rd Qu.:2168.9   3rd Qu.:1831.2  
+#>  Max.   :6986.2   Max.   :7148.0   Max.   :6820.0  
+#>    N4_US_T390       N5_US_T60        N5_US_T90     
+#>  Min.   :   9.3   Min.   :   3.4   Min.   :  10.0  
+#>  1st Qu.: 197.8   1st Qu.: 213.2   1st Qu.: 209.8  
+#>  Median : 590.7   Median : 609.4   Median : 561.3  
+#>  Mean   :1458.8   Mean   :1498.2   Mean   :1424.8  
+#>  3rd Qu.:1984.8   3rd Qu.:2008.7   3rd Qu.:1906.5  
+#>  Max.   :6762.3   Max.   :7268.2   Max.   :6857.8  
+#>    N5_US_T210       N5_US_T390       N6_US_T60     
+#>  Min.   :  10.7   Min.   :  16.5   Min.   :  13.0  
+#>  1st Qu.: 202.0   1st Qu.: 208.2   1st Qu.: 207.5  
+#>  Median : 555.6   Median : 570.5   Median : 516.2  
+#>  Mean   :1394.1   Mean   :1435.3   Mean   :1412.9  
+#>  3rd Qu.:1923.9   3rd Qu.:1867.8   3rd Qu.:2037.4  
+#>  Max.   :6574.0   Max.   :6896.6   Max.   :6898.1  
+#>    N6_US_T90        N6_US_T210       N6_US_T390    
+#>  Min.   :   6.6   Min.   :   3.8   Min.   :  14.4  
+#>  1st Qu.: 198.6   1st Qu.: 203.9   1st Qu.: 195.8  
+#>  Median : 530.6   Median : 578.0   Median : 580.0  
+#>  Mean   :1388.3   Mean   :1416.5   Mean   :1360.8  
+#>  3rd Qu.:1889.8   3rd Qu.:2030.8   3rd Qu.:1872.6  
+#>  Max.   :6749.4   Max.   :6490.0   Max.   :6780.2
 ```
 
 <img src="man/figures/README-plotmicroarrayclass-1.png" title="plot of chunk plotmicroarrayclass" alt="plot of chunk plotmicroarrayclass" width="100%" /><img src="man/figures/README-plotmicroarrayclass-2.png" title="plot of chunk plotmicroarrayclass" alt="plot of chunk plotmicroarrayclass" width="100%" /><img src="man/figures/README-plotmicroarrayclass-3.png" title="plot of chunk plotmicroarrayclass" alt="plot of chunk plotmicroarrayclass" width="100%" />
@@ -885,35 +906,35 @@ Net_inf_P_Lasso2 <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=Casca
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.0068
+#> The convergence of the network is (L1 norm) : 0.0069
 #> We are at step :  2
 #> Computing Group (out of 4) : 
 #>  1
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.00221
+#> The convergence of the network is (L1 norm) : 0.0023
 #> We are at step :  3
 #> Computing Group (out of 4) : 
 #>  1
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.00155
+#> The convergence of the network is (L1 norm) : 0.00162
 #> We are at step :  4
 #> Computing Group (out of 4) : 
 #>  1
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.00113
+#> The convergence of the network is (L1 norm) : 0.00121
 #> We are at step :  5
 #> Computing Group (out of 4) : 
 #>  1
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.00083
+#> The convergence of the network is (L1 norm) : 0.00092
 ```
 
 <img src="man/figures/README-netinflasso2-1.png" title="plot of chunk netinflasso2" alt="plot of chunk netinflasso2" width="100%" /><img src="man/figures/README-netinflasso2-2.png" title="plot of chunk netinflasso2" alt="plot of chunk netinflasso2" width="100%" />
@@ -958,7 +979,7 @@ Net_inf_P_Lasso2_Weighted <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fsh
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.00035
+#> The convergence of the network is (L1 norm) : 0.00036
 ```
 
 <img src="man/figures/README-netinflasso2Weighted-1.png" title="plot of chunk netinflasso2Weighted" alt="plot of chunk netinflasso2Weighted" width="100%" /><img src="man/figures/README-netinflasso2Weighted-2.png" title="plot of chunk netinflasso2Weighted" alt="plot of chunk netinflasso2Weighted" width="100%" />
@@ -1140,14 +1161,14 @@ Net_inf_P_stability <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=Ca
 #>  2mc.cores=2.........................
 #>  3mc.cores=2.........................
 #>  4mc.cores=2.........................
-#> The convergence of the network is (L1 norm) : 0.0046
+#> The convergence of the network is (L1 norm) : 0.0042
 #> We are at step :  2
 #> Computing Group (out of 4) : 
 #>  1mc.cores=2
 #>  2mc.cores=2.........................
 #>  3mc.cores=2.........................
 #>  4mc.cores=2.........................
-#> The convergence of the network is (L1 norm) : 0.00069
+#> The convergence of the network is (L1 norm) : 0.00095
 ```
 
 <img src="man/figures/README-netinfStab-1.png" title="plot of chunk netinfStab" alt="plot of chunk netinfStab" width="100%" /><img src="man/figures/README-netinfStab-2.png" title="plot of chunk netinfStab" alt="plot of chunk netinfStab" width="100%" />
@@ -1211,48 +1232,45 @@ Net_inf_P_Robust <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=Casca
 #> We are at step :  1
 #> Computing Group (out of 4) : 
 #>  1
-#> Loading required package: lars
-#> Loaded lars 1.2
-#> 
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.0067
+#> The convergence of the network is (L1 norm) : 0.0069
 #> We are at step :  2
 #> Computing Group (out of 4) : 
 #>  1
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.00332
+#> The convergence of the network is (L1 norm) : 0.00366
 #> We are at step :  3
 #> Computing Group (out of 4) : 
 #>  1
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.00199
+#> The convergence of the network is (L1 norm) : 0.00203
 #> We are at step :  4
 #> Computing Group (out of 4) : 
 #>  1
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.00138
+#> The convergence of the network is (L1 norm) : 0.00142
 #> We are at step :  5
 #> Computing Group (out of 4) : 
 #>  1
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.00103
+#> The convergence of the network is (L1 norm) : 0.00117
 #> We are at step :  6
 #> Computing Group (out of 4) : 
 #>  1
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.00075
+#> The convergence of the network is (L1 norm) : 0.00086
 ```
 
 <img src="man/figures/README-netinfRobust-1.png" title="plot of chunk netinfRobust" alt="plot of chunk netinfRobust" width="100%" /><img src="man/figures/README-netinfRobust-2.png" title="plot of chunk netinfRobust" alt="plot of chunk netinfRobust" width="100%" />
@@ -1293,21 +1311,21 @@ Net_inf_P_SelectBoost <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.00159
+#> The convergence of the network is (L1 norm) : 0.00174
 #> We are at step :  3
 #> Computing Group (out of 4) : 
 #>  1
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.00129
+#> The convergence of the network is (L1 norm) : 0.00125
 #> We are at step :  4
 #> Computing Group (out of 4) : 
 #>  1
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.00096
+#> The convergence of the network is (L1 norm) : 0.00094
 ```
 
 <img src="man/figures/README-netinfSB-1.png" title="plot of chunk netinfSB" alt="plot of chunk netinfSB" width="100%" /><img src="man/figures/README-netinfSB-2.png" title="plot of chunk netinfSB" alt="plot of chunk netinfSB" width="100%" />
@@ -1344,8 +1362,6 @@ Net_inf_P_SelectBoostWeighted <- Patterns::inference(M, Finit=CascadeFinit(4,4),
 #> We are at step :  1
 #> Computing Group (out of 4) : 
 #>  1
-#> Loading required namespace: SelectBoost
-#> 
 #>  2.........................
 #>  3.........................
 #>  4.........................
@@ -1356,7 +1372,7 @@ Net_inf_P_SelectBoostWeighted <- Patterns::inference(M, Finit=CascadeFinit(4,4),
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.00055
+#> The convergence of the network is (L1 norm) : 0.00047
 ```
 
 <img src="man/figures/README-netinfSBW-1.png" title="plot of chunk netinfSBW" alt="plot of chunk netinfSBW" width="100%" /><img src="man/figures/README-netinfSBW-2.png" title="plot of chunk netinfSBW" alt="plot of chunk netinfSBW" width="100%" />
@@ -1405,6 +1421,8 @@ evolution(network,sequence,type.ani = "html", outdir=getwd())
 #> animation option 'nmax' changed: 20 --> 50
 #> HTML file created at: index.html
 ```
+
+<img src="man/figures/README-evolutationpkgdown-1.png" title="plot of chunk evolutationpkgdown" alt="plot of chunk evolutationpkgdown" width="100%" />
 ![Evolution as .gif.](docs/reference/evolution/animation.gif)
 
 [Evolution as .html.](reference/evolution/index.html)
@@ -1430,22 +1448,25 @@ cutoff(networkCascade)
 #> [1] "8/10"
 #> [1] "9/10"
 #> [1] "10/10"
-#>  [1] 0.000 0.007 0.423 0.388 0.236 0.631 0.952 0.976 0.825 0.362
+#>  [1] 0.000 0.007 0.423 0.388 0.236 0.631 0.952 0.976 0.825
+#> [10] 0.362
 ```
 
 <img src="man/figures/README-cutoff-1.png" title="plot of chunk cutoff" alt="plot of chunk cutoff" width="100%" />
 
 ```
 #> $p.value
-#>  [1] 0.000 0.007 0.423 0.388 0.236 0.631 0.952 0.976 0.825 0.362
+#>  [1] 0.000 0.007 0.423 0.388 0.236 0.631 0.952 0.976 0.825
+#> [10] 0.362
 #> 
 #> $p.value.inter
-#>  [1] -0.04643835  0.14848083  0.28125541  0.36247646  0.33538710
-#>  [6]  0.60021707  0.92531630  0.98522398  0.79881816  0.37310221
+#>  [1] -0.04643835  0.14848083  0.28125541  0.36247646
+#>  [5]  0.33538710  0.60021707  0.92531630  0.98522398
+#>  [9]  0.79881816  0.37310221
 #> 
 #> $sequence
-#>  [1] 0.00000000 0.04444444 0.08888889 0.13333333 0.17777778 0.22222222
-#>  [7] 0.26666667 0.31111111 0.35555556 0.40000000
+#>  [1] 0.00000000 0.04444444 0.08888889 0.13333333 0.17777778
+#>  [6] 0.22222222 0.26666667 0.31111111 0.35555556 0.40000000
 ```
 
 Analyze the network with a cutoff set to the previouly found 0.133 optimal value.
@@ -1624,12 +1645,12 @@ head(Selection)
 #> 1563563_at  -1.44513486  1.6869516 -0.4297297
 #> 
 #> $name
-#> [1] "210226_at"   "233516_s_at" "202081_at"   "236719_at"   "236019_at"  
-#> [6] "1563563_at" 
+#> [1] "210226_at"   "233516_s_at" "202081_at"   "236719_at"  
+#> [5] "236019_at"   "1563563_at" 
 #> 
 #> $gene_ID
-#> [1] "210226_at"   "233516_s_at" "202081_at"   "236719_at"   "236019_at"  
-#> [6] "1563563_at" 
+#> [1] "210226_at"   "233516_s_at" "202081_at"   "236719_at"  
+#> [5] "236019_at"   "1563563_at" 
 #> 
 #> $group
 #> [1] 1 2 1 1 1 1
@@ -1669,41 +1690,41 @@ summary(Selection)
 #>  Mean   : 0.73063   Mean   : 0.06753   Mean   : 0.22115  
 #>  3rd Qu.: 1.26164   3rd Qu.: 0.32496   3rd Qu.: 0.33157  
 #>  Max.   : 3.87950   Max.   : 2.83321   Max.   : 3.31723  
-#>       US90             US210             US390              US60         
-#>  Min.   :-0.9721   Min.   :-1.9349   Min.   :-3.8418   Min.   :-2.85438  
-#>  1st Qu.:-0.1027   1st Qu.: 0.3254   1st Qu.:-0.1592   1st Qu.:-0.06031  
-#>  Median : 0.2548   Median : 1.2512   Median : 0.1538   Median : 0.03601  
-#>  Mean   : 0.6479   Mean   : 1.0485   Mean   : 0.1219   Mean   : 0.14593  
-#>  3rd Qu.: 1.0737   3rd Qu.: 1.8513   3rd Qu.: 0.6268   3rd Qu.: 0.24568  
-#>  Max.   : 4.3604   Max.   : 4.4860   Max.   : 1.9886   Max.   : 1.82903  
-#>       US90              US210              US390         
-#>  Min.   :-0.90355   Min.   :-0.83324   Min.   :-0.96834  
-#>  1st Qu.:-0.08464   1st Qu.: 0.07605   1st Qu.: 0.01569  
-#>  Median : 0.17135   Median : 0.52176   Median : 0.17370  
-#>  Mean   : 0.41929   Mean   : 0.62446   Mean   : 0.23854  
-#>  3rd Qu.: 0.75565   3rd Qu.: 1.07821   3rd Qu.: 0.45189  
-#>  Max.   : 3.60640   Max.   : 2.27744   Max.   : 1.90880  
-#>       US60               US90              US210             US390        
-#>  Min.   :-1.38002   Min.   :-2.94444   Min.   :-1.0271   Min.   :-1.3636  
-#>  1st Qu.:-0.19910   1st Qu.:-0.01758   1st Qu.: 0.1459   1st Qu.:-0.1386  
-#>  Median :-0.07962   Median : 0.16080   Median : 0.7430   Median : 0.1492  
-#>  Mean   : 0.12972   Mean   : 0.37123   Mean   : 0.7972   Mean   : 0.1271  
-#>  3rd Qu.: 0.26113   3rd Qu.: 0.61933   3rd Qu.: 1.3922   3rd Qu.: 0.4825  
-#>  Max.   : 2.31074   Max.   : 3.24454   Max.   : 3.6213   Max.   : 1.5979  
-#>       US60               US90              US210        
-#>  Min.   :-1.79176   Min.   :-3.20791   Min.   :-1.4716  
-#>  1st Qu.:-0.09822   1st Qu.:-0.03963   1st Qu.: 0.1292  
-#>  Median : 0.03378   Median : 0.28261   Median : 0.8392  
-#>  Mean   : 0.27978   Mean   : 0.52529   Mean   : 0.7903  
-#>  3rd Qu.: 0.33548   3rd Qu.: 1.03256   3rd Qu.: 1.4416  
-#>  Max.   : 3.16035   Max.   : 3.19975   Max.   : 2.8027  
-#>      US390         
-#>  Min.   :-1.95883  
-#>  1st Qu.:-0.04786  
-#>  Median : 0.22472  
-#>  Mean   : 0.21171  
-#>  3rd Qu.: 0.42511  
-#>  Max.   : 2.14903
+#>       US90             US210             US390        
+#>  Min.   :-0.9721   Min.   :-1.9349   Min.   :-3.8418  
+#>  1st Qu.:-0.1027   1st Qu.: 0.3254   1st Qu.:-0.1592  
+#>  Median : 0.2548   Median : 1.2512   Median : 0.1538  
+#>  Mean   : 0.6479   Mean   : 1.0485   Mean   : 0.1219  
+#>  3rd Qu.: 1.0737   3rd Qu.: 1.8513   3rd Qu.: 0.6268  
+#>  Max.   : 4.3604   Max.   : 4.4860   Max.   : 1.9886  
+#>       US60               US90              US210         
+#>  Min.   :-2.85438   Min.   :-0.90355   Min.   :-0.83324  
+#>  1st Qu.:-0.06031   1st Qu.:-0.08464   1st Qu.: 0.07605  
+#>  Median : 0.03601   Median : 0.17135   Median : 0.52176  
+#>  Mean   : 0.14593   Mean   : 0.41929   Mean   : 0.62446  
+#>  3rd Qu.: 0.24568   3rd Qu.: 0.75565   3rd Qu.: 1.07821  
+#>  Max.   : 1.82903   Max.   : 3.60640   Max.   : 2.27744  
+#>      US390               US60               US90         
+#>  Min.   :-0.96834   Min.   :-1.38002   Min.   :-2.94444  
+#>  1st Qu.: 0.01569   1st Qu.:-0.19910   1st Qu.:-0.01758  
+#>  Median : 0.17370   Median :-0.07962   Median : 0.16080  
+#>  Mean   : 0.23854   Mean   : 0.12972   Mean   : 0.37123  
+#>  3rd Qu.: 0.45189   3rd Qu.: 0.26113   3rd Qu.: 0.61933  
+#>  Max.   : 1.90880   Max.   : 2.31074   Max.   : 3.24454  
+#>      US210             US390              US60         
+#>  Min.   :-1.0271   Min.   :-1.3636   Min.   :-1.79176  
+#>  1st Qu.: 0.1459   1st Qu.:-0.1386   1st Qu.:-0.09822  
+#>  Median : 0.7430   Median : 0.1492   Median : 0.03378  
+#>  Mean   : 0.7972   Mean   : 0.1271   Mean   : 0.27978  
+#>  3rd Qu.: 1.3922   3rd Qu.: 0.4825   3rd Qu.: 0.33548  
+#>  Max.   : 3.6213   Max.   : 1.5979   Max.   : 3.16035  
+#>       US90              US210             US390         
+#>  Min.   :-3.20791   Min.   :-1.4716   Min.   :-1.95883  
+#>  1st Qu.:-0.03963   1st Qu.: 0.1292   1st Qu.:-0.04786  
+#>  Median : 0.28261   Median : 0.8392   Median : 0.22472  
+#>  Mean   : 0.52529   Mean   : 0.7903   Mean   : 0.21171  
+#>  3rd Qu.: 1.03256   3rd Qu.: 1.4416   3rd Qu.: 0.42511  
+#>  Max.   : 3.19975   Max.   : 2.8027   Max.   : 2.14903
 ```
 
 <img src="man/figures/README-microselection6-1.png" title="plot of chunk microselection6" alt="plot of chunk microselection6" width="100%" /><img src="man/figures/README-microselection6-2.png" title="plot of chunk microselection6" alt="plot of chunk microselection6" width="100%" /><img src="man/figures/README-microselection6-3.png" title="plot of chunk microselection6" alt="plot of chunk microselection6" width="100%" />

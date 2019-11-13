@@ -1,8 +1,8 @@
 Package: Patterns
 Type: Package
 Title: Deciphering Biological Networks with Patterned Heterogeneous Measurements
-Version: 1.1
-Date: 2019-08-24
+Version: 1.2
+Date: 2019-11-13
 Depends: R (>= 3.5.0)
 biocViews:
 Imports: abind, animation, Biobase, c060, cluster, elasticnet, glmnet, gplots, graphics, 
