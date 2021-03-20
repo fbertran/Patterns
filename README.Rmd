@@ -514,7 +514,7 @@ evolution(network,sequence,type.ani = "html",outdir=destdir)
 ```
 ![Evolution as .gif.](docs/reference/evolution/animation.gif)
 
-[Evolution as .html.](reference/evolution/index.html)
+[Evolution as .html.](docs/reference/evolution/index.html)
 
 Evolution of some properties of a reverse-engineered network with increasing cut-off values.
 ![Evolution of some properties of a reverse-engineered network with increasing cut-off values.](docs/reference/compare-methods-1.png)

@@ -19,3 +19,12 @@ citEntry(entry="Manual",
                titl, ", ", vers, ".", sep=""
                )
 )
+
+citEntry(entry = "Article",
+         title = titl,
+         author = auth,
+         year = 2020,
+journal="Bioinformatics",
+url="10.1093/bioinformatics/btaa855",
+         textVersion =
+         paste0("Bertrand, F., Aouadi, I., Jung, N., Carapito, R., Vallat, L., Bahram, S., Maumy-Bertrand, M. (2020). SelectBoost: a general algorithm to enhance the performance of variable selection methods in correlated datasets. Bioinformatics, btaa855, https://doi.org/10.1093/bioinformatics/btaa855."))
