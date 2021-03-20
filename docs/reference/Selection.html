@@ -8,21 +8,36 @@
 
 <title>Selection of genes. — Selection • Patterns</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,10 +45,14 @@
 
 
 
-<meta property="og:title" content="Selection of genes. — Selection" />
 
-<meta property="og:description" content="20 (at most) genes with differential expression at t1, 20 (at most) genes with differential expression at t2, 20 (at most) genes with differential expression at t3, 20 (at most) genes with differential expression at t4 et 20 (at most) genes with global differential expression were selected." />
-<meta name="twitter:card" content="summary" />
+<meta property="og:title" content="Selection of genes. — Selection" />
+<meta property="og:description" content="20 (at most) genes with differential expression at t1, 20 (at most) genes
+with differential expression at t2, 20 (at most) genes with differential
+expression at t3, 20 (at most) genes with differential expression at t4 et
+20 (at most) genes with global differential expression were selected." />
+<meta property="og:image" content="/logo.png" />
+
 
 
 
@@ -47,9 +66,10 @@
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -63,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Patterns</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3</span>
       </span>
     </div>
 
@@ -71,7 +91,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -97,11 +117,10 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/fbertran/Patterns">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/fbertran/Patterns/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -112,29 +131,35 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Selection of genes.</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/fbertran/Patterns/blob/master/R/datasets.R'><code>R/datasets.R</code></a></small>
     <div class="hidden name"><code>Selection.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    
-    <p>20 (at most) genes with differential expression at t1, 20 (at most) genes with differential expression at t2, 20 (at most) genes with differential expression at t3, 20 (at most) genes with differential expression at t4 et 20 (at most) genes with global differential expression were selected.</p>
-    
+    <p>20 (at most) genes with differential expression at t1, 20 (at most) genes
+with differential expression at t2, 20 (at most) genes with differential
+expression at t3, 20 (at most) genes with differential expression at t4 et
+20 (at most) genes with global differential expression were selected.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>Selection</span>)</pre>
-        
+
+
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Bertrand Frederic, Myriam Maumy-Bertrand.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>Selection</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>Selection</span>)</div><div class='output co'>#&gt; The matrix :
-#&gt; 
+    <pre class="examples"><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>Selection</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>Selection</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $microarray
 #&gt;                    US60       US90      US210
 #&gt; 210226_at    0.82417544  0.9166931  0.7310784
 #&gt; 233516_s_at -0.27395188 -2.3695246  0.6511830
@@ -142,26 +167,28 @@
 #&gt; 236719_at   -2.07284086 -0.3123747  0.1792494
 #&gt; 236019_at   -0.08175065 -0.3699708 -0.4315901
 #&gt; 1563563_at  -1.44513486  1.6869516 -0.4297297
-#&gt; ...
 #&gt; 
-#&gt; Vector of names :
+#&gt; $name
 #&gt; [1] "210226_at"   "233516_s_at" "202081_at"   "236719_at"   "236019_at"  
 #&gt; [6] "1563563_at" 
-#&gt; ...Vector of geneID :
+#&gt; 
+#&gt; $gene_ID
 #&gt; [1] "210226_at"   "233516_s_at" "202081_at"   "236719_at"   "236019_at"  
 #&gt; [6] "1563563_at" 
-#&gt; ...
-#&gt; Vector of group :
+#&gt; 
+#&gt; $group
 #&gt; [1] 1 2 1 1 1 1
-#&gt; ...
-#&gt; Vector of starting time :
+#&gt; 
+#&gt; $start_time
 #&gt; [1] 1 2 1 1 1 1
-#&gt; ...
-#&gt; Vector of time :
+#&gt; 
+#&gt; $time
 #&gt; [1]  60  90 210 390
 #&gt; 
-#&gt; Number of subject :
-#&gt; [1] 6</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>Selection</span>,<span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='message'>Le chargement a nécessité le package : cluster</span></div><div class='output co'>#&gt;       US60               US90               US210             US390         
+#&gt; $subject
+#&gt; [1] 6
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>Selection</span>,<span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Le chargement a nécessité le package : cluster</span></div><div class='output co'>#&gt;       US60               US90               US210             US390         
 #&gt;  Min.   :-2.76841   Min.   :-2.369525   Min.   :-1.6147   Min.   :-2.60480  
 #&gt;  1st Qu.:-0.18028   1st Qu.:-0.181425   1st Qu.: 0.1985   1st Qu.:-0.03884  
 #&gt;  Median : 0.05675   Median :-0.001924   Median : 0.9886   Median : 0.31766  
@@ -202,19 +229,16 @@
 #&gt;  Median : 0.03378   Median : 0.28261   Median : 0.8392   Median : 0.22472  
 #&gt;  Mean   : 0.27978   Mean   : 0.52529   Mean   : 0.7903   Mean   : 0.21171  
 #&gt;  3rd Qu.: 0.33548   3rd Qu.: 1.03256   3rd Qu.: 1.4416   3rd Qu.: 0.42511  
-#&gt;  Max.   : 3.16035   Max.   : 3.19975   Max.   : 2.8027   Max.   : 2.14903  </div><div class='output co'>#&gt; <span class='message'>Le chargement a nécessité le package : lattice</span></div><div class='img'><img src='Selection-1.png' alt='' width='700' height='433' /></div></pre>
+#&gt;  Max.   : 3.16035   Max.   : 3.19975   Max.   : 2.8027   Max.   : 2.14903  </div><div class='output co'>#&gt; <span class='message'>Le chargement a nécessité le package : lattice</span></div><div class='img'><img src='Selection-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-            
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Bertrand Frederic, Myriam Maumy-Bertrand.</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -222,13 +246,16 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

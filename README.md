@@ -2,21 +2,21 @@
 
 
 
-# Deciphering Biological Networks with Patterned Heterogeneous (e.g. multiOmics) Measurements
+# Patterns <img src="man/figures/logo.png" align="right" width="200"/>
 
+# A modeling tool dedicated to biological network modeling to decipher Biological Networks with Patterned Heterogeneous (e.g. multiOmics) Measurements
+## Frédéric Bertrand and Myriam Maumy-Bertrand
 
-### *Frédéric Bertrand and Myriam Maumy-Bertrand*
-
-
+<!-- badges: start -->
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![R-CMD-check](https://github.com/fbertran/Patterns/workflows/R-CMD-check/badge.svg)](https://github.com/fbertran/Patterns/actions)
+[![Codecov test coverage](https://codecov.io/gh/fbertran/Patterns/branch/master/graph/badge.svg)](https://codecov.io/gh/fbertran/Patterns?branch=master)
 [![CRAN status](https://www.r-pkg.org/badges/version/Patterns)](https://cran.r-project.org/package=Patterns)
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/Patterns)](https://cran.r-project.org/package=Patterns)
+[![GitHub Repo stars](https://img.shields.io/github/stars/fbertran/Patterns?style=social)](https://github.com/fbertran/Patterns)
 [![DOI](https://zenodo.org/badge/18441799.svg)](https://zenodo.org/badge/latestdoi/18441799)
-
-
-----------------
-
-
-# Patterns: a modeling tool dedicated to biological network modeling
-
+<!-- badges: end -->
 
 
 It is designed to work with **patterned data**. Famous examples of problems related to patterned data are:
@@ -285,9 +285,8 @@ Plot the simulated network.
 
 ```r
 Patterns::plot(Net, choice="network")
+#> Error: 'plot' is not an exported object from 'namespace:Patterns'
 ```
-
-<img src="man/figures/README-plotnet1-1.png" title="plot of chunk plotnet1" alt="plot of chunk plotnet1" width="100%" />
 
 If a gene clustering is known, it can be used as a coloring scheme.
 
@@ -309,9 +308,8 @@ Plot the F matrix using the `pixmap` package, for high dimensional F matrices.
 
 ```r
 plot(Net, choice="Fpixmap")
+#> Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'
 ```
-
-<img src="man/figures/README-plotFpixmap-1.png" title="plot of chunk plotFpixmap" alt="plot of chunk plotFpixmap" width="100%" />
 
 We simulate gene expression according to the network that was previously drawn
 
@@ -913,28 +911,28 @@ Net_inf_P_Lasso2 <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=Casca
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.0023
+#> The convergence of the network is (L1 norm) : 0.00229
 #> We are at step :  3
 #> Computing Group (out of 4) : 
 #>  1
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.00162
+#> The convergence of the network is (L1 norm) : 0.00153
 #> We are at step :  4
 #> Computing Group (out of 4) : 
 #>  1
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.00121
+#> The convergence of the network is (L1 norm) : 0.00114
 #> We are at step :  5
 #> Computing Group (out of 4) : 
 #>  1
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.00092
+#> The convergence of the network is (L1 norm) : 0.00086
 ```
 
 <img src="man/figures/README-netinflasso2-1.png" title="plot of chunk netinflasso2" alt="plot of chunk netinflasso2" width="100%" /><img src="man/figures/README-netinflasso2-2.png" title="plot of chunk netinflasso2" alt="plot of chunk netinflasso2" width="100%" />
@@ -979,7 +977,7 @@ Net_inf_P_Lasso2_Weighted <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fsh
 #>  2.........................
 #>  3.........................
 #>  4.........................
-#> The convergence of the network is (L1 norm) : 0.00036
+#> The convergence of the network is (L1 norm) : 4e-04
 ```
 
 <img src="man/figures/README-netinflasso2Weighted-1.png" title="plot of chunk netinflasso2Weighted" alt="plot of chunk netinflasso2Weighted" width="100%" /><img src="man/figures/README-netinflasso2Weighted-2.png" title="plot of chunk netinflasso2Weighted" alt="plot of chunk netinflasso2Weighted" width="100%" />
@@ -1333,6 +1331,8 @@ Net_inf_P_SelectBoost <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=
 
 
 ```
+#> Warning: 'Patterns' namespace cannot be unloaded:
+#>   tentative d'obtenir le slot "defined" d'un objet d'une classe élémentaire ("environment") sans slots
 #> 
 #> Attaching package: 'Patterns'
 #> The following object is masked from 'package:igraph':
@@ -1416,13 +1416,9 @@ evolution(network,sequence,type.ani = "html", outdir=getwd())
 ```
 
 ```
-#> Output at: animation.gif
-#> animation option 'nmax' changed: 50 --> 20
-#> animation option 'nmax' changed: 20 --> 50
-#> HTML file created at: index.html
+#> Error in setwd(outdir): impossible de changer de répertoire de travail
+#> Error in setwd(outdir): impossible de changer de répertoire de travail
 ```
-
-<img src="man/figures/README-evolutationpkgdown-1.png" title="plot of chunk evolutationpkgdown" alt="plot of chunk evolutationpkgdown" width="100%" />
 ![Evolution as .gif.](docs/reference/evolution/animation.gif)
 
 [Evolution as .html.](reference/evolution/index.html)
@@ -1448,21 +1444,18 @@ cutoff(networkCascade)
 #> [1] "8/10"
 #> [1] "9/10"
 #> [1] "10/10"
-#>  [1] 0.000 0.007 0.423 0.388 0.236 0.631 0.952 0.976 0.825
-#> [10] 0.362
+#>  [1] 0.000 0.007 0.423 0.388 0.236 0.631 0.952 0.976 0.825 0.362
 ```
 
 <img src="man/figures/README-cutoff-1.png" title="plot of chunk cutoff" alt="plot of chunk cutoff" width="100%" />
 
 ```
 #> $p.value
-#>  [1] 0.000 0.007 0.423 0.388 0.236 0.631 0.952 0.976 0.825
-#> [10] 0.362
+#>  [1] 0.000 0.007 0.423 0.388 0.236 0.631 0.952 0.976 0.825 0.362
 #> 
 #> $p.value.inter
-#>  [1] -0.04643835  0.14848083  0.28125541  0.36247646
-#>  [5]  0.33538710  0.60021707  0.92531630  0.98522398
-#>  [9]  0.79881816  0.37310221
+#>  [1] -0.04643835  0.14848083  0.28125541  0.36247646  0.33538710
+#>  [6]  0.60021707  0.92531630  0.98522398  0.79881816  0.37310221
 #> 
 #> $sequence
 #>  [1] 0.00000000 0.04444444 0.08888889 0.13333333 0.17777778

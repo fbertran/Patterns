@@ -11,21 +11,21 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Deciphering Biological Networks with Patterned Heterogeneous (e.g. multiOmics) Measurements
+# Patterns <img src="man/figures/logo.png" align="right" width="200"/>
 
+# A modeling tool dedicated to biological network modeling to decipher Biological Networks with Patterned Heterogeneous (e.g. multiOmics) Measurements
+## Frédéric Bertrand and Myriam Maumy-Bertrand
 
-### *Frédéric Bertrand and Myriam Maumy-Bertrand*
-
-
+<!-- badges: start -->
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![R-CMD-check](https://github.com/fbertran/Patterns/workflows/R-CMD-check/badge.svg)](https://github.com/fbertran/Patterns/actions)
+[![Codecov test coverage](https://codecov.io/gh/fbertran/Patterns/branch/master/graph/badge.svg)](https://codecov.io/gh/fbertran/Patterns?branch=master)
 [![CRAN status](https://www.r-pkg.org/badges/version/Patterns)](https://cran.r-project.org/package=Patterns)
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/Patterns)](https://cran.r-project.org/package=Patterns)
+[![GitHub Repo stars](https://img.shields.io/github/stars/fbertran/Patterns?style=social)](https://github.com/fbertran/Patterns)
 [![DOI](https://zenodo.org/badge/18441799.svg)](https://zenodo.org/badge/latestdoi/18441799)
-
-
-----------------
-
-
-# Patterns: a modeling tool dedicated to biological network modeling
-
+<!-- badges: end -->
 
 
 It is designed to work with **patterned data**. Famous examples of problems related to patterned data are:

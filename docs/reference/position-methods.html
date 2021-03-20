@@ -8,21 +8,36 @@
 
 <title>Returns the position of edges in the network — position-methods • Patterns</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,10 +45,13 @@
 
 
 
-<meta property="og:title" content="Returns the position of edges in the network — position-methods" />
 
-<meta property="og:description" content="Returns the position of edges in the network" />
-<meta name="twitter:card" content="summary" />
+<meta property="og:title" content="Returns the position of edges in the network — position-methods" />
+<meta property="og:description" content="Returns the position of edges in the network
+Retrieve network position for consistent plotting.
+Utility function to plot networks." />
+<meta property="og:image" content="/logo.png" />
+
 
 
 
@@ -47,9 +65,10 @@
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -63,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Patterns</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3</span>
       </span>
     </div>
 
@@ -71,7 +90,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -97,11 +116,10 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/fbertran/Patterns">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/fbertran/Patterns/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -112,42 +130,172 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Returns the position of edges in the network</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/fbertran/Patterns/blob/master/R/network.R'><code>R/network.R</code></a></small>
     <div class="hidden name"><code>position-methods.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    
-    <p>Returns the position of edges in the network</p>
-    
+    <p>Returns the position of edges in the network
+Retrieve network position for consistent plotting.
+Utility function to plot networks.</p>
     </div>
 
-        
+    <pre class="usage"><span class='co'># S4 method for network</span>
+<span class='fu'>position</span><span class='op'>(</span><span class='va'>net</span>, nv <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>net</th>
+      <td><p>a network object</p></td>
+    </tr>
+    <tr>
+      <th>nv</th>
+      <td><p>the level of cutoff at which the analysis should be done</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Matrix with as many rows as the number of edges of network and three
+columns (name, xcoord, ycoord).</p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
-    <dl class='dl-horizontal'>
-    <dt><code>signature(net = "network")</code></dt><dd><p>Returns a matrix with the position of the node. This matrix can then be used as an argument in the plot function.</p></dd>
+    <p></p><dl>
+
+<dt>list("signature(net = \"network\")")</dt><dd><p>Returns a matrix with the
+position of the node. This matrix can then be used as an argument in the
+plot function.</p></dd> 
 </dl>
-    
 
-  </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#methods">Methods</a></li>
-          </ul>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
-    <h2>Author</h2>
     <p>Bertrand Frederic, Myriam Maumy-Bertrand.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>network</span><span class='op'>)</span>
+<span class='fu'>position</span><span class='op'>(</span><span class='va'>network</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;        nom                  
+#&gt;   [1,]   1 83.05281 145.8135
+#&gt;   [2,]   2 83.40773 146.0362
+#&gt;   [3,]   3 83.56600 146.7397
+#&gt;   [4,]   4 83.57525 145.9787
+#&gt;   [5,]   5 83.78106 145.7349
+#&gt;   [6,]   6 83.74424 146.0442
+#&gt;   [7,]   7 83.90528 145.9258
+#&gt;   [8,]   8 83.44175 145.8386
+#&gt;   [9,]   9 82.98484 146.6520
+#&gt;  [10,]  10 83.43693 146.2960
+#&gt;  [11,]  11 83.53720 146.4992
+#&gt;  [12,]  12 83.86204 146.2606
+#&gt;  [13,]  13 83.63495 146.3657
+#&gt;  [14,]  14 83.85369 146.5633
+#&gt;  [15,]  15 83.65729 146.1952
+#&gt;  [16,]  16 83.24482 146.3316
+#&gt;  [17,]  17 83.50506 147.0364
+#&gt;  [18,]  18 83.63048 147.3255
+#&gt;  [19,]  19 83.59131 145.7576
+#&gt;  [20,]  20 83.76982 146.4216
+#&gt;  [21,]  21 82.01370 146.4308
+#&gt;  [22,]  22 83.10298 147.2948
+#&gt;  [23,]  23 82.16892 145.4020
+#&gt;  [24,]  24 82.02046 145.7594
+#&gt;  [25,]  25 83.78124 147.8160
+#&gt;  [26,]  26 83.69376 145.4952
+#&gt;  [27,]  27 83.30904 147.3107
+#&gt;  [28,]  28 81.78238 145.2170
+#&gt;  [29,]  29 82.56562 145.3284
+#&gt;  [30,]  30 81.95712 146.1625
+#&gt;  [31,]  31 81.53871 145.8285
+#&gt;  [32,]  32 82.89107 145.2257
+#&gt;  [33,]  33 82.50356 147.0298
+#&gt;  [34,]  34 82.86114 147.9982
+#&gt;  [35,]  35 83.46860 147.2228
+#&gt;  [36,]  36 81.69901 146.9103
+#&gt;  [37,]  37 83.02338 147.1432
+#&gt;  [38,]  38 83.12490 145.2242
+#&gt;  [39,]  39 83.57537 145.3654
+#&gt;  [40,]  40 82.70477 147.1654
+#&gt;  [41,]  41 83.04784 146.9454
+#&gt;  [42,]  42 82.86971 145.4809
+#&gt;  [43,]  43 84.05086 146.8024
+#&gt;  [44,]  44 82.92224 146.1557
+#&gt;  [45,]  45 84.38451 147.3619
+#&gt;  [46,]  46 83.00500 145.5592
+#&gt;  [47,]  47 83.75205 147.1833
+#&gt;  [48,]  48 83.75186 146.9984
+#&gt;  [49,]  49 83.18363 145.6699
+#&gt;  [50,]  50 83.24677 145.8235
+#&gt;  [51,]  51 83.29115 145.2708
+#&gt;  [52,]  52 84.23144 147.1738
+#&gt;  [53,]  53 83.27580 145.5494
+#&gt;  [54,]  54 84.05036 146.1811
+#&gt;  [55,]  55 83.96910 145.0635
+#&gt;  [56,]  56 82.27613 146.3239
+#&gt;  [57,]  57 82.97993 145.9618
+#&gt;  [58,]  58 82.29688 146.9424
+#&gt;  [59,]  59 83.52515 147.8997
+#&gt;  [60,]  60 83.09280 146.6036
+#&gt;  [61,]  61 82.58411 146.7388
+#&gt;  [62,]  62 82.92435 147.3215
+#&gt;  [63,]  63 84.26960 145.7687
+#&gt;  [64,]  64 83.39239 146.7624
+#&gt;  [65,]  65 82.47474 146.2327
+#&gt;  [66,]  66 83.57737 145.1302
+#&gt;  [67,]  67 83.24171 146.0958
+#&gt;  [68,]  68 82.61192 146.3999
+#&gt;  [69,]  69 83.25714 146.6472
+#&gt;  [70,]  70 83.09658 146.4312
+#&gt;  [71,]  71 82.58702 146.0703
+#&gt;  [72,]  72 82.60910 145.7314
+#&gt;  [73,]  73 84.63117 146.0159
+#&gt;  [74,]  74 84.43989 146.1670
+#&gt;  [75,]  75 84.56343 146.6896
+#&gt;  [76,]  76 82.79090 145.7999
+#&gt;  [77,]  77 83.24049 146.9699
+#&gt;  [78,]  78 82.52836 146.5842
+#&gt;  [79,]  79 83.98308 145.5126
+#&gt;  [80,]  80 84.64778 146.3272
+#&gt;  [81,]  81 83.33734 146.5074
+#&gt;  [82,]  82 83.91436 146.8720
+#&gt;  [83,]  83 84.51945 146.9657
+#&gt;  [84,]  84 82.73548 146.1514
+#&gt;  [85,]  85 84.01658 147.3762
+#&gt;  [86,]  86 82.78399 146.8556
+#&gt;  [87,]  87 84.74471 146.4835
+#&gt;  [88,]  88 83.64639 146.5994
+#&gt;  [89,]  89 84.24795 146.6267
+#&gt;  [90,]  90 82.70370 145.9148
+#&gt;  [91,]  91 84.45526 145.8777
+#&gt;  [92,]  92 84.20494 146.3999
+#&gt;  [93,]  93 84.13191 145.4165
+#&gt;  [94,]  94 84.14226 146.1168
+#&gt;  [95,]  95 82.52971 147.3121
+#&gt;  [96,]  96 83.33811 146.2268
+#&gt;  [97,]  97 84.10712 145.7291
+#&gt;  [98,]  98 82.86076 146.6023
+#&gt;  [99,]  99 82.08558 146.6422
+#&gt; [100,] 100 83.03994 146.2825
+#&gt; [101,] 101 82.36258 146.0340
+#&gt; [102,] 102 82.88544 146.4356</div><div class='input'>
+</div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -155,13 +303,16 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

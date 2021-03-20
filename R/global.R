@@ -1,26 +1,36 @@
-setGeneric("analyze_network",package="Patterns",def = function(Omega,nv,...){standardGeneric("analyze_network")})
-setGeneric("clustExploration",package="Patterns",def = function(microarray,...){standardGeneric("clustExploration")})
-setGeneric("clustInference",package="Patterns",def = function(microarray,vote.index,...){standardGeneric("clustInference")})
-setGeneric("compare",package="Patterns",def = function(Net,Net_inf,nv){standardGeneric("compare")})
-setGeneric("cutoff",package="Patterns",def = function(Omega,... ){standardGeneric("cutoff")})
-setGeneric("evolution",package="Patterns",def = function(net,list_nv,... ){standardGeneric("evolution")})
-setGeneric("gene_expr_simulation",package="Patterns",def = function(network,...){standardGeneric("gene_expr_simulation")})
-#setGeneric("gene_counts_simulation",package="Patterns",def = function(network,...){standardGeneric("gene_counts_simulation")})
-setGeneric("geneNeighborhood",package="Patterns",def = function(net,targets,... ){standardGeneric("geneNeighborhood")})
-setGeneric("genePeakSelection",package="Patterns",def = function(x,peak,... ){standardGeneric("genePeakSelection")})
-setGeneric("geneSelection",package="Patterns",def = function(x,y,tot.number,... ){standardGeneric("geneSelection")})
-setGeneric("inference",package="Patterns",def = function(M,... ){standardGeneric("inference")})
-setGeneric("position",package="Patterns",def = function(net,... ){standardGeneric("position")})
-#setGeneric("inferenceCascade",package="Patterns",def = function(M,... ){standardGeneric("inferenceCascade")})
-#setGeneric("predict",package="Patterns",def = function(object,...){standardGeneric("predict")})
-setGeneric("probeMerge",package="Patterns",def = function(x,...){standardGeneric("probeMerge")})
-setGeneric("unionMicro",package="Patterns",def = function(M1,M2 ){standardGeneric("unionMicro")})
-#setGeneric("unionNGseq",package="Patterns",def = function(C1,C2 ){standardGeneric("unionNGseq")})
-setGeneric("unsupervised_clustering_auto_m_c",package="Patterns",def=function(M1,... ){standardGeneric("unsupervised_clustering_auto_m_c")})
-setGeneric("unsupervised_clustering",package="Patterns",def=function(M1,clust,mestim,... ){standardGeneric("unsupervised_clustering")})
 
 
 
+
+#' Coerce a matrix into a micro_array object.
+#' 
+#' Coerce a matrix into a micro_array object.
+#' 
+#' 
+#' @param M A matrix. Contains the microarray measurements. Should be of size N
+#' * K, with N the number of genes and K=T*P with T the number of time points,
+#' and P the number of subjects. This matrix should be created using
+#' cbind(M1,M2,...) with M1 a N*T matrix with the measurements for patient 1,
+#' M2 a N*T matrix with the measurements for patient 2.
+#' @param time A vector. The time points measurements
+#' @param subject The number of subjects.
+#' @param name_probe Vector with the row names of the micro array.
+#' @param gene_ID Vector with the actors' IDs of the row names of the micro
+#' array.
+#' @param group Vector with the actors' groups of the row names of the micro
+#' array.
+#' @param start_time Vector with the actors' starting time (i.e. the time it is
+#' thought to begin to have an effect on another actor in the network).
+#' @return A micro_array object.
+#' @author Bertrand Frederic, Myriam Maumy-Bertrand.
+#' @examples
+#' 
+#' if(require(CascadeData)){
+#' 	data(micro_US, package="CascadeData")
+#' 	micro_US<-as.micro_array(micro_US[1:100,],time=c(60,90,210,390),subject=6)
+#' 	plot(micro_US)
+#' 	}
+#' 
 as.micro_array <-
   function(M,
            time,
@@ -456,6 +466,40 @@ choice_cutoff_final<-function(O,nb,eps,hub,plot.g=FALSE,prop.hub){
 
 #simulations
 
+
+
+#' Generates a network.
+#' 
+#' Generates a network.
+#' 
+#' 
+#' @param nb Integer. The number of genes.
+#' @param time_label Vector. The time points measurements.
+#' @param exp The exponential parameter, as in the barabasi.game function in
+#' igraph package.
+#' @param init The attractiveness of the vertices with no adjacent edges. See
+#' barabasi.game function.
+#' @param regul A vector mapping each gene with its number of regulators.
+#' @param min_expr Minimum of strength of a non-zero link
+#' @param max_expr Maximum of strength of a non-zero link
+#' @param casc.level ...
+#' @return A network object.
+#' @author Bertrand Frederic, Myriam Maumy-Bertrand.
+#' @examples
+#' 
+#' set.seed(1)
+#' Net<-network_random(
+#' 	nb=100,
+#' 	time_label=rep(1:4,each=25),
+#' 	exp=1,
+#' 	init=1,
+#' 	regul=round(rexp(100,1))+1,
+#' 	min_expr=0.1,
+#' 	max_expr=2,
+#' 	casc.level=0.4
+#' 	)
+#' plot(Net)
+#' 
 network_random<-function(nb,time_label,exp,init,regul,min_expr,max_expr,casc.level){
   
   net<-matrix(0,nb,nb)
@@ -487,18 +531,87 @@ network_random<-function(nb,time_label,exp,init,regul,min_expr,max_expr,casc.lev
 
 # Band text matrices
 
+
+
+#' Replace matrix values by band.
+#' 
+#' F matrices utility function.
+#' 
+#' 
+#' @param a The matrix to be replaced
+#' @param b The matrix with the replacement values
+#' @param k The extend of the replacement: 0 (diagonal only), 1 (diagonal and
+#' first extra diagonal), in general an entry is replaced if abs(row(a) -
+#' col(a)) <= k
+#' @return A matrix (same size as a)
+#' @author Bertrand Frederic, Myriam Maumy-Bertrand.
+#' @keywords manip
+#' @examples
+#' 
+#' a=matrix(1:9,3,3)
+#' b=matrix(0,3,3)
+#' replaceBand(a,b,0)
+#' replaceBand(a,b,1)
+#' replaceBand(a,b,2)
+#' 
 replaceBand <- function(a, b, k) {
   swap <- abs(row(a) - col(a)) <= k
   a[swap] <- b[swap]
   a
 }
 
+
+
+#' Replace matrix values triangular upper part and by band for the lower part.
+#' 
+#' F matrices utility function.
+#' 
+#' 
+#' @param a The matrix to be replaced
+#' @param b The matrix with the replacement values
+#' @param k The extend of the replacement: 0 (upper part only), 1 (upper part
+#' and first extra diagonal), in general an entry is replaced if (row(a) -
+#' col(a)) <= k
+#' @return A matrix (same size as a)
+#' @author Bertrand Frederic, Myriam Maumy-Bertrand.
+#' @keywords manip
+#' @examples
+#' 
+#' a=matrix(1:9,3,3)
+#' b=matrix(1,3,3)
+#' replaceUp(a,b,0)
+#' replaceUp(a,b,1)
+#' replaceUp(a,b,2)
+#' 
 replaceUp <- function(a, b, k) {
   swap <- (row(a) - col(a)) <= k
   a[swap] <- b[swap]
   a
 }
 
+
+
+#' Replace matrix values triangular lower part and by band for the upper part.
+#' 
+#' F matrices utility function.
+#' 
+#' 
+#' @param a The matrix to be replaced
+#' @param b The matrix with the replacement values
+#' @param k The extend of the replacement: 0 (lower part and diagonal only), 1
+#' (lower part and first extra diagonal), in general an entry is replaced if
+#' -(row(a) - col(a)) <= k
+#' @return A matrix (same size as a)
+#' @author Bertrand Frederic, Myriam Maumy-Bertrand.
+#' @keywords manip
+#' @examples
+#' 
+#' a=matrix(1:9,3,3)
+#' b=matrix(1,3,3)
+#' replaceDown(a,b,0)
+#' replaceDown(a,b,1)
+#' replaceDown(a,b,2)
+#' 
 replaceDown <- function(a, b, k) {
   swap <- -(row(a) - col(a)) <= k
   a[swap] <- b[swap]
@@ -507,6 +620,26 @@ replaceDown <- function(a, b, k) {
 
 # Cascade Finit and Fshape generator
 
+
+
+#' Create F matrices shaped for cascade networks inference.
+#' 
+#' This is an helper function to create F matrices with special shape used for
+#' cascade networks.
+#' 
+#' 
+#' @param sqF Size of an F cell
+#' @param ngrp Number of groups
+#' @return An array of sizes c(sqF, sqF, ngrp).
+#' @author Bertrand Frederic, Myriam Maumy-Bertrand.
+#' @keywords models
+#' @examples
+#' 
+#' CascadeFshape(3,2)
+#' plotF(CascadeFshape(3,2),choice = "Fshape")
+#' CascadeFshape(4,3)
+#' plotF(CascadeFshape(4,3),choice = "Fshape")
+#' 
 CascadeFshape=function(sqF,ngrp){
   nF=ngrp*ngrp
   Fshape<-array("0",c(sqF,sqF,nF))
@@ -527,6 +660,29 @@ CascadeFshape=function(sqF,ngrp){
 }
 
 
+
+
+#' Create initial F matrices for cascade networks inference.
+#' 
+#' This is an helper function to create initial values F matrices for cascade
+#' networks.
+#' 
+#' 
+#' @param sqF Size of an F cell
+#' @param ngrp Number of groups
+#' @param low.trig Fill the lower trigonal matrices with ones
+#' @return An array of sizes c(sqF, sqF, ngrp).
+#' @author Bertrand Frederic, Myriam Maumy-Bertrand.
+#' @keywords models
+#' @examples
+#' 
+#' CascadeFinit(3,2)
+#' CascadeFinit(4,3)
+#' plotF(CascadeFinit(4,3),choice = "F")
+#' CascadeFinit(3,2,low.trig=FALSE)
+#' CascadeFinit(4,3,low.trig=FALSE)
+#' plotF(CascadeFinit(4,3,low.trig=FALSE),choice = "F")
+#' 
 CascadeFinit=function(sqF,ngrp,low.trig=TRUE){
   nF=ngrp*ngrp
   Finit<-array(0,c(sqF,sqF,nF))
@@ -544,6 +700,25 @@ CascadeFinit=function(sqF,ngrp,low.trig=TRUE){
   return(Finit)
 }
 
+
+
+#' Create F matrices using specific intergroup actions for network inference.
+#' 
+#' This is an helper function to create values F matrices using specific
+#' intergroup actions for network inference.
+#' 
+#' 
+#' @param sqF Size of an F cell
+#' @param ngrp Number of groups
+#' @param Indic Matrix to specify where there is an interaction from one group
+#' to another
+#' @return An array of size (sqF, sqF, ngrp).
+#' @author Bertrand Frederic, Myriam Maumy-Bertrand.
+#' @keywords models
+#' @examples
+#' 
+#' IndicFshape(3, 2, matrix(1,2,2)-diag(2))
+#' 
 IndicFshape <- function(sqF,ngrp,Indic){
   nF=ngrp*ngrp
   Fshape<-array("0",c(sqF,sqF,nF))
@@ -565,6 +740,26 @@ IndicFshape <- function(sqF,ngrp,Indic){
   return(Fshape)
 }
 
+
+
+#' Create initial F matrices using specific intergroup actions for network
+#' inference.
+#' 
+#' This is an helper function to create initial values F matrices for networks.
+#' 
+#' 
+#' @param sqF Size of an F cell
+#' @param ngrp Number of groups
+#' @param Indic Matrix to specify where there is an interaction from one group
+#' to another
+#' @param low.trig Fill the lower trigonal matrices with ones
+#' @return An array of size (sqF, sqF, ngrp).
+#' @author Bertrand Frederic, Myriam Maumy-Bertrand.
+#' @keywords models
+#' @examples
+#' 
+#' IndicFinit(3, 2, matrix(1,2,2)-diag(2))
+#' 
 IndicFinit <- function(sqF,ngrp,Indic,low.trig=TRUE){
   nF=ngrp*ngrp
   Finit<-array(0,c(sqF,sqF,nF))
@@ -595,6 +790,31 @@ majority_indice<-function(x){
 }    
 
 
+
+
+#' Plot functions for the F matrices.
+#' 
+#' The graphical output will differ according to the option used.
+#' 
+#' 
+#' @param x The F matrix.
+#' @param choice A string: either "F", "Fpixmap", "Fshape", or "Fshapepixmap"
+#' @param nround An integer. For numerical F matrices only. The number of
+#' decimal numbers to display.
+#' @param pixmap.color For pixmap plots.
+#' @return Nothing.
+#' @author Bertrand Frederic, Myriam Maumy-Bertrand.
+#' @keywords dplot
+#' @examples
+#' 
+#' #For numerical/inferred F matrices
+#' plotF(CascadeFinit(4,4),choice="F", nround=1)
+#' plotF(CascadeFinit(4,4),choice="Fpixmap")
+#' 
+#' #For theoritical F matrices
+#' plotF(CascadeFshape(4,4),choice="Fshape")
+#' plotF(CascadeFshape(4,4),choice="Fshapepixmap")
+#' 
 plotF <- function(x
                   ,
                   choice = "Fshape"

@@ -1,8 +1,10 @@
 base
 Patterns
-CascadeData
+limma
 cluster
 lattice
+biomaRt
+CascadeData
 igraph
 plotrix
 VGAM
@@ -11,5 +13,3 @@ c060
 lars
 survival
 tnet
-limma
-biomaRt

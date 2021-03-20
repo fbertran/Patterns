@@ -1,12 +1,4 @@
-setClass(Class = "micropredict",
-         representation(microarray_unchanged="micro_array"
-                        ,microarray_changed="micro_array"
-                        ,microarray_predict="micro_array"
-                        ,nv="numeric"
-                        ,network="network"
-                        ,targets="numeric")
-)
-
+#' @rdname plot-methods
 setMethod("plot"
           ,c("micropredict")
           ,function(x

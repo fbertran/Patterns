@@ -4,7 +4,7 @@ shorttitle: "Network inference and analysis of CLL data"
 author: 
 - name: "Frédéric Bertrand and Myriam Maumy-Bertrand"
   affiliation: 
-  - Université de Strasbourg et CNRS
+  - Université de Strasbourg et CNRS, 
   - IRMA, labex IRMIA
   email: frederic.bertrand@math.unistra.fr
 date: "`r Sys.Date()`"
@@ -17,6 +17,7 @@ vignette: >
 
 ```{r setup, include = FALSE}
 LOCAL <- identical(Sys.getenv("LOCAL"), "TRUE")
+#LOCAL=FALSE
 knitr::opts_chunk$set(purl = LOCAL)
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -93,7 +94,7 @@ require(biomaRt)
 
 affyids=c("202763_at","209310_s_at","207500_at")
 ensembl = useMart("ensembl",dataset="hsapiens_gene_ensembl")
-infos<-getBM(attributes=c("affy_hg_u133_plus_2","ensembl_gene_id","entrezgene","hgnc_symbol","chromosome_name","start_position","end_position","band"), filters = "affy_hg_u133_plus_2", values = CLL[CLL[,1] %in% selection@name,1] , mart = ensembl,uniqueRows=TRUE, checkFilters = TRUE)
+infos<-getBM(attributes=c("affy_hg_u133_plus_2","ensembl_gene_id","hgnc_symbol","chromosome_name","start_position","end_position","band"), filters = "affy_hg_u133_plus_2", values = CLL[CLL[,1] %in% selection@name,1] , mart = ensembl,uniqueRows=TRUE, checkFilters = TRUE)
 ```
 
 ```{r addgeneid, warning=FALSE, cache=TRUE, eval = LOCAL}

@@ -1,14 +1,4 @@
-setClass(
-  Class = "network",
-  representation(
-    network = "matrix",
-    name = "vector",
-    F = "array",
-    convF = "matrix",
-    convO = "vector",
-    time_pt = "vector"
-  )
-)
+
 
 
 setMethod("print", "network", function(x, ...) {
@@ -44,6 +34,25 @@ setMethod("print", "network", function(x, ...) {
   invisible(x)
 })
 
+#' Analysing the network
+#' 
+#' Calculates some indicators for each node in the network.
+#' 
+#' 
+#' @aliases analyze_network analyze_network-methods
+#' analyze_network,network-method
+#' @param Omega a network object
+#' @param nv the level of cutoff at which the analysis should be done
+#' @param label_v (optionnal) the name of the genes
+#' @return A matrix containing, for each node, its betweenness,its degree, its
+#' output, its closeness.
+#' @author Bertrand Frederic, Myriam Maumy-Bertrand.
+#' @keywords methods
+#' @examples
+#' 
+#' data(network)
+#' analyze_network(network,nv=0)
+#' 
 setMethod("analyze_network", "network", function(Omega, nv, label_v = NULL) {
   require(tnet)
   if (is.null(label_v)) {
@@ -70,6 +79,48 @@ setMethod("analyze_network", "network", function(Omega, nv, label_v = NULL) {
 })
 
 
+#' See the evolution of the network with change of cutoff
+#' 
+#' See the evolution of the network with change of cutoff
+#' 
+#' Several types of outputs are available using the type.ani option. \itemize{
+#' \item html \item latex (requires latex) \item swf (requires swftools)
+#' \item video (requires ffmpeg) \item gif \item manual_gif }
+#' 
+#' @aliases evolution evolution-methods evolution,network-method
+#' @param net a network object
+#' @param list_nv a vector of cutoff at which the network should be shown
+#' @param gr a vector giving the group of each genee. Defaults to NULL 
+#' @param color.vertex a vector giving the color of each nodee. Defaults to NULL 
+#' @param color.edge a vector giving the color of each edge. Defaults to NULL 
+#' @param fix logical, should the position of the node in the network be calculated once at the beginning ? Defaults to TRUE. 
+#' @param size vector giving the size of the plot. Defaults to c(2000,1000) 
+#' @param label_v vector giving the labels of each vertex. Defaults to 1:dim(net@network)[1] 
+#' @param legend string giving the position of the legend. Defaults to "topleft" 
+#' @param legend.position string giving the position of the legend. Defaults to "topleft" 
+#' @param frame.color string giving the color of the frame of the plot. Defaults to "black" 
+#' @param label.hub label hubs. Defaults to FALSE 
+#' @param outdir Directory to save the animation. No default value since it must be specified by the user. 
+#' @param type.ani Type of animation. Defaults to "html" 
+#' @return A HTML page with the evolution of the network.
+#' @author Bertrand Frederic, Myriam Maumy-Bertrand.
+#' @keywords methods
+#' @examples
+#' 
+#' \donttest{
+#' data(network)
+#' sequence<-seq(0,0.2,length.out=20)
+#' 
+#' #Change the destdir to have the animation created where you want. 
+#' destdir = tempdir()
+#' 
+#' #Example of use of the evolution method with an html output.
+#' evolution(network,sequence,type.ani = "html",outdir=destdir)
+#' 
+#' #Example of use of the evolution method with an animated gif output.
+#' evolution(network,sequence,type.ani = "gif",outdir=destdir)
+#' }
+#' 
 setMethod("evolution", "network", 
           function(net
                    ,
@@ -461,6 +512,32 @@ setMethod("evolution", "network",
           )
           
 
+#' Returns the position of edges in the network
+#' 
+#' Returns the position of edges in the network
+#' Retrieve network position for consistent plotting.
+#' Utility function to plot networks.
+#' 
+#' @name position-methods
+#' @aliases position position-methods position,network-method
+#' @docType methods
+#' @section Methods: \describe{
+#' 
+#' \item{list("signature(net = \"network\")")}{ Returns a matrix with the
+#' position of the node. This matrix can then be used as an argument in the
+#' plot function. } }
+#' 
+#' @param net a network object
+#' @param nv the level of cutoff at which the analysis should be done
+#' @return Matrix with as many rows as the number of edges of network and three
+#' columns (name, xcoord, ycoord).
+#' @author Bertrand Frederic, Myriam Maumy-Bertrand.
+#' @keywords methods dplots
+#' @examples
+#' 
+#' data(network)
+#' position(network)
+#' 
 setMethod("position", "network", function(net, nv = 0) {
   require(igraph, quietly = TRUE, warn.conflicts = FALSE);on.exit(unloadNamespace("package:igraph"))
   O <- net@network
@@ -501,6 +578,7 @@ setMethod("position", "network", function(net, nv = 0) {
 #######################################
 #######################################
 
+#' @rdname plot-methods
 setMethod("plot"
           , "network"
           , function(x
@@ -1066,7 +1144,46 @@ setMethod("plot"
               invisible(G)
             }
           })
-          
+
+#' Find the neighborhood of a set of nodes.
+#' 
+#' Find the neighborhood of a set of nodes.
+#' 
+#' 
+#' @aliases geneNeighborhood geneNeighborhood-methods
+#' geneNeighborhood,network-method
+#' @param net a network object
+#' @param targets a vector containing the set of nodes
+#' @param nv the level of cutoff. Defaut to 0.
+#' @param order of the neighborhood. Defaut to `length(net@time_pt)-1`.
+#' @param label_v vector defining the vertex labels.
+#' @param ini using the ``position'' function, you can
+#' fix the position of the nodes.
+#' @param frame.color color of the frames.
+#' @param label.hub logical ; if TRUE only the hubs are labeled.
+#' @param graph plot graph of the network. Defaults to `TRUE`.
+#' @param names return names of the neighbors. Defaults to `FALSE`.
+#' @return The neighborhood of the targeted genes.
+#' @author Bertrand Frederic, Myriam Maumy-Bertrand.
+#' @keywords methods
+#' @examples
+#' 
+#' data(Selection)
+#' data(infos)
+#' #Find probesets for EGR1
+#' pbst_EGR1 = infos[infos$hgnc_symbol=="EGR1", "affy_hg_u133_plus_2"]
+#' 
+#' gene_IDs = infos[match(Selection@name, infos$affy_hg_u133_plus_), "hgnc_symbol"]
+#' 
+#' data(network)
+#' #A nv value can chosen using the cutoff function
+#' nv=.11 
+#' EGR1<-which(is.element(Selection@name,pbst_EGR1))
+#' P<-position(network,nv=nv)
+#' 
+#' geneNeighborhood(network,targets=EGR1,nv=nv,ini=P,
+#' label_v=gene_IDs)
+#'           
 setMethod("geneNeighborhood", "network"
           , function(net
                      ,
@@ -1175,6 +1292,34 @@ setMethod("geneNeighborhood", "network"
             }
           })
 
+
+#' Choose the best cutoff
+#' 
+#' Allows estimating the best cutoff. For a sequence of cutoff, the p value
+#' corresponding to each cutoff value of the sequence. Mainly recommended for
+#' single time cascade networks. To achieve more sparsity in other settings,
+#' please use a fiiting function based on the stability selection or
+#' selectboost algorithms.
+#' 
+#' 
+#' @aliases cutoff cutoff-methods cutoff,network-method
+#' @param Omega a network object
+#' @param sequence a vector corresponding to the sequence of cutoffs that will be tested.
+#' @param x_min an integer ; only values over x_min are further retained for performing the test.
+#' 
+#' @return A list containing two objects : \item{p.value}{the p values
+#' corresponding to the sequence of cutoff} \item{p.value.inter}{the smoothed p
+#' value vector, using the loess function}
+#' @author Bertrand Frederic, Myriam Maumy-Bertrand.
+#' @keywords methods
+#' @examples
+#' 
+#' \donttest{
+#' 		data(network)
+#' 		cutoff(network)
+#' 		#See vignette for more details
+#' }
+#' 
 setMethod("cutoff", "network", function(Omega,
                                         sequence = NULL,
                                         x_min = 0) {
@@ -1840,6 +1985,50 @@ setMethod("cutoff", "network", function(Omega,
 })
 
 
+#' Some basic criteria of comparison between actual and inferred network.
+#' 
+#' Allows comparison between actual and inferred network.
+#' 
+#' 
+#' @name compare-methods
+#' @aliases compare-methods compare compare,network,network,numeric-method
+#' @docType methods
+#' @return A vector containing : sensitivity, predictive positive value, the
+#' usual F-score (2*ppv*sens/(sppvpe+sens)), the 1/2 ponderated Fscore
+#' ((1+0.5^2)*ppv*sens/(ppv/4+sens)) and the 2 ponderated Fscore
+#' ((1+2^2)*ppv*sens/(ppv*4+sens)).
+#' @section Methods: \describe{
+#' 
+#' \item{list("signature(Net = \"network\", Net_inf = \"network\", nv =
+#' \"numeric\")")}{ \describe{ \item{Net}{ A network object containing the
+#' actual network.  } \item{Net_inf}{ A network object containing the inferred
+#' network.  } \item{nv}{ A number that indicates at which level of cutoff the
+#' comparison should be done.  } } }
+#' 
+#' }
+#' @param Net A network object containing the
+#' actual network.
+#' @param Net_inf A network object containing the inferred
+#' network.
+#' @param nv A number that indicates at which level of cutoff the
+#' comparison should be done.
+#' @author Bertrand Frederic, Myriam Maumy-Bertrand.
+#' @examples
+#' 
+#' data(Net)
+#' data(Net_inf_PL)
+#' 
+#' #Comparing true and inferred networks
+#' Crit_values=NULL
+#' 
+#' #Here are the cutoff level tested
+#' test.seq<-seq(0,max(abs(Net_inf_PL@network*0.9)),length.out=200)
+#' for(u in test.seq){
+#' 	Crit_values<-rbind(Crit_values,Patterns::compare(Net,Net_inf_PL,u))
+#' }
+#' matplot(test.seq,Crit_values,type="l",ylab="Criterion value",xlab="Cutoff level",lwd=2)
+#' legend(x="topleft", legend=colnames(Crit_values), lty=1:5,col=1:5,ncol=2,cex=.9)
+#' 
 setMethod("compare",c("network","network","numeric"),function(Net,
                                                               Net_inf,
                                                               nv=1){

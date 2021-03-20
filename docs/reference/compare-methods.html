@@ -8,21 +8,36 @@
 
 <title>Some basic criteria of comparison between actual and inferred network. — compare-methods • Patterns</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,10 +45,11 @@
 
 
 
-<meta property="og:title" content="Some basic criteria of comparison between actual and inferred network. — compare-methods" />
 
+<meta property="og:title" content="Some basic criteria of comparison between actual and inferred network. — compare-methods" />
 <meta property="og:description" content="Allows comparison between actual and inferred network." />
-<meta name="twitter:card" content="summary" />
+<meta property="og:image" content="/logo.png" />
+
 
 
 
@@ -47,9 +63,10 @@
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -63,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Patterns</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3</span>
       </span>
     </div>
 
@@ -71,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -97,11 +114,10 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/fbertran/Patterns">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/fbertran/Patterns/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -112,67 +128,94 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Some basic criteria of comparison between actual and inferred network.</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/fbertran/Patterns/blob/master/R/network.R'><code>R/network.R</code></a></small>
     <div class="hidden name"><code>compare-methods.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    
     <p>Allows comparison between actual and inferred network.</p>
-    
     </div>
 
-        
-    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
+    <pre class="usage"><span class='co'># S4 method for network,network,numeric</span>
+<span class='fu'>compare</span><span class='op'>(</span><span class='va'>Net</span>, <span class='va'>Net_inf</span>, nv <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
 
-    <dl class='dl-horizontal'>
-    <dt><code>signature(Net = "network", Net_inf = "network", nv = "numeric")</code></dt><dd><p><dl class='dl-horizontal'>
-  <dt>Net</dt><dd><p>A network object containing the actual network.</p></dd>
-  <dt>Net_inf</dt><dd><p>A network object containing the inferred network.</p></dd>
-  <dt>nv</dt><dd><p>A number that indicates at which level of cutoff the comparison should be done.</p></dd>
-</dl></p></dd>
-    </dl>
-    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>Net</th>
+      <td><p>A network object containing the
+actual network.</p></td>
+    </tr>
+    <tr>
+      <th>Net_inf</th>
+      <td><p>A network object containing the inferred
+network.</p></td>
+    </tr>
+    <tr>
+      <th>nv</th>
+      <td><p>A number that indicates at which level of cutoff the
+comparison should be done.</p></td>
+    </tr>
+    </table>
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A vector containing : sensitivity, predictive positive value, the usual F-score (2*ppv*sens/(sppvpe+sens)), the 1/2 ponderated Fscore ((1+0.5^2)*ppv*sens/(ppv/4+sens)) and the 2 ponderated Fscore ((1+2^2)*ppv*sens/(ppv*4+sens)).</p>
-    
+    <p>A vector containing : sensitivity, predictive positive value, the
+usual F-score (2*ppv*sens/(sppvpe+sens)), the 1/2 ponderated Fscore
+((1+0.5^2)*ppv*sens/(ppv/4+sens)) and the 2 ponderated Fscore
+((1+2^2)*ppv*sens/(ppv*4+sens)).</p>
+    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
+
+    <p></p><dl>
+
+<dt>list("signature(Net = \"network\", Net_inf = \"network\", nv =
+\"numeric\")")</dt><dd><p><dl>
+<dt>Net</dt><dd><p>A network object containing the
+actual network.</p></dd> <dt>Net_inf</dt><dd><p>A network object containing the inferred
+network.</p></dd> <dt>nv</dt><dd><p>A number that indicates at which level of cutoff the
+comparison should be done.</p></dd> 
+</dl></p></dd>
+
+
+</dl>
+
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Bertrand Frederic, Myriam Maumy-Bertrand.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>Net</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>Net_inf_PL</span>)
+    <pre class="examples"><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>Net</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>Net_inf_PL</span><span class='op'>)</span>
 
 <span class='co'>#Comparing true and inferred networks</span>
-<span class='no'>Crit_values</span><span class='kw'>=</span><span class='kw'>NULL</span>
+<span class='va'>Crit_values</span><span class='op'>=</span><span class='cn'>NULL</span>
 
 <span class='co'>#Here are the cutoff level tested</span>
-<span class='no'>test.seq</span><span class='kw'>&lt;-</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>0</span>,<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>max</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/MathFun'>abs</a></span>(<span class='no'>Net_inf_PL</span>@<span class='kw'>network</span>*<span class='fl'>0.9</span>)),<span class='kw'>length.out</span><span class='kw'>=</span><span class='fl'>200</span>)
-<span class='kw'>for</span>(<span class='no'>u</span> <span class='kw'>in</span> <span class='no'>test.seq</span>){
-        <span class='no'>Crit_values</span><span class='kw'>&lt;-</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cbind'>rbind</a></span>(<span class='no'>Crit_values</span>,<span class='kw pkg'>Patterns</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/Patterns/topics/compare-methods'>compare</a></span>(<span class='no'>Net</span>,<span class='no'>Net_inf_PL</span>,<span class='no'>u</span>))
-}
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/matplot'>matplot</a></span>(<span class='no'>test.seq</span>,<span class='no'>Crit_values</span>,<span class='kw'>type</span><span class='kw'>=</span><span class='st'>"l"</span>,<span class='kw'>ylab</span><span class='kw'>=</span><span class='st'>"Criterion value"</span>,<span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>"Cutoff level"</span>,<span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/legend'>legend</a></span>(<span class='kw'>x</span><span class='kw'>=</span><span class='st'>"topleft"</span>, <span class='kw'>legend</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>colnames</a></span>(<span class='no'>Crit_values</span>), <span class='kw'>lty</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>5</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>5</span>,<span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>2</span>,<span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>.9</span>)</div><div class='img'><img src='compare-methods-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='va'>test.seq</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='va'>Net_inf_PL</span><span class='op'>@</span><span class='va'>network</span><span class='op'>*</span><span class='fl'>0.9</span><span class='op'>)</span><span class='op'>)</span>,length.out<span class='op'>=</span><span class='fl'>200</span><span class='op'>)</span>
+<span class='kw'>for</span><span class='op'>(</span><span class='va'>u</span> <span class='kw'>in</span> <span class='va'>test.seq</span><span class='op'>)</span><span class='op'>{</span>
+  <span class='va'>Crit_values</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='va'>Crit_values</span>,<span class='fu'>Patterns</span><span class='fu'>::</span><span class='fu'>compare</span><span class='op'>(</span><span class='va'>Net</span>,<span class='va'>Net_inf_PL</span>,<span class='va'>u</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/matplot.html'>matplot</a></span><span class='op'>(</span><span class='va'>test.seq</span>,<span class='va'>Crit_values</span>,type<span class='op'>=</span><span class='st'>"l"</span>,ylab<span class='op'>=</span><span class='st'>"Criterion value"</span>,xlab<span class='op'>=</span><span class='st'>"Cutoff level"</span>,lwd<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/legend.html'>legend</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='st'>"topleft"</span>, legend<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>Crit_values</span><span class='op'>)</span>, lty<span class='op'>=</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>,col<span class='op'>=</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>,ncol<span class='op'>=</span><span class='fl'>2</span>,cex<span class='op'>=</span><span class='fl'>.9</span><span class='op'>)</span>
+</div><div class='img'><img src='compare-methods-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#methods">Methods</a></li>
-
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Bertrand Frederic, Myriam Maumy-Bertrand.</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -180,13 +223,16 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

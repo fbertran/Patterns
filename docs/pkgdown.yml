@@ -1,7 +1,8 @@
-pandoc: 2.7.2
-pkgdown: 1.4.1
+pandoc: 2.11.2
+pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   ExampleCLL: ExampleCLL.html
   IntroPatterns: IntroPatterns.html
+last_built: 2021-03-20T10:23Z
 

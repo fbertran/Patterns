@@ -1,3 +1,7 @@
+# Patterns 1.3
+
+* Roxygen the package, add badges, logo, package help page and update pkgdown site.
+
 # Patterns 1.2
 
 * Fix a lasso based function due to glmnet 3.0 release.
