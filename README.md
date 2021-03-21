@@ -67,7 +67,7 @@ The weights are viewed as a penalty factors in the penalized regression model: i
 
 
 
-![Evolution of a reverse-engineered network with increasing cut-off values.](docs/reference/evolution/animation.gif)
+![Evolution of a reverse-engineered network with increasing cut-off values.](docs/reference/animation.gif)
 
 
 
@@ -285,8 +285,9 @@ Plot the simulated network.
 
 ```r
 Patterns::plot(Net, choice="network")
-#> Error: 'plot' is not an exported object from 'namespace:Patterns'
 ```
+
+<img src="man/figures/README-plotnet1-1.png" title="plot of chunk plotnet1" alt="plot of chunk plotnet1" width="100%" />
 
 If a gene clustering is known, it can be used as a coloring scheme.
 
@@ -308,8 +309,9 @@ Plot the F matrix using the `pixmap` package, for high dimensional F matrices.
 
 ```r
 plot(Net, choice="Fpixmap")
-#> Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'
 ```
+
+<img src="man/figures/README-plotFpixmap-1.png" title="plot of chunk plotFpixmap" alt="plot of chunk plotFpixmap" width="100%" />
 
 We simulate gene expression according to the network that was previously drawn
 
@@ -1331,8 +1333,6 @@ Net_inf_P_SelectBoost <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=
 
 
 ```
-#> Warning: 'Patterns' namespace cannot be unloaded:
-#>   tentative d'obtenir le slot "defined" d'un objet d'une classe élémentaire ("environment") sans slots
 #> 
 #> Attaching package: 'Patterns'
 #> The following object is masked from 'package:igraph':
@@ -1403,7 +1403,7 @@ stats::heatmap(Net_inf_P_SelectBoostWeighted@network, Rowv = NA, Colv = NA, scal
 
 <img src="man/figures/README-heatresultsSBW-1.png" title="plot of chunk heatresultsSBW" alt="plot of chunk heatresultsSBW" width="100%" />
 
-###Post inference network analysis
+### Post inference network analysis
 Such an analysis is only required if the model was not fitted using the stability selection or the selectboost algorithm.
 
 Create an animation of the network with increasing cutoffs with an animated .gif format or a  html webpage in the working directory.
@@ -1421,7 +1421,7 @@ evolution(network,sequence,type.ani = "html", outdir=getwd())
 ```
 ![Evolution as .gif.](docs/reference/evolution/animation.gif)
 
-[Evolution as .html.](reference/evolution/index.html)
+[Evolution as .html.](docs/reference/evolution/index.html)
 
 Evolution of some properties of a reverse-engineered network with increasing cut-off values.
 ![Evolution of some properties of a reverse-engineered network with increasing cut-off values.](docs/reference/compare-methods-1.png)

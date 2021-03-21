@@ -54,7 +54,7 @@ Maintainer: Frederic Bertrand <frederic.bertrand@math.unistra.fr>
 Description: A modeling tool dedicated to biological network modeling (Bertrand and others 2020, <doi:10.1093/bioinformatics/btaa855>). It allows for single or joint modeling of, for instance, genes and proteins. It starts with the selection of the actors that will be the used in the reverse engineering upcoming step. An actor can be included in that selection based on its differential measurement (for instance gene expression or protein abundance) or on its time course profile. Wrappers for actors clustering functions and cluster analysis are provided. It also allows reverse engineering of biological networks taking into account the observed time course patterns of the actors. Many inference functions are provided and dedicated to get specific features for the inferred network such as sparsity, robust links, high confidence links or stable through resampling links. Some simulation and prediction tools are also available for cascade networks (Jung and others 2014, <doi:10.1093/bioinformatics/btt705>). Example of use with microarray or RNA-Seq data are provided.
 License: GPL (>= 2)
 Encoding: UTF-8
-Collate: Patterns-package.R datasets.R global.R micro_array.R network.R micro_array-network.R
+Collate: Patterns-package.R global.R datasets.R micro_array.R network.R micro_array-network.R
 	micropredict.R
 Classification/MSC: 62J05, 62J07, 62J99, 92C42
 VignetteBuilder: knitr

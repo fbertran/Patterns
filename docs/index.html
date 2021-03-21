@@ -146,7 +146,7 @@
 <p><img src="docs/reference/figures/README-FresultsLC-1.png" alt="Infered F matrix of the network (cascade shape)."></p>
 <p><img src="docs/reference/figures/README-heatresultsLC-1.png" alt="Infered coefficient matrix of the network (cascade shape)."></p>
 <p><img src="docs/reference/figures/README-plotnet2-1.png" alt="Reverse-engineered network."></p>
-<p><img src="docs/reference/evolution/animation.gif" alt="Evolution of a reverse-engineered network with increasing cut-off values."></p>
+<p><img src="docs/reference/animation.gif" alt="Evolution of a reverse-engineered network with increasing cut-off values."></p>
 <p><img src="docs/reference/figures/README-plotsimuldata-1.png" alt="Plot of simulated data for cascade networks featuring cluster membership."></p>
 <p><img src="docs/reference/figures/README-plotsimuldata-2.png" alt="Plot of simulated data for cascade networks featuring subject membership."></p>
 <p>A word for those that have been using our seminal work, the <code>Cascade</code> package that we created several years ago and that was a very efficient network reverse engineering tool for cascade networks (Jung, N., Bertrand, F., Bahram, S., Vallat, L., and Maumy-Bertrand, M. (2014), <a href="https://doi.org/10.1093/bioinformatics/btt705" class="uri">https://doi.org/10.1093/bioinformatics/btt705</a>, <a href="https://cran.r-project.org/package=Cascade" class="uri">https://cran.r-project.org/package=Cascade</a>, <a href="https://github.com/fbertran/Cascade" class="uri">https://github.com/fbertran/Cascade</a> and <a href="https://fbertran.github.io/Cascade/" class="uri">https://fbertran.github.io/Cascade/</a>).</p>
@@ -328,8 +328,8 @@
 <span class="co">#&gt;   ..@ time_pt: int [1:4] 1 2 3 4</span></code></pre></div>
 <p>Plot the simulated network.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">Patterns</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">Net</span>, choice<span class="op">=</span><span class="st">"network"</span><span class="op">)</span>
-<span class="co">#&gt; Error: 'plot' is not an exported object from 'namespace:Patterns'</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">Patterns</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">Net</span>, choice<span class="op">=</span><span class="st">"network"</span><span class="op">)</span></code></pre></div>
+<p><img src="reference/figures/README-plotnet1-1.png" title="plot of chunk plotnet1" alt="plot of chunk plotnet1" width="100%"></p>
 <p>If a gene clustering is known, it can be used as a coloring scheme.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">Net</span>, choice<span class="op">=</span><span class="st">"network"</span>, gr<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,each<span class="op">=</span><span class="fl">25</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -340,8 +340,8 @@
 <p><img src="reference/figures/README-plotF-1.png" title="plot of chunk plotF" alt="plot of chunk plotF" width="100%"></p>
 <p>Plot the F matrix using the <code>pixmap</code> package, for high dimensional F matrices.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">Net</span>, choice<span class="op">=</span><span class="st">"Fpixmap"</span><span class="op">)</span>
-<span class="co">#&gt; Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">Net</span>, choice<span class="op">=</span><span class="st">"Fpixmap"</span><span class="op">)</span></code></pre></div>
+<p><img src="reference/figures/README-plotFpixmap-1.png" title="plot of chunk plotFpixmap" alt="plot of chunk plotFpixmap" width="100%"></p>
 <p>We simulate gene expression according to the network that was previously drawn</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
@@ -1214,9 +1214,7 @@
 <span class="co">#&gt;  4.........................</span>
 <span class="co">#&gt; The convergence of the network is (L1 norm) : 0.00094</span></code></pre></div>
 <p><img src="reference/figures/README-netinfSB-1.png" title="plot of chunk netinfSB" alt="plot of chunk netinfSB" width="100%"><img src="reference/figures/README-netinfSB-2.png" title="plot of chunk netinfSB" alt="plot of chunk netinfSB" width="100%"></p>
-<pre><code>#&gt; Warning: 'Patterns' namespace cannot be unloaded:
-#&gt;   tentative d'obtenir le slot "defined" d'un objet d'une classe élémentaire ("environment") sans slots
-#&gt; 
+<pre><code>#&gt; 
 #&gt; Attaching package: 'Patterns'
 #&gt; The following object is masked from 'package:igraph':
 #&gt; 
@@ -1259,7 +1257,11 @@
 <div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/heatmap.html">heatmap</a></span><span class="op">(</span><span class="va">Net_inf_P_SelectBoostWeighted</span><span class="op">@</span><span class="va">network</span>, Rowv <span class="op">=</span> <span class="cn">NA</span>, Colv <span class="op">=</span> <span class="cn">NA</span>, scale<span class="op">=</span><span class="st">"none"</span>, revC<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-heatresultsSBW-1.png" title="plot of chunk heatresultsSBW" alt="plot of chunk heatresultsSBW" width="100%"></p>
-<p>###Post inference network analysis Such an analysis is only required if the model was not fitted using the stability selection or the selectboost algorithm.</p>
+</div>
+<div id="post-inference-network-analysis" class="section level3">
+<h3 class="hasAnchor">
+<a href="#post-inference-network-analysis" class="anchor"></a>Post inference network analysis</h3>
+<p>Such an analysis is only required if the model was not fitted using the stability selection or the selectboost algorithm.</p>
 <p>Create an animation of the network with increasing cutoffs with an animated .gif format or a html webpage in the working directory.</p>
 <div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">network</span><span class="op">)</span>
@@ -1269,7 +1271,7 @@
 <pre><code>#&gt; Error in setwd(outdir): impossible de changer de répertoire de travail
 #&gt; Error in setwd(outdir): impossible de changer de répertoire de travail</code></pre>
 <p><img src="docs/reference/evolution/animation.gif" alt="Evolution as .gif."></p>
-<p><a href="reference/evolution/index.html">Evolution as .html.</a></p>
+<p><a href="docs/reference/evolution/index.html">Evolution as .html.</a></p>
 <p>Evolution of some properties of a reverse-engineered network with increasing cut-off values. <img src="docs/reference/compare-methods-1.png" alt="Evolution of some properties of a reverse-engineered network with increasing cut-off values."></p>
 <p>We switch to data that were derived from the inferrence of a real biological network and try to detect the optimal cutoff value: the best cutoff value for a network to fit a scale free network. The <code>cutoff</code> was validated only single group cascade networks (number of actors groups = number of timepoints) and for genes dataset. Instead of the <code>cutoff</code> function, manual curation or the stability selection or the selectboost algorithm should be used.</p>
 <div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">

@@ -118,3 +118,21 @@ sticker(
   h_color = "grey",
   filename = "man/figures/logo.png"
 )
+
+sticker(
+  r,
+  package = "Patterns",
+  p_size = 8,
+  s_x = .98,
+  s_y = 0.7,
+  s_width = 1.7,
+  s_height = 1.3,
+  p_x = 1,
+  p_y = 1.3,
+  url = "https://cran.r-project.org/package=Patterns",
+  u_color = "white",
+  u_size = 1.1,
+  h_fill = "black",
+  h_color = "grey",
+  filename = "man/figures/logo_Patterns.svg"
+)

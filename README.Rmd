@@ -76,7 +76,7 @@ The weights are viewed as a penalty factors in the penalized regression model: i
 
 
 
-![Evolution of a reverse-engineered network with increasing cut-off values.](docs/reference/evolution/animation.gif)
+![Evolution of a reverse-engineered network with increasing cut-off values.](docs/reference/animation.gif)
 
 
 
@@ -494,7 +494,7 @@ Heatmap of the coefficients of the Omega matrix of the network
 stats::heatmap(Net_inf_P_SelectBoostWeighted@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
 ```
 
-###Post inference network analysis
+### Post inference network analysis
 Such an analysis is only required if the model was not fitted using the stability selection or the selectboost algorithm.
 
 Create an animation of the network with increasing cutoffs with an animated .gif format or a  html webpage in the working directory.
