@@ -23,6 +23,12 @@ jobs:
       - name: Install XQuartz on macOS
         if: runner.os == 'macOS'
         run: brew install xquartz --cask
+      - name: Install ghostscript on macOS
+        if: runner.os == 'macOS'
+        run: brew install ghostscript
+      - name: Install Magick on macOS
+        if: runner.os == 'macOS'
+        run: brew install imagemagick
       - name: Install dependencies
         run: |
           install.packages(c("remotes", "rcmdcheck"))

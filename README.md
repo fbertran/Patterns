@@ -47,37 +47,6 @@ The weights are viewed as a penalty factors in the penalized regression model: i
 
 
 
-![Infered F matrix of the network (General shape).](docs/reference/figures/README-Fresults-1.png)
-
-
-
-![Infered coefficient matrix of the network (General shape).](docs/reference/figures/README-heatresults-1.png)
-
-
-
-![Infered F matrix of the network (cascade shape).](docs/reference/figures/README-FresultsLC-1.png)
-
-
-
-![Infered coefficient matrix of the network (cascade shape).](docs/reference/figures/README-heatresultsLC-1.png)
-
-
-
-![Reverse-engineered network.](docs/reference/figures/README-plotnet2-1.png)
-
-
-
-![Evolution of a reverse-engineered network with increasing cut-off values.](docs/reference/animation.gif)
-
-
-
-![Plot of simulated data for cascade networks featuring cluster membership.](docs/reference/figures/README-plotsimuldata-1.png)
-
-
-
-![Plot of simulated data for cascade networks featuring subject membership.](docs/reference/figures/README-plotsimuldata-2.png)
-
-
 A word for those that have been using our seminal work, the `Cascade` package that we created several years ago and that was a very efficient network reverse engineering tool for cascade networks 
 (Jung, N., Bertrand, F., Bahram, S., Vallat, L., and Maumy-Bertrand, M. (2014), <https://doi.org/10.1093/bioinformatics/btt705>, <https://cran.r-project.org/package=Cascade>, <https://github.com/fbertran/Cascade> and <https://fbertran.github.io/Cascade/>).
 
@@ -1419,12 +1388,12 @@ evolution(network,sequence,type.ani = "html", outdir=getwd())
 #> Error in setwd(outdir): impossible de changer de répertoire de travail
 #> Error in setwd(outdir): impossible de changer de répertoire de travail
 ```
-![Evolution as .gif.](docs/reference/evolution/animation.gif)
+![Evolution as .gif.](https://fbertran.github.io/Patterns/reference/evolution/animation.gif)
 
-[Evolution as .html.](docs/reference/evolution/index.html)
+[Evolution as .html.](https://fbertran.github.io/Patterns/reference/evolution/index.html)
 
 Evolution of some properties of a reverse-engineered network with increasing cut-off values.
-![Evolution of some properties of a reverse-engineered network with increasing cut-off values.](docs/reference/compare-methods-1.png)
+![Evolution of some properties of a reverse-engineered network with increasing cut-off values.](https://fbertran.github.io/Patterns/reference/compare-methods-1.png)
 
 We switch to data that were derived from the inferrence of a real biological network and try to detect the optimal cutoff value: the best cutoff value for a network to fit a scale free network. The `cutoff` was validated only single group cascade networks (number of actors groups = number of timepoints) and for genes dataset. Instead of the `cutoff` function, manual curation or the stability selection or the selectboost algorithm should be used.
 
@@ -1735,5 +1704,37 @@ This process could be improved by retrieve a real gene_ID using the `bitr` funct
 
 
 
+
+### Examples of outputs
+
+![Infered F matrix of the network (General shape).](https://fbertran.github.io/Patterns/reference/figures/README-Fresults-1.png)
+
+
+
+![Infered coefficient matrix of the network (General shape).](https://fbertran.github.io/Patterns/reference/figures/README-heatresults-1.png)
+
+
+
+![Infered F matrix of the network (cascade shape).](https://fbertran.github.io/Patterns/reference/figures/README-FresultsLC-1.png)
+
+
+
+![Infered coefficient matrix of the network (cascade shape).](https://fbertran.github.io/Patterns/reference/figures/README-heatresultsLC-1.png)
+
+
+
+![Reverse-engineered network.](https://fbertran.github.io/Patterns/reference/figures/README-plotnet2-1.png)
+
+
+
+![Evolution of a reverse-engineered network with increasing cut-off values.](https://fbertran.github.io/Patterns/reference/evolution/animation.gif)
+
+
+
+![Plot of simulated data for cascade networks featuring cluster membership.](https://fbertran.github.io/Patterns/reference/figures/README-plotsimuldata-1.png)
+
+
+
+![Plot of simulated data for cascade networks featuring subject membership.](https://fbertran.github.io/Patterns/reference/figures/README-plotsimuldata-2.png)
 
 
