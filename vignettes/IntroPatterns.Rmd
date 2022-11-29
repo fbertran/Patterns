@@ -6,7 +6,7 @@ author:
   affiliation: 
   - Université de Strasbourg et CNRS, 
   - IRMA, labex IRMIA
-  email: frederic.bertrand@math.unistra.fr
+  email: frederic.bertrand@utt.fr
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -122,17 +122,17 @@ devtools::install_github("fbertran/Patterns")
 ## Examples
 
 ### Data management
-Import Cascade Data (repeated measurements on several subjects) from the CascadeData package and turn them into a micro array object. The second line makes sure the CascadeData package is installed.
-```{r microarrayclass, message=FALSE, warning=FALSE, eval = LOCAL}
+Import Cascade Data (repeated measurements on several subjects) from the CascadeData package and turn them into a omics array object. The second line makes sure the CascadeData package is installed.
+```{r omicsarrayclass, message=FALSE, warning=FALSE, eval = LOCAL}
 library(Patterns)
 if(!require(CascadeData)){install.packages("CascadeData")}
 data(micro_US)
-micro_US<-as.micro_array(micro_US[1:100,],time=c(60,90,210,390),subject=6)
+micro_US<-as.omics_array(micro_US[1:100,],time=c(60,90,210,390),subject=6)
 str(micro_US)
 ```
 
 Get a summay and plots of the data:
-```{r plotmicroarrayclass, fig.keep='all', eval = LOCAL}
+```{r plotomicsarrayclass, fig.keep='all', eval = LOCAL}
 summary(micro_US)
 plot(micro_US)
 ```
@@ -219,7 +219,7 @@ We simulate gene expression according to the network that was previously drawn
 ```{r genesimul, message=FALSE, warning=FALSE, eval = LOCAL}
 set.seed(1)
 M <- Patterns::gene_expr_simulation(
-  network=Net,
+  omics_network=Net,
   time_label=rep(1:4,each=25),
   subject=5,
   peak_level=200,
@@ -249,7 +249,7 @@ plot(Net_inf_P, choice="F")
 
 Heatmap of the inferred coefficients of the Omega matrix
 ```{r heatresults, eval = LOCAL}
-stats::heatmap(Net_inf_P@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
+stats::heatmap(Net_inf_P@omics_network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
 ```
 
 
@@ -329,7 +329,7 @@ plot(Net_inf_P_S, choice="F")
 
 Heatmap of the coefficients of the Omega matrix of the network. They reflect the use of a special $F$ matrix. It is an example of an F matrix specifically designed to deal with cascade networks.
 ```{r heatresultsLC, fig.keep="none", eval = LOCAL}
-stats::heatmap(Net_inf_P_S@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
+stats::heatmap(Net_inf_P_S@omics_network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
 ```
 
 
@@ -355,14 +355,14 @@ plot(Net_inf_P_Lasso2, choice="F")
 
 Heatmap of the coefficients of the Omega matrix of the network
 ```{r heatresultslasso2, fig.keep="none", eval = LOCAL}
-stats::heatmap(Net_inf_P_Lasso2@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
+stats::heatmap(Net_inf_P_Lasso2@omics_network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
 ```
 
 We create a weighting vector to perform weighted lasso inference.
 ```{r netinfPriors, eval = LOCAL}
-Weights_Net=slot(Net,"network")
-Weights_Net[Net@network!=0]=.1        
-Weights_Net[Net@network==0]=1000
+Weights_Net=slot(Net,"omics_network")
+Weights_Net[Net@omics_network!=0]=.1        
+Weights_Net[Net@omics_network==0]=1000
 ```
 
 ```{r netinflasso2Weighted, cache=TRUE, fig.keep="none", eval = LOCAL}
@@ -376,7 +376,7 @@ plot(Net_inf_P_Lasso2_Weighted, choice="F")
 
 Heatmap of the coefficients of the Omega matrix of the network
 ```{r heatresultslasso2Weighted, fig.keep="none", eval = LOCAL}
-stats::heatmap(Net_inf_P_Lasso2_Weighted@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
+stats::heatmap(Net_inf_P_Lasso2_Weighted@omics_network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
 ```
 
 
@@ -391,7 +391,7 @@ plot(Net_inf_P_SPLS, choice="F")
 
 Heatmap of the coefficients of the Omega matrix of the network
 ```{r heatresultsSPLS, fig.keep="none", eval = LOCAL}
-stats::heatmap(Net_inf_P_SPLS@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
+stats::heatmap(Net_inf_P_SPLS@omics_network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
 ```
 
 ```{r netinfEN, cache=TRUE, fig.keep="none", eval = LOCAL}
@@ -405,7 +405,7 @@ plot(Net_inf_P_ELASTICNET, choice="F")
 
 Heatmap of the coefficients of the Omega matrix of the network
 ```{r heatresultsEN, fig.keep="none", eval = LOCAL}
-stats::heatmap(Net_inf_P_ELASTICNET@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
+stats::heatmap(Net_inf_P_ELASTICNET@omics_network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
 ```
 
 ```{r netinfStab, cache=TRUE, fig.keep="none", eval = LOCAL}
@@ -419,7 +419,7 @@ plot(Net_inf_P_stability, choice="F")
 
 Heatmap of the coefficients of the Omega matrix of the network
 ```{r heatresultsStab, fig.keep="none", eval = LOCAL}
-stats::heatmap(Net_inf_P_stability@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
+stats::heatmap(Net_inf_P_stability@omics_network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
 ```
 
 ```{r netinfStabWeight, cache=TRUE, fig.keep="none", eval = LOCAL}
@@ -433,7 +433,7 @@ plot(Net_inf_P_StabWeight, choice="F")
 
 Heatmap of the coefficients of the Omega matrix of the network
 ```{r heatresultsStabWeight, fig.keep="none", eval = LOCAL}
-stats::heatmap(Net_inf_P_StabWeight@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
+stats::heatmap(Net_inf_P_StabWeight@omics_network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
 ```
 
 ```{r netinfRobust, cache=TRUE, fig.keep="none", eval = LOCAL}
@@ -447,7 +447,7 @@ plot(Net_inf_P_Robust, choice="F")
 
 Heatmap of the coefficients of the Omega matrix of the network
 ```{r heatresultsRobust, fig.keep="none", eval = LOCAL}
-stats::heatmap(Net_inf_P_Robust@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
+stats::heatmap(Net_inf_P_Robust@omics_network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
 ```
 
 ```{r netinfSB, cache=TRUE, fig.keep="none", eval = LOCAL}
@@ -468,7 +468,7 @@ plot(Net_inf_P_SelectBoost, choice="F")
 
 Heatmap of the coefficients of the Omega matrix of the network
 ```{r heatresultsSB, fig.keep="none", eval = LOCAL}
-stats::heatmap(Net_inf_P_SelectBoost@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
+stats::heatmap(Net_inf_P_SelectBoost@omics_network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
 ```
 
 ```{r netinfSBW, cache=TRUE, fig.keep="none", eval = LOCAL}
@@ -487,7 +487,7 @@ plot(Net_inf_P_SelectBoostWeighted, choice="F")
 
 Heatmap of the coefficients of the Omega matrix of the network
 ```{r heatresultsSBW, fig.keep="none", eval = LOCAL}
-stats::heatmap(Net_inf_P_SelectBoostWeighted@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
+stats::heatmap(Net_inf_P_SelectBoostWeighted@omics_network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
 ```
 
 ###Post inference network analysis
@@ -510,7 +510,7 @@ data(Net_inf_PL)
 Crit_values=NULL
 
 #Here are the cutoff level tested
-test.seq<-seq(0,max(abs(Net_inf_PL@network*0.9)),length.out=200)
+test.seq<-seq(0,max(abs(Net_inf_PL@omics_network*0.9)),length.out=200)
 for(u in test.seq){
 	Crit_values<-rbind(Crit_values,Patterns::compare(Net,Net_inf_PL,u))
 }
@@ -543,51 +543,51 @@ plot(networkCascade,nv=0.133, gr=Selection@group)
 ### Perform gene selection
 
 Import data.
-```{r microselection, warning=FALSE, cache=FALSE, eval = LOCAL}
+```{r omicsselection, warning=FALSE, cache=FALSE, eval = LOCAL}
 library(Patterns)
 library(CascadeData)
 data(micro_S)
-micro_S<-as.micro_array(micro_S,time=c(60,90,210,390),subject=6,gene_ID=rownames(micro_S))
+micro_S<-as.omics_array(micro_S,time=c(60,90,210,390),subject=6,gene_ID=rownames(micro_S))
 data(micro_US)
-micro_US<-as.micro_array(micro_US,time=c(60,90,210,390),subject=6,gene_ID=rownames(micro_US))
+micro_US<-as.omics_array(micro_US,time=c(60,90,210,390),subject=6,gene_ID=rownames(micro_US))
 ```
 
 Select early genes (t1 or t2):
-```{r microselection1, warning=FALSE, cache=TRUE, eval = LOCAL}
+```{r omicsselection1, warning=FALSE, cache=TRUE, eval = LOCAL}
 Selection1<-Patterns::geneSelection(x=micro_S,y=micro_US,20,wanted.patterns=rbind(c(0,1,0,0),c(1,0,0,0),c(1,1,0,0)))
 ```
 
 Section genes with first significant differential  expression at t1:
-```{r microselection2, warning=FALSE, cache=TRUE, eval = LOCAL}
+```{r omicsselection2, warning=FALSE, cache=TRUE, eval = LOCAL}
 Selection2<-geneSelection(x=micro_S,y=micro_US,20,peak=1)
 ```
 
 Section genes with first significant differential expression at t2:
-```{r microselection3, warning=FALSE, cache=TRUE, eval = LOCAL}
+```{r omicsselection3, warning=FALSE, cache=TRUE, eval = LOCAL}
 Selection3<-geneSelection(x=micro_S,y=micro_US,20,peak=2)
 ```
 
 Select later genes (t3 or t4)
-```{r microselection4, warning=FALSE, cache=TRUE, eval = LOCAL}
+```{r omicsselection4, warning=FALSE, cache=TRUE, eval = LOCAL}
 Selection4<-geneSelection(x=micro_S,y=micro_US,50,
 wanted.patterns=rbind(c(0,0,1,0),c(0,0,0,1),c(1,1,0,0)))
 ```
 
 Merge those selections:
-```{r microselection5, warning=FALSE, eval = LOCAL}
-Selection<-unionMicro(Selection1,Selection2)
-Selection<-unionMicro(Selection,Selection3)
-Selection<-unionMicro(Selection,Selection4)
+```{r omicsselection5, warning=FALSE, eval = LOCAL}
+Selection<-unionOmics(Selection1,Selection2)
+Selection<-unionOmics(Selection,Selection3)
+Selection<-unionOmics(Selection,Selection4)
 head(Selection)
 ```
 
 Summarize the final selection:
-```{r microselection6, warning=FALSE, fig.keep="none", eval = LOCAL}
+```{r omicsselection6, warning=FALSE, fig.keep="none", eval = LOCAL}
 summary(Selection)
 ```
 
 Plot the final selection:
-```{r microselection7, warning=FALSE, fig.keep="none", eval = LOCAL}
+```{r omicsselection7, warning=FALSE, fig.keep="none", eval = LOCAL}
 plot(Selection)
 ```
 

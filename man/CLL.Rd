@@ -41,9 +41,8 @@ data(CLL)
 str(CLL)
 
 \donttest{
-CLLfile <- "https://raw.githubusercontent.com/fbertran/Patterns/master/add_data/CLL.RData"
-load(CLLfile)
-
+CLLfile <- "https://github.com/fbertran/Patterns/raw/master/add_data/CLL.RData"
+repmis::source_data(CLLfile)
 str(CLL)
 }
 

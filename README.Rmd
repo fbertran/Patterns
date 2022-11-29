@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R-CMD-check](https://github.com/fbertran/Patterns/workflows/R-CMD-check/badge.svg)](https://github.com/fbertran/Patterns/actions)
-[![Codecov test coverage](https://codecov.io/gh/fbertran/Patterns/branch/master/graph/badge.svg)](https://codecov.io/gh/fbertran/Patterns?branch=master)
+[![Codecov test coverage](https://codecov.io/gh/fbertran/Patterns/branch/master/graph/badge.svg)](https://app.codecov.io/gh/fbertran/Patterns?branch=master)
 [![CRAN status](https://www.r-pkg.org/badges/version/Patterns)](https://cran.r-project.org/package=Patterns)
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/Patterns)](https://cran.r-project.org/package=Patterns)
 [![GitHub Repo stars](https://img.shields.io/github/stars/fbertran/Patterns?style=social)](https://github.com/fbertran/Patterns)
@@ -91,19 +91,19 @@ devtools::install_github("fbertran/Patterns")
 ## Examples
 
 ### Data management
-Import Cascade Data (repeated measurements on several subjects) from the CascadeData package and turn them into a micro array object. The second line makes sure the CascadeData package is installed.
+Import Cascade Data (repeated measurements on several subjects) from the CascadeData package and turn them into a omics array object. The second line makes sure the CascadeData package is installed.
 ```{r loadpackage, message=FALSE, warning=FALSE, cache=FALSE}
 library(Patterns)
 ```
-```{r microarrayclass, message=FALSE, warning=FALSE}
+```{r omicsarrayclass, message=FALSE, warning=FALSE}
 if(!require(CascadeData)){install.packages("CascadeData")}
 data(micro_US)
-micro_US<-as.micro_array(micro_US[1:100,],time=c(60,90,210,390),subject=6)
+micro_US<-as.omics_array(micro_US[1:100,],time=c(60,90,210,390),subject=6)
 str(micro_US)
 ```
 
 Get a summay and plots of the data:
-```{r plotmicroarrayclass, fig.keep='all', cache=TRUE}
+```{r plotomicsarrayclass, fig.keep='all', cache=TRUE}
 summary(micro_US)
 plot(micro_US)
 ```
@@ -513,51 +513,51 @@ plot(networkCascade,nv=0.133, gr=Selection@group)
 ### Perform gene selection
 
 Import data.
-```{r microselection, warning=FALSE}
+```{r omicsselection, warning=FALSE}
 library(Patterns)
 library(CascadeData)
 data(micro_S)
-micro_S<-as.micro_array(micro_S,time=c(60,90,210,390),subject=6,gene_ID=rownames(micro_S))
+micro_S<-as.omics_array(micro_S,time=c(60,90,210,390),subject=6,gene_ID=rownames(micro_S))
 data(micro_US)
-micro_US<-as.micro_array(micro_US,time=c(60,90,210,390),subject=6,gene_ID=rownames(micro_US))
+micro_US<-as.omics_array(micro_US,time=c(60,90,210,390),subject=6,gene_ID=rownames(micro_US))
 ```
 
 Select early genes (t1 or t2):
-```{r microselection1, warning=FALSE, cache=TRUE}
+```{r omicsselection1, warning=FALSE, cache=TRUE}
 Selection1<-geneSelection(x=micro_S,y=micro_US,20,wanted.patterns=rbind(c(0,1,0,0),c(1,0,0,0),c(1,1,0,0)))
 ```
 
 Section genes with first significant differential  expression at t1:
-```{r microselection2, warning=FALSE, cache=TRUE}
+```{r omicsselection2, warning=FALSE, cache=TRUE}
 Selection2<-geneSelection(x=micro_S,y=micro_US,20,peak=1)
 ```
 
 Section genes with first significant differential expression at t2:
-```{r microselection3, warning=FALSE, cache=TRUE}
+```{r omicsselection3, warning=FALSE, cache=TRUE}
 Selection3<-geneSelection(x=micro_S,y=micro_US,20,peak=2)
 ```
 
 Select later genes (t3 or t4)
-```{r microselection4, warning=FALSE, cache=TRUE}
+```{r omicsselection4, warning=FALSE, cache=TRUE}
 Selection4<-geneSelection(x=micro_S,y=micro_US,50,
 wanted.patterns=rbind(c(0,0,1,0),c(0,0,0,1),c(1,1,0,0)))
 ```
 
 Merge those selections:
-```{r microselection5, warning=FALSE}
-Selection<-unionMicro(Selection1,Selection2)
-Selection<-unionMicro(Selection,Selection3)
-Selection<-unionMicro(Selection,Selection4)
+```{r omicsselection5, warning=FALSE}
+Selection<-unionOmics(Selection1,Selection2)
+Selection<-unionOmics(Selection,Selection3)
+Selection<-unionOmics(Selection,Selection4)
 head(Selection)
 ```
 
 Summarize the final selection:
-```{r microselection6, warning=FALSE}
+```{r omicsselection6, warning=FALSE}
 summary(Selection)
 ```
 
 Plot the final selection:
-```{r microselection7, warning=FALSE}
+```{r omicsselection7, warning=FALSE}
 plot(Selection)
 ```
 

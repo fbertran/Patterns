@@ -27,6 +27,6 @@ C. Schleiss, [...], M. Maumy-Bertrand, S. Bahram, F. Bertrand, and L. Vallat. (2
 }
 \author{
 This package has been written by Frederic Bertrand in collaboration
-with Myriam Maumy-Bertrand. Maintainer: <frederic.bertrand@math.unistra.fr>
+with Myriam Maumy-Bertrand. Maintainer: <frederic.bertrand@utt.fr>
 }
 \keyword{package}

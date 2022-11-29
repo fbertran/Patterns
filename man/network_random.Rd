@@ -35,7 +35,7 @@ barabasi.game function.}
 \item{casc.level}{...}
 }
 \value{
-A network object.
+A omics_network object.
 }
 \description{
 Generates a network.

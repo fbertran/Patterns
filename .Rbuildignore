@@ -29,6 +29,7 @@ genlogo.R
 ^\.github$
 
 #For the cached chunks of the vignettes
+^animation.gif
 ^vignettes.*cache$
 #For the image outputs of the vignettes
 ^vignettes.*files$

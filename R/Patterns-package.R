@@ -18,7 +18,7 @@
 #' @name Patterns-package
 #' @aliases Patterns-package Patterns
 #' @author This package has been written by Frederic Bertrand in collaboration
-#' with Myriam Maumy-Bertrand. Maintainer: <frederic.bertrand@@math.unistra.fr>
+#' with Myriam Maumy-Bertrand. Maintainer: <frederic.bertrand@@utt.fr>
 #' 
 #' @references F. Bertrand, I. Aouadi, N. Jung, R. Carapito, L. Vallat, S. Bahram, M. Maumy-Bertrand (2020). SelectBoost: a general algorithm to enhance the performance of variable selection methods, \emph{Bioinformatics}, \doi{10.1093/bioinformatics/btaa855}.
 #' 
@@ -26,7 +26,7 @@
 #' 
 #' @keywords package
 #' 
-#' @importFrom  grDevices col2rgb
+#' @importFrom grDevices col2rgb
 #' @importFrom grDevices colorRamp
 #' @importFrom grDevices dev.cur
 # #' @importFrom grDevices dev.new
@@ -82,11 +82,19 @@
 #' @importFrom igraph V
 #' @importFrom nnls nnls
 #' @importFrom plotrix color2D.matplot
+#' @importFrom repmis source_data
 #' 
-#' 
-#' 
-#' 
-#' 
+#' @importFrom Mfuzz standardise
+#' @importFrom Mfuzz mestimate
+#' @importFrom Mfuzz cselection
+#' @importFrom Mfuzz Dmin
+#' @importFrom Mfuzz overlap.plot
+#' @importFrom Mfuzz mfuzz.plot
+#' @importFrom Mfuzz mfuzz
+#' @importFrom SelectBoost fastboost
+#' @importFrom SelectBoost group_func_2
+#' @importFrom gplots heatmap.2
+#' @importFrom jetset jscores
 #' @exportMethod analyze_network
 #' @exportMethod clustExploration
 #' @exportMethod clustInference
@@ -104,21 +112,21 @@
 #' @exportMethod plot
 #' @exportMethod position
 #' @exportMethod predict
-#' @exportMethod print
+#' @exportMethod show
 #' @exportMethod summary
-#' @exportMethod unionMicro
+#' @exportMethod unionOmics
 #  #' @exportMethod unionNGseq
-
-#' @exportClass micro_array
+#  
+#' @exportClass omics_array
 # #' @exportClass nextgen_seq
-#' @exportClass network
-#' @exportClass micropredict
+#' @exportClass omics_network
+#' @exportClass omics_predict
 # #' @exportClass ngseqpredict
 #' 
 #' @export network_random
 #' @export unsupervised_clustering_auto_m_c
 #' @export unsupervised_clustering
-#' @export as.micro_array
+#' @export as.omics_array
 #' @export plotF
 # #' @export "as.nextgen_seq
 #' @export replaceBand
@@ -132,12 +140,12 @@
 NULL
 
 setGeneric("analyze_network",package="Patterns",def = function(Omega,nv,...){standardGeneric("analyze_network")})
-setGeneric("clustExploration",package="Patterns",def = function(microarray,...){standardGeneric("clustExploration")})
-setGeneric("clustInference",package="Patterns",def = function(microarray,vote.index,...){standardGeneric("clustInference")})
+setGeneric("clustExploration",package="Patterns",def = function(omicsarray,...){standardGeneric("clustExploration")})
+setGeneric("clustInference",package="Patterns",def = function(omicsarray,vote.index,...){standardGeneric("clustInference")})
 setGeneric("compare",package="Patterns",def = function(Net,Net_inf,nv){standardGeneric("compare")})
 setGeneric("cutoff",package="Patterns",def = function(Omega,... ){standardGeneric("cutoff")})
 setGeneric("evolution",package="Patterns",def = function(net,list_nv,... ){standardGeneric("evolution")})
-setGeneric("gene_expr_simulation",package="Patterns",def = function(network,...){standardGeneric("gene_expr_simulation")})
+setGeneric("gene_expr_simulation",package="Patterns",def = function(omics_network,...){standardGeneric("gene_expr_simulation")})
 #setGeneric("gene_counts_simulation",package="Patterns",def = function(network,...){standardGeneric("gene_counts_simulation")})
 setGeneric("geneNeighborhood",package="Patterns",def = function(net,targets,... ){standardGeneric("geneNeighborhood")})
 setGeneric("genePeakSelection",package="Patterns",def = function(x,peak,... ){standardGeneric("genePeakSelection")})
@@ -147,28 +155,28 @@ setGeneric("position",package="Patterns",def = function(net,... ){standardGeneri
 #setGeneric("inferenceCascade",package="Patterns",def = function(M,... ){standardGeneric("inferenceCascade")})
 #setGeneric("predict",package="Patterns",def = function(object,...){standardGeneric("predict")})
 setGeneric("probeMerge",package="Patterns",def = function(x,...){standardGeneric("probeMerge")})
-setGeneric("unionMicro",package="Patterns",def = function(M1,M2 ){standardGeneric("unionMicro")})
+setGeneric("unionOmics",package="Patterns",def = function(M1,M2 ){standardGeneric("unionOmics")})
 #setGeneric("unionNGseq",package="Patterns",def = function(C1,C2 ){standardGeneric("unionNGseq")})
 setGeneric("unsupervised_clustering_auto_m_c",package="Patterns",def=function(M1,... ){standardGeneric("unsupervised_clustering_auto_m_c")})
 setGeneric("unsupervised_clustering",package="Patterns",def=function(M1,clust,mestim,... ){standardGeneric("unsupervised_clustering")})
 
-#' Class \code{"micro_array"}
+#' Class \code{"omics_array"}
 #' 
-#' The \code{"micro_array"} class
+#' The \code{"omics_array"} class
 #' 
 #' 
-#' @name micro_array-class
+#' @name omics_array-class
 #' @docType class
 #' @section Objects from the Class: Objects can be created by calls of the form
-#' \code{new("micro_array", ...)}. %% ~~ describe objects here ~~
+#' \code{new("omics_array", ...)}.
 #' @author Bertrand Frederic, Myriam Maumy-Bertrand.
 #' @keywords classes
 #' @examples
 #' 
-#' showClass("micro_array")
+#' showClass("omics_array")
 #' 
-setClass(Class = "micro_array",
-         representation(microarray="matrix",                        
+setClass(Class = "omics_array",
+         slots=c(omicsarray="matrix",                        
                         name="vector",
                         gene_ID="vector",
                         group=c("vector",NULL),
@@ -177,60 +185,43 @@ setClass(Class = "micro_array",
                         subject="numeric"),
          prototype = prototype(group = 0,start_time=0),
          validity=function(object){
-           
-           if(dim(object@microarray)[2] != length(object@time)*object@subject){
-             
+           if(dim(object@omicsarray)[2] != length(object@time)*object@subject){
              stop("[Error: ]Number of colomns must be equal to the number of time points * the number of subject")
            }
-           if(dim(object@microarray)[1] != length(object@name)&&length(object@name)!=0){
-             
+           if(dim(object@omicsarray)[1] != length(object@name)&&length(object@name)!=0){
              stop("[Error: ] Length of the vector of names must equal to the number of genes")
            }
-           
-           if(dim(object@microarray)[1] != length(object@group)&&length(object@group)!=1){
-             
+           if(dim(object@omicsarray)[1] != length(object@group)&&length(object@group)!=1){
              print(object@group)
              stop("[Error: ] Length of the vector of group must equal to the number of genes or null")
            }
-           
-           if(dim(object@microarray)[1] != length(object@start_time)&&length(object@start_time)!=1){
-             
-             
+           if(dim(object@omicsarray)[1] != length(object@start_time)&&length(object@start_time)!=1){
              stop("[Error: ] Length of the vector of starting time must equal to the number of genes or null")
            }
-           
-           #	if(length(object@name)!=length(unique(object@name))){ #Disappeared in Cascade 1.03
-           #
-           #				stop("[Error: ] Names must be unique")
-           #		}
            if(object@subject<1){
-             
              stop("[Error: ] There must be at least one subject")
            }	
-           
          }
-         
 )
 
-#' Class \code{"network"}
+#' Class \code{"omics_network"}
 #' 
-#' The \code{"network"} class
+#' The \code{"omics_network"} class
 #' 
 #' 
-#' @name network-class
+#' @name omics_network-class
 #' @docType class
 #' @section Objects from the Class: Objects can be created by calls of the form
-#' \code{new("network", ...)}.
+#' \code{new("omics_network", ...)}.
 #' @author Bertrand Frederic, Myriam Maumy-Bertrand.
 #' @keywords classes
 #' @examples
 #' 
-#' showClass("network")
+#' showClass("omics_network")
 #' 
 setClass(
-  Class = "network",
-  representation(
-    network = "matrix",
+  Class = "omics_network",
+  slots=c(omics_network = "matrix",
     name = "vector",
     F = "array",
     convF = "matrix",
@@ -239,27 +230,27 @@ setClass(
   )
 )
 
-#' Class \code{"micropredict"}
+#' Class \code{"omics_predict"}
 #' 
-#' The \code{"micropredict"} class
+#' The \code{"omics_predict"} class
 #' 
 #' 
-#' @name micropredict-class
+#' @name omics_predict-class
 #' @docType class
 #' @section Objects from the Class: Objects can be created by calls of the form
-#' \code{new("micropred", ...)}.
+#' \code{new("omics_predict", ...)}.
 #' @author Bertrand Frederic, Myriam Maumy-Bertrand.
 #' @keywords classes
 #' @examples
 #' 
-#' showClass("micropredict")
+#' showClass("omics_predict")
 #' 
-setClass(Class = "micropredict",
-         representation(microarray_unchanged="micro_array"
-                        ,microarray_changed="micro_array"
-                        ,microarray_predict="micro_array"
+setClass(Class = "omics_predict",
+         slots=c(omicsarray_unchanged="omics_array"
+                        ,omicsarray_changed="omics_array"
+                        ,omicsarray_predict="omics_array"
                         ,nv="numeric"
-                        ,network="network"
+                        ,omics_network="omics_network"
                         ,targets="numeric")
 )
 

@@ -2,36 +2,36 @@
 
 
 
-#' Coerce a matrix into a micro_array object.
+#' Coerce a matrix into a omics_array object.
 #' 
-#' Coerce a matrix into a micro_array object.
+#' Coerce a matrix into a omics_array object.
 #' 
 #' 
-#' @param M A matrix. Contains the microarray measurements. Should be of size N
+#' @param M A matrix. Contains the omicsarray measurements. Should be of size N
 #' * K, with N the number of genes and K=T*P with T the number of time points,
 #' and P the number of subjects. This matrix should be created using
 #' cbind(M1,M2,...) with M1 a N*T matrix with the measurements for patient 1,
 #' M2 a N*T matrix with the measurements for patient 2.
 #' @param time A vector. The time points measurements
 #' @param subject The number of subjects.
-#' @param name_probe Vector with the row names of the micro array.
-#' @param gene_ID Vector with the actors' IDs of the row names of the micro
+#' @param name_probe Vector with the row names of the omics array.
+#' @param gene_ID Vector with the actors' IDs of the row names of the omics
 #' array.
-#' @param group Vector with the actors' groups of the row names of the micro
+#' @param group Vector with the actors' groups of the row names of the omics
 #' array.
 #' @param start_time Vector with the actors' starting time (i.e. the time it is
 #' thought to begin to have an effect on another actor in the network).
-#' @return A micro_array object.
+#' @return A omics_array object.
 #' @author Bertrand Frederic, Myriam Maumy-Bertrand.
 #' @examples
 #' 
 #' if(require(CascadeData)){
 #' 	data(micro_US, package="CascadeData")
-#' 	micro_US<-as.micro_array(micro_US[1:100,],time=c(60,90,210,390),subject=6)
+#' 	micro_US<-as.omics_array(micro_US[1:100,],time=c(60,90,210,390),subject=6)
 #' 	plot(micro_US)
 #' 	}
 #' 
-as.micro_array <-
+as.omics_array <-
   function(M,
            time,
            subject,
@@ -50,8 +50,8 @@ as.micro_array <-
       g <- gene_ID
     return(
       new(
-        "micro_array",
-        microarray = as.matrix(M),
+        "omics_array",
+        omicsarray = as.matrix(M),
         name = row.names(M),
         gene_ID = g,
         time = time,
@@ -483,7 +483,7 @@ choice_cutoff_final<-function(O,nb,eps,hub,plot.g=FALSE,prop.hub){
 #' @param min_expr Minimum of strength of a non-zero link
 #' @param max_expr Maximum of strength of a non-zero link
 #' @param casc.level ...
-#' @return A network object.
+#' @return A omics_network object.
 #' @author Bertrand Frederic, Myriam Maumy-Bertrand.
 #' @examples
 #' 
@@ -525,7 +525,7 @@ network_random<-function(nb,time_label,exp,init,regul,min_expr,max_expr,casc.lev
   }
   length(unique(time_label))->T
   F<-CascadeFinit(T,T)
-  N<-new("network",network=net2,name=paste("gene",1:nb),F=F,convO=0,convF=matrix(0,1,1),time_pt=1:length(unique(time_label)))
+  N<-new("omics_network",omics_network=net2,name=paste("gene",1:nb),F=F,convO=0,convF=matrix(0,1,1),time_pt=1:length(unique(time_label)))
   return(N)
 }
 
