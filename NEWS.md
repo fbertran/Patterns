@@ -1,3 +1,7 @@
+# Patterns 1.5
+
+* Code fixes required by the CRAN.
+
 # Patterns 1.4
 
 * Fixed escaped characters in Rd files, updated maintainer address and separated Patterns classes from Cascade ones in order to prevent unwanted side effects when both packages are loaded. Various fixes to data files and code to adapt to the new classes.

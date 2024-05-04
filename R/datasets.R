@@ -195,7 +195,25 @@ NULL
 #' 
 NULL
 
-
+#' Human transcription factors from HumanTFDB
+#' 
+#' Retrieve human transcription factors from HumanTFDB, extracted from 
+#' AnimalTFDB 3.0: a comprehensive resource for annotation and prediction 
+#' of animal transcription factors. Hui Hu, Ya-Ru Miao, Long-Hao Jia, 
+#' Qing-Yang Yu, Qiong Zhang and An-Yuan Guo. *Nucl. Acids Res*. (2018).
+#' 
+#' 
+#' @name doc
+#' @docType data
+#' @author Bertrand Frederic, Myriam Maumy-Bertrand.
+#' @keywords datasets
+#' @examples
+#' 
+#' data(doc)
+#' head(doc)
+#' summary(doc)
+#' 
+NULL
 
 
 

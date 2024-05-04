@@ -574,7 +574,7 @@ setMethod(f="unsupervised_clustering",
 #' @examples
 #' 
 #' \donttest{
-#'   if(require(CascadeData)){
+#'  if(require(CascadeData)){
 #' 	data(micro_US)
 #' 	micro_US<-as.omics_array(micro_US,time=c(60,90,210,390),subject=6)
 #' 	data(micro_S)
@@ -599,7 +599,7 @@ setMethod(f="unsupervised_clustering",
 #'   summary(Selection_3)
 #'   }
 #' 
-#'   if(require(CascadeData)){
+#' if(require(CascadeData)){
 #' data(micro_US)
 #' micro_US<-as.omics_array(micro_US,time=c(60,90,210,390),subject=6)
 #' data(micro_S)
@@ -1581,6 +1581,7 @@ setMethod(f="clustExploration",
           definition=function(omicsarray,new.window=FALSE){
   
   require("Mfuzz", quietly = TRUE, warn.conflicts = FALSE)
+  require("e1071", quietly = TRUE, warn.conflicts = FALSE)
   T<-length(omicsarray@time)
   P<-omicsarray@subject
   M1<-omicsarray@omicsarray
@@ -1616,6 +1617,10 @@ setMethod(f="clustExploration",
   while(indic=="continue"){
     k<-k+1
     cl <- Mfuzz::mfuzz(M_exp, c = k,m=m_max)
+#    mfuzz <- function(eset,centers,m,...){
+#      cl<-e1071::cmeans(exprs(eset),centers=centers,method="cmeans",m=m,...)
+#    }
+    
     M_clust<-matrix(cl$cluster,nrow(M1),P)
     mv<-apply(M_clust,1,majority_vote)  
     mind<-apply(M_clust,1,majority_indice)  

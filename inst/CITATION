@@ -4,25 +4,33 @@ titl <- meta$Title
 titl <- "Patterns: reverse engineering of biological networks with patterned expressions"
 year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date, perl = TRUE)
 vers <- paste("R package version", meta$Version)
-auth <- personList(as.person("Frederic Bertrand"),
-                             as.person("Myriam Maumy-Bertrand"))
+auth <- c(person(given = "Frederic", family= "Bertrand"),
+                  	person(given = "Myriam", family= "Maumy-Bertrand"))
 
-citEntry(entry="Manual",
+bibentry(bibtype="Manual",
          title = titl,
-         author = personList(as.person("F. Bertrand"), as.person("M. Maumy-Bertrand")),
-	 publisher = "manual",
+         author = c(person(given = "Frederic", family= "Bertrand"),
+                    person(given = "Myriam", family= "Maumy-Bertrand")),
          year         = year,
          note         = vers,
-         url          = "",
+         url          = "https://github.com/fbertran/ModStatR",
          textVersion = 
-         paste("F. Bertrand and M. Maumy-Bertrand (",year ,"). ", 
-               titl, ", ", vers, ".", sep=""
-               )
+           paste("Frédéric Bertrand and Myriam Maumy-Bertrand (",year ,"). ", 
+                 titl, ", ", vers, ".", sep=""
+           )
 )
 
-citEntry(entry = "Article",
+bibentry(bibtype = "Article",
          title = titl,
-         author = auth,
+         author = 
+         c(person(given = "F.", family = "Bertrand"),
+         person(given = "I.", family = "Aouadi"),
+         person(given = "N.", family = "Jung"),
+         person(given = "R.", family = "Carapito"),
+         person(given = "L.", family = "Vallat"),
+         person(given = "S.", family = "Bahram"),
+         person(given = "M.", family = "Maumy-Bertrand")
+         ),
          year = 2020,
 journal="Bioinformatics",
 url="https://doi.org/10.1093/bioinformatics/btaa855",

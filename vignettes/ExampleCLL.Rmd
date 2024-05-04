@@ -141,9 +141,16 @@ save(list=c("infos"),file="infos.RData")
 
 Retrieve human transcription factors from HumanTFDB, extracted from AnimalTFDB 3.0: a comprehensive resource for annotation and prediction of animal transcription factors. Hui Hu, Ya-Ru Miao, Long-Hao Jia, Qing-Yang Yu, Qiong Zhang and An-Yuan Guo. *Nucl. Acids Res*. (2018).
 
-```{r HumanTFDB, warning=FALSE, cache=TRUE, eval = LOCAL}
-doc <- read.delim("http://bioinfo.life.hust.edu.cn/static/AnimalTFDB3/download/Homo_sapiens_TF",encoding = "UTF-8", header=TRUE)
+```{r HumanTFDBfailsafe, warning=FALSE, cache=TRUE, include=FALSE, eval = LOCAL}
+getTF <- FALSE
+try({doc <- read.delim("http://bioinfo.life.hust.edu.cn/static/AnimalTFDB3/download/Homo_sapiens_TF",encoding = "UTF-8", header=TRUE); getTF <- TRUE}, silent = TRUE)
+if(!getTF){data(doc)}
+TF<-as.character(doc[,"Symbol"])
+TF<-TF[order(TF)]
+```
 
+```{r HumanTFDB, warning=FALSE, cache=TRUE, eval = FALSE}
+doc <- read.delim("http://bioinfo.life.hust.edu.cn/static/AnimalTFDB3/download/Homo_sapiens_TF",encoding = "UTF-8", header=TRUE)
 TF<-as.character(doc[,"Symbol"])
 TF<-TF[order(TF)]
 ```

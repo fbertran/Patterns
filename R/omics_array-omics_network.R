@@ -456,7 +456,8 @@ setMethod(f="inference"
                 Omega[IND, which(gr %in% grpjj)]<-Omega[IND, which(gr %in% grpjj)]*0
                 
                 if(fitfun=="LASSO2"){
-                  
+                  if (!requireNamespace("glmnet", quietly = TRUE))
+                    stop ("The 'glmnet' package is not installed.", call. = FALSE)
                  priors2<-priors[IND,which(gr %in% grpjj)]
                  Y2<-cbind(1:nrow(Y),Y)
                   if(norm(pred,type="F")>eps){
@@ -477,6 +478,8 @@ setMethod(f="inference"
                 
                 
                 if(fitfun=="LASSO"){
+                  if (!requireNamespace("lars", quietly = TRUE))
+                    stop ("The 'lars' package is not installed.", call. = FALSE)
                   if(norm(pred,type="F")>eps){     
                     save_show.error.messages = options()$show.error.messages
                     options(show.error.messages = show.error.messages)
@@ -496,6 +499,8 @@ setMethod(f="inference"
                   }
                 }
                 if(fitfun=="SPLS"){
+                  if (!requireNamespace("spls", quietly = TRUE))
+                    stop ("The 'spls' package is not installed.", call. = FALSE)
                   if(norm(pred,type="F")>eps){     
                     save_show.error.messages = options()$show.error.messages
                     options(show.error.messages = show.error.messages)
@@ -513,6 +518,8 @@ setMethod(f="inference"
                   }
                 }
                 if(fitfun=="ELASTICNET"){
+                  if (!requireNamespace("elasticnet", quietly = TRUE))
+                    stop ("The 'elasticnet' package is not installed.", call. = FALSE)
                   if(norm(pred,type="F")>eps){     
                     save_show.error.messages = options()$show.error.messages
                     options(show.error.messages = show.error.messages)
@@ -530,7 +537,11 @@ setMethod(f="inference"
                   }
                 }
                 if(fitfun=="stability.c060"){
-                  require(c060);
+                  if (!requireNamespace("glmnet", quietly = TRUE))
+                    stop ("The 'glmnet' package is not installed.", call. = FALSE)
+                  if (!requireNamespace("c060", quietly = TRUE))
+                    stop ("The 'c060' package is not installed.", call. = FALSE)
+                  #require(c060);
                   if(verbose){cat("mc.cores=",mc.cores,sep="")}
                   
                   fun_stab<-function(g,mc.cores=mc.cores,intercept.stabpath=intercept.stabpath){
@@ -566,7 +577,11 @@ setMethod(f="inference"
                 
                 
                 if(fitfun=="stability.c060.weighted"){
-                  require(c060);
+                  if (!requireNamespace("c060", quietly = TRUE))
+                    stop ("The 'c060' package is not installed.", call. = FALSE)
+                  if (!requireNamespace("glmnet", quietly = TRUE))
+                    stop ("The 'glmnet' package is not installed.", call. = FALSE)
+                  #require(c060);
                   if(verbose){cat("mc.cores=",mc.cores," ",sep="")}
                   priors2<-priors[IND,which(gr %in% grpjj)]
                   Y2<-cbind(1:nrow(Y),Y)
@@ -691,6 +706,8 @@ setMethod(f="inference"
                 
                 if(fitfun=="selectboost.weighted"){
                   requireNamespace("SelectBoost");on.exit(unloadNamespace("package:SelectBoost"))
+                  if (!requireNamespace("glmnet", quietly = TRUE))
+                    stop ("The 'glmnet' package is not installed.", call. = FALSE)
                   priors2<-priors[IND,which(gr %in% grpjj)]
                   Y2<-cbind(1:nrow(Y),Y)
                   
@@ -713,6 +730,8 @@ setMethod(f="inference"
                   
                   
                   fun_selectboost_weighted<-function(g,mc.cores=mc.cores, steps.seq = steps.seq, limselect = limselect, use.parallel = use.parallel){
+                    if (!requireNamespace("glmnet", quietly = TRUE))
+                      stop ("The 'glmnet' package is not installed.", call. = FALSE)
                     if(norm(pred,type="F")<=eps){     
                       return(rep(0,nrow(pred)))
                       if(verbose){cat(".")}               

@@ -1,31 +1,13 @@
-#' The Patterns Package
-#' 
-#' A modeling tool dedicated to biological network modeling. It allows for
-#' single or joint modeling of, for instance, genes and proteins. It starts
-#' with the selection of the actors that will be the used in the reverse
-#' engineering upcoming step. An actor can be included in that selection based
-#' on its differential measurement (for instance gene expression or protein
-#' abundance) or on its time course profile. Wrappers for actors clustering
-#' functions and cluster analysis are provided. It also allows reverse
-#' engineering of biological networks taking into account the observed time
-#' course patterns of the actors. Many inference functions are provided and
-#' dedicated to get specific features for the inferred network such as
-#' sparsity, robust links, high confidence links or stable through resampling
-#' links. Some simulation and prediction tools are also available for cascade
-#' networks. Example of use with microarray or RNA-Seq data are provided.
-#' 
-#' @docType package
-#' @name Patterns-package
-#' @aliases Patterns-package Patterns
-#' @author This package has been written by Frederic Bertrand in collaboration
-#' with Myriam Maumy-Bertrand. Maintainer: <frederic.bertrand@@utt.fr>
-#' 
+#' @keywords internal
+#' @aliases Patterns-package Patterns NULL
+#'
 #' @references F. Bertrand, I. Aouadi, N. Jung, R. Carapito, L. Vallat, S. Bahram, M. Maumy-Bertrand (2020). SelectBoost: a general algorithm to enhance the performance of variable selection methods, \emph{Bioinformatics}, \doi{10.1093/bioinformatics/btaa855}.
 #' 
 #' C. Schleiss, [...], M. Maumy-Bertrand, S. Bahram, F. Bertrand, and L. Vallat. (2021). Temporal multiomic modelling reveals a B-cell receptor proliferative program in chronic lymphocytic leukemia. \emph{Leukemia}.
-#' 
-#' @keywords package
-#' 
+#'
+"_PACKAGE"
+
+
 #' @importFrom grDevices col2rgb
 #' @importFrom grDevices colorRamp
 #' @importFrom grDevices dev.cur
@@ -84,6 +66,7 @@
 #' @importFrom plotrix color2D.matplot
 #' @importFrom repmis source_data
 #' 
+#' @importFrom cluster agnes
 #' @importFrom Mfuzz standardise
 #' @importFrom Mfuzz mestimate
 #' @importFrom Mfuzz cselection
@@ -91,6 +74,7 @@
 #' @importFrom Mfuzz overlap.plot
 #' @importFrom Mfuzz mfuzz.plot
 #' @importFrom Mfuzz mfuzz
+#' @importFrom e1071 cmeans
 #' @importFrom SelectBoost fastboost
 #' @importFrom SelectBoost group_func_2
 #' @importFrom gplots heatmap.2

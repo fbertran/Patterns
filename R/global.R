@@ -155,6 +155,8 @@ lasso_reg_old<-function(M,Y,K,eps,priors){
 
 
 lasso_reg2<-function(M,Y,eps,foldid=foldid,priors){
+  if (!requireNamespace("glmnet", quietly = TRUE))
+    stop ("The 'glmnet' package is not installed.", call. = FALSE)
   requireNamespace("glmnet")
   if(is.null(priors)) priors<-rep(1,nrow(M))
   cvglmnet<-try(glmnet::cv.glmnet(t(M),Y,foldid=foldid,penalty.factor=priors,intercept=FALSE))
@@ -175,6 +177,8 @@ cv.spls1 <- function (x, y, fold = 10, K, eta, kappa = 0.5, select = "pls2",
                       #, cv.fun.name
                       , verbose=FALSE, ...) 
 {
+  if (!requireNamespace("spls", quietly = TRUE))
+    stop ("The 'spls' package is not installed.", call. = FALSE)
   x <- as.matrix(x)
   n <- nrow(x)
   p <- ncol(x)
@@ -277,6 +281,8 @@ cv.spls1 <- function (x, y, fold = 10, K, eta, kappa = 0.5, select = "pls2",
 spls_reg<-function(M,Y,K,eps,cv.fun=cv.fun
                    #, cv.fun.name=cv.fun.name
                    ){
+  if (!requireNamespace("spls", quietly = TRUE))
+    stop ("The 'spls' package is not installed.", call. = FALSE)
                    repu=M[,1]
                    repu[]<-0
                    VarM=apply(M,1,var)
@@ -295,6 +301,8 @@ spls_reg<-function(M,Y,K,eps,cv.fun=cv.fun
 
 
 spls_reg_old<-function(M,Y,K,eps){
+  if (!requireNamespace("spls", quietly = TRUE))
+    stop ("The 'spls' package is not installed.", call. = FALSE)
                    cvspls<-try(spls::cv.spls(t(M),(Y),fold=K,K=1:10,eta = seq(0.1,0.9,0.1),plot.it=FALSE))
                    model<-try(spls::spls(t(M),(Y),eta=cvspls$eta.opt,K=cvspls$K.opt,eps=10^-5))
                    repu<-try(spls::coef.spls(model))
@@ -308,6 +316,8 @@ cv.enet1 <- function (x, y, K = 10, lambda, s, mode, trace = FALSE, plot.it = TR
                       #, cv.fun.name
                       , ...)  
 {
+  if (!requireNamespace("elasticnet", quietly = TRUE))
+    stop ("The 'elasticnet' package is not installed.", call. = FALSE)
   all.folds <- cv.fun(length(y), K)
   residmat <- matrix(0, length(s), K)
   for (i in seq(K)) {
@@ -336,6 +346,8 @@ cv.enet1 <- function (x, y, K = 10, lambda, s, mode, trace = FALSE, plot.it = TR
 enet_reg<-function(M,Y,K,eps,cv.fun=cv.fun
                    #, cv.fun.name=cv.fun.name
                    ){
+  if (!requireNamespace("elasticnet", quietly = TRUE))
+    stop ("The 'elasticnet' package is not installed.", call. = FALSE)
   # require(elasticnet)
   M<-t(M)
   colnames(M)<-1:dim(M)[2]	  
@@ -355,6 +367,8 @@ enet_reg<-function(M,Y,K,eps,cv.fun=cv.fun
 
 
 enet_reg_old<-function(M,Y,K,eps){
+  if (!requireNamespace("elasticnet", quietly = TRUE))
+    stop ("The 'elasticnet' package is not installed.", call. = FALSE)
   # require(elasticnet)
   M<-t(M)
   colnames(M)<-1:dim(M)[2]	  
@@ -809,11 +823,20 @@ majority_indice<-function(x){
 #' 
 #' #For numerical/inferred F matrices
 #' plotF(CascadeFinit(4,4),choice="F", nround=1)
+#' 
+#' if (requireNamespace("pixmap", quietly = TRUE)) {
 #' plotF(CascadeFinit(4,4),choice="Fpixmap")
+#' } else {
+#' plotF(CascadeFinit(4,4),choice="F", nround=1)
+#' }
 #' 
 #' #For theoritical F matrices
 #' plotF(CascadeFshape(4,4),choice="Fshape")
+#' if (requireNamespace("pixmap", quietly = TRUE)) {
 #' plotF(CascadeFshape(4,4),choice="Fshapepixmap")
+#' } else {
+#' plotF(CascadeFshape(4,4),choice="Fshape")
+#' }
 #' 
 plotF <- function(x
                   ,
@@ -823,6 +846,14 @@ plotF <- function(x
                   ,
                   pixmap.color = terrain.colors(20))
 {
+  if(choice == "Fpixmap"){
+    if(!requireNamespace("pixmap", quietly = TRUE))
+      stop("The 'pixmap' package is not installed.", call. = FALSE)
+  }
+  if(choice == "Fshapepixmap"){
+    if(!requireNamespace("pixmap", quietly = TRUE))
+      stop("The 'pixmap' package is not installed.", call. = FALSE)
+  }
   if (choice == "F") {
     requireNamespace("plotrix", quietly = TRUE)
     F <- x

@@ -4,29 +4,33 @@
 \name{Patterns-package}
 \alias{Patterns-package}
 \alias{Patterns}
-\title{The Patterns Package}
+\title{Patterns: Deciphering Biological Networks with Patterned Heterogeneous Measurements}
 \description{
-A modeling tool dedicated to biological network modeling. It allows for
-single or joint modeling of, for instance, genes and proteins. It starts
-with the selection of the actors that will be the used in the reverse
-engineering upcoming step. An actor can be included in that selection based
-on its differential measurement (for instance gene expression or protein
-abundance) or on its time course profile. Wrappers for actors clustering
-functions and cluster analysis are provided. It also allows reverse
-engineering of biological networks taking into account the observed time
-course patterns of the actors. Many inference functions are provided and
-dedicated to get specific features for the inferred network such as
-sparsity, robust links, high confidence links or stable through resampling
-links. Some simulation and prediction tools are also available for cascade
-networks. Example of use with microarray or RNA-Seq data are provided.
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
+A modeling tool dedicated to biological network modeling (Bertrand and others 2020, \doi{10.1093/bioinformatics/btaa855}). It allows for single or joint modeling of, for instance, genes and proteins. It starts with the selection of the actors that will be the used in the reverse engineering upcoming step. An actor can be included in that selection based on its differential measurement (for instance gene expression or protein abundance) or on its time course profile. Wrappers for actors clustering functions and cluster analysis are provided. It also allows reverse engineering of biological networks taking into account the observed time course patterns of the actors. Many inference functions are provided and dedicated to get specific features for the inferred network such as sparsity, robust links, high confidence links or stable through resampling links. Some simulation and prediction tools are also available for cascade networks (Jung and others 2014, \doi{10.1093/bioinformatics/btt705}). Example of use with microarray or RNA-Seq data are provided.
 }
 \references{
 F. Bertrand, I. Aouadi, N. Jung, R. Carapito, L. Vallat, S. Bahram, M. Maumy-Bertrand (2020). SelectBoost: a general algorithm to enhance the performance of variable selection methods, \emph{Bioinformatics}, \doi{10.1093/bioinformatics/btaa855}.
 
 C. Schleiss, [...], M. Maumy-Bertrand, S. Bahram, F. Bertrand, and L. Vallat. (2021). Temporal multiomic modelling reveals a B-cell receptor proliferative program in chronic lymphocytic leukemia. \emph{Leukemia}.
 }
-\author{
-This package has been written by Frederic Bertrand in collaboration
-with Myriam Maumy-Bertrand. Maintainer: <frederic.bertrand@utt.fr>
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://fbertran.github.io/Patterns/}
+  \item \url{https://github.com/fbertran/Patterns/}
+  \item Report bugs at \url{https://github.com/fbertran/Patterns/issues/}
 }
-\keyword{package}
+
+}
+\author{
+\strong{Maintainer}: Frederic Bertrand \email{frederic.bertrand@utt.fr} (\href{https://orcid.org/0000-0002-0837-8281}{ORCID})
+
+Authors:
+\itemize{
+  \item Myriam Maumy-Bertrand \email{myriam.maumy-bertrand@utt.fr} (\href{https://orcid.org/0000-0002-4615-1512}{ORCID})
+}
+
+}
+\keyword{internal}

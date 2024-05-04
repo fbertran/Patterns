@@ -168,7 +168,9 @@ setMethod("evolution", "omics_network",
                      }
                      
                      if (type.ani == "html") {
-                       require(animation)
+                       if (!requireNamespace("animation", quietly = TRUE))
+                         stop ("The 'animation' package is not installed installed.", call. = FALSE)
+                       #require(animation)
                        animation::ani.options(ani.height = size[2],
                                               ani.width = size[1])
                        animation::saveHTML({
@@ -229,7 +231,9 @@ setMethod("evolution", "omics_network",
                        })
                      }
                      if (type.ani == "latex") {
-                       require(animation)
+                       if (!requireNamespace("animation", quietly = TRUE))
+                         stop ("The 'animation' package is not installed installed.", call. = FALSE)
+                       #require(animation)
                        animation::ani.options(ani.height = size[2],
                                               ani.width = size[1])#, qpdf = '/opt/local/bin/qpdf'
                        animation::saveLatex({
@@ -290,7 +294,9 @@ setMethod("evolution", "omics_network",
                        })
                      }
                      if (type.ani == "swf") {
-                       require(animation)
+                       if (!requireNamespace("animation", quietly = TRUE))
+                         stop ("The 'animation' package is not installed installed.", call. = FALSE)
+                       #require(animation)
                        animation::ani.options(ani.height = size[2],
                                               ani.width = size[1])#, qpdf = '/opt/local/bin/qpdf'
                        animation::saveSWF({
@@ -351,7 +357,9 @@ setMethod("evolution", "omics_network",
                        })
                      }
                      if (type.ani == "video") {
-                       require(animation)
+                       if (!requireNamespace("animation", quietly = TRUE))
+                         stop ("The 'animation' package is not installed installed.", call. = FALSE)
+                       #require(animation)
                        animation::ani.options(ani.height = size[2],
                                               ani.width = size[1])#, qpdf = '/opt/local/bin/qpdf'
                        animation::saveVideo({
@@ -413,7 +421,9 @@ setMethod("evolution", "omics_network",
                      }
                      if (type.ani == "gif") {
                        setwd(orig_working_directory)
-                       require(animation)
+                       if (!requireNamespace("animation", quietly = TRUE))
+                         stop ("The 'animation' package is not installed installed.", call. = FALSE)
+                       #require(animation)
                        animation::ani.options(ani.height = size[2],
                                               ani.width = size[1])#, qpdf = '/opt/local/bin/qpdf'
                        animation::saveGIF({
@@ -1712,7 +1722,9 @@ setMethod("plot"
                 if (is.null(gr)) {stop("Need of groups")
                 }
                 T <- length(unique(gr))#length(x@time_pt)
-                require(animation)
+                if (!requireNamespace("animation", quietly = TRUE))
+                  stop ("The 'animation' package is not installed installed.", call. = FALSE)
+                #require(animation)
                 animation::ani.options(ani.height = size[2],
                                        ani.width = size[1])
                 

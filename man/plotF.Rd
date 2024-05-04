@@ -26,11 +26,20 @@ The graphical output will differ according to the option used.
 
 #For numerical/inferred F matrices
 plotF(CascadeFinit(4,4),choice="F", nround=1)
+
+if (requireNamespace("pixmap", quietly = TRUE)) {
 plotF(CascadeFinit(4,4),choice="Fpixmap")
+} else {
+plotF(CascadeFinit(4,4),choice="F", nround=1)
+}
 
 #For theoritical F matrices
 plotF(CascadeFshape(4,4),choice="Fshape")
+if (requireNamespace("pixmap", quietly = TRUE)) {
 plotF(CascadeFshape(4,4),choice="Fshapepixmap")
+} else {
+plotF(CascadeFshape(4,4),choice="Fshape")
+}
 
 }
 \author{

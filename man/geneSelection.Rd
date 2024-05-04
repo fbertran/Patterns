@@ -115,7 +115,7 @@ Selection of differentially expressed genes.
 \examples{
 
 \donttest{
-  if(require(CascadeData)){
+ if(require(CascadeData)){
 	data(micro_US)
 	micro_US<-as.omics_array(micro_US,time=c(60,90,210,390),subject=6)
 	data(micro_S)
@@ -140,7 +140,7 @@ Selection of differentially expressed genes.
   summary(Selection_3)
   }
 
-  if(require(CascadeData)){
+if(require(CascadeData)){
 data(micro_US)
 micro_US<-as.omics_array(micro_US,time=c(60,90,210,390),subject=6)
 data(micro_S)

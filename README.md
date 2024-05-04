@@ -43,8 +43,7 @@ It allows for **single** or **joint modeling** of, for instance, genes and prote
 * Examples of use with microarray or RNA-Seq data are provided.
 
 
-The weights are viewed as a penalty factors in the penalized regression model: it is a number that multiplies the lambda value in the minimization problem to allow differential shrinkage, [Friedman et al. 2010](https://web.stanford.edu/~hastie/Papers/glmnet.pdf), equation 1 page 3. If equal to 0, it implies no shrinkage, and that variable is always included in the model. Default is 1 for all variables. Infinity means that the variable is excluded from the model. Note that the weights are rescaled to sum to the number of variables.
-
+The weights are viewed as a penalty factors in the penalized regression model: it is a number that multiplies the lambda value in the minimization problem to allow differential shrinkage, [Friedman et al. 2010](https://github.com/fbertran/Patterns/raw/master/add_data/glmnet.pdf), equation 1 page 3. If equal to 0, it implies no shrinkage, and that variable is always included in the model. Default is 1 for all variables. Infinity means that the variable is excluded from the model. Note that the weights are rescaled to sum to the number of variables.
 
 
 A word for those that have been using our seminal work, the `Cascade` package that we created several years ago and that was a very efficient network reverse engineering tool for cascade networks 
@@ -240,7 +239,6 @@ Plot the simulated network.
 
 ```r
 Patterns::plot(Net, choice="network")
-#> Error: 'plot' n’est un object exporté depuis 'namespace:Patterns'
 ```
 
 If a gene clustering is known, it can be used as a coloring scheme.
@@ -255,14 +253,21 @@ Plot the F matrix, for low dimensional F matrices.
 plot(Net, choice="F")
 ```
 
-<img src="man/figures/README-plotF-1.png" title="plot of chunk plotF" alt="plot of chunk plotF" width="100%" />
+<div class="figure">
+<img src="man/figures/README-plotF-1.png" alt="plot of chunk plotF" width="100%" />
+<p class="caption">plot of chunk plotF</p>
+</div>
 
 Plot the F matrix using the `pixmap` package, for high dimensional F matrices.
 
 ```r
 plot(Net, choice="Fpixmap")
-#> Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'
 ```
+
+<div class="figure">
+<img src="man/figures/README-plotFpixmap-1.png" alt="plot of chunk plotFpixmap" width="100%" />
+<p class="caption">plot of chunk plotFpixmap</p>
+</div>
 
 We simulate gene expression according to the network that was previously drawn
 
@@ -274,9 +279,9 @@ M <- Patterns::gene_expr_simulation(
   subject=5,
   peak_level=200,
   act_time_group=1:4)
-#> Error in (function (classes, fdef, mtable) : impossible de trouver une méthode héritée pour la fonction 'gene_expr_simulation' pour la signature '"missing"'
+#> Error: unable to find an inherited method for function 'gene_expr_simulation' for signature 'omics_network = "missing"'
 str(M)
-#> Error in str(M): objet 'M' introuvable
+#> Error in eval(expr, envir, enclos): object 'M' not found
 ```
 
 Get a summay and plots of the simulated data:
@@ -304,14 +309,14 @@ Plot of the inferred F matrix
 
 ```r
 plot(Net_inf_P, choice="F")
-#> Error in h(simpleError(msg, call)): erreur d'ï¿½valuation de l'argument 'x' lors de la sï¿½lection d'une mï¿½thode pour la fonction 'plot' : objet 'Net_inf_P' introuvable
+#> Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'Net_inf_P' not found
 ```
 
 Heatmap of the inferred coefficients of the Omega matrix
 
 ```r
 stats::heatmap(Net_inf_P@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
-#> Error in stats::heatmap(Net_inf_P@network, Rowv = NA, Colv = NA, scale = "none", : objet 'Net_inf_P' introuvable
+#> Error in eval(expr, envir, enclos): object 'Net_inf_P' not found
 ```
 
 
@@ -634,20 +639,29 @@ The `plotF` is convenient to display F matrices. Here are the the displays of th
 plotF(Fshape,choice="Fshape")
 ```
 
-<img src="man/figures/README-plotfshape1-1.png" title="plot of chunk plotfshape1" alt="plot of chunk plotfshape1" width="100%" />
+<div class="figure">
+<img src="man/figures/README-plotfshape1-1.png" alt="plot of chunk plotfshape1" width="100%" />
+<p class="caption">plot of chunk plotfshape1</p>
+</div>
 
 
 ```r
 plotF(CascadeFshape(4,4),choice="Fshape")
 ```
 
-<img src="man/figures/README-plotfshape2-1.png" title="plot of chunk plotfshape2" alt="plot of chunk plotfshape2" width="100%" />
+<div class="figure">
+<img src="man/figures/README-plotfshape2-1.png" alt="plot of chunk plotfshape2" width="100%" />
+<p class="caption">plot of chunk plotfshape2</p>
+</div>
 
 ```r
 plotF(IndicFshape(Ti,ngrp,TestIndic),choice="Fshape")
 ```
 
-<img src="man/figures/README-plotfshape3-1.png" title="plot of chunk plotfshape3" alt="plot of chunk plotfshape3" width="100%" />
+<div class="figure">
+<img src="man/figures/README-plotfshape3-1.png" alt="plot of chunk plotfshape3" width="100%" />
+<p class="caption">plot of chunk plotfshape3</p>
+</div>
 
 We now fit the model with an $F$ matrix that is designed for cascade networks.
 
@@ -662,14 +676,14 @@ Plot of the inferred F matrix
 
 ```r
 plot(Net_inf_P_S, choice="F")
-#> Error in h(simpleError(msg, call)): erreur d'ï¿½valuation de l'argument 'x' lors de la sï¿½lection d'une mï¿½thode pour la fonction 'plot' : objet 'Net_inf_P_S' introuvable
+#> Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'Net_inf_P_S' not found
 ```
 
 Heatmap of the coefficients of the Omega matrix of the network. They reflect the use of a special $F$ matrix. It is an example of an F matrix specifically designed to deal with cascade networks.
 
 ```r
 stats::heatmap(Net_inf_P_S@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
-#> Error in stats::heatmap(Net_inf_P_S@network, Rowv = NA, Colv = NA, scale = "none", : objet 'Net_inf_P_S' introuvable
+#> Error in eval(expr, envir, enclos): object 'Net_inf_P_S' not found
 ```
 
 
@@ -694,25 +708,25 @@ Plot of the inferred F matrix
 
 ```r
 plot(Net_inf_P_Lasso2, choice="F")
-#> Error in h(simpleError(msg, call)): erreur d'ï¿½valuation de l'argument 'x' lors de la sï¿½lection d'une mï¿½thode pour la fonction 'plot' : objet 'Net_inf_P_Lasso2' introuvable
+#> Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'Net_inf_P_Lasso2' not found
 ```
 
 Heatmap of the coefficients of the Omega matrix of the network
 
 ```r
 stats::heatmap(Net_inf_P_Lasso2@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
-#> Error in stats::heatmap(Net_inf_P_Lasso2@network, Rowv = NA, Colv = NA, : objet 'Net_inf_P_Lasso2' introuvable
+#> Error in eval(expr, envir, enclos): object 'Net_inf_P_Lasso2' not found
 ```
 
 We create a weighting vector to perform weighted lasso inference.
 
 ```r
 Weights_Net=slot(Net,"network")
-#> Error in slot(Net, "network"): aucun slot de nom "network" pour cet objet de la classe "omics_network"
+#> Error in slot(Net, "network"): no slot of name "network" for this object of class "omics_network"
 Weights_Net[Net@network!=0]=.1        
-#> Error in Weights_Net[Net@network != 0] = 0.1: objet 'Weights_Net' introuvable
+#> Error: object 'Weights_Net' not found
 Weights_Net[Net@network==0]=1000
-#> Error in Weights_Net[Net@network == 0] = 1000: objet 'Weights_Net' introuvable
+#> Error: object 'Weights_Net' not found
 ```
 
 
@@ -725,14 +739,14 @@ Plot of the inferred F matrix
 
 ```r
 plot(Net_inf_P_Lasso2_Weighted, choice="F")
-#> Error in h(simpleError(msg, call)): erreur d'ï¿½valuation de l'argument 'x' lors de la sï¿½lection d'une mï¿½thode pour la fonction 'plot' : objet 'Net_inf_P_Lasso2_Weighted' introuvable
+#> Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'Net_inf_P_Lasso2_Weighted' not found
 ```
 
 Heatmap of the coefficients of the Omega matrix of the network
 
 ```r
 stats::heatmap(Net_inf_P_Lasso2_Weighted@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
-#> Error in stats::heatmap(Net_inf_P_Lasso2_Weighted@network, Rowv = NA, : objet 'Net_inf_P_Lasso2_Weighted' introuvable
+#> Error in eval(expr, envir, enclos): object 'Net_inf_P_Lasso2_Weighted' not found
 ```
 
 
@@ -746,14 +760,14 @@ Plot of the inferred F matrix
 
 ```r
 plot(Net_inf_P_SPLS, choice="F")
-#> Error in h(simpleError(msg, call)): erreur d'ï¿½valuation de l'argument 'x' lors de la sï¿½lection d'une mï¿½thode pour la fonction 'plot' : objet 'Net_inf_P_SPLS' introuvable
+#> Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'Net_inf_P_SPLS' not found
 ```
 
 Heatmap of the coefficients of the Omega matrix of the network
 
 ```r
 stats::heatmap(Net_inf_P_SPLS@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
-#> Error in stats::heatmap(Net_inf_P_SPLS@network, Rowv = NA, Colv = NA, : objet 'Net_inf_P_SPLS' introuvable
+#> Error in eval(expr, envir, enclos): object 'Net_inf_P_SPLS' not found
 ```
 
 
@@ -766,14 +780,14 @@ Plot of the inferred F matrix
 
 ```r
 plot(Net_inf_P_ELASTICNET, choice="F")
-#> Error in h(simpleError(msg, call)): erreur d'ï¿½valuation de l'argument 'x' lors de la sï¿½lection d'une mï¿½thode pour la fonction 'plot' : objet 'Net_inf_P_ELASTICNET' introuvable
+#> Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'Net_inf_P_ELASTICNET' not found
 ```
 
 Heatmap of the coefficients of the Omega matrix of the network
 
 ```r
 stats::heatmap(Net_inf_P_ELASTICNET@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
-#> Error in stats::heatmap(Net_inf_P_ELASTICNET@network, Rowv = NA, Colv = NA, : objet 'Net_inf_P_ELASTICNET' introuvable
+#> Error in eval(expr, envir, enclos): object 'Net_inf_P_ELASTICNET' not found
 ```
 
 
@@ -786,14 +800,14 @@ Plot of the inferred F matrix
 
 ```r
 plot(Net_inf_P_stability, choice="F")
-#> Error in h(simpleError(msg, call)): erreur d'ï¿½valuation de l'argument 'x' lors de la sï¿½lection d'une mï¿½thode pour la fonction 'plot' : objet 'Net_inf_P_stability' introuvable
+#> Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'Net_inf_P_stability' not found
 ```
 
 Heatmap of the coefficients of the Omega matrix of the network
 
 ```r
 stats::heatmap(Net_inf_P_stability@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
-#> Error in stats::heatmap(Net_inf_P_stability@network, Rowv = NA, Colv = NA, : objet 'Net_inf_P_stability' introuvable
+#> Error in eval(expr, envir, enclos): object 'Net_inf_P_stability' not found
 ```
 
 
@@ -806,14 +820,14 @@ Plot of the inferred F matrix
 
 ```r
 plot(Net_inf_P_StabWeight, choice="F")
-#> Error in h(simpleError(msg, call)): erreur d'ï¿½valuation de l'argument 'x' lors de la sï¿½lection d'une mï¿½thode pour la fonction 'plot' : objet 'Net_inf_P_StabWeight' introuvable
+#> Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'Net_inf_P_StabWeight' not found
 ```
 
 Heatmap of the coefficients of the Omega matrix of the network
 
 ```r
 stats::heatmap(Net_inf_P_StabWeight@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
-#> Error in stats::heatmap(Net_inf_P_StabWeight@network, Rowv = NA, Colv = NA, : objet 'Net_inf_P_StabWeight' introuvable
+#> Error in eval(expr, envir, enclos): object 'Net_inf_P_StabWeight' not found
 ```
 
 
@@ -826,14 +840,14 @@ Plot of the inferred F matrix
 
 ```r
 plot(Net_inf_P_Robust, choice="F")
-#> Error in h(simpleError(msg, call)): erreur d'ï¿½valuation de l'argument 'x' lors de la sï¿½lection d'une mï¿½thode pour la fonction 'plot' : objet 'Net_inf_P_Robust' introuvable
+#> Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'Net_inf_P_Robust' not found
 ```
 
 Heatmap of the coefficients of the Omega matrix of the network
 
 ```r
 stats::heatmap(Net_inf_P_Robust@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
-#> Error in stats::heatmap(Net_inf_P_Robust@network, Rowv = NA, Colv = NA, : objet 'Net_inf_P_Robust' introuvable
+#> Error in eval(expr, envir, enclos): object 'Net_inf_P_Robust' not found
 ```
 
 
@@ -848,19 +862,26 @@ Net_inf_P_SelectBoost <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=
 
 
 
+```
+#> 
+#> Attaching package: 'Patterns'
+#> The following object is masked from 'package:igraph':
+#> 
+#>     compare
+```
 
 Plot of the inferred F matrix
 
 ```r
 plot(Net_inf_P_SelectBoost, choice="F")
-#> Error in h(simpleError(msg, call)): erreur d'ï¿½valuation de l'argument 'x' lors de la sï¿½lection d'une mï¿½thode pour la fonction 'plot' : objet 'Net_inf_P_SelectBoost' introuvable
+#> Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'Net_inf_P_SelectBoost' not found
 ```
 
 Heatmap of the coefficients of the Omega matrix of the network
 
 ```r
 stats::heatmap(Net_inf_P_SelectBoost@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
-#> Error in stats::heatmap(Net_inf_P_SelectBoost@network, Rowv = NA, Colv = NA, : objet 'Net_inf_P_SelectBoost' introuvable
+#> Error in eval(expr, envir, enclos): object 'Net_inf_P_SelectBoost' not found
 ```
 
 
@@ -871,19 +892,26 @@ Net_inf_P_SelectBoostWeighted <- Patterns::inference(M, Finit=CascadeFinit(4,4),
 
 
 
+```
+#> 
+#> Attaching package: 'Patterns'
+#> The following object is masked from 'package:igraph':
+#> 
+#>     compare
+```
 
 Plot of the inferred F matrix
 
 ```r
 plot(Net_inf_P_SelectBoostWeighted, choice="F")
-#> Error in h(simpleError(msg, call)): erreur d'ï¿½valuation de l'argument 'x' lors de la sï¿½lection d'une mï¿½thode pour la fonction 'plot' : objet 'Net_inf_P_SelectBoostWeighted' introuvable
+#> Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'Net_inf_P_SelectBoostWeighted' not found
 ```
 
 Heatmap of the coefficients of the Omega matrix of the network
 
 ```r
 stats::heatmap(Net_inf_P_SelectBoostWeighted@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
-#> Error in stats::heatmap(Net_inf_P_SelectBoostWeighted@network, Rowv = NA, : objet 'Net_inf_P_SelectBoostWeighted' introuvable
+#> Error in eval(expr, envir, enclos): object 'Net_inf_P_SelectBoostWeighted' not found
 ```
 
 ### Post inference network analysis
@@ -899,8 +927,8 @@ evolution(network,sequence,type.ani = "html", outdir=getwd())
 ```
 
 ```
-#> Error in setwd(outdir): impossible de changer de répertoire de travail
-#> Error in setwd(outdir): impossible de changer de répertoire de travail
+#> Error in setwd(outdir): cannot change working directory
+#> Error in setwd(outdir): cannot change working directory
 ```
 ![Evolution as .gif.](https://fbertran.github.io/Patterns/reference/evolution/animation.gif)
 
@@ -930,8 +958,12 @@ analyze_network(networkCascade,nv=0.133)
 ```r
 data(Selection)
 plot(networkCascade,nv=0.133, gr=Selection@group)
-#> Error in as.double(y): cannot coerce type 'S4' to vector of type 'double'
 ```
+
+<div class="figure">
+<img src="man/figures/README-plotnet-1.png" alt="plot of chunk plotnet" width="100%" />
+<p class="caption">plot of chunk plotnet</p>
+</div>
 
 
 
@@ -1060,7 +1092,16 @@ summary(Selection)
 #>  Max.   : 3.16035   Max.   : 3.19975   Max.   : 2.8027   Max.   : 2.14903
 ```
 
-<img src="man/figures/README-omicsselection6-1.png" title="plot of chunk omicsselection6" alt="plot of chunk omicsselection6" width="100%" /><img src="man/figures/README-omicsselection6-2.png" title="plot of chunk omicsselection6" alt="plot of chunk omicsselection6" width="100%" /><img src="man/figures/README-omicsselection6-3.png" title="plot of chunk omicsselection6" alt="plot of chunk omicsselection6" width="100%" />
+<div class="figure">
+<img src="man/figures/README-omicsselection6-1.png" alt="plot of chunk omicsselection6" width="100%" />
+<p class="caption">plot of chunk omicsselection6</p>
+</div><div class="figure">
+<img src="man/figures/README-omicsselection6-2.png" alt="plot of chunk omicsselection6" width="100%" />
+<p class="caption">plot of chunk omicsselection6</p>
+</div><div class="figure">
+<img src="man/figures/README-omicsselection6-3.png" alt="plot of chunk omicsselection6" width="100%" />
+<p class="caption">plot of chunk omicsselection6</p>
+</div>
 
 Plot the final selection:
 
@@ -1068,7 +1109,31 @@ Plot the final selection:
 plot(Selection)
 ```
 
-<img src="man/figures/README-omicsselection7-1.png" title="plot of chunk omicsselection7" alt="plot of chunk omicsselection7" width="100%" /><img src="man/figures/README-omicsselection7-2.png" title="plot of chunk omicsselection7" alt="plot of chunk omicsselection7" width="100%" /><img src="man/figures/README-omicsselection7-3.png" title="plot of chunk omicsselection7" alt="plot of chunk omicsselection7" width="100%" /><img src="man/figures/README-omicsselection7-4.png" title="plot of chunk omicsselection7" alt="plot of chunk omicsselection7" width="100%" /><img src="man/figures/README-omicsselection7-5.png" title="plot of chunk omicsselection7" alt="plot of chunk omicsselection7" width="100%" /><img src="man/figures/README-omicsselection7-6.png" title="plot of chunk omicsselection7" alt="plot of chunk omicsselection7" width="100%" /><img src="man/figures/README-omicsselection7-7.png" title="plot of chunk omicsselection7" alt="plot of chunk omicsselection7" width="100%" /><img src="man/figures/README-omicsselection7-8.png" title="plot of chunk omicsselection7" alt="plot of chunk omicsselection7" width="100%" />
+<div class="figure">
+<img src="man/figures/README-omicsselection7-1.png" alt="plot of chunk omicsselection7" width="100%" />
+<p class="caption">plot of chunk omicsselection7</p>
+</div><div class="figure">
+<img src="man/figures/README-omicsselection7-2.png" alt="plot of chunk omicsselection7" width="100%" />
+<p class="caption">plot of chunk omicsselection7</p>
+</div><div class="figure">
+<img src="man/figures/README-omicsselection7-3.png" alt="plot of chunk omicsselection7" width="100%" />
+<p class="caption">plot of chunk omicsselection7</p>
+</div><div class="figure">
+<img src="man/figures/README-omicsselection7-4.png" alt="plot of chunk omicsselection7" width="100%" />
+<p class="caption">plot of chunk omicsselection7</p>
+</div><div class="figure">
+<img src="man/figures/README-omicsselection7-5.png" alt="plot of chunk omicsselection7" width="100%" />
+<p class="caption">plot of chunk omicsselection7</p>
+</div><div class="figure">
+<img src="man/figures/README-omicsselection7-6.png" alt="plot of chunk omicsselection7" width="100%" />
+<p class="caption">plot of chunk omicsselection7</p>
+</div><div class="figure">
+<img src="man/figures/README-omicsselection7-7.png" alt="plot of chunk omicsselection7" width="100%" />
+<p class="caption">plot of chunk omicsselection7</p>
+</div><div class="figure">
+<img src="man/figures/README-omicsselection7-8.png" alt="plot of chunk omicsselection7" width="100%" />
+<p class="caption">plot of chunk omicsselection7</p>
+</div>
 
 This process could be improved by retrieve a real gene_ID using the `bitr` function of the `ClusterProfiler` package or by performing independent filtering using `jetset` package to only keep at most only probeset (the best one, if there is one good enough) per gene_ID.
 

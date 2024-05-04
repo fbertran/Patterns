@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Patterns</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@ Bertrand and Myriam Maumy-Bertrand</h4>
 IRMIA<br><a class="author_email" href="mailto:#"></a><a href="mailto:frederic.bertrand@utt.fr" class="email">frederic.bertrand@utt.fr</a>
       </address>
                   
-            <h4 data-toc-skip class="date">2022-11-29</h4>
+            <h4 data-toc-skip class="date">2024-05-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/fbertran/Patterns/blob/HEAD/vignettes/ExampleCLL.Rmd" class="external-link"><code>vignettes/ExampleCLL.Rmd</code></a></small>
       <div class="hidden name"><code>ExampleCLL.Rmd</code></div>
@@ -109,7 +109,8 @@ IRMIA<br><a class="author_email" href="mailto:#"></a><a href="mailto:frederic.be
 <h2 id="data-preparation">Data preparation<a class="anchor" aria-label="anchor" href="#data-preparation"></a>
 </h2>
 <p>Retrieve the full CLL dataset.</p>
-<pre><code><span><span class="co">#&gt; Loading required package: Patterns</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; Loading required package: Patterns</span></span>
+<span><span class="co">#&gt; </span></span></code></pre>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/Patterns/" class="external-link">Patterns</a></span><span class="op">)</span></span>
 <span><span class="va">CLLfile</span> <span class="op">&lt;-</span> <span class="st">"https://github.com/fbertran/Patterns/raw/master/add_data/CLL.RData"</span></span>
@@ -356,7 +357,7 @@ EGR1.</p>
 <span><span class="co">#&gt; [1] 169</span></span></code></pre></div>
 <p>Translate the probesets’ names for the selection.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va">biomaRt</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/grimbough/biomaRt" class="external-link">biomaRt</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">affyids</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"202763_at"</span>,<span class="st">"209310_s_at"</span>,<span class="st">"207500_at"</span><span class="op">)</span></span>
 <span><span class="va">ensembl</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/biomaRt/man/useMart.html" class="external-link">useMart</a></span><span class="op">(</span><span class="st">"ensembl"</span>,dataset<span class="op">=</span><span class="st">"hsapiens_gene_ensembl"</span><span class="op">)</span></span>
@@ -440,7 +441,6 @@ Qing-Yang Yu, Qiong Zhang and An-Yuan Guo. <em>Nucl. Acids Res</em>.
 (2018).</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">doc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.delim</a></span><span class="op">(</span><span class="st">"http://bioinfo.life.hust.edu.cn/static/AnimalTFDB3/download/Homo_sapiens_TF"</span>,encoding <span class="op">=</span> <span class="st">"UTF-8"</span>, header<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
 <span><span class="va">TF</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">doc</span><span class="op">[</span>,<span class="st">"Symbol"</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">TF</span><span class="op">&lt;-</span><span class="va">TF</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">TF</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 <p>The <code>TF</code> object holds the list of human transcription
@@ -477,7 +477,7 @@ object.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer>
