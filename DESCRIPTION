@@ -1,8 +1,8 @@
 Package: Patterns
 Type: Package
 Title: Deciphering Biological Networks with Patterned Heterogeneous Measurements
-Version: 1.5
-Date: 2024-05-03
+Version: 1.6
+Date: 2025-07-02
 Depends: R (>= 3.5.0)
 biocViews:
 Imports: 
@@ -22,7 +22,6 @@ Imports:
     movMF, 
     nnls, 
     plotrix, 
-    repmis,
     SelectBoost, 
     tnet, 
     VGAM, 
@@ -52,6 +51,6 @@ Collate: Patterns-package.R global.R datasets.R omics_array.R omics_network.R om
 	omics_predict.R
 Classification/MSC: 62J05, 62J07, 62J99, 92C42
 VignetteBuilder: knitr
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 URL: https://fbertran.github.io/Patterns/, https://github.com/fbertran/Patterns/
 BugReports: https://github.com/fbertran/Patterns/issues/

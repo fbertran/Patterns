@@ -40,8 +40,11 @@
 #' str(CLL)
 #' 
 #' \donttest{
+#' 
 #' CLLfile <- "https://github.com/fbertran/Patterns/raw/master/add_data/CLL.RData"
-#' repmis::source_data(CLLfile)
+#' download.file(CLLfile,destfile = file.path(tempdir(),"downloadData.RData"),method = "libcurl")
+#' load(file.path(tempdir(),"downloadData.RData"))
+#' unlink(file.path(tempdir(),"downloadData.RData"))
 #' str(CLL)
 #' }
 #' 

@@ -6,12 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Deciphering Biological Networks with Patterned Heterogeneous Measurements • Patterns</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png">
+<link rel="icon" type="”image/svg+xml”" href="favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" sizes="any" href="favicon.ico">
+<link rel="manifest" href="site.webmanifest">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -26,7 +25,7 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -40,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">Patterns</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6</span>
       </span>
     </div>
 
@@ -52,7 +51,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -72,7 +71,7 @@
 <li>
   <a href="https://github.com/fbertran/Patterns/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul>
@@ -83,7 +82,7 @@
 </div>
 <!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="contents col-md-9">
@@ -142,13 +141,13 @@
 <li>
 <strong>any number of groups</strong> can be used whereas in the <code>Cascade</code> package only 1 group for each timepoint could be created, which prevented the users to create homogeneous clusters of genes in datasets that featured more than a few dozens of genes.</li>
 <li>
-<strong>custom</strong> <span class="math inline"><em>F</em></span> matrices shapes whereas in the <code>Cascade</code> package only 1 shape was provided:
+<strong>custom</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math> matrices shapes whereas in the <code>Cascade</code> package only 1 shape was provided:
 <ul>
 <li>interaction between groups</li>
-<li>custom design of inner cells of the <span class="math inline"><em>F</em></span> matrix</li>
+<li>custom design of inner cells of the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math> matrix</li>
 </ul>
 </li>
-<li>the custom <span class="math inline"><em>F</em></span> matrices allow to deal with <strong>heteregeneous networks</strong> with several kinds of actors such as mixing genes and proteins in a single network to perform <strong>joint inference</strong>.</li>
+<li>the custom <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math> matrices allow to deal with <strong>heteregeneous networks</strong> with several kinds of actors such as mixing genes and proteins in a single network to perform <strong>joint inference</strong>.</li>
 <li>about <strong>nine inference algorithms</strong> are provided, whereas 1 (lasso) in <code>Cascade</code>.</li>
 </ul>
 <p>Hence the <code>Patterns</code> package should be viewed more as a completely new modelling tools than as an extension of the <code>Cascade</code> package.</p>
@@ -248,7 +247,7 @@
 <h3 id="data-simulation">Data simulation<a class="anchor" aria-label="anchor" href="#data-simulation"></a>
 </h3>
 <p>Let’s simulate some cascade data and then do some reverse engineering.</p>
-<p>We first design the F matrix for <span class="math inline"><em>T</em><sub><em>i</em></sub> = 4</span> times and <span class="math inline"><em>N</em><em>g</em><em>r</em><em>p</em> = 4</span> groups. The <code>Fmat</code>object is an array of sizes <span class="math inline">(<em>T</em><sub><em>i</em></sub>,<em>T</em>−<em>i</em>,<em>N</em><em>g</em><em>r</em><em>p</em><sup>2</sup>) = (4,4,16)</span>.</p>
+<p>We first design the F matrix for <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mi>i</mi></msub><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">T_i=4</annotation></semantics></math> times and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mi>g</mi><mi>r</mi><mi>p</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">Ngrp=4</annotation></semantics></math> groups. The <code>Fmat</code>object is an array of sizes <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>T</mi><mi>i</mi></msub><mo>,</mo><mi>T</mi><mo>−</mo><mi>i</mi><mo>,</mo><mi>N</mi><mi>g</mi><mi>r</mi><msup><mi>p</mi><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>4</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>16</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">(T_i,T-i,Ngrp^2)=(4,4,16)</annotation></semantics></math>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Ti</span><span class="op">&lt;-</span><span class="fl">4</span></span>
 <span><span class="va">Ngrp</span><span class="op">&lt;-</span><span class="fl">4</span></span>
@@ -356,7 +355,7 @@ plot of chunk plotFpixmap
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/heatmap.html" class="external-link">heatmap</a></span><span class="op">(</span><span class="va">Net_inf_P</span><span class="op">@</span><span class="va">network</span>, Rowv <span class="op">=</span> <span class="cn">NA</span>, Colv <span class="op">=</span> <span class="cn">NA</span>, scale<span class="op">=</span><span class="st">"none"</span>, revC<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'Net_inf_P' not found</span></span></code></pre></div>
-<p>Default values fot the <span class="math inline"><em>F</em></span> matrices. The <code>Finit</code> matrix (starting values for the algorithm). In our case, the <code>Finit</code>object is an array of sizes <span class="math inline">(<em>T</em><sub><em>i</em></sub>,<em>T</em>−<em>i</em>,<em>N</em><em>g</em><em>r</em><em>p</em><sup>2</sup>) = (4,4,16)</span>.</p>
+<p>Default values fot the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math> matrices. The <code>Finit</code> matrix (starting values for the algorithm). In our case, the <code>Finit</code>object is an array of sizes <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>T</mi><mi>i</mi></msub><mo>,</mo><mi>T</mi><mo>−</mo><mi>i</mi><mo>,</mo><mi>N</mi><mi>g</mi><mi>r</mi><msup><mi>p</mi><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>4</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>16</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">(T_i,T-i,Ngrp^2)=(4,4,16)</annotation></semantics></math>.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Ti</span><span class="op">&lt;-</span><span class="fl">4</span>;</span>
 <span><span class="va">ngrp</span><span class="op">&lt;-</span><span class="fl">4</span></span>
@@ -385,8 +384,8 @@ plot of chunk plotFpixmap
 <span>    <span class="va">Fshape</span><span class="op">[</span>,,<span class="va">ii</span><span class="op">]</span><span class="op">&lt;-</span><span class="va">tempFshape</span></span>
 <span>  <span class="op">}</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p>Any other form can be used. A “0” coefficient is missing from the model. It allows testing the best structure of an “F” matrix and even performing some significance tests of hypothses on the structure of the <span class="math inline"><em>F</em></span> matrix.</p>
-<p>The <code>IndicFshape</code> function allows to design custom F matrix for cascade networks with equally spaced measurements by specifying the zero and non zero <span class="math inline"><em>F</em><sub><em>i</em><em>j</em></sub></span> cells of the <span class="math inline"><em>F</em></span> matrix. It is useful for models featuring several clusters of actors that are activated at the time. Let’s define the following indicatrix matrix (action of all groups on each other, which is not a possible real modeling setting and is only used as an example):</p>
+<p>Any other form can be used. A “0” coefficient is missing from the model. It allows testing the best structure of an “F” matrix and even performing some significance tests of hypothses on the structure of the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math> matrix.</p>
+<p>The <code>IndicFshape</code> function allows to design custom F matrix for cascade networks with equally spaced measurements by specifying the zero and non zero <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>F</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><annotation encoding="application/x-tex">F_{ij}</annotation></semantics></math> cells of the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math> matrix. It is useful for models featuring several clusters of actors that are activated at the time. Let’s define the following indicatrix matrix (action of all groups on each other, which is not a possible real modeling setting and is only used as an example):</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">TestIndic</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="va">Ti</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span><span class="op">(</span><span class="va">ngrp</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">==</span><span class="fl">1</span><span class="op">)</span>,byrow<span class="op">=</span><span class="cn">TRUE</span>,<span class="va">ngrp</span>,<span class="va">ngrp</span><span class="op">)</span></span>
 <span><span class="va">TestIndic</span></span>
@@ -395,7 +394,7 @@ plot of chunk plotFpixmap
 <span><span class="co">#&gt; [2,]  TRUE FALSE  TRUE  TRUE</span></span>
 <span><span class="co">#&gt; [3,]  TRUE  TRUE FALSE  TRUE</span></span>
 <span><span class="co">#&gt; [4,]  TRUE  TRUE  TRUE FALSE</span></span></code></pre></div>
-<p>For that choice, we get those init and shape <span class="math inline"><em>F</em></span> matrices.</p>
+<p>For that choice, we get those init and shape <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math> matrices.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/IndicFinit.html">IndicFinit</a></span><span class="op">(</span><span class="va">Ti</span>,<span class="va">ngrp</span>,<span class="va">TestIndic</span><span class="op">)</span></span>
 <span><span class="co">#&gt; , , 1</span></span>
@@ -653,8 +652,8 @@ plot of chunk plotFpixmap
 <span><span class="co">#&gt; [2,] "0"  "0"  "0"  "0" </span></span>
 <span><span class="co">#&gt; [3,] "0"  "0"  "0"  "0" </span></span>
 <span><span class="co">#&gt; [4,] "0"  "0"  "0"  "0"</span></span></code></pre></div>
-<p>Those <span class="math inline"><em>F</em></span> matrices are lower diagonal ones to enforce that an observed value at a given time can only be predicted by a value that was observed in the past only (i.e. neither at the same moment or in the future).</p>
-<p>The <code>plotF</code> is convenient to display F matrices. Here are the the displays of the three <span class="math inline"><em>F</em></span> matrices we have just introduced.</p>
+<p>Those <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math> matrices are lower diagonal ones to enforce that an observed value at a given time can only be predicted by a value that was observed in the past only (i.e. neither at the same moment or in the future).</p>
+<p>The <code>plotF</code> is convenient to display F matrices. Here are the the displays of the three <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math> matrices we have just introduced.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plotF.html">plotF</a></span><span class="op">(</span><span class="va">Fshape</span>,choice<span class="op">=</span><span class="st">"Fshape"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
@@ -676,7 +675,7 @@ plot of chunk plotfshape2
 plot of chunk plotfshape3
 </p>
 </div>
-<p>We now fit the model with an <span class="math inline"><em>F</em></span> matrix that is designed for cascade networks.</p>
+<p>We now fit the model with an <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math> matrix that is designed for cascade networks.</p>
 <p>Specific Fshape</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Net_inf_P_S</span> <span class="op">&lt;-</span> <span class="fu">Patterns</span><span class="fu">::</span><span class="fu"><a href="reference/inference.html">inference</a></span><span class="op">(</span><span class="va">M</span>, Finit<span class="op">=</span><span class="fu"><a href="reference/CascadeFinit.html">CascadeFinit</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span>, Fshape<span class="op">=</span><span class="fu"><a href="reference/CascadeFshape.html">CascadeFshape</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
@@ -685,7 +684,7 @@ plot of chunk plotfshape3
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Net_inf_P_S</span>, choice<span class="op">=</span><span class="st">"F"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'Net_inf_P_S' not found</span></span></code></pre></div>
-<p>Heatmap of the coefficients of the Omega matrix of the network. They reflect the use of a special <span class="math inline"><em>F</em></span> matrix. It is an example of an F matrix specifically designed to deal with cascade networks.</p>
+<p>Heatmap of the coefficients of the Omega matrix of the network. They reflect the use of a special <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math> matrix. It is an example of an F matrix specifically designed to deal with cascade networks.</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/heatmap.html" class="external-link">heatmap</a></span><span class="op">(</span><span class="va">Net_inf_P_S</span><span class="op">@</span><span class="va">network</span>, Rowv <span class="op">=</span> <span class="cn">NA</span>, Colv <span class="op">=</span> <span class="cn">NA</span>, scale<span class="op">=</span><span class="st">"none"</span>, revC<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'Net_inf_P_S' not found</span></span></code></pre></div>
@@ -800,10 +799,10 @@ plot of chunk plotfshape3
 <span><span class="co">#&gt; Error in Weights_Net_1[, ] &lt;- 1: objet 'Weights_Net_1' introuvable</span></span>
 <span><span class="va">Net_inf_P_SelectBoost</span> <span class="op">&lt;-</span> <span class="fu">Patterns</span><span class="fu">::</span><span class="fu"><a href="reference/inference.html">inference</a></span><span class="op">(</span><span class="va">M</span>, Finit<span class="op">=</span><span class="fu"><a href="reference/CascadeFinit.html">CascadeFinit</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span>, Fshape<span class="op">=</span><span class="fu"><a href="reference/CascadeFshape.html">CascadeFshape</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span>, fitfun<span class="op">=</span><span class="st">"selectboost.weighted"</span>,priors<span class="op">=</span><span class="va">Weights_Net_1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in h(simpleError(msg, call)): erreur d'ï¿½valuation de l'argument 'M' lors de la sï¿½lection d'une mï¿½thode pour la fonction 'inference' : objet 'M' introuvable</span></span></code></pre></div>
-<pre><code><span><span class="co">#&gt; </span></span>
+<pre><code><span><span class="co">#&gt;</span></span>
 <span><span class="co">#&gt; Attaching package: 'Patterns'</span></span>
 <span><span class="co">#&gt; The following object is masked from 'package:igraph':</span></span>
-<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;</span></span>
 <span><span class="co">#&gt;     compare</span></span></code></pre>
 <p>Plot of the inferred F matrix</p>
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
@@ -816,10 +815,10 @@ plot of chunk plotfshape3
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Net_inf_P_SelectBoostWeighted</span> <span class="op">&lt;-</span> <span class="fu">Patterns</span><span class="fu">::</span><span class="fu"><a href="reference/inference.html">inference</a></span><span class="op">(</span><span class="va">M</span>, Finit<span class="op">=</span><span class="fu"><a href="reference/CascadeFinit.html">CascadeFinit</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span>, Fshape<span class="op">=</span><span class="fu"><a href="reference/CascadeFshape.html">CascadeFshape</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span>, fitfun<span class="op">=</span><span class="st">"selectboost.weighted"</span>,priors<span class="op">=</span><span class="va">Weights_Net</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in h(simpleError(msg, call)): erreur d'ï¿½valuation de l'argument 'M' lors de la sï¿½lection d'une mï¿½thode pour la fonction 'inference' : objet 'M' introuvable</span></span></code></pre></div>
-<pre><code><span><span class="co">#&gt; </span></span>
+<pre><code><span><span class="co">#&gt;</span></span>
 <span><span class="co">#&gt; Attaching package: 'Patterns'</span></span>
 <span><span class="co">#&gt; The following object is masked from 'package:igraph':</span></span>
-<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;</span></span>
 <span><span class="co">#&gt;     compare</span></span></code></pre>
 <p>Plot of the inferred F matrix</p>
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
@@ -1090,8 +1089,8 @@ plot of chunk omicsselection7
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Frederic Bertrand <br><small class="roles"> Maintainer, author </small> <a href="https://orcid.org/0000-0002-0837-8281" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Myriam Maumy-Bertrand <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-4615-1512" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Frederic Bertrand <br><small class="roles"> Maintainer, author </small> <a href="https://orcid.org/0000-0002-0837-8281" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>Myriam Maumy-Bertrand <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-4615-1512" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 </ul>
 </div>
 
@@ -1120,16 +1119,16 @@ plot of chunk omicsselection7
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
       </footer>
 </div>
 
-  
 
 
-  
+
+
 
   </body>
 </html>

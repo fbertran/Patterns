@@ -1,228 +1,78 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/Articles_SAV_20210320/ExampleCLL.html</loc>
-  </url>
-  <url>
-    <loc>/Articles_SAV_20210320/IntroPatterns.html</loc>
-  </url>
-  <url>
-    <loc>/Articles_SAV_20210320/index.html</loc>
-  </url>
-  <url>
-    <loc>/articles/ExampleCLL.html</loc>
-  </url>
-  <url>
-    <loc>/articles/IntroPatterns.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/CLL.html</loc>
-  </url>
-  <url>
-    <loc>/reference/CascadeFinit.html</loc>
-  </url>
-  <url>
-    <loc>/reference/CascadeFshape.html</loc>
-  </url>
-  <url>
-    <loc>/reference/IndicFinit.html</loc>
-  </url>
-  <url>
-    <loc>/reference/IndicFshape.html</loc>
-  </url>
-  <url>
-    <loc>/reference/M.html</loc>
-  </url>
-  <url>
-    <loc>/reference/Net.html</loc>
-  </url>
-  <url>
-    <loc>/reference/Net_inf_PL.html</loc>
-  </url>
-  <url>
-    <loc>/reference/Patterns-package.html</loc>
-  </url>
-  <url>
-    <loc>/reference/Selection.html</loc>
-  </url>
-  <url>
-    <loc>/reference/analyze_network-network-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/analyze_network-omics_network-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/as.micro_array.html</loc>
-  </url>
-  <url>
-    <loc>/reference/as.omics_array.html</loc>
-  </url>
-  <url>
-    <loc>/reference/clustExploration-micro_array-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/clustExploration-omics_array-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/clustInference-micro_array-numeric-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/clustInference-omics_array-numeric-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/compare-methods.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cutoff-network-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cutoff-omics_network-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/dim.html</loc>
-  </url>
-  <url>
-    <loc>/reference/doc.html</loc>
-  </url>
-  <url>
-    <loc>/reference/evolution/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/evolution-network-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/evolution-omics_network-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/geneNeighborhood-network-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/geneNeighborhood-omics_network-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/geneSelection.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gene_expr_simulation-network-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gene_expr_simulation-omics_network-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/head-micro_array-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/head-omics_array-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/inference.html</loc>
-  </url>
-  <url>
-    <loc>/reference/infos.html</loc>
-  </url>
-  <url>
-    <loc>/reference/micro_array-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/micropredict-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/network-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/network.html</loc>
-  </url>
-  <url>
-    <loc>/reference/network2gp.html</loc>
-  </url>
-  <url>
-    <loc>/reference/networkCascade.html</loc>
-  </url>
-  <url>
-    <loc>/reference/network_random.html</loc>
-  </url>
-  <url>
-    <loc>/reference/omics_array-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/omics_network-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/omics_predict-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot-methods.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plotF.html</loc>
-  </url>
-  <url>
-    <loc>/reference/position-methods.html</loc>
-  </url>
-  <url>
-    <loc>/reference/predict-micro_array-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/predict-omics_array-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/print-methods.html</loc>
-  </url>
-  <url>
-    <loc>/reference/probeMerge-micro_array-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/probeMerge-omics_array-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/replaceBand.html</loc>
-  </url>
-  <url>
-    <loc>/reference/replaceDown.html</loc>
-  </url>
-  <url>
-    <loc>/reference/replaceUp.html</loc>
-  </url>
-  <url>
-    <loc>/reference/show-methods.html</loc>
-  </url>
-  <url>
-    <loc>/reference/summary-methods.html</loc>
-  </url>
-  <url>
-    <loc>/reference/unionMicro-methods.html</loc>
-  </url>
-  <url>
-    <loc>/reference/unionOmics-methods.html</loc>
-  </url>
-  <url>
-    <loc>/reference/unsupervised_clustering-micro_array-numeric-numeric-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/unsupervised_clustering-omics_array-numeric-numeric-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/unsupervised_clustering_auto_m_c-micro_array-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/unsupervised_clustering_auto_m_c-omics_array-method.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/Articles_SAV_20210320/ExampleCLL.html</loc></url>
+<url><loc>/Articles_SAV_20210320/IntroPatterns.html</loc></url>
+<url><loc>/Articles_SAV_20210320/index.html</loc></url>
+<url><loc>/articles/ExampleCLL.html</loc></url>
+<url><loc>/articles/IntroPatterns.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/CLL.html</loc></url>
+<url><loc>/reference/CascadeFinit.html</loc></url>
+<url><loc>/reference/CascadeFshape.html</loc></url>
+<url><loc>/reference/IndicFinit.html</loc></url>
+<url><loc>/reference/IndicFshape.html</loc></url>
+<url><loc>/reference/M.html</loc></url>
+<url><loc>/reference/Net.html</loc></url>
+<url><loc>/reference/Net_inf_PL.html</loc></url>
+<url><loc>/reference/Patterns-package.html</loc></url>
+<url><loc>/reference/Selection.html</loc></url>
+<url><loc>/reference/analyze_network-network-method.html</loc></url>
+<url><loc>/reference/analyze_network-omics_network-method.html</loc></url>
+<url><loc>/reference/as.micro_array.html</loc></url>
+<url><loc>/reference/as.omics_array.html</loc></url>
+<url><loc>/reference/clustExploration-micro_array-method.html</loc></url>
+<url><loc>/reference/clustExploration-omics_array-method.html</loc></url>
+<url><loc>/reference/clustInference-micro_array-numeric-method.html</loc></url>
+<url><loc>/reference/clustInference-omics_array-numeric-method.html</loc></url>
+<url><loc>/reference/compare-methods.html</loc></url>
+<url><loc>/reference/cutoff-network-method.html</loc></url>
+<url><loc>/reference/cutoff-omics_network-method.html</loc></url>
+<url><loc>/reference/dim.html</loc></url>
+<url><loc>/reference/doc.html</loc></url>
+<url><loc>/reference/evolution/index.html</loc></url>
+<url><loc>/reference/evolution-network-method.html</loc></url>
+<url><loc>/reference/evolution-omics_network-method.html</loc></url>
+<url><loc>/reference/geneNeighborhood-network-method.html</loc></url>
+<url><loc>/reference/geneNeighborhood-omics_network-method.html</loc></url>
+<url><loc>/reference/geneSelection.html</loc></url>
+<url><loc>/reference/gene_expr_simulation-network-method.html</loc></url>
+<url><loc>/reference/gene_expr_simulation-omics_network-method.html</loc></url>
+<url><loc>/reference/head-micro_array-method.html</loc></url>
+<url><loc>/reference/head-omics_array-method.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/inference.html</loc></url>
+<url><loc>/reference/infos.html</loc></url>
+<url><loc>/reference/micro_array-class.html</loc></url>
+<url><loc>/reference/micropredict-class.html</loc></url>
+<url><loc>/reference/network-class.html</loc></url>
+<url><loc>/reference/network.html</loc></url>
+<url><loc>/reference/network2gp.html</loc></url>
+<url><loc>/reference/networkCascade.html</loc></url>
+<url><loc>/reference/network_random.html</loc></url>
+<url><loc>/reference/omics_array-class.html</loc></url>
+<url><loc>/reference/omics_network-class.html</loc></url>
+<url><loc>/reference/omics_predict-class.html</loc></url>
+<url><loc>/reference/plot-methods.html</loc></url>
+<url><loc>/reference/plotF.html</loc></url>
+<url><loc>/reference/position-methods.html</loc></url>
+<url><loc>/reference/predict-micro_array-method.html</loc></url>
+<url><loc>/reference/predict-omics_array-method.html</loc></url>
+<url><loc>/reference/print-methods.html</loc></url>
+<url><loc>/reference/probeMerge-micro_array-method.html</loc></url>
+<url><loc>/reference/probeMerge-omics_array-method.html</loc></url>
+<url><loc>/reference/replaceBand.html</loc></url>
+<url><loc>/reference/replaceDown.html</loc></url>
+<url><loc>/reference/replaceUp.html</loc></url>
+<url><loc>/reference/show-methods.html</loc></url>
+<url><loc>/reference/summary-methods.html</loc></url>
+<url><loc>/reference/unionMicro-methods.html</loc></url>
+<url><loc>/reference/unionOmics-methods.html</loc></url>
+<url><loc>/reference/unsupervised_clustering-micro_array-numeric-numeric-method.html</loc></url>
+<url><loc>/reference/unsupervised_clustering-omics_array-numeric-numeric-method.html</loc></url>
+<url><loc>/reference/unsupervised_clustering_auto_m_c-micro_array-method.html</loc></url>
+<url><loc>/reference/unsupervised_clustering_auto_m_c-omics_array-method.html</loc></url>
 </urlset>
+

@@ -64,7 +64,6 @@
 #' @importFrom igraph V
 #' @importFrom nnls nnls
 #' @importFrom plotrix color2D.matplot
-#' @importFrom repmis source_data
 #' 
 #' @importFrom cluster agnes
 #' @importFrom Mfuzz standardise

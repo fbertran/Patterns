@@ -1,3 +1,7 @@
+# Patterns 1.6
+
+* Code fixes to remove a strong depency that was to be archived by CRAN.
+
 # Patterns 1.5
 
 * Code fixes required by the CRAN.

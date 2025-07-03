@@ -13,7 +13,7 @@ bibentry(bibtype="Manual",
                     person(given = "Myriam", family= "Maumy-Bertrand")),
          year         = year,
          note         = vers,
-         url          = "https://github.com/fbertran/ModStatR",
+         url          = "https://github.com/fbertran/Patterns",
          textVersion = 
            paste("Frédéric Bertrand and Myriam Maumy-Bertrand (",year ,"). ", 
                  titl, ", ", vers, ".", sep=""
