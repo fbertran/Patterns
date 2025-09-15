@@ -220,3 +220,33 @@ NULL
 
 
 
+#' jetsetscoresHuman transcription factors from HumanTFDB
+#' 
+#' This data set provides gene target and quality scores for each probe set 
+#' on the hgu133plus2 Affymetrix gene expression microarrays.
+#' 
+#' Scores are calculated from BLASTN alignments between probe sequences and 
+#' Refseq transcript sequences, as described in the vignette and in the 
+#' reference below.
+#' 
+#' The Refseq human RNA was downloaded from NCBI on 2017-04-04. The lookups 
+#' were based on org.Hs.eg.db version 3.4.0.
+#' 
+#' @name jetsetscores
+#' @docType data
+#' @author Bertrand Frederic
+#' @keywords datasets
+#' 
+#' @references Qiyuan Li, Nicolai J. Birkbak, Balazs Gyorffy, Zoltan Szallasi 
+#' and Aron C. Eklund. (2011) Jetset: selecting the optimal microarray probe 
+#' set to represent a gene. BMC Bioinformatics. 12:474.
+#' 
+#' @examples
+#' 
+#' data(jetsetscores)
+#' head(jetsetscores)
+#' summary(jetsetscores)
+#' 
+NULL
+
+

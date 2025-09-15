@@ -1,3 +1,9 @@
+# Patterns 1.7
+
+* Updated maintainer email.
+* Added unit tests.
+* Added package doi.
+
 # Patterns 1.6
 
 * Code fixes to remove a strong depency that was to be archived by CRAN.

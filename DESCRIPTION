@@ -1,8 +1,8 @@
 Package: Patterns
 Type: Package
 Title: Deciphering Biological Networks with Patterned Heterogeneous Measurements
-Version: 1.6
-Date: 2025-07-02
+Version: 1.7
+Date: 2025-09-09
 Depends: R (>= 3.5.0)
 biocViews:
 Imports: 
@@ -13,7 +13,6 @@ Imports:
     graphics, 
     grDevices, 
     igraph, 
-    jetset, 
     lars, 
     lattice, 
     limma, 
@@ -38,12 +37,13 @@ Suggests:
     pixmap, 
     R.rsp,
     rmarkdown,
-    spls
+    spls,
+    testthat (>= 3.0.0)
 Authors@R: c(
-	person(given = "Frederic", family= "Bertrand", role = c("cre", "aut"), email = "frederic.bertrand@utt.fr", comment = c(ORCID = "0000-0002-0837-8281")),
-	person(given = "Myriam", family= "Maumy-Bertrand", role = c("aut"), email = "myriam.maumy-bertrand@utt.fr", comment = c(ORCID = "0000-0002-4615-1512")))
+	person(given = "Frederic", family= "Bertrand", role = c("cre", "aut"), email = "frederic.bertrand@lecnam.net", comment = c(ORCID = "0000-0002-0837-8281")),
+	person(given = "Myriam", family= "Maumy-Bertrand", role = c("aut"), email = "myriam.maumy@ehesp.fr", comment = c(ORCID = "0000-0002-4615-1512")))
 Author: Frederic Bertrand [cre, aut] (<https://orcid.org/0000-0002-0837-8281>), Myriam Maumy-Bertrand [aut] (<https://orcid.org/0000-0002-4615-1512>)
-Maintainer: Frederic Bertrand <frederic.bertrand@utt.fr>
+Maintainer: Frederic Bertrand <frederic.bertrand@lecnam.net>
 Description: A modeling tool dedicated to biological network modeling (Bertrand and others 2020, <doi:10.1093/bioinformatics/btaa855>). It allows for single or joint modeling of, for instance, genes and proteins. It starts with the selection of the actors that will be the used in the reverse engineering upcoming step. An actor can be included in that selection based on its differential measurement (for instance gene expression or protein abundance) or on its time course profile. Wrappers for actors clustering functions and cluster analysis are provided. It also allows reverse engineering of biological networks taking into account the observed time course patterns of the actors. Many inference functions are provided and dedicated to get specific features for the inferred network such as sparsity, robust links, high confidence links or stable through resampling links. Some simulation and prediction tools are also available for cascade networks (Jung and others 2014, <doi:10.1093/bioinformatics/btt705>). Example of use with microarray or RNA-Seq data are provided.
 License: GPL (>= 2)
 Encoding: UTF-8
@@ -51,6 +51,7 @@ Collate: Patterns-package.R global.R datasets.R omics_array.R omics_network.R om
 	omics_predict.R
 Classification/MSC: 62J05, 62J07, 62J99, 92C42
 VignetteBuilder: knitr
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 URL: https://fbertran.github.io/Patterns/, https://github.com/fbertran/Patterns/
 BugReports: https://github.com/fbertran/Patterns/issues/
+Config/testthat/edition: 3

@@ -77,7 +77,7 @@
 #' @importFrom SelectBoost fastboost
 #' @importFrom SelectBoost group_func_2
 #' @importFrom gplots heatmap.2
-#' @importFrom jetset jscores
+# #' @importFrom jetset jscores
 #' @exportMethod analyze_network
 #' @exportMethod clustExploration
 #' @exportMethod clustInference
@@ -169,7 +169,7 @@ setClass(Class = "omics_array",
          prototype = prototype(group = 0,start_time=0),
          validity=function(object){
            if(dim(object@omicsarray)[2] != length(object@time)*object@subject){
-             stop("[Error: ]Number of colomns must be equal to the number of time points * the number of subject")
+             stop("[Error: ] Number of colomns must be equal to the number of time points * the number of subject")
            }
            if(dim(object@omicsarray)[1] != length(object@name)&&length(object@name)!=0){
              stop("[Error: ] Length of the vector of names must equal to the number of genes")

@@ -4,92 +4,66 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Deciphering Biological Networks with Patterned Heterogeneous Measurements • Patterns</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" sizes="any" href="favicon.ico">
 <link rel="manifest" href="site.webmanifest">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
-<script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Deciphering Biological Networks with Patterned Heterogeneous Measurements">
+<script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Deciphering Biological Networks with Patterned Heterogeneous Measurements">
+<meta name="description" content="A modeling tool dedicated to biological network modeling (Bertrand and others 2020, &lt;doi:10.1093/bioinformatics/btaa855&gt;). It allows for single or joint modeling of, for instance, genes and proteins. It starts with the selection of the actors that will be the used in the reverse engineering upcoming step. An actor can be included in that selection based on its differential measurement (for instance gene expression or protein abundance) or on its time course profile. Wrappers for actors clustering functions and cluster analysis are provided. It also allows reverse engineering of biological networks taking into account the observed time course patterns of the actors. Many inference functions are provided and dedicated to get specific features for the inferred network such as sparsity, robust links, high confidence links or stable through resampling links. Some simulation and prediction tools are also available for cascade networks (Jung and others 2014, &lt;doi:10.1093/bioinformatics/btt705&gt;). Example of use with microarray or RNA-Seq data are provided.">
 <meta property="og:description" content="A modeling tool dedicated to biological network modeling (Bertrand and others 2020, &lt;doi:10.1093/bioinformatics/btaa855&gt;). It allows for single or joint modeling of, for instance, genes and proteins. It starts with the selection of the actors that will be the used in the reverse engineering upcoming step. An actor can be included in that selection based on its differential measurement (for instance gene expression or protein abundance) or on its time course profile. Wrappers for actors clustering functions and cluster analysis are provided. It also allows reverse engineering of biological networks taking into account the observed time course patterns of the actors. Many inference functions are provided and dedicated to get specific features for the inferred network such as sparsity, robust links, high confidence links or stable through resampling links. Some simulation and prediction tools are also available for cascade networks (Jung and others 2014, &lt;doi:10.1093/bioinformatics/btt705&gt;). Example of use with microarray or RNA-Seq data are provided.">
-<meta property="og:image" content="/logo.png">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<meta property="og:image" content="https://fbertran.github.io/Patterns/logo.png">
 </head>
-<body data-spy="scroll" data-target="#toc">
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <div class="container template-home">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">Patterns</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.6</span>
-      </span>
-    </div>
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Articles
+    <a class="navbar-brand me-2" href="index.html">Patterns</a>
 
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="articles/ExampleCLL.html">Network inference and analysis of CLL data</a>
-    </li>
-    <li>
-      <a href="articles/IntroPatterns.html">Introduction to Patterns: a modeling tool dedicated to biological network modeling</a>
-    </li>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.7</small>
+
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/ExampleCLL.html">Network inference and analysis of CLL data</a></li>
+    <li><a class="dropdown-item" href="articles/IntroPatterns.html">Introduction to Patterns: a modeling tool dedicated to biological network modeling</a></li>
   </ul>
 </li>
-<li>
-  <a href="news/index.html">Changelog</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/fbertran/Patterns/" class="external-link">
-    <span class="fab fa-github fa-lg"></span>
-
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
+</form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/fbertran/Patterns/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
-<!--/.nav-collapse -->
+
+
   </div>
-<!--/.container -->
+</nav><div class="container template-home">
+<div class="row">
+  <main id="main" class="col-md-9"><div class="section level1">
+<div class="page-header">
+<img src="logo.png" class="logo" alt=""><h1 id="patterns-">Patterns <a class="anchor" aria-label="anchor" href="#patterns-"></a>
+</h1>
 </div>
-<!--/.navbar -->
-
-
-
-      </header><div class="row">
-  <div class="contents col-md-9">
-
-<div class="section level1">
-<div class="page-header"><h1 id="patterns-">Patterns <img src="reference/figures/logo.png" align="right" width="200"><a class="anchor" aria-label="anchor" href="#patterns-"></a>
-</h1></div>
 </div>
 <div class="section level1">
 <h1 id="a-modeling-tool-dedicated-to-biological-network-modeling-to-decipher-biological-networks-with-patterned-heterogeneous-eg-multiomics-measurements">A modeling tool dedicated to biological network modeling to decipher Biological Networks with Patterned Heterogeneous (e.g. multiOmics) Measurements<a class="anchor" aria-label="anchor" href="#a-modeling-tool-dedicated-to-biological-network-modeling-to-decipher-biological-networks-with-patterned-heterogeneous-eg-multiomics-measurements"></a>
@@ -97,6 +71,7 @@
 <div class="section level2">
 <h2 id="frédéric-bertrand-and-myriam-maumy-bertrand">Frédéric Bertrand and Myriam Maumy-Bertrand<a class="anchor" aria-label="anchor" href="#fr%C3%A9d%C3%A9ric-bertrand-and-myriam-maumy-bertrand"></a>
 </h2>
+<p><a href="https://doi.org/10.32614/CRAN.package.Patterns" class="external-link uri">https://doi.org/10.32614/CRAN.package.Patterns</a></p>
 <!-- badges: start -->
 
 <p>It is designed to work with <strong>patterned data</strong>. Famous examples of problems related to patterned data are:</p>
@@ -171,7 +146,7 @@
 </h3>
 <p>Import Cascade Data (repeated measurements on several subjects) from the CascadeData package and turn them into a omics array object. The second line makes sure the CascadeData package is installed.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/Patterns/" class="external-link">Patterns</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/Patterns/">Patterns</a></span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/CascadeData/" class="external-link">CascadeData</a></span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"CascadeData"</span><span class="op">)</span><span class="op">}</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">micro_US</span><span class="op">)</span></span>
@@ -331,7 +306,7 @@ plot of chunk plotFpixmap
 <span>  act_time_group<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error: unable to find an inherited method for function 'gene_expr_simulation' for signature 'omics_network = "missing"'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'M' not found</span></span></code></pre></div>
+<span><span class="co">#&gt;  num [1:60, 1:6] -1.495 0.368 0.517 -0.484 0.675 ...</span></span></code></pre></div>
 <p>Get a summay and plots of the simulated data:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
@@ -354,7 +329,7 @@ plot of chunk plotFpixmap
 <p>Heatmap of the inferred coefficients of the Omega matrix</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/heatmap.html" class="external-link">heatmap</a></span><span class="op">(</span><span class="va">Net_inf_P</span><span class="op">@</span><span class="va">network</span>, Rowv <span class="op">=</span> <span class="cn">NA</span>, Colv <span class="op">=</span> <span class="cn">NA</span>, scale<span class="op">=</span><span class="st">"none"</span>, revC<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'Net_inf_P' not found</span></span></code></pre></div>
+<span><span class="co">#&gt; Error: object 'Net_inf_P' not found</span></span></code></pre></div>
 <p>Default values fot the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math> matrices. The <code>Finit</code> matrix (starting values for the algorithm). In our case, the <code>Finit</code>object is an array of sizes <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>T</mi><mi>i</mi></msub><mo>,</mo><mi>T</mi><mo>−</mo><mi>i</mi><mo>,</mo><mi>N</mi><mi>g</mi><mi>r</mi><msup><mi>p</mi><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>4</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>16</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">(T_i,T-i,Ngrp^2)=(4,4,16)</annotation></semantics></math>.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Ti</span><span class="op">&lt;-</span><span class="fl">4</span>;</span>
@@ -687,7 +662,7 @@ plot of chunk plotfshape3
 <p>Heatmap of the coefficients of the Omega matrix of the network. They reflect the use of a special <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math> matrix. It is an example of an F matrix specifically designed to deal with cascade networks.</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/heatmap.html" class="external-link">heatmap</a></span><span class="op">(</span><span class="va">Net_inf_P_S</span><span class="op">@</span><span class="va">network</span>, Rowv <span class="op">=</span> <span class="cn">NA</span>, Colv <span class="op">=</span> <span class="cn">NA</span>, scale<span class="op">=</span><span class="st">"none"</span>, revC<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'Net_inf_P_S' not found</span></span></code></pre></div>
+<span><span class="co">#&gt; Error: object 'Net_inf_P_S' not found</span></span></code></pre></div>
 <p>There are many fitting functions provided with the <code>Patterns</code> package in order to search for <strong>specific features</strong> for the inferred network such as <strong>sparsity</strong>, <strong>robust links</strong>, <strong>high confidence links</strong> or <strong>stable through resampling links</strong>. :</p>
 <ul>
 <li>
@@ -717,7 +692,7 @@ plot of chunk plotfshape3
 <p>Heatmap of the coefficients of the Omega matrix of the network</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/heatmap.html" class="external-link">heatmap</a></span><span class="op">(</span><span class="va">Net_inf_P_Lasso2</span><span class="op">@</span><span class="va">network</span>, Rowv <span class="op">=</span> <span class="cn">NA</span>, Colv <span class="op">=</span> <span class="cn">NA</span>, scale<span class="op">=</span><span class="st">"none"</span>, revC<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'Net_inf_P_Lasso2' not found</span></span></code></pre></div>
+<span><span class="co">#&gt; Error: object 'Net_inf_P_Lasso2' not found</span></span></code></pre></div>
 <p>We create a weighting vector to perform weighted lasso inference.</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Weights_Net</span><span class="op">=</span><span class="fu">slot</span><span class="op">(</span><span class="va">Net</span>,<span class="st">"network"</span><span class="op">)</span></span>
@@ -736,7 +711,7 @@ plot of chunk plotfshape3
 <p>Heatmap of the coefficients of the Omega matrix of the network</p>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/heatmap.html" class="external-link">heatmap</a></span><span class="op">(</span><span class="va">Net_inf_P_Lasso2_Weighted</span><span class="op">@</span><span class="va">network</span>, Rowv <span class="op">=</span> <span class="cn">NA</span>, Colv <span class="op">=</span> <span class="cn">NA</span>, scale<span class="op">=</span><span class="st">"none"</span>, revC<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'Net_inf_P_Lasso2_Weighted' not found</span></span></code></pre></div>
+<span><span class="co">#&gt; Error: object 'Net_inf_P_Lasso2_Weighted' not found</span></span></code></pre></div>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Net_inf_P_SPLS</span> <span class="op">&lt;-</span> <span class="fu">Patterns</span><span class="fu">::</span><span class="fu"><a href="reference/inference.html">inference</a></span><span class="op">(</span><span class="va">M</span>, Finit<span class="op">=</span><span class="fu"><a href="reference/CascadeFinit.html">CascadeFinit</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span>, Fshape<span class="op">=</span><span class="fu"><a href="reference/CascadeFshape.html">CascadeFshape</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span>, fitfun<span class="op">=</span><span class="st">"SPLS"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in h(simpleError(msg, call)): erreur d'ï¿½valuation de l'argument 'M' lors de la sï¿½lection d'une mï¿½thode pour la fonction 'inference' : objet 'M' introuvable</span></span></code></pre></div>
@@ -747,7 +722,7 @@ plot of chunk plotfshape3
 <p>Heatmap of the coefficients of the Omega matrix of the network</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/heatmap.html" class="external-link">heatmap</a></span><span class="op">(</span><span class="va">Net_inf_P_SPLS</span><span class="op">@</span><span class="va">network</span>, Rowv <span class="op">=</span> <span class="cn">NA</span>, Colv <span class="op">=</span> <span class="cn">NA</span>, scale<span class="op">=</span><span class="st">"none"</span>, revC<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'Net_inf_P_SPLS' not found</span></span></code></pre></div>
+<span><span class="co">#&gt; Error: object 'Net_inf_P_SPLS' not found</span></span></code></pre></div>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Net_inf_P_ELASTICNET</span> <span class="op">&lt;-</span> <span class="fu">Patterns</span><span class="fu">::</span><span class="fu"><a href="reference/inference.html">inference</a></span><span class="op">(</span><span class="va">M</span>, Finit<span class="op">=</span><span class="fu"><a href="reference/CascadeFinit.html">CascadeFinit</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span>, Fshape<span class="op">=</span><span class="fu"><a href="reference/CascadeFshape.html">CascadeFshape</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span>, fitfun<span class="op">=</span><span class="st">"ELASTICNET"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in h(simpleError(msg, call)): erreur d'ï¿½valuation de l'argument 'M' lors de la sï¿½lection d'une mï¿½thode pour la fonction 'inference' : objet 'M' introuvable</span></span></code></pre></div>
@@ -758,7 +733,7 @@ plot of chunk plotfshape3
 <p>Heatmap of the coefficients of the Omega matrix of the network</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/heatmap.html" class="external-link">heatmap</a></span><span class="op">(</span><span class="va">Net_inf_P_ELASTICNET</span><span class="op">@</span><span class="va">network</span>, Rowv <span class="op">=</span> <span class="cn">NA</span>, Colv <span class="op">=</span> <span class="cn">NA</span>, scale<span class="op">=</span><span class="st">"none"</span>, revC<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'Net_inf_P_ELASTICNET' not found</span></span></code></pre></div>
+<span><span class="co">#&gt; Error: object 'Net_inf_P_ELASTICNET' not found</span></span></code></pre></div>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Net_inf_P_stability</span> <span class="op">&lt;-</span> <span class="fu">Patterns</span><span class="fu">::</span><span class="fu"><a href="reference/inference.html">inference</a></span><span class="op">(</span><span class="va">M</span>, Finit<span class="op">=</span><span class="fu"><a href="reference/CascadeFinit.html">CascadeFinit</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span>, Fshape<span class="op">=</span><span class="fu"><a href="reference/CascadeFshape.html">CascadeFshape</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span>, fitfun<span class="op">=</span><span class="st">"stability.c060"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in h(simpleError(msg, call)): erreur d'ï¿½valuation de l'argument 'M' lors de la sï¿½lection d'une mï¿½thode pour la fonction 'inference' : objet 'M' introuvable</span></span></code></pre></div>
@@ -769,7 +744,7 @@ plot of chunk plotfshape3
 <p>Heatmap of the coefficients of the Omega matrix of the network</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/heatmap.html" class="external-link">heatmap</a></span><span class="op">(</span><span class="va">Net_inf_P_stability</span><span class="op">@</span><span class="va">network</span>, Rowv <span class="op">=</span> <span class="cn">NA</span>, Colv <span class="op">=</span> <span class="cn">NA</span>, scale<span class="op">=</span><span class="st">"none"</span>, revC<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'Net_inf_P_stability' not found</span></span></code></pre></div>
+<span><span class="co">#&gt; Error: object 'Net_inf_P_stability' not found</span></span></code></pre></div>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Net_inf_P_StabWeight</span> <span class="op">&lt;-</span> <span class="fu">Patterns</span><span class="fu">::</span><span class="fu"><a href="reference/inference.html">inference</a></span><span class="op">(</span><span class="va">M</span>, Finit<span class="op">=</span><span class="fu"><a href="reference/CascadeFinit.html">CascadeFinit</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span>, Fshape<span class="op">=</span><span class="fu"><a href="reference/CascadeFshape.html">CascadeFshape</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span>, fitfun<span class="op">=</span><span class="st">"stability.c060.weighted"</span>, priors<span class="op">=</span><span class="va">Weights_Net</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in h(simpleError(msg, call)): erreur d'ï¿½valuation de l'argument 'M' lors de la sï¿½lection d'une mï¿½thode pour la fonction 'inference' : objet 'M' introuvable</span></span></code></pre></div>
@@ -780,7 +755,7 @@ plot of chunk plotfshape3
 <p>Heatmap of the coefficients of the Omega matrix of the network</p>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/heatmap.html" class="external-link">heatmap</a></span><span class="op">(</span><span class="va">Net_inf_P_StabWeight</span><span class="op">@</span><span class="va">network</span>, Rowv <span class="op">=</span> <span class="cn">NA</span>, Colv <span class="op">=</span> <span class="cn">NA</span>, scale<span class="op">=</span><span class="st">"none"</span>, revC<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'Net_inf_P_StabWeight' not found</span></span></code></pre></div>
+<span><span class="co">#&gt; Error: object 'Net_inf_P_StabWeight' not found</span></span></code></pre></div>
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Net_inf_P_Robust</span> <span class="op">&lt;-</span> <span class="fu">Patterns</span><span class="fu">::</span><span class="fu"><a href="reference/inference.html">inference</a></span><span class="op">(</span><span class="va">M</span>, Finit<span class="op">=</span><span class="fu"><a href="reference/CascadeFinit.html">CascadeFinit</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span>, Fshape<span class="op">=</span><span class="fu"><a href="reference/CascadeFshape.html">CascadeFshape</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span>, fitfun<span class="op">=</span><span class="st">"robust"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in h(simpleError(msg, call)): erreur d'ï¿½valuation de l'argument 'M' lors de la sï¿½lection d'une mï¿½thode pour la fonction 'inference' : objet 'M' introuvable</span></span></code></pre></div>
@@ -791,7 +766,7 @@ plot of chunk plotfshape3
 <p>Heatmap of the coefficients of the Omega matrix of the network</p>
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/heatmap.html" class="external-link">heatmap</a></span><span class="op">(</span><span class="va">Net_inf_P_Robust</span><span class="op">@</span><span class="va">network</span>, Rowv <span class="op">=</span> <span class="cn">NA</span>, Colv <span class="op">=</span> <span class="cn">NA</span>, scale<span class="op">=</span><span class="st">"none"</span>, revC<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'Net_inf_P_Robust' not found</span></span></code></pre></div>
+<span><span class="co">#&gt; Error: object 'Net_inf_P_Robust' not found</span></span></code></pre></div>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Weights_Net_1</span> <span class="op">&lt;-</span> <span class="va">Weights_Net</span></span>
 <span><span class="co">#&gt; Error in eval(expr, envir, enclos): objet 'Weights_Net' introuvable</span></span>
@@ -801,6 +776,9 @@ plot of chunk plotfshape3
 <span><span class="co">#&gt; Error in h(simpleError(msg, call)): erreur d'ï¿½valuation de l'argument 'M' lors de la sï¿½lection d'une mï¿½thode pour la fonction 'inference' : objet 'M' introuvable</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt;</span></span>
 <span><span class="co">#&gt; Attaching package: 'Patterns'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:testthat':</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt;     compare</span></span>
 <span><span class="co">#&gt; The following object is masked from 'package:igraph':</span></span>
 <span><span class="co">#&gt;</span></span>
 <span><span class="co">#&gt;     compare</span></span></code></pre>
@@ -811,12 +789,15 @@ plot of chunk plotfshape3
 <p>Heatmap of the coefficients of the Omega matrix of the network</p>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/heatmap.html" class="external-link">heatmap</a></span><span class="op">(</span><span class="va">Net_inf_P_SelectBoost</span><span class="op">@</span><span class="va">network</span>, Rowv <span class="op">=</span> <span class="cn">NA</span>, Colv <span class="op">=</span> <span class="cn">NA</span>, scale<span class="op">=</span><span class="st">"none"</span>, revC<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'Net_inf_P_SelectBoost' not found</span></span></code></pre></div>
+<span><span class="co">#&gt; Error: object 'Net_inf_P_SelectBoost' not found</span></span></code></pre></div>
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Net_inf_P_SelectBoostWeighted</span> <span class="op">&lt;-</span> <span class="fu">Patterns</span><span class="fu">::</span><span class="fu"><a href="reference/inference.html">inference</a></span><span class="op">(</span><span class="va">M</span>, Finit<span class="op">=</span><span class="fu"><a href="reference/CascadeFinit.html">CascadeFinit</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span>, Fshape<span class="op">=</span><span class="fu"><a href="reference/CascadeFshape.html">CascadeFshape</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span>, fitfun<span class="op">=</span><span class="st">"selectboost.weighted"</span>,priors<span class="op">=</span><span class="va">Weights_Net</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in h(simpleError(msg, call)): erreur d'ï¿½valuation de l'argument 'M' lors de la sï¿½lection d'une mï¿½thode pour la fonction 'inference' : objet 'M' introuvable</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt;</span></span>
 <span><span class="co">#&gt; Attaching package: 'Patterns'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:testthat':</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt;     compare</span></span>
 <span><span class="co">#&gt; The following object is masked from 'package:igraph':</span></span>
 <span><span class="co">#&gt;</span></span>
 <span><span class="co">#&gt;     compare</span></span></code></pre>
@@ -827,7 +808,7 @@ plot of chunk plotfshape3
 <p>Heatmap of the coefficients of the Omega matrix of the network</p>
 <div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/heatmap.html" class="external-link">heatmap</a></span><span class="op">(</span><span class="va">Net_inf_P_SelectBoostWeighted</span><span class="op">@</span><span class="va">network</span>, Rowv <span class="op">=</span> <span class="cn">NA</span>, Colv <span class="op">=</span> <span class="cn">NA</span>, scale<span class="op">=</span><span class="st">"none"</span>, revC<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'Net_inf_P_SelectBoostWeighted' not found</span></span></code></pre></div>
+<span><span class="co">#&gt; Error: object 'Net_inf_P_SelectBoostWeighted' not found</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="post-inference-network-analysis">Post inference network analysis<a class="anchor" aria-label="anchor" href="#post-inference-network-analysis"></a>
@@ -844,7 +825,7 @@ plot of chunk plotfshape3
 <div class="float">
 <img src="https://fbertran.github.io/Patterns/reference/evolution/animation.gif" alt="Evolution as .gif."><div class="figcaption">Evolution as .gif.</div>
 </div>
-<p><a href="https://fbertran.github.io/Patterns/reference/evolution/index.html" class="external-link">Evolution as .html.</a></p>
+<p><a href="https://fbertran.github.io/Patterns/reference/evolution/index.html">Evolution as .html.</a></p>
 <p>Evolution of some properties of a reverse-engineered network with increasing cut-off values. <img src="https://fbertran.github.io/Patterns/reference/compare-methods-1.png" alt="Evolution of some properties of a reverse-engineered network with increasing cut-off values."></p>
 <p>We switch to data that were derived from the inferrence of a real biological network and try to detect the optimal cutoff value: the best cutoff value for a network to fit a scale free network. The <code>cutoff</code> was validated only single group cascade networks (number of actors groups = number of timepoints) and for genes dataset. Instead of the <code>cutoff</code> function, manual curation or the stability selection or the selectboost algorithm should be used.</p>
 <div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
@@ -870,7 +851,7 @@ plot of chunk plotnet
 </h3>
 <p>Import data.</p>
 <div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/Patterns/" class="external-link">Patterns</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/Patterns/">Patterns</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fbertran.github.io/CascadeData/" class="external-link">CascadeData</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">micro_S</span><span class="op">)</span></span>
 <span><span class="va">micro_S</span><span class="op">&lt;-</span><span class="fu"><a href="reference/as.omics_array.html">as.omics_array</a></span><span class="op">(</span><span class="va">micro_S</span>,time<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">60</span>,<span class="fl">90</span>,<span class="fl">210</span>,<span class="fl">390</span><span class="op">)</span>,subject<span class="op">=</span><span class="fl">6</span>,gene_ID<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">micro_S</span><span class="op">)</span><span class="op">)</span></span>
@@ -905,12 +886,10 @@ plot of chunk plotnet
 <span><span class="co">#&gt; 1563563_at  -1.44513486  1.6869516 -0.4297297</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $name</span></span>
-<span><span class="co">#&gt; [1] "210226_at"   "233516_s_at" "202081_at"   "236719_at"   "236019_at"  </span></span>
-<span><span class="co">#&gt; [6] "1563563_at" </span></span>
+<span><span class="co">#&gt; [1] "210226_at"   "233516_s_at" "202081_at"   "236719_at"   "236019_at"   "1563563_at" </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $gene_ID</span></span>
-<span><span class="co">#&gt; [1] "210226_at"   "233516_s_at" "202081_at"   "236719_at"   "236019_at"  </span></span>
-<span><span class="co">#&gt; [6] "1563563_at" </span></span>
+<span><span class="co">#&gt; [1] "210226_at"   "233516_s_at" "202081_at"   "236719_at"   "236019_at"   "1563563_at" </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $group</span></span>
 <span><span class="co">#&gt; [1] 1 2 1 1 1 1</span></span>
@@ -935,7 +914,7 @@ plot of chunk plotnet
 <span><span class="co">#&gt;  Max.   : 2.86440   Max.   : 4.284675   Max.   : 3.6727   Max.   : 2.54704  </span></span>
 <span><span class="co">#&gt;       US60              US90              US210              US390         </span></span>
 <span><span class="co">#&gt;  Min.   :-2.7932   Min.   :-2.49245   Min.   :-1.21606   Min.   :-1.74407  </span></span>
-<span><span class="co">#&gt;  1st Qu.:-0.5547   1st Qu.:-0.01944   1st Qu.: 0.07966   1st Qu.:-0.26548  </span></span>
+<span><span class="co">#&gt;  1st Qu.:-0.5547   1st Qu.:-0.01944   1st Qu.: 0.07967   1st Qu.:-0.26548  </span></span>
 <span><span class="co">#&gt;  Median :-0.3089   Median : 0.14977   Median : 0.72019   Median : 0.03616  </span></span>
 <span><span class="co">#&gt;  Mean   :-0.2917   Mean   : 0.33720   Mean   : 0.73063   Mean   : 0.06753  </span></span>
 <span><span class="co">#&gt;  3rd Qu.:-0.1725   3rd Qu.: 0.48744   3rd Qu.: 1.26164   3rd Qu.: 0.32496  </span></span>
@@ -944,7 +923,7 @@ plot of chunk plotnet
 <span><span class="co">#&gt;  Min.   :-2.94444   Min.   :-0.9721   Min.   :-1.9349   Min.   :-3.8418  </span></span>
 <span><span class="co">#&gt;  1st Qu.:-0.23136   1st Qu.:-0.1027   1st Qu.: 0.3254   1st Qu.:-0.1592  </span></span>
 <span><span class="co">#&gt;  Median :-0.04761   Median : 0.2548   Median : 1.2512   Median : 0.1538  </span></span>
-<span><span class="co">#&gt;  Mean   : 0.22115   Mean   : 0.6479   Mean   : 1.0485   Mean   : 0.1219  </span></span>
+<span><span class="co">#&gt;  Mean   : 0.22116   Mean   : 0.6479   Mean   : 1.0485   Mean   : 0.1219  </span></span>
 <span><span class="co">#&gt;  3rd Qu.: 0.33157   3rd Qu.: 1.0737   3rd Qu.: 1.8513   3rd Qu.: 0.6268  </span></span>
 <span><span class="co">#&gt;  Max.   : 3.31723   Max.   : 4.3604   Max.   : 4.4860   Max.   : 1.9886  </span></span>
 <span><span class="co">#&gt;       US60               US90              US210              US390         </span></span>
@@ -952,7 +931,7 @@ plot of chunk plotnet
 <span><span class="co">#&gt;  1st Qu.:-0.06031   1st Qu.:-0.08464   1st Qu.: 0.07605   1st Qu.: 0.01569  </span></span>
 <span><span class="co">#&gt;  Median : 0.03601   Median : 0.17135   Median : 0.52176   Median : 0.17370  </span></span>
 <span><span class="co">#&gt;  Mean   : 0.14593   Mean   : 0.41929   Mean   : 0.62446   Mean   : 0.23854  </span></span>
-<span><span class="co">#&gt;  3rd Qu.: 0.24568   3rd Qu.: 0.75565   3rd Qu.: 1.07821   3rd Qu.: 0.45189  </span></span>
+<span><span class="co">#&gt;  3rd Qu.: 0.24568   3rd Qu.: 0.75564   3rd Qu.: 1.07821   3rd Qu.: 0.45189  </span></span>
 <span><span class="co">#&gt;  Max.   : 1.82903   Max.   : 3.60640   Max.   : 2.27744   Max.   : 1.90880  </span></span>
 <span><span class="co">#&gt;       US60               US90              US210             US390        </span></span>
 <span><span class="co">#&gt;  Min.   :-1.38002   Min.   :-2.94444   Min.   :-1.0271   Min.   :-1.3636  </span></span>
@@ -1059,10 +1038,7 @@ plot of chunk omicsselection7
 </div>
 </div>
 
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="links">
+  </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li><a href="https://cloud.r-project.org/package=Patterns" class="external-link">View on CRAN</a></li>
@@ -1097,6 +1073,7 @@ plot of chunk omicsselection7
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
+<li><a href="https://doi.org/10.32614/CRAN.package.Patterns" class="external-link"><img src="https://img.shields.io/badge/doi-10.32614/CRAN.package.Patterns-blue.svg" alt="DOI"></a></li>
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-green.svg" alt="Lifecycle: stable"></a></li>
 <li><a href="https://www.repostatus.org/#active" class="external-link"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed."></a></li>
 <li><a href="https://github.com/fbertran/Patterns/actions" class="external-link"><img src="https://github.com/fbertran/Patterns/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
@@ -1104,27 +1081,23 @@ plot of chunk omicsselection7
 <li><a href="https://cran.r-project.org/package=Patterns" class="external-link"><img src="https://www.r-pkg.org/badges/version/Patterns" alt="CRAN status"></a></li>
 <li><a href="https://cran.r-project.org/package=Patterns" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/Patterns" alt="CRAN RStudio mirror downloads"></a></li>
 <li><a href="https://github.com/fbertran/Patterns" class="external-link"><img src="https://img.shields.io/github/stars/fbertran/Patterns?style=social" alt="GitHub Repo stars"></a></li>
-<li><a href="https://zenodo.org/badge/latestdoi/18441799" class="external-link"><img src="https://zenodo.org/badge/18441799.svg" alt="DOI"></a></li>
 </ul>
 </div>
 
-  </div>
+  </aside>
 </div>
 
 
-      <footer><div class="copyright">
-  <p></p>
-<p>Developed by Frederic Bertrand, Myriam Maumy-Bertrand.</p>
+    <footer><div class="pkgdown-footer-left">
+  <p>Developed by Frederic Bertrand, Myriam Maumy-Bertrand.</p>
 </div>
 
-<div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+<div class="pkgdown-footer-right">
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
-
 
 
 

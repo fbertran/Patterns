@@ -307,10 +307,11 @@ setMethod("plot","omics_array",function(x,...)
 #' @keywords manip
 #' @examples
 #' 
+#' data(jetsetscores)
 #' if(require(CascadeData)){
 #' data(micro_S)
-#' D<-as.omics_array(micro_S[1:2000,],1:4,6)
-#' D@gene_ID<-jetset::scores.hgu133plus2[D@name,"EntrezID"]
+#' D<-as.omics_array(micro_S[1:400,],1:4,6)
+#' D@gene_ID<-jetsetscores[D@name,"EntrezID"]
 #' PM <- probeMerge(D)
 #' }
 #' 

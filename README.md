@@ -5,9 +5,13 @@
 # Patterns <img src="man/figures/logo.png" align="right" width="200"/>
 
 # A modeling tool dedicated to biological network modeling to decipher Biological Networks with Patterned Heterogeneous (e.g. multiOmics) Measurements
+
 ## Frédéric Bertrand and Myriam Maumy-Bertrand
 
+<https://doi.org/10.32614/CRAN.package.Patterns>
+
 <!-- badges: start -->
+[![DOI](https://img.shields.io/badge/doi-10.32614/CRAN.package.Patterns-blue.svg)](https://doi.org/10.32614/CRAN.package.Patterns)
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R-CMD-check](https://github.com/fbertran/Patterns/workflows/R-CMD-check/badge.svg)](https://github.com/fbertran/Patterns/actions)
@@ -15,7 +19,6 @@
 [![CRAN status](https://www.r-pkg.org/badges/version/Patterns)](https://cran.r-project.org/package=Patterns)
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/Patterns)](https://cran.r-project.org/package=Patterns)
 [![GitHub Repo stars](https://img.shields.io/github/stars/fbertran/Patterns?style=social)](https://github.com/fbertran/Patterns)
-[![DOI](https://zenodo.org/badge/18441799.svg)](https://zenodo.org/badge/latestdoi/18441799)
 <!-- badges: end -->
 
 
@@ -69,14 +72,14 @@ This website and these examples were created by F. Bertrand and M. Maumy-Bertran
 You can install the released version of Patterns from [CRAN](https://CRAN.R-project.org) with:
 
 
-```r
+``` r
 install.packages("Patterns")
 ```
 
 You can install the development version of Patterns from [github](https://github.com) with:
 
 
-```r
+``` r
 devtools::install_github("fbertran/Patterns")
 ```
 
@@ -85,11 +88,11 @@ devtools::install_github("fbertran/Patterns")
 ### Data management
 Import Cascade Data (repeated measurements on several subjects) from the CascadeData package and turn them into a omics array object. The second line makes sure the CascadeData package is installed.
 
-```r
+``` r
 library(Patterns)
 ```
 
-```r
+``` r
 if(!require(CascadeData)){install.packages("CascadeData")}
 data(micro_US)
 micro_US<-as.omics_array(micro_US[1:100,],time=c(60,90,210,390),subject=6)
@@ -171,7 +174,7 @@ Let's simulate some cascade data and then do some reverse engineering.
 
 We first design the F matrix for $T_i=4$ times and $Ngrp=4$ groups. The `Fmat`object is an array of sizes $(T_i,T-i,Ngrp^2)=(4,4,16)$.
 
-```r
+``` r
 Ti<-4
 Ngrp<-4
 
@@ -186,7 +189,7 @@ for(i in 1:(Ti^2)){
 
 The `Patterns` function `CascadeFinit` is an utility function to easily define such an F matrix.
 
-```r
+``` r
 Fbis=Patterns::CascadeFinit(Ti,Ngrp,low.trig=FALSE)
 str(Fbis)
 #>  num [1:4, 1:4, 1:16] 0 0 0 0 0 0 0 0 0 0 ...
@@ -194,14 +197,14 @@ str(Fbis)
 
 Check if the two matrices `Fmat` and `Fbis` are identical.
 
-```r
+``` r
 print(all(Fmat==Fbis))
 #> [1] TRUE
 ```
 
 End of F matrix definition.
 
-```r
+``` r
 Fmat[,,3]<-Fmat[,,3]*0.2
 Fmat[3,1,3]<-1
 Fmat[4,2,3]<-1
@@ -212,7 +215,7 @@ Fmat[,,8]<-Fmat[,,3]
 
 We set the seed to make the results reproducible and draw a scale free random network.
 
-```r
+``` r
 set.seed(1)
 Net<-Patterns::network_random(
   nb=100,
@@ -237,19 +240,19 @@ str(Net)
 
 Plot the simulated network.
 
-```r
+``` r
 Patterns::plot(Net, choice="network")
 ```
 
 If a gene clustering is known, it can be used as a coloring scheme.
 
-```r
+``` r
 plot(Net, choice="network", gr=rep(1:4,each=25))
 ```
 
 Plot the F matrix, for low dimensional F matrices.
 
-```r
+``` r
 plot(Net, choice="F")
 ```
 
@@ -260,7 +263,7 @@ plot(Net, choice="F")
 
 Plot the F matrix using the `pixmap` package, for high dimensional F matrices.
 
-```r
+``` r
 plot(Net, choice="Fpixmap")
 ```
 
@@ -271,7 +274,7 @@ plot(Net, choice="Fpixmap")
 
 We simulate gene expression according to the network that was previously drawn
 
-```r
+``` r
 set.seed(1)
 M <- Patterns::gene_expr_simulation(
   network=Net,
@@ -281,7 +284,7 @@ M <- Patterns::gene_expr_simulation(
   act_time_group=1:4)
 #> Error: unable to find an inherited method for function 'gene_expr_simulation' for signature 'omics_network = "missing"'
 str(M)
-#> Error in eval(expr, envir, enclos): object 'M' not found
+#>  num [1:60, 1:6] -1.495 0.368 0.517 -0.484 0.675 ...
 ```
 
 Get a summay and plots of the simulated data:
@@ -307,22 +310,22 @@ Net_inf_P <- Patterns::inference(M, cv.subjects=TRUE)
 
 Plot of the inferred F matrix
 
-```r
+``` r
 plot(Net_inf_P, choice="F")
 #> Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'Net_inf_P' not found
 ```
 
 Heatmap of the inferred coefficients of the Omega matrix
 
-```r
+``` r
 stats::heatmap(Net_inf_P@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
-#> Error in eval(expr, envir, enclos): object 'Net_inf_P' not found
+#> Error: object 'Net_inf_P' not found
 ```
 
 
 Default values fot the $F$ matrices. The `Finit` matrix (starting values for the algorithm). In our case, the `Finit`object is an array of sizes $(T_i,T-i,Ngrp^2)=(4,4,16)$.
 
-```r
+``` r
 Ti<-4;
 ngrp<-4
 nF<-ngrp^2
@@ -338,7 +341,7 @@ Finit<-array(0,c(Ti,Ti,nF))
 
 The `Fshape` matrix (default shape for `F` matrix the algorithm). Any interaction between groups and times are permitted except the retro-actions (a group on itself, or an action at the same time for an actor on another one).
 
-```r
+``` r
 Fshape<-array("0",c(Ti,Ti,nF)) 
 for(ii in 1:nF){  
   if((ii%%(ngrp+1))==1){
@@ -359,7 +362,7 @@ Any other form can be used. A "0" coefficient is missing from the model. It allo
 
 The `IndicFshape` function allows to design custom F matrix for cascade networks with equally spaced measurements by specifying the zero and non zero $F_{ij}$ cells of the $F$ matrix. It is useful for models featuring several clusters of actors that are activated at the time. Let's define the following indicatrix matrix (action of all groups on each other, which is not a possible real modeling setting and is only used as an example):
 
-```r
+``` r
 TestIndic=matrix(!((1:(Ti^2))%%(ngrp+1)==1),byrow=TRUE,ngrp,ngrp)
 TestIndic
 #>       [,1]  [,2]  [,3]  [,4]
@@ -371,7 +374,7 @@ TestIndic
 
 For that choice, we get those init and shape $F$ matrices.
 
-```r
+``` r
 IndicFinit(Ti,ngrp,TestIndic)
 #> , , 1
 #> 
@@ -635,7 +638,7 @@ Those $F$ matrices are lower diagonal ones to enforce that an observed value at 
 The `plotF` is convenient to display F matrices. Here are the the displays of the three $F$ matrices we have just introduced.
 
 
-```r
+``` r
 plotF(Fshape,choice="Fshape")
 ```
 
@@ -645,7 +648,7 @@ plotF(Fshape,choice="Fshape")
 </div>
 
 
-```r
+``` r
 plotF(CascadeFshape(4,4),choice="Fshape")
 ```
 
@@ -654,7 +657,7 @@ plotF(CascadeFshape(4,4),choice="Fshape")
 <p class="caption">plot of chunk plotfshape2</p>
 </div>
 
-```r
+``` r
 plotF(IndicFshape(Ti,ngrp,TestIndic),choice="Fshape")
 ```
 
@@ -674,16 +677,16 @@ Net_inf_P_S <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=CascadeFsh
 
 Plot of the inferred F matrix
 
-```r
+``` r
 plot(Net_inf_P_S, choice="F")
 #> Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'Net_inf_P_S' not found
 ```
 
 Heatmap of the coefficients of the Omega matrix of the network. They reflect the use of a special $F$ matrix. It is an example of an F matrix specifically designed to deal with cascade networks.
 
-```r
+``` r
 stats::heatmap(Net_inf_P_S@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
-#> Error in eval(expr, envir, enclos): object 'Net_inf_P_S' not found
+#> Error: object 'Net_inf_P_S' not found
 ```
 
 
@@ -706,21 +709,21 @@ Net_inf_P_Lasso2 <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=Casca
 
 Plot of the inferred F matrix
 
-```r
+``` r
 plot(Net_inf_P_Lasso2, choice="F")
 #> Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'Net_inf_P_Lasso2' not found
 ```
 
 Heatmap of the coefficients of the Omega matrix of the network
 
-```r
+``` r
 stats::heatmap(Net_inf_P_Lasso2@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
-#> Error in eval(expr, envir, enclos): object 'Net_inf_P_Lasso2' not found
+#> Error: object 'Net_inf_P_Lasso2' not found
 ```
 
 We create a weighting vector to perform weighted lasso inference.
 
-```r
+``` r
 Weights_Net=slot(Net,"network")
 #> Error in slot(Net, "network"): no slot of name "network" for this object of class "omics_network"
 Weights_Net[Net@network!=0]=.1        
@@ -737,16 +740,16 @@ Net_inf_P_Lasso2_Weighted <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fsh
 
 Plot of the inferred F matrix
 
-```r
+``` r
 plot(Net_inf_P_Lasso2_Weighted, choice="F")
 #> Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'Net_inf_P_Lasso2_Weighted' not found
 ```
 
 Heatmap of the coefficients of the Omega matrix of the network
 
-```r
+``` r
 stats::heatmap(Net_inf_P_Lasso2_Weighted@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
-#> Error in eval(expr, envir, enclos): object 'Net_inf_P_Lasso2_Weighted' not found
+#> Error: object 'Net_inf_P_Lasso2_Weighted' not found
 ```
 
 
@@ -758,16 +761,16 @@ Net_inf_P_SPLS <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=Cascade
 
 Plot of the inferred F matrix
 
-```r
+``` r
 plot(Net_inf_P_SPLS, choice="F")
 #> Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'Net_inf_P_SPLS' not found
 ```
 
 Heatmap of the coefficients of the Omega matrix of the network
 
-```r
+``` r
 stats::heatmap(Net_inf_P_SPLS@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
-#> Error in eval(expr, envir, enclos): object 'Net_inf_P_SPLS' not found
+#> Error: object 'Net_inf_P_SPLS' not found
 ```
 
 
@@ -778,16 +781,16 @@ Net_inf_P_ELASTICNET <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=C
 
 Plot of the inferred F matrix
 
-```r
+``` r
 plot(Net_inf_P_ELASTICNET, choice="F")
 #> Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'Net_inf_P_ELASTICNET' not found
 ```
 
 Heatmap of the coefficients of the Omega matrix of the network
 
-```r
+``` r
 stats::heatmap(Net_inf_P_ELASTICNET@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
-#> Error in eval(expr, envir, enclos): object 'Net_inf_P_ELASTICNET' not found
+#> Error: object 'Net_inf_P_ELASTICNET' not found
 ```
 
 
@@ -798,16 +801,16 @@ Net_inf_P_stability <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=Ca
 
 Plot of the inferred F matrix
 
-```r
+``` r
 plot(Net_inf_P_stability, choice="F")
 #> Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'Net_inf_P_stability' not found
 ```
 
 Heatmap of the coefficients of the Omega matrix of the network
 
-```r
+``` r
 stats::heatmap(Net_inf_P_stability@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
-#> Error in eval(expr, envir, enclos): object 'Net_inf_P_stability' not found
+#> Error: object 'Net_inf_P_stability' not found
 ```
 
 
@@ -818,16 +821,16 @@ Net_inf_P_StabWeight <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=C
 
 Plot of the inferred F matrix
 
-```r
+``` r
 plot(Net_inf_P_StabWeight, choice="F")
 #> Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'Net_inf_P_StabWeight' not found
 ```
 
 Heatmap of the coefficients of the Omega matrix of the network
 
-```r
+``` r
 stats::heatmap(Net_inf_P_StabWeight@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
-#> Error in eval(expr, envir, enclos): object 'Net_inf_P_StabWeight' not found
+#> Error: object 'Net_inf_P_StabWeight' not found
 ```
 
 
@@ -838,16 +841,16 @@ Net_inf_P_Robust <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=Casca
 
 Plot of the inferred F matrix
 
-```r
+``` r
 plot(Net_inf_P_Robust, choice="F")
 #> Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'Net_inf_P_Robust' not found
 ```
 
 Heatmap of the coefficients of the Omega matrix of the network
 
-```r
+``` r
 stats::heatmap(Net_inf_P_Robust@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
-#> Error in eval(expr, envir, enclos): object 'Net_inf_P_Robust' not found
+#> Error: object 'Net_inf_P_Robust' not found
 ```
 
 
@@ -865,6 +868,9 @@ Net_inf_P_SelectBoost <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=
 ```
 #> 
 #> Attaching package: 'Patterns'
+#> The following object is masked from 'package:testthat':
+#> 
+#>     compare
 #> The following object is masked from 'package:igraph':
 #> 
 #>     compare
@@ -872,16 +878,16 @@ Net_inf_P_SelectBoost <- Patterns::inference(M, Finit=CascadeFinit(4,4), Fshape=
 
 Plot of the inferred F matrix
 
-```r
+``` r
 plot(Net_inf_P_SelectBoost, choice="F")
 #> Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'Net_inf_P_SelectBoost' not found
 ```
 
 Heatmap of the coefficients of the Omega matrix of the network
 
-```r
+``` r
 stats::heatmap(Net_inf_P_SelectBoost@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
-#> Error in eval(expr, envir, enclos): object 'Net_inf_P_SelectBoost' not found
+#> Error: object 'Net_inf_P_SelectBoost' not found
 ```
 
 
@@ -895,6 +901,9 @@ Net_inf_P_SelectBoostWeighted <- Patterns::inference(M, Finit=CascadeFinit(4,4),
 ```
 #> 
 #> Attaching package: 'Patterns'
+#> The following object is masked from 'package:testthat':
+#> 
+#>     compare
 #> The following object is masked from 'package:igraph':
 #> 
 #>     compare
@@ -902,16 +911,16 @@ Net_inf_P_SelectBoostWeighted <- Patterns::inference(M, Finit=CascadeFinit(4,4),
 
 Plot of the inferred F matrix
 
-```r
+``` r
 plot(Net_inf_P_SelectBoostWeighted, choice="F")
 #> Error in h(simpleError(msg, call)): error in evaluating the argument 'x' in selecting a method for function 'plot': object 'Net_inf_P_SelectBoostWeighted' not found
 ```
 
 Heatmap of the coefficients of the Omega matrix of the network
 
-```r
+``` r
 stats::heatmap(Net_inf_P_SelectBoostWeighted@network, Rowv = NA, Colv = NA, scale="none", revC=TRUE)
-#> Error in eval(expr, envir, enclos): object 'Net_inf_P_SelectBoostWeighted' not found
+#> Error: object 'Net_inf_P_SelectBoostWeighted' not found
 ```
 
 ### Post inference network analysis
@@ -919,7 +928,7 @@ Such an analysis is only required if the model was not fitted using the stabilit
 
 Create an animation of the network with increasing cutoffs with an animated .gif format or a  html webpage in the working directory.
 
-```r
+``` r
 data(network)
 sequence<-seq(0,0.2,length.out=20)
 evolution(network,sequence,type.ani = "gif", outdir=getwd())
@@ -955,7 +964,7 @@ analyze_network(networkCascade,nv=0.133)
 ```
 
 
-```r
+``` r
 data(Selection)
 plot(networkCascade,nv=0.133, gr=Selection@group)
 ```
@@ -973,7 +982,7 @@ plot(networkCascade,nv=0.133, gr=Selection@group)
 
 Import data.
 
-```r
+``` r
 library(Patterns)
 library(CascadeData)
 data(micro_S)
@@ -1009,7 +1018,7 @@ wanted.patterns=rbind(c(0,0,1,0),c(0,0,0,1),c(1,1,0,0)))
 
 Merge those selections:
 
-```r
+``` r
 Selection<-unionOmics(Selection1,Selection2)
 Selection<-unionOmics(Selection,Selection3)
 Selection<-unionOmics(Selection,Selection4)
@@ -1024,12 +1033,10 @@ head(Selection)
 #> 1563563_at  -1.44513486  1.6869516 -0.4297297
 #> 
 #> $name
-#> [1] "210226_at"   "233516_s_at" "202081_at"   "236719_at"   "236019_at"  
-#> [6] "1563563_at" 
+#> [1] "210226_at"   "233516_s_at" "202081_at"   "236719_at"   "236019_at"   "1563563_at" 
 #> 
 #> $gene_ID
-#> [1] "210226_at"   "233516_s_at" "202081_at"   "236719_at"   "236019_at"  
-#> [6] "1563563_at" 
+#> [1] "210226_at"   "233516_s_at" "202081_at"   "236719_at"   "236019_at"   "1563563_at" 
 #> 
 #> $group
 #> [1] 1 2 1 1 1 1
@@ -1046,7 +1053,7 @@ head(Selection)
 
 Summarize the final selection:
 
-```r
+``` r
 summary(Selection)
 #>       US60               US90               US210             US390         
 #>  Min.   :-2.76841   Min.   :-2.369525   Min.   :-1.6147   Min.   :-2.60480  
@@ -1057,7 +1064,7 @@ summary(Selection)
 #>  Max.   : 2.86440   Max.   : 4.284675   Max.   : 3.6727   Max.   : 2.54704  
 #>       US60              US90              US210              US390         
 #>  Min.   :-2.7932   Min.   :-2.49245   Min.   :-1.21606   Min.   :-1.74407  
-#>  1st Qu.:-0.5547   1st Qu.:-0.01944   1st Qu.: 0.07966   1st Qu.:-0.26548  
+#>  1st Qu.:-0.5547   1st Qu.:-0.01944   1st Qu.: 0.07967   1st Qu.:-0.26548  
 #>  Median :-0.3089   Median : 0.14977   Median : 0.72019   Median : 0.03616  
 #>  Mean   :-0.2917   Mean   : 0.33720   Mean   : 0.73063   Mean   : 0.06753  
 #>  3rd Qu.:-0.1725   3rd Qu.: 0.48744   3rd Qu.: 1.26164   3rd Qu.: 0.32496  
@@ -1066,7 +1073,7 @@ summary(Selection)
 #>  Min.   :-2.94444   Min.   :-0.9721   Min.   :-1.9349   Min.   :-3.8418  
 #>  1st Qu.:-0.23136   1st Qu.:-0.1027   1st Qu.: 0.3254   1st Qu.:-0.1592  
 #>  Median :-0.04761   Median : 0.2548   Median : 1.2512   Median : 0.1538  
-#>  Mean   : 0.22115   Mean   : 0.6479   Mean   : 1.0485   Mean   : 0.1219  
+#>  Mean   : 0.22116   Mean   : 0.6479   Mean   : 1.0485   Mean   : 0.1219  
 #>  3rd Qu.: 0.33157   3rd Qu.: 1.0737   3rd Qu.: 1.8513   3rd Qu.: 0.6268  
 #>  Max.   : 3.31723   Max.   : 4.3604   Max.   : 4.4860   Max.   : 1.9886  
 #>       US60               US90              US210              US390         
@@ -1074,7 +1081,7 @@ summary(Selection)
 #>  1st Qu.:-0.06031   1st Qu.:-0.08464   1st Qu.: 0.07605   1st Qu.: 0.01569  
 #>  Median : 0.03601   Median : 0.17135   Median : 0.52176   Median : 0.17370  
 #>  Mean   : 0.14593   Mean   : 0.41929   Mean   : 0.62446   Mean   : 0.23854  
-#>  3rd Qu.: 0.24568   3rd Qu.: 0.75565   3rd Qu.: 1.07821   3rd Qu.: 0.45189  
+#>  3rd Qu.: 0.24568   3rd Qu.: 0.75564   3rd Qu.: 1.07821   3rd Qu.: 0.45189  
 #>  Max.   : 1.82903   Max.   : 3.60640   Max.   : 2.27744   Max.   : 1.90880  
 #>       US60               US90              US210             US390        
 #>  Min.   :-1.38002   Min.   :-2.94444   Min.   :-1.0271   Min.   :-1.3636  
@@ -1105,7 +1112,7 @@ summary(Selection)
 
 Plot the final selection:
 
-```r
+``` r
 plot(Selection)
 ```
 
